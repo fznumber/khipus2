@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="encens.khipus.model.admin.Usuario" table="usuario" schema="" catalog="eos">
+        <id name="idusuario">
+            <column name="IDUSUARIO" sql-type="bigint" not-null="true"/>
+        </id>
+        <property name="fechacreacion">
+            <column name="FECHACREACION" sql-type="timestamp" not-null="true"/>
+        </property>
+        <property name="email">
+            <column name="EMAIL" sql-type="varchar" length="100"/>
+        </property>
+        <property name="numerousuario">
+            <column name="NUMEROUSUARIO" sql-type="varchar" length="4"/>
+        </property>
+        <property name="usuariofinanzas">
+            <column name="USUARIOFINANZAS" sql-type="int"/>
+        </property>
+        <property name="clave">
+            <column name="CLAVE" sql-type="varchar" length="200"/>
+        </property>
+        <property name="usuario">
+            <column name="USUARIO" sql-type="varchar" length="50"/>
+        </property>
+        <property name="version">
+            <column name="VERSION" sql-type="bigint"/>
+        </property>
+        <many-to-one name="companiaByIdcompania" class="encens.khipus.model.admin.Compania">
+            <column name="IDCOMPANIA"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>
