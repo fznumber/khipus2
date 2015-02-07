@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="encens.khipus.model.purchases.Paquetes" table="paquetes" schema="" catalog="eos">
+        <id name="idpaquetes">
+            <column name="IDPAQUETES" sql-type="bigint" not-null="true"/>
+        </id>
+        <property name="nombre">
+            <column name="NOMBRE" sql-type="varchar" length="100"/>
+        </property>
+        <property name="fechaInicio">
+            <column name="FECHA_INICIO" sql-type="date"/>
+        </property>
+        <property name="fechaFin">
+            <column name="FECHA_FIN" sql-type="date"/>
+        </property>
+        <property name="activo">
+            <column name="ACTIVO" sql-type="varchar" length="2"/>
+        </property>
+        <property name="total">
+            <column name="TOTAL" sql-type="double" precision="10" scale="2"/>
+        </property>
+        <property name="cuentaId">
+            <column name="CUENTA_ID" sql-type="bigint"/>
+        </property>
+        <set name="articulosPaquetesByIdpaquetes" inverse="true">
+            <key>
+                <column name="IDPAQUETES"/>
+            </key>
+            <one-to-many not-found="ignore" class="encens.khipus.model.purchases.ArticulosPaquete"/>
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="encens.khipus.model.purchases.Personas" table="personas" schema="" catalog="eos">
+        <id name="piId">
+            <column name="PI_ID" sql-type="bigint" not-null="true"/>
+        </id>
+        <property name="nroDoc">
+            <column name="NRO_DOC" sql-type="varchar" length="20"/>
+        </property>
+        <property name="ap">
+            <column name="AP" sql-type="varchar" length="65"/>
+        </property>
+        <property name="am">
+            <column name="AM" sql-type="varchar" length="65"/>
+        </property>
+        <property name="nom">
+            <column name="NOM" sql-type="varchar" length="100" not-null="true"/>
+        </property>
+        <property name="sexo">
+            <column name="SEXO" sql-type="varchar" length="1"/>
+        </property>
+        <property name="estCivil">
+            <column name="EST_CIVIL" sql-type="varchar" length="1"/>
+        </property>
+        <property name="fechaNac">
+            <column name="FECHA_NAC" sql-type="date"/>
+        </property>
+        <property name="cemCod">
+            <column name="CEM_COD" sql-type="varchar" length="15"/>
+        </property>
+        <property name="ocuCod">
+            <column name="OCU_COD" sql-type="varchar" length="15"/>
+        </property>
+        <property name="tdoCod">
+            <column name="TDO_COD" sql-type="varchar" length="15"/>
+        </property>
+        <property name="sisCod">
+            <column name="SIS_COD" sql-type="varchar" length="20"/>
+        </property>
+        <property name="idcliente">
+            <column name="IDCLIENTE" sql-type="bigint" not-null="true"/>
+        </property>
+        <many-to-one name="clienteByIdcliente" class="encens.khipus.model.purchases.Cliente">
+            <column name="IDCLIENTE" not-null="true"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

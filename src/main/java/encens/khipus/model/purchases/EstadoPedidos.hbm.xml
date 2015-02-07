@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="encens.khipus.model.purchases.EstadoPedidos" table="estado_pedidos" schema="" catalog="eos">
+        <id name="idestadopedido">
+            <column name="IDESTADOPEDIDO" sql-type="bigint" not-null="true"/>
+        </id>
+        <property name="estado">
+            <column name="ESTADO" sql-type="varchar" length="10" not-null="true"/>
+        </property>
+        <set name="pedidosesByIdestadopedido" inverse="true">
+            <key>
+                <column name="ESTADO_PEDIDO" not-null="true"/>
+            </key>
+            <one-to-many not-found="ignore" class="encens.khipus.model.purchases.Pedidos"/>
+        </set>
+    </class>
+</hibernate-mapping>

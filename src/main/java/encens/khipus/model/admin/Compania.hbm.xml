@@ -11,5 +11,11 @@
         <property name="codigo">
             <column name="CODIGO" sql-type="varchar"/>
         </property>
+        <set name="usuariosByIdcompania" inverse="true">
+            <key>
+                <column name="IDCOMPANIA"/>
+            </key>
+            <one-to-many not-found="ignore" class="encens.khipus.model.admin.Usuario"/>
+        </set>
     </class>
 </hibernate-mapping>

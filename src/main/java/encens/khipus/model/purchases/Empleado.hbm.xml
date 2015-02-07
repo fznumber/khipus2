@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="encens.khipus.model.purchases.Empleado" table="empleado" schema="" catalog="eos">
+        <id name="idempleado">
+            <column name="IDEMPLEADO" sql-type="bigint" not-null="true"/>
+        </id>
+        <property name="flagafp">
+            <column name="FLAGAFP" sql-type="bigint"/>
+        </property>
+        <property name="flagcontrol">
+            <column name="FLAGCONTROL" sql-type="bigint"/>
+        </property>
+        <property name="codigoempleado">
+            <column name="CODIGOEMPLEADO" sql-type="varchar"/>
+        </property>
+        <property name="fechaingreso">
+            <column name="FECHAINGRESO" sql-type="date"/>
+        </property>
+        <property name="flagjubilado">
+            <column name="FLAGJUBILADO" sql-type="bigint"/>
+        </property>
+        <property name="codigomarcacion">
+            <column name="CODIGOMARCACION" sql-type="varchar" length="100"/>
+        </property>
+        <property name="tipodepago">
+            <column name="TIPODEPAGO" sql-type="varchar" length="20"/>
+        </property>
+        <property name="flagret">
+            <column name="FLAGRET" sql-type="bigint"/>
+        </property>
+        <property name="fechasalida">
+            <column name="FECHASALIDA" sql-type="date"/>
+        </property>
+        <property name="salario">
+            <column name="SALARIO" sql-type="double" precision="13" scale="2"/>
+        </property>
+        <property name="idunidadnegocio">
+            <column name="IDUNIDADNEGOCIO" sql-type="bigint"/>
+        </property>
+        <property name="idcompania">
+            <column name="IDCOMPANIA" sql-type="bigint"/>
+        </property>
+        <set name="pedidosesByIdempleado" inverse="true">
+            <key>
+                <column name="IDEMPLEADO" not-null="true"/>
+            </key>
+            <one-to-many not-found="ignore" class="encens.khipus.model.purchases.Pedidos"/>
+        </set>
+    </class>
+</hibernate-mapping>

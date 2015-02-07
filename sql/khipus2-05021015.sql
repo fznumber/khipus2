@@ -1,4 +1,4 @@
-/*--------------------------------------------------------
+--------------------------------------------------------
 --  DDL for Table COMPANIA
 --------------------------------------------------------
 
@@ -84,30 +84,6 @@ CREATE TABLE EOS.DERECHOACCESO
   ALTER TABLE EOS.USUARIOROL ADD CONSTRAINT USUARIOROL_ROL_FK1 FOREIGN KEY ( IDROL ) REFERENCES EOS.ROL ( IDROL ) ;
   ALTER TABLE EOS.USUARIOROL ADD CONSTRAINT USUARIOROL_USUARIO_FK1 FOREIGN KEY ( IDUSUARIO ) REFERENCES EOS.USUARIO ( IDUSUARIO ) ;  
   ALTER TABLE EOS.USUARIO ADD CONSTRAINT USUARIO_COMPANIA_FK1 FOREIGN KEY ( IDCOMPANIA ) REFERENCES EOS.COMPANIA ( IDCOMPANIA ) ;
-  */
-
-
-
-  CREATE TABLE EOS.COMPANIA 
-   (	IDCOMPANIA BIGINT(24), 
-		CODIGO VARCHAR(255),
-        primary key(IDCOMPANIA)
-   );
-
- CREATE TABLE EOS.USUARIO
-    (
-      IDUSUARIO       BIGINT(24)  NOT NULL ,
-      FECHACREACION   TIMESTAMP ,
-      EMAIL           VARCHAR (100 ) ,
-      NUMEROUSUARIO   VARCHAR (4 ) ,
-      USUARIOFINANZAS INT (10) ,
-      CLAVE           VARCHAR (200 ) ,
-      USUARIO         VARCHAR (50 ) ,
-      VERSION         BIGINT(24)  ,
-      IDCOMPANIA      BIGINT(24),
-      foreign key(IDCOMPANIA) references eos.COMPANIA(IDCOMPANIA),
-      primary key(IDUSUARIO)
-    ) ;
 -----------------
 /*
 use eos;

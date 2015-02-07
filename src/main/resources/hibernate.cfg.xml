@@ -5,18 +5,40 @@
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/eos</property>
-    <property name="connection.username">root</property>
-    <property name="connection.password">Control123</property>
     <property name="hibernate.connection.pool_size">10</property>
     <property name="hibernate.current_session_context_class">thread</property>
     <property name="hibernate.show_sql">true</property>
     <property name="hibernate.hbm2ddl.auto">validate</property>
     <!-- MAPPING -->
     <!-- <mapping class="encens.khipus.model.admin" /> -->
-    <mapping class="encens.khipus.model.admin.Compania"/>
-    <mapping class="encens.khipus.model.admin.Usuario"/>
     <mapping resource="encens/khipus/model/admin/Compania.hbm.xml"/>
     <mapping resource="encens/khipus/model/admin/Usuario.hbm.xml"/>
+    <mapping class="encens.khipus.model.admin.Compania"/>
+    <mapping class="encens.khipus.model.admin.Usuario"/>
+    <mapping resource="encens/khipus/model/purchases/ArticulosPaquete.hbm.xml"/>
+    <mapping class="encens.khipus.model.purchases.ArticulosPedido"/>
+    <mapping resource="encens/khipus/model/purchases/ArticulosPedido.hbm.xml"/>
+    <mapping class="encens.khipus.model.purchases.Cliente"/>
+    <mapping resource="encens/khipus/model/purchases/Cliente.hbm.xml"/>
+    <mapping class="encens.khipus.model.purchases.Empleado"/>
+    <mapping resource="encens/khipus/model/purchases/Empleado.hbm.xml"/>
+    <mapping class="encens.khipus.model.purchases.EstadoPedidos"/>
+    <mapping resource="encens/khipus/model/purchases/EstadoPedidos.hbm.xml"/>
+    <mapping resource="encens/khipus/model/purchases/Institucion.hbm.xml"/>
+    <mapping class="encens.khipus.model.purchases.Institucion"/>
+    <mapping class="encens.khipus.model.purchases.Paquetes"/>
+    <mapping resource="encens/khipus/model/purchases/Paquetes.hbm.xml"/>
+    <mapping class="encens.khipus.model.purchases.Pedidos"/>
+    <mapping resource="encens/khipus/model/purchases/Pedidos.hbm.xml"/>
+    <mapping class="encens.khipus.model.purchases.Personas"/>
+    <mapping resource="encens/khipus/model/purchases/Personas.hbm.xml"/>
+    <mapping resource="encens/khipus/model/purchases/Retencion.hbm.xml"/>
+    <mapping class="encens.khipus.model.purchases.Retencion"/>
+    <mapping class="encens.khipus.model.purchases.Tipocliente"/>
+    <mapping resource="encens/khipus/model/purchases/Tipocliente.hbm.xml"/>
+    <mapping class="encens.khipus.model.purchases.Tipopedido"/>
+    <mapping resource="encens/khipus/model/purchases/Tipopedido.hbm.xml"/>
+    <mapping class="encens.khipus.model.purchases.ArticulosPaquete"/>
 
   </session-factory>
 </hibernate-configuration>
