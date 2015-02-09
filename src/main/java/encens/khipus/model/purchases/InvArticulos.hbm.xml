@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="encens.khipus.model.purchases.InvArticulos" table="inv_articulos" schema="" catalog="eos">
+        <composite-id mapped="true" class="encens.khipus.model.purchases.InvArticulosPK">
+            <key-property name="noCia">
+                <column name="NO_CIA" sql-type="varchar" length="2" not-null="true"/>
+            </key-property>
+            <key-property name="codArt">
+                <column name="COD_ART" sql-type="varchar" length="6" not-null="true"/>
+            </key-property>
+        </composite-id>
+        <property name="controlValorado">
+            <column name="CONTROL_VALORADO" sql-type="varchar"/>
+        </property>
+        <property name="cantiadEqui">
+            <column name="CANTIAD_EQUI" sql-type="double" precision="10" scale="2"/>
+        </property>
+        <property name="codGru">
+            <column name="COD_GRU" sql-type="varchar" length="3"/>
+        </property>
+        <property name="codMedMay">
+            <column name="COD_MED_MAY" sql-type="varchar" length="6"/>
+        </property>
+        <property name="saldoMon">
+            <column name="SALDO_MON" sql-type="double" precision="16" scale="6"/>
+        </property>
+        <property name="stockmaximo">
+            <column name="STOCKMAXIMO" sql-type="double" precision="16" scale="6"/>
+        </property>
+        <property name="stockminimo">
+            <column name="STOCKMINIMO" sql-type="double" precision="16" scale="6"/>
+        </property>
+        <property name="descri">
+            <column name="DESCRI" sql-type="varchar" length="100"/>
+        </property>
+        <property name="nombrecorto">
+            <column name="NOMBRECORTO" sql-type="varchar" length="14"/>
+        </property>
+        <property name="cuentaArt">
+            <column name="CUENTA_ART" sql-type="varchar" length="31"/>
+        </property>
+        <property name="vendible">
+            <column name="VENDIBLE" sql-type="varchar"/>
+        </property>
+        <property name="estado">
+            <column name="ESTADO" sql-type="varchar" length="3"/>
+        </property>
+        <property name="codSub">
+            <column name="COD_SUB" sql-type="varchar" length="3"/>
+        </property>
+        <property name="costoUni">
+            <column name="COSTO_UNI" sql-type="double" precision="16" scale="6"/>
+        </property>
+        <property name="codMed">
+            <column name="COD_MED" sql-type="varchar" length="6"/>
+        </property>
+        <property name="version">
+            <column name="VERSION" sql-type="bigint"/>
+        </property>
+        <many-to-one name="invGrupos" class="encens.khipus.model.purchases.InvGrupos">
+            <column name="NO_CIA" not-null="true"/>
+            <column name="COD_GRU"/>
+        </many-to-one>
+        <set name="ventaarticulos" inverse="true">
+            <key>
+                <column name="NO_CIA" not-null="true"/>
+                <column name="COD_ART" not-null="true"/>
+            </key>
+            <one-to-many not-found="ignore" class="encens.khipus.model.purchases.Ventaarticulo"/>
+        </set>
+    </class>
+</hibernate-mapping>

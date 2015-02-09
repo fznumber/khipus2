@@ -53,8 +53,5 @@
         <property name="totalInv">
             <column name="TOTAL_INV" sql-type="bigint"/>
         </property>
-        <many-to-one name="pedidosByPedido" class="encens.khipus.model.purchases.Pedidos">
-            <column name="PEDIDO" not-null="true"/>
-        </many-to-one>
     </class>
 </hibernate-mapping>

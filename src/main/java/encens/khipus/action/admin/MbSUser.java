@@ -7,20 +7,18 @@
 package encens.khipus.action.admin;
 
 
-import java.io.Serializable;
-
-import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
-import encens.khipus.model.admin.User;
 import encens.khipus.model.admin.Usuario;
 import encens.khipus.services.admin.ServiceBeanUser;
 import encens.khipus.util.Encrypt;
 import encens.khipus.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+import java.io.Serializable;
 
 /**
  *
@@ -63,7 +61,7 @@ public class MbSUser implements Serializable {
                     HttpSession httpSession=(HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
                     httpSession.setAttribute("userName", this.userName);
                     
-                    return "/usuario/vertodo";
+                    return "/usuario/registroPedido";
                 }
             }
             

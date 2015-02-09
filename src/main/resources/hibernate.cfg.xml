@@ -39,6 +39,14 @@
     <mapping class="encens.khipus.model.purchases.Tipopedido"/>
     <mapping resource="encens/khipus/model/purchases/Tipopedido.hbm.xml"/>
     <mapping class="encens.khipus.model.purchases.ArticulosPaquete"/>
+    <mapping resource="encens/khipus/model/purchases/Distribuidor.hbm.xml"/>
+    <mapping class="encens.khipus.model.purchases.Distribuidor"/>
+    <mapping class="encens.khipus.model.purchases.InvArticulos"/>
+    <mapping resource="encens/khipus/model/purchases/InvArticulos.hbm.xml"/>
+    <mapping resource="encens/khipus/model/purchases/InvGrupos.hbm.xml"/>
+    <mapping class="encens.khipus.model.purchases.InvGrupos"/>
+    <mapping resource="encens/khipus/model/purchases/Ventaarticulo.hbm.xml"/>
+    <mapping class="encens.khipus.model.purchases.Ventaarticulo"/>
 
   </session-factory>
 </hibernate-configuration>

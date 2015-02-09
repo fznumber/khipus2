@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="encens.khipus.model.purchases.InvGrupos" table="inv_grupos" schema="" catalog="eos">
+        <composite-id mapped="true" class="encens.khipus.model.purchases.InvGruposPK">
+            <key-property name="noCia">
+                <column name="NO_CIA" sql-type="varchar" length="2" not-null="true"/>
+            </key-property>
+            <key-property name="codGru">
+                <column name="COD_GRU" sql-type="varchar" length="3" not-null="true"/>
+            </key-property>
+        </composite-id>
+        <property name="cuentaInv">
+            <column name="CUENTA_INV" sql-type="varchar" length="31"/>
+        </property>
+        <property name="descri">
+            <column name="DESCRI" sql-type="varchar" length="100"/>
+        </property>
+        <property name="version">
+            <column name="VERSION" sql-type="bigint"/>
+        </property>
+        <property name="tipo">
+            <column name="TIPO" sql-type="varchar" length="50"/>
+        </property>
+        <set name="invArticuloses" inverse="true">
+            <key>
+                <column name="NO_CIA" not-null="true"/>
+                <column name="COD_GRU"/>
+            </key>
+            <one-to-many not-found="ignore" class="encens.khipus.model.purchases.InvArticulos"/>
+        </set>
+    </class>
+</hibernate-mapping>

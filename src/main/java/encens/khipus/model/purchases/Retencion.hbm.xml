@@ -17,8 +17,5 @@
         <property name="idcliente">
             <column name="IDCLIENTE" sql-type="bigint" not-null="true"/>
         </property>
-        <many-to-one name="clienteByIdcliente" class="encens.khipus.model.purchases.Cliente">
-            <column name="IDCLIENTE" not-null="true"/>
-        </many-to-one>
     </class>
 </hibernate-mapping>

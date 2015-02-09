@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="encens.khipus.model.purchases.Ventaarticulo" table="ventaarticulo" schema="" catalog="eos">
+        <id name="idventaarticulo">
+            <column name="IDVENTAARTICULO" sql-type="bigint" not-null="true"/>
+        </id>
+        <property name="precio">
+            <column name="PRECIO" sql-type="bigint"/>
+        </property>
+        <property name="precioespecial">
+            <column name="PRECIOESPECIAL" sql-type="bigint"/>
+        </property>
+        <property name="idcliente">
+            <column name="IDCLIENTE" sql-type="bigint" not-null="true"/>
+        </property>
+        <property name="noCia">
+            <column name="NO_CIA" sql-type="varchar" length="2" not-null="true"/>
+        </property>
+        <property name="codArt">
+            <column name="COD_ART" sql-type="varchar" length="6" not-null="true"/>
+        </property>
+        <many-to-one name="clienteByIdcliente" class="encens.khipus.model.purchases.Cliente">
+            <column name="IDCLIENTE" not-null="true"/>
+        </many-to-one>
+        <many-to-one name="invArticulos" class="encens.khipus.model.purchases.InvArticulos">
+            <column name="NO_CIA" not-null="true"/>
+            <column name="COD_ART" not-null="true"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

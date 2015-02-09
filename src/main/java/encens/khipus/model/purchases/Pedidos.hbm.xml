@@ -53,23 +53,26 @@
         <property name="supervisor">
             <column name="SUPERVISOR" sql-type="bigint"/>
         </property>
-        <property name="distribuidor">
-            <column name="DISTRIBUIDOR" sql-type="bigint"/>
-        </property>
         <property name="porcenDescuento">
             <column name="PORCEN_DESCUENTO" sql-type="bigint"/>
         </property>
         <property name="porcenRetencion">
             <column name="PORCEN_RETENCION" sql-type="bigint"/>
         </property>
-        <property name="tipopedidoIdtipopedido">
-            <column name="TIPOPEDIDO_IDTIPOPEDIDO" sql-type="bigint" not-null="true"/>
+        <property name="idtipopedido">
+            <column name="IDTIPOPEDIDO" sql-type="bigint" not-null="true"/>
         </property>
         <property name="idcliente">
             <column name="IDCLIENTE" sql-type="bigint" not-null="true"/>
         </property>
+        <property name="iddistribuidor">
+            <column name="IDDISTRIBUIDOR" sql-type="bigint" not-null="true"/>
+        </property>
         <many-to-one name="clienteByIdcliente" class="encens.khipus.model.purchases.Cliente">
             <column name="IDCLIENTE" not-null="true"/>
+        </many-to-one>
+        <many-to-one name="distribuidorByIddistribuidor" class="encens.khipus.model.purchases.Distribuidor">
+            <column name="IDDISTRIBUIDOR" not-null="true"/>
         </many-to-one>
         <many-to-one name="empleadoByIdempleado" class="encens.khipus.model.purchases.Empleado">
             <column name="IDEMPLEADO" not-null="true"/>
@@ -77,14 +80,8 @@
         <many-to-one name="estadoPedidosByEstadoPedido" class="encens.khipus.model.purchases.EstadoPedidos">
             <column name="ESTADO_PEDIDO" not-null="true"/>
         </many-to-one>
-        <many-to-one name="tipopedidoByTipopedidoIdtipopedido" class="encens.khipus.model.purchases.Tipopedido">
-            <column name="TIPOPEDIDO_IDTIPOPEDIDO" not-null="true"/>
+        <many-to-one name="tipopedidoByIdtipopedido" class="encens.khipus.model.purchases.Tipopedido">
+            <column name="IDTIPOPEDIDO" not-null="true"/>
         </many-to-one>
-        <set name="articulosPedidosByIdpedidos" inverse="true">
-            <key>
-                <column name="PEDIDO" not-null="true"/>
-            </key>
-            <one-to-many not-found="ignore" class="encens.khipus.model.purchases.ArticulosPedido"/>
-        </set>
     </class>
 </hibernate-mapping>

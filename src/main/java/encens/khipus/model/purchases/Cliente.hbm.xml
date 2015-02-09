@@ -32,29 +32,17 @@
         <many-to-one name="tipoclienteByIdtipocliente" class="encens.khipus.model.purchases.Tipocliente">
             <column name="IDTIPOCLIENTE" not-null="true"/>
         </many-to-one>
-        <set name="articulosPaquetesByIdcliente" inverse="true">
-            <key>
-                <column name="IDCLIENTE" not-null="true"/>
-            </key>
-            <one-to-many not-found="ignore" class="encens.khipus.model.purchases.ArticulosPaquete"/>
-        </set>
         <set name="pedidosesByIdcliente" inverse="true">
             <key>
                 <column name="IDCLIENTE" not-null="true"/>
             </key>
             <one-to-many not-found="ignore" class="encens.khipus.model.purchases.Pedidos"/>
         </set>
-        <set name="personasesByIdcliente" inverse="true">
+        <set name="ventaarticulosByIdcliente" inverse="true">
             <key>
                 <column name="IDCLIENTE" not-null="true"/>
             </key>
-            <one-to-many not-found="ignore" class="encens.khipus.model.purchases.Personas"/>
-        </set>
-        <set name="retencionsByIdcliente" inverse="true">
-            <key>
-                <column name="IDCLIENTE" not-null="true"/>
-            </key>
-            <one-to-many not-found="ignore" class="encens.khipus.model.purchases.Retencion"/>
+            <one-to-many not-found="ignore" class="encens.khipus.model.purchases.Ventaarticulo"/>
         </set>
     </class>
 </hibernate-mapping>

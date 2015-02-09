@@ -35,6 +35,10 @@ public class Pedidos {
     private Empleado empleadoByIdempleado;
     private EstadoPedidos estadoPedidosByEstadoPedido;
     private Tipopedido tipopedidoByTipopedidoIdtipopedido;
+    private Distribuidor distribuidorByIddistribuidor;
+    private Tipopedido tipopedidoByIdtipopedido;
+    private long idtipopedido;
+    private long iddistribuidor;
 
     @Id
     @Column(name = "IDPEDIDOS", nullable = false, insertable = true, updatable = true)
@@ -197,7 +201,7 @@ public class Pedidos {
     }
 
     @Basic
-    @Column(name = "DISTRIBUIDOR", nullable = true, insertable = true, updatable = true)
+    @Column(name = "IDDISTRIBUIDOR", nullable = true, insertable = true, updatable = true)
     public Long getDistribuidor() {
         return distribuidor;
     }
@@ -227,7 +231,7 @@ public class Pedidos {
     }
 
     @Basic
-    @Column(name = "TIPOPEDIDO_IDTIPOPEDIDO", nullable = false, insertable = true, updatable = true)
+    @Column(name = "IDTIPOPEDIDO", nullable = false, insertable = true, updatable = true)
     public long getTipopedidoIdtipopedido() {
         return tipopedidoIdtipopedido;
     }
@@ -351,12 +355,52 @@ public class Pedidos {
     }
 
     @ManyToOne
-    @JoinColumn(name = "TIPOPEDIDO_IDTIPOPEDIDO", referencedColumnName = "IDTIPOPEDIDO", nullable = false)
+    @JoinColumn(name = "IDTIPOPEDIDO", referencedColumnName = "IDTIPOPEDIDO", nullable = false)
     public Tipopedido getTipopedidoByTipopedidoIdtipopedido() {
         return tipopedidoByTipopedidoIdtipopedido;
     }
 
     public void setTipopedidoByTipopedidoIdtipopedido(Tipopedido tipopedidoByTipopedidoIdtipopedido) {
         this.tipopedidoByTipopedidoIdtipopedido = tipopedidoByTipopedidoIdtipopedido;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "IDDISTRIBUIDOR", referencedColumnName = "IDDISTRIBUIDOR", nullable = false)
+    public Distribuidor getDistribuidorByIddistribuidor() {
+        return distribuidorByIddistribuidor;
+    }
+
+    public void setDistribuidorByIddistribuidor(Distribuidor distribuidorByIddistribuidor) {
+        this.distribuidorByIddistribuidor = distribuidorByIddistribuidor;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "IDTIPOPEDIDO", referencedColumnName = "IDTIPOPEDIDO", nullable = false)
+    public Tipopedido getTipopedidoByIdtipopedido() {
+        return tipopedidoByIdtipopedido;
+    }
+
+    public void setTipopedidoByIdtipopedido(Tipopedido tipopedidoByIdtipopedido) {
+        this.tipopedidoByIdtipopedido = tipopedidoByIdtipopedido;
+    }
+
+    @Basic
+    @Column(name = "IDTIPOPEDIDO", nullable = false, insertable = true, updatable = true)
+    public long getIdtipopedido() {
+        return idtipopedido;
+    }
+
+    public void setIdtipopedido(long idtipopedido) {
+        this.idtipopedido = idtipopedido;
+    }
+
+    @Basic
+    @Column(name = "IDDISTRIBUIDOR", nullable = false, insertable = true, updatable = true)
+    public long getIddistribuidor() {
+        return iddistribuidor;
+    }
+
+    public void setIddistribuidor(long iddistribuidor) {
+        this.iddistribuidor = iddistribuidor;
     }
 }

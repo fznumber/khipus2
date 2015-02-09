@@ -25,6 +25,7 @@ public class ArticulosPedido {
     private Long precioInv;
     private Long totalInv;
     private Pedidos pedidosByPedido;
+    private String nombre;
 
     @Id
     @Column(name = "IDARTICULOSPEDIDO", nullable = false, insertable = true, updatable = true)
@@ -35,6 +36,18 @@ public class ArticulosPedido {
     public void setIdarticulospedido(long idarticulospedido) {
         this.idarticulospedido = idarticulospedido;
     }
+
+    @Transient
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+
+
 
     @Basic
     @Column(name = "ID_CUENTA", nullable = false, insertable = true, updatable = true)

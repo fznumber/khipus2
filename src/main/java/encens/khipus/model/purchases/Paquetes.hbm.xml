@@ -26,11 +26,5 @@
         <property name="cuentaId">
             <column name="CUENTA_ID" sql-type="bigint"/>
         </property>
-        <set name="articulosPaquetesByIdpaquetes" inverse="true">
-            <key>
-                <column name="IDPAQUETES"/>
-            </key>
-            <one-to-many not-found="ignore" class="encens.khipus.model.purchases.ArticulosPaquete"/>
-        </set>
     </class>
 </hibernate-mapping>

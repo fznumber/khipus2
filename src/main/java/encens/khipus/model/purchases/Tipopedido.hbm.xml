@@ -13,7 +13,7 @@
         </property>
         <set name="pedidosesByIdtipopedido" inverse="true">
             <key>
-                <column name="TIPOPEDIDO_IDTIPOPEDIDO" not-null="true"/>
+                <column name="IDTIPOPEDIDO" not-null="true"/>
             </key>
             <one-to-many not-found="ignore" class="encens.khipus.model.purchases.Pedidos"/>
         </set>

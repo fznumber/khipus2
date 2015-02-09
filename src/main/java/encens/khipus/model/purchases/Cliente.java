@@ -21,6 +21,7 @@ public class Cliente {
     private Collection<Personas> personasesByIdcliente;
     private Collection<Retencion> retencionsByIdcliente;
     private Collection<Pedidos> pedidosesByIdcliente;
+    private Collection<Ventaarticulo> ventaarticulosByIdcliente;
 
     @Id
     @Column(name = "IDCLIENTE", nullable = false, insertable = true, updatable = true)
@@ -176,5 +177,14 @@ public class Cliente {
 
     public void setPedidosesByIdcliente(Collection<Pedidos> pedidosesByIdcliente) {
         this.pedidosesByIdcliente = pedidosesByIdcliente;
+    }
+
+    @OneToMany(mappedBy = "clienteByIdcliente")
+    public Collection<Ventaarticulo> getVentaarticulosByIdcliente() {
+        return ventaarticulosByIdcliente;
+    }
+
+    public void setVentaarticulosByIdcliente(Collection<Ventaarticulo> ventaarticulosByIdcliente) {
+        this.ventaarticulosByIdcliente = ventaarticulosByIdcliente;
     }
 }
