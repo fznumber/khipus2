@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Table(name = "articulos_paquete", schema = "", catalog = "eos")
 public class ArticulosPaquete {
     private long idarticulospaquete;
-    private Long idpaquetes;
     private Long idCuenta;
     private String codArt;
     private String noCia;
@@ -17,9 +16,8 @@ public class ArticulosPaquete {
     private String codAlm;
     private Double precio;
     private Double total;
-    private long idcliente;
-    private Cliente clienteByIdcliente;
-    private Paquetes paquetesByIdpaquetes;
+    private Cliente cliente;
+    private Paquetes paquete;
 
     @Id
     @Column(name = "IDARTICULOSPAQUETE", nullable = false, insertable = true, updatable = true)
@@ -29,16 +27,6 @@ public class ArticulosPaquete {
 
     public void setIdarticulospaquete(long idarticulospaquete) {
         this.idarticulospaquete = idarticulospaquete;
-    }
-
-    @Basic
-    @Column(name = "IDPAQUETES", nullable = true, insertable = true, updatable = true)
-    public Long getIdpaquetes() {
-        return idpaquetes;
-    }
-
-    public void setIdpaquetes(Long idpaquetes) {
-        this.idpaquetes = idpaquetes;
     }
 
     @Basic
@@ -111,17 +99,7 @@ public class ArticulosPaquete {
         this.total = total;
     }
 
-    @Basic
-    @Column(name = "IDCLIENTE", nullable = false, insertable = true, updatable = true)
-    public long getIdcliente() {
-        return idcliente;
-    }
-
-    public void setIdcliente(long idcliente) {
-        this.idcliente = idcliente;
-    }
-
-    @Override
+     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -129,12 +107,10 @@ public class ArticulosPaquete {
         ArticulosPaquete that = (ArticulosPaquete) o;
 
         if (idarticulospaquete != that.idarticulospaquete) return false;
-        if (idcliente != that.idcliente) return false;
         if (cantidad != null ? !cantidad.equals(that.cantidad) : that.cantidad != null) return false;
         if (codAlm != null ? !codAlm.equals(that.codAlm) : that.codAlm != null) return false;
         if (codArt != null ? !codArt.equals(that.codArt) : that.codArt != null) return false;
         if (idCuenta != null ? !idCuenta.equals(that.idCuenta) : that.idCuenta != null) return false;
-        if (idpaquetes != null ? !idpaquetes.equals(that.idpaquetes) : that.idpaquetes != null) return false;
         if (noCia != null ? !noCia.equals(that.noCia) : that.noCia != null) return false;
         if (precio != null ? !precio.equals(that.precio) : that.precio != null) return false;
         if (total != null ? !total.equals(that.total) : that.total != null) return false;
@@ -145,7 +121,6 @@ public class ArticulosPaquete {
     @Override
     public int hashCode() {
         int result = (int) (idarticulospaquete ^ (idarticulospaquete >>> 32));
-        result = 31 * result + (idpaquetes != null ? idpaquetes.hashCode() : 0);
         result = 31 * result + (idCuenta != null ? idCuenta.hashCode() : 0);
         result = 31 * result + (codArt != null ? codArt.hashCode() : 0);
         result = 31 * result + (noCia != null ? noCia.hashCode() : 0);
@@ -153,27 +128,26 @@ public class ArticulosPaquete {
         result = 31 * result + (codAlm != null ? codAlm.hashCode() : 0);
         result = 31 * result + (precio != null ? precio.hashCode() : 0);
         result = 31 * result + (total != null ? total.hashCode() : 0);
-        result = 31 * result + (int) (idcliente ^ (idcliente >>> 32));
         return result;
     }
 
     @ManyToOne
     @JoinColumn(name = "IDCLIENTE", referencedColumnName = "IDCLIENTE", nullable = false)
-    public Cliente getClienteByIdcliente() {
-        return clienteByIdcliente;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setClienteByIdcliente(Cliente clienteByIdcliente) {
-        this.clienteByIdcliente = clienteByIdcliente;
+    public void setCliente(Cliente clienteByIdcliente) {
+        this.cliente = clienteByIdcliente;
     }
 
     @ManyToOne
     @JoinColumn(name = "IDPAQUETES", referencedColumnName = "IDPAQUETES")
-    public Paquetes getPaquetesByIdpaquetes() {
-        return paquetesByIdpaquetes;
+    public Paquetes getPaquete() {
+        return paquete;
     }
 
-    public void setPaquetesByIdpaquetes(Paquetes paquetesByIdpaquetes) {
-        this.paquetesByIdpaquetes = paquetesByIdpaquetes;
+    public void setPaquete(Paquetes paquetesByIdpaquetes) {
+        this.paquete = paquetesByIdpaquetes;
     }
 }

@@ -14,7 +14,6 @@ public class InvArticulos {
     private String codArt;
     private String controlValorado;
     private Double cantiadEqui;
-    private String codGru;
     private String codMedMay;
     private Double saldoMon;
     private Double stockmaximo;
@@ -69,16 +68,6 @@ public class InvArticulos {
 
     public void setCantiadEqui(Double cantiadEqui) {
         this.cantiadEqui = cantiadEqui;
-    }
-
-    @Basic
-    @Column(name = "COD_GRU", nullable = true, insertable = true, updatable = true, length = 3)
-    public String getCodGru() {
-        return codGru;
-    }
-
-    public void setCodGru(String codGru) {
-        this.codGru = codGru;
     }
 
     @Basic
@@ -220,7 +209,6 @@ public class InvArticulos {
 
         if (cantiadEqui != null ? !cantiadEqui.equals(that.cantiadEqui) : that.cantiadEqui != null) return false;
         if (codArt != null ? !codArt.equals(that.codArt) : that.codArt != null) return false;
-        if (codGru != null ? !codGru.equals(that.codGru) : that.codGru != null) return false;
         if (codMed != null ? !codMed.equals(that.codMed) : that.codMed != null) return false;
         if (codMedMay != null ? !codMedMay.equals(that.codMedMay) : that.codMedMay != null) return false;
         if (codSub != null ? !codSub.equals(that.codSub) : that.codSub != null) return false;
@@ -247,7 +235,6 @@ public class InvArticulos {
         result = 31 * result + (codArt != null ? codArt.hashCode() : 0);
         result = 31 * result + (controlValorado != null ? controlValorado.hashCode() : 0);
         result = 31 * result + (cantiadEqui != null ? cantiadEqui.hashCode() : 0);
-        result = 31 * result + (codGru != null ? codGru.hashCode() : 0);
         result = 31 * result + (codMedMay != null ? codMedMay.hashCode() : 0);
         result = 31 * result + (saldoMon != null ? saldoMon.hashCode() : 0);
         result = 31 * result + (stockmaximo != null ? stockmaximo.hashCode() : 0);

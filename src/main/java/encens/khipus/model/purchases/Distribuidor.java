@@ -10,7 +10,7 @@ import java.util.Collection;
 public class Distribuidor {
     private long iddistribuidor;
     private String observacion;
-    private Collection<Pedidos> pedidosesByIddistribuidor;
+    private Collection<Pedidos> pedidos;
 
     @Id
     @Column(name = "IDDISTRIBUIDOR", nullable = false, insertable = true, updatable = true)
@@ -52,12 +52,12 @@ public class Distribuidor {
         return result;
     }
 
-    @OneToMany(mappedBy = "distribuidorByIddistribuidor")
-    public Collection<Pedidos> getPedidosesByIddistribuidor() {
-        return pedidosesByIddistribuidor;
+    @OneToMany(mappedBy = "distribuidor")
+    public Collection<Pedidos> getPedidos() {
+        return pedidos;
     }
 
-    public void setPedidosesByIddistribuidor(Collection<Pedidos> pedidosesByIddistribuidor) {
-        this.pedidosesByIddistribuidor = pedidosesByIddistribuidor;
+    public void setPedidos(Collection<Pedidos> pedidosesByIddistribuidor) {
+        this.pedidos = pedidosesByIddistribuidor;
     }
 }

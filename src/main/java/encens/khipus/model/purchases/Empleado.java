@@ -22,7 +22,7 @@ public class Empleado {
     private Double salario;
     private Long idunidadnegocio;
     private Long idcompania;
-    private Collection<Pedidos> pedidosesByIdempleado;
+    private Collection<Pedidos> pedidos;
 
     @Id
     @Column(name = "IDEMPLEADO", nullable = false, insertable = true, updatable = true)
@@ -203,12 +203,12 @@ public class Empleado {
         return result;
     }
 
-    @OneToMany(mappedBy = "empleadoByIdempleado")
-    public Collection<Pedidos> getPedidosesByIdempleado() {
-        return pedidosesByIdempleado;
+    @OneToMany(mappedBy = "empleado")
+    public Collection<Pedidos> getPedidos() {
+        return pedidos;
     }
 
-    public void setPedidosesByIdempleado(Collection<Pedidos> pedidosesByIdempleado) {
-        this.pedidosesByIdempleado = pedidosesByIdempleado;
+    public void setPedidos(Collection<Pedidos> pedidosesByIdempleado) {
+        this.pedidos = pedidosesByIdempleado;
     }
 }

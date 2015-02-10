@@ -9,13 +9,10 @@
             <column name="IDVENTAARTICULO" sql-type="bigint" not-null="true"/>
         </id>
         <property name="precio">
-            <column name="PRECIO" sql-type="bigint"/>
+            <column name="PRECIO" sql-type="double"/>
         </property>
         <property name="precioespecial">
-            <column name="PRECIOESPECIAL" sql-type="bigint"/>
-        </property>
-        <property name="idcliente">
-            <column name="IDCLIENTE" sql-type="bigint" not-null="true"/>
+            <column name="PRECIOESPECIAL" sql-type="double"/>
         </property>
         <property name="noCia">
             <column name="NO_CIA" sql-type="varchar" length="2" not-null="true"/>

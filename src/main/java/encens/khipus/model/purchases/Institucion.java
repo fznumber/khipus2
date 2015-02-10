@@ -10,7 +10,7 @@ import java.util.Collection;
 public class Institucion {
     private long idinstitucion;
     private String razonsocial;
-    private Collection<Cliente> clientesByIdinstitucion;
+    private Collection<Cliente> clientes;
 
     @Id
     @Column(name = "IDINSTITUCION", nullable = false, insertable = true, updatable = true)
@@ -53,11 +53,11 @@ public class Institucion {
     }
 
     @OneToMany(mappedBy = "institucionByIdinstitucion")
-    public Collection<Cliente> getClientesByIdinstitucion() {
-        return clientesByIdinstitucion;
+    public Collection<Cliente> getClientes() {
+        return clientes;
     }
 
-    public void setClientesByIdinstitucion(Collection<Cliente> clientesByIdinstitucion) {
-        this.clientesByIdinstitucion = clientesByIdinstitucion;
+    public void setClientes(Collection<Cliente> clientesByIdinstitucion) {
+        this.clientes = clientesByIdinstitucion;
     }
 }

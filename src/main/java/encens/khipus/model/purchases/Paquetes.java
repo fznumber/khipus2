@@ -16,7 +16,7 @@ public class Paquetes {
     private String activo;
     private Double total;
     private Long cuentaId;
-    private Collection<ArticulosPaquete> articulosPaquetesByIdpaquetes;
+    private Collection<ArticulosPaquete> articulosPaquetes;
 
     @Id
     @Column(name = "IDPAQUETES", nullable = false, insertable = true, updatable = true)
@@ -119,12 +119,12 @@ public class Paquetes {
         return result;
     }
 
-    @OneToMany(mappedBy = "paquetesByIdpaquetes")
-    public Collection<ArticulosPaquete> getArticulosPaquetesByIdpaquetes() {
-        return articulosPaquetesByIdpaquetes;
+    @OneToMany(mappedBy = "paquete")
+    public Collection<ArticulosPaquete> getArticulosPaquetes() {
+        return articulosPaquetes;
     }
 
-    public void setArticulosPaquetesByIdpaquetes(Collection<ArticulosPaquete> articulosPaquetesByIdpaquetes) {
-        this.articulosPaquetesByIdpaquetes = articulosPaquetesByIdpaquetes;
+    public void setArticulosPaquetes(Collection<ArticulosPaquete> articulosPaquetesByIdpaquetes) {
+        this.articulosPaquetes = articulosPaquetesByIdpaquetes;
     }
 }

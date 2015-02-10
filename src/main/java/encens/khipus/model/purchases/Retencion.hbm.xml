@@ -14,8 +14,8 @@
         <property name="porcentage">
             <column name="PORCENTAGE" sql-type="double" precision="5" scale="2"/>
         </property>
-        <property name="idcliente">
+        <many-to-one name="clienteRetencion" class="encens.khipus.model.purchases.Cliente">
             <column name="IDCLIENTE" sql-type="bigint" not-null="true"/>
-        </property>
+        </many-to-one>
     </class>
 </hibernate-mapping>

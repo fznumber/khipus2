@@ -20,8 +20,7 @@ public class Personas {
     private String ocuCod;
     private String tdoCod;
     private String sisCod;
-    private long idcliente;
-    private Cliente clienteByIdcliente;
+    private Cliente clientePersona;
 
     @Id
     @Column(name = "PI_ID", nullable = false, insertable = true, updatable = true)
@@ -143,16 +142,6 @@ public class Personas {
         this.sisCod = sisCod;
     }
 
-    @Basic
-    @Column(name = "IDCLIENTE", nullable = false, insertable = true, updatable = true)
-    public long getIdcliente() {
-        return idcliente;
-    }
-
-    public void setIdcliente(long idcliente) {
-        this.idcliente = idcliente;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -160,7 +149,6 @@ public class Personas {
 
         Personas personas = (Personas) o;
 
-        if (idcliente != personas.idcliente) return false;
         if (piId != personas.piId) return false;
         if (am != null ? !am.equals(personas.am) : personas.am != null) return false;
         if (ap != null ? !ap.equals(personas.ap) : personas.ap != null) return false;
@@ -191,17 +179,16 @@ public class Personas {
         result = 31 * result + (ocuCod != null ? ocuCod.hashCode() : 0);
         result = 31 * result + (tdoCod != null ? tdoCod.hashCode() : 0);
         result = 31 * result + (sisCod != null ? sisCod.hashCode() : 0);
-        result = 31 * result + (int) (idcliente ^ (idcliente >>> 32));
         return result;
     }
 
     @ManyToOne
     @JoinColumn(name = "IDCLIENTE", referencedColumnName = "IDCLIENTE", nullable = false)
-    public Cliente getClienteByIdcliente() {
-        return clienteByIdcliente;
+    public Cliente getClientePersona() {
+        return clientePersona;
     }
 
-    public void setClienteByIdcliente(Cliente clienteByIdcliente) {
-        this.clienteByIdcliente = clienteByIdcliente;
+    public void setClientePersona(Cliente clienteByIdcliente) {
+        this.clientePersona = clienteByIdcliente;
     }
 }

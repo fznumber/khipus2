@@ -52,7 +52,7 @@ public class Tipopedido {
         return result;
     }
 
-    @OneToMany(mappedBy = "tipopedidoByIdtipopedido")
+    @OneToMany(mappedBy = "tipoPedido")
     public Collection<Pedidos> getPedidosesByIdtipopedido() {
         return pedidosesByIdtipopedido;
     }

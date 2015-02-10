@@ -44,7 +44,7 @@
         <property name="idcompania">
             <column name="IDCOMPANIA" sql-type="bigint"/>
         </property>
-        <set name="pedidosesByIdempleado" inverse="true">
+        <set name="pedidos" inverse="true">
             <key>
                 <column name="IDEMPLEADO" not-null="true"/>
             </key>

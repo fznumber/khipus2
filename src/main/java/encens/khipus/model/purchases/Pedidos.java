@@ -11,11 +11,10 @@ import java.util.Collection;
 public class Pedidos {
     private long idpedidos;
     private String descripcion;
-    private long estadoPedido;
-    private String tipoPedido;
+    private long estado;
+    private String tipo;
     private String id;
     private Date fechaPedido;
-    private long idempleado;
     private Long iddireccion;
     private Long idzona;
     private long id1;
@@ -25,20 +24,14 @@ public class Pedidos {
     private String observacion;
     private String factura;
     private Long supervisor;
-    private Long distribuidor;
     private Long porcenDescuento;
     private Long porcenRetencion;
-    private long tipopedidoIdtipopedido;
-    private long idcliente;
-    private Collection<ArticulosPedido> articulosPedidosByIdpedidos;
-    private Cliente clienteByIdcliente;
-    private Empleado empleadoByIdempleado;
-    private EstadoPedidos estadoPedidosByEstadoPedido;
-    private Tipopedido tipopedidoByTipopedidoIdtipopedido;
-    private Distribuidor distribuidorByIddistribuidor;
-    private Tipopedido tipopedidoByIdtipopedido;
-    private long idtipopedido;
-    private long iddistribuidor;
+    private Collection<ArticulosPedido> articulosPedidos;
+    private Cliente cliente;
+    private Empleado empleado;
+    private EstadoPedidos estadoPedidos;
+    private Tipopedido tipoPedido;
+    private Distribuidor distribuidor;
 
     @Id
     @Column(name = "IDPEDIDOS", nullable = false, insertable = true, updatable = true)
@@ -60,24 +53,22 @@ public class Pedidos {
         this.descripcion = descripcion;
     }
 
-    @Basic
-    @Column(name = "ESTADO_PEDIDO", nullable = false, insertable = true, updatable = true)
-    public long getEstadoPedido() {
-        return estadoPedido;
+    public long getEstado() {
+        return estado;
     }
 
-    public void setEstadoPedido(long estadoPedido) {
-        this.estadoPedido = estadoPedido;
+    public void setEstado(long estadoPedido) {
+        this.estado = estadoPedido;
     }
 
     @Basic
     @Column(name = "TIPO_PEDIDO", nullable = false, insertable = true, updatable = true, length = 10)
-    public String getTipoPedido() {
-        return tipoPedido;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setTipoPedido(String tipoPedido) {
-        this.tipoPedido = tipoPedido;
+    public void setTipo(String tipoPedido) {
+        this.tipo = tipoPedido;
     }
 
     @Basic
@@ -98,16 +89,6 @@ public class Pedidos {
 
     public void setFechaPedido(Date fechaPedido) {
         this.fechaPedido = fechaPedido;
-    }
-
-    @Basic
-    @Column(name = "IDEMPLEADO", nullable = false, insertable = true, updatable = true)
-    public long getIdempleado() {
-        return idempleado;
-    }
-
-    public void setIdempleado(long idempleado) {
-        this.idempleado = idempleado;
     }
 
     @Basic
@@ -201,16 +182,6 @@ public class Pedidos {
     }
 
     @Basic
-    @Column(name = "IDDISTRIBUIDOR", nullable = true, insertable = true, updatable = true)
-    public Long getDistribuidor() {
-        return distribuidor;
-    }
-
-    public void setDistribuidor(Long distribuidor) {
-        this.distribuidor = distribuidor;
-    }
-
-    @Basic
     @Column(name = "PORCEN_DESCUENTO", nullable = true, insertable = true, updatable = true)
     public Long getPorcenDescuento() {
         return porcenDescuento;
@@ -230,26 +201,6 @@ public class Pedidos {
         this.porcenRetencion = porcenRetencion;
     }
 
-    @Basic
-    @Column(name = "IDTIPOPEDIDO", nullable = false, insertable = true, updatable = true)
-    public long getTipopedidoIdtipopedido() {
-        return tipopedidoIdtipopedido;
-    }
-
-    public void setTipopedidoIdtipopedido(long tipopedidoIdtipopedido) {
-        this.tipopedidoIdtipopedido = tipopedidoIdtipopedido;
-    }
-
-    @Basic
-    @Column(name = "IDCLIENTE", nullable = false, insertable = true, updatable = true)
-    public long getIdcliente() {
-        return idcliente;
-    }
-
-    public void setIdcliente(long idcliente) {
-        this.idcliente = idcliente;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -257,12 +208,9 @@ public class Pedidos {
 
         Pedidos pedidos = (Pedidos) o;
 
-        if (estadoPedido != pedidos.estadoPedido) return false;
+        if (estado != pedidos.estado) return false;
         if (id1 != pedidos.id1) return false;
-        if (idcliente != pedidos.idcliente) return false;
-        if (idempleado != pedidos.idempleado) return false;
         if (idpedidos != pedidos.idpedidos) return false;
-        if (tipopedidoIdtipopedido != pedidos.tipopedidoIdtipopedido) return false;
         if (Double.compare(pedidos.total, total) != 0) return false;
         if (descripcion != null ? !descripcion.equals(pedidos.descripcion) : pedidos.descripcion != null) return false;
         if (distribuidor != null ? !distribuidor.equals(pedidos.distribuidor) : pedidos.distribuidor != null)
@@ -281,7 +229,7 @@ public class Pedidos {
         if (porcenRetencion != null ? !porcenRetencion.equals(pedidos.porcenRetencion) : pedidos.porcenRetencion != null)
             return false;
         if (supervisor != null ? !supervisor.equals(pedidos.supervisor) : pedidos.supervisor != null) return false;
-        if (tipoPedido != null ? !tipoPedido.equals(pedidos.tipoPedido) : pedidos.tipoPedido != null) return false;
+        if (tipo != null ? !tipo.equals(pedidos.tipo) : pedidos.tipo != null) return false;
 
         return true;
     }
@@ -292,11 +240,10 @@ public class Pedidos {
         long temp;
         result = (int) (idpedidos ^ (idpedidos >>> 32));
         result = 31 * result + (descripcion != null ? descripcion.hashCode() : 0);
-        result = 31 * result + (int) (estadoPedido ^ (estadoPedido >>> 32));
-        result = 31 * result + (tipoPedido != null ? tipoPedido.hashCode() : 0);
+        result = 31 * result + (int) (estado ^ (estado >>> 32));
+        result = 31 * result + (tipo != null ? tipo.hashCode() : 0);
         result = 31 * result + (id != null ? id.hashCode() : 0);
         result = 31 * result + (fechaPedido != null ? fechaPedido.hashCode() : 0);
-        result = 31 * result + (int) (idempleado ^ (idempleado >>> 32));
         result = 31 * result + (iddireccion != null ? iddireccion.hashCode() : 0);
         result = 31 * result + (idzona != null ? idzona.hashCode() : 0);
         result = 31 * result + (int) (id1 ^ (id1 >>> 32));
@@ -310,97 +257,66 @@ public class Pedidos {
         result = 31 * result + (distribuidor != null ? distribuidor.hashCode() : 0);
         result = 31 * result + (porcenDescuento != null ? porcenDescuento.hashCode() : 0);
         result = 31 * result + (porcenRetencion != null ? porcenRetencion.hashCode() : 0);
-        result = 31 * result + (int) (tipopedidoIdtipopedido ^ (tipopedidoIdtipopedido >>> 32));
-        result = 31 * result + (int) (idcliente ^ (idcliente >>> 32));
         return result;
     }
 
     @OneToMany(mappedBy = "pedidosByPedido")
-    public Collection<ArticulosPedido> getArticulosPedidosByIdpedidos() {
-        return articulosPedidosByIdpedidos;
+    public Collection<ArticulosPedido> getArticulosPedidos() {
+        return articulosPedidos;
     }
 
-    public void setArticulosPedidosByIdpedidos(Collection<ArticulosPedido> articulosPedidosByIdpedidos) {
-        this.articulosPedidosByIdpedidos = articulosPedidosByIdpedidos;
+    public void setArticulosPedidos(Collection<ArticulosPedido> articulosPedidosByIdpedidos) {
+        this.articulosPedidos = articulosPedidosByIdpedidos;
     }
 
     @ManyToOne
     @JoinColumn(name = "IDCLIENTE", referencedColumnName = "IDCLIENTE", nullable = false)
-    public Cliente getClienteByIdcliente() {
-        return clienteByIdcliente;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setClienteByIdcliente(Cliente clienteByIdcliente) {
-        this.clienteByIdcliente = clienteByIdcliente;
+    public void setCliente(Cliente clienteByIdcliente) {
+        this.cliente = clienteByIdcliente;
     }
 
     @ManyToOne
     @JoinColumn(name = "IDEMPLEADO", referencedColumnName = "IDEMPLEADO", nullable = false)
-    public Empleado getEmpleadoByIdempleado() {
-        return empleadoByIdempleado;
+    public Empleado getEmpleado() {
+        return empleado;
     }
 
-    public void setEmpleadoByIdempleado(Empleado empleadoByIdempleado) {
-        this.empleadoByIdempleado = empleadoByIdempleado;
+    public void setEmpleado(Empleado empleadoByIdempleado) {
+        this.empleado = empleadoByIdempleado;
     }
 
     @ManyToOne
     @JoinColumn(name = "ESTADO_PEDIDO", referencedColumnName = "IDESTADOPEDIDO", nullable = false)
-    public EstadoPedidos getEstadoPedidosByEstadoPedido() {
-        return estadoPedidosByEstadoPedido;
+    public EstadoPedidos getEstadoPedidos() {
+        return estadoPedidos;
     }
 
-    public void setEstadoPedidosByEstadoPedido(EstadoPedidos estadoPedidosByEstadoPedido) {
-        this.estadoPedidosByEstadoPedido = estadoPedidosByEstadoPedido;
+    public void setEstadoPedidos(EstadoPedidos estadoPedidosByEstadoPedido) {
+        this.estadoPedidos = estadoPedidosByEstadoPedido;
     }
 
     @ManyToOne
     @JoinColumn(name = "IDTIPOPEDIDO", referencedColumnName = "IDTIPOPEDIDO", nullable = false)
-    public Tipopedido getTipopedidoByTipopedidoIdtipopedido() {
-        return tipopedidoByTipopedidoIdtipopedido;
+    public Tipopedido getTipoPedido() {
+        return tipoPedido;
     }
 
-    public void setTipopedidoByTipopedidoIdtipopedido(Tipopedido tipopedidoByTipopedidoIdtipopedido) {
-        this.tipopedidoByTipopedidoIdtipopedido = tipopedidoByTipopedidoIdtipopedido;
+    public void setTipoPedido(Tipopedido tipopedido) {
+        this.tipoPedido = tipopedido;
     }
 
     @ManyToOne
     @JoinColumn(name = "IDDISTRIBUIDOR", referencedColumnName = "IDDISTRIBUIDOR", nullable = false)
-    public Distribuidor getDistribuidorByIddistribuidor() {
-        return distribuidorByIddistribuidor;
+    public Distribuidor getDistribuidor() {
+        return distribuidor;
     }
 
-    public void setDistribuidorByIddistribuidor(Distribuidor distribuidorByIddistribuidor) {
-        this.distribuidorByIddistribuidor = distribuidorByIddistribuidor;
+    public void setDistribuidor(Distribuidor distribuidorByIddistribuidor) {
     }
 
-    @ManyToOne
-    @JoinColumn(name = "IDTIPOPEDIDO", referencedColumnName = "IDTIPOPEDIDO", nullable = false)
-    public Tipopedido getTipopedidoByIdtipopedido() {
-        return tipopedidoByIdtipopedido;
-    }
 
-    public void setTipopedidoByIdtipopedido(Tipopedido tipopedidoByIdtipopedido) {
-        this.tipopedidoByIdtipopedido = tipopedidoByIdtipopedido;
-    }
-
-    @Basic
-    @Column(name = "IDTIPOPEDIDO", nullable = false, insertable = true, updatable = true)
-    public long getIdtipopedido() {
-        return idtipopedido;
-    }
-
-    public void setIdtipopedido(long idtipopedido) {
-        this.idtipopedido = idtipopedido;
-    }
-
-    @Basic
-    @Column(name = "IDDISTRIBUIDOR", nullable = false, insertable = true, updatable = true)
-    public long getIddistribuidor() {
-        return iddistribuidor;
-    }
-
-    public void setIddistribuidor(long iddistribuidor) {
-        this.iddistribuidor = iddistribuidor;
-    }
 }

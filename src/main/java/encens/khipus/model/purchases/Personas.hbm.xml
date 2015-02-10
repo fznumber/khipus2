@@ -41,8 +41,8 @@
         <property name="sisCod">
             <column name="SIS_COD" sql-type="varchar" length="20"/>
         </property>
-        <property name="idcliente">
+        <many-to-one name="clientePersona" class="encens.khipus.model.purchases.Cliente">
             <column name="IDCLIENTE" sql-type="bigint" not-null="true"/>
-        </property>
+        </many-to-one>
     </class>
 </hibernate-mapping>

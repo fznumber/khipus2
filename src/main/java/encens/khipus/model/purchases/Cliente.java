@@ -13,8 +13,6 @@ public class Cliente {
     private Integer telefono;
     private String nit;
     private String codigo;
-    private long idinstitucion;
-    private long idtipocliente;
     private Collection<ArticulosPaquete> articulosPaquetesByIdcliente;
     private Institucion institucionByIdinstitucion;
     private Tipocliente tipoclienteByIdtipocliente;
@@ -73,26 +71,6 @@ public class Cliente {
         this.codigo = codigo;
     }
 
-    @Basic
-    @Column(name = "IDINSTITUCION", nullable = false, insertable = true, updatable = true)
-    public long getIdinstitucion() {
-        return idinstitucion;
-    }
-
-    public void setIdinstitucion(long idinstitucion) {
-        this.idinstitucion = idinstitucion;
-    }
-
-    @Basic
-    @Column(name = "IDTIPOCLIENTE", nullable = false, insertable = true, updatable = true)
-    public long getIdtipocliente() {
-        return idtipocliente;
-    }
-
-    public void setIdtipocliente(long idtipocliente) {
-        this.idtipocliente = idtipocliente;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -101,8 +79,6 @@ public class Cliente {
         Cliente cliente = (Cliente) o;
 
         if (idcliente != cliente.idcliente) return false;
-        if (idinstitucion != cliente.idinstitucion) return false;
-        if (idtipocliente != cliente.idtipocliente) return false;
         if (codigo != null ? !codigo.equals(cliente.codigo) : cliente.codigo != null) return false;
         if (direccion != null ? !direccion.equals(cliente.direccion) : cliente.direccion != null) return false;
         if (nit != null ? !nit.equals(cliente.nit) : cliente.nit != null) return false;
@@ -118,12 +94,10 @@ public class Cliente {
         result = 31 * result + (telefono != null ? telefono.hashCode() : 0);
         result = 31 * result + (nit != null ? nit.hashCode() : 0);
         result = 31 * result + (codigo != null ? codigo.hashCode() : 0);
-        result = 31 * result + (int) (idinstitucion ^ (idinstitucion >>> 32));
-        result = 31 * result + (int) (idtipocliente ^ (idtipocliente >>> 32));
         return result;
     }
 
-    @OneToMany(mappedBy = "clienteByIdcliente")
+    @OneToMany(mappedBy = "cliente")
     public Collection<ArticulosPaquete> getArticulosPaquetesByIdcliente() {
         return articulosPaquetesByIdcliente;
     }
@@ -152,7 +126,7 @@ public class Cliente {
         this.tipoclienteByIdtipocliente = tipoclienteByIdtipocliente;
     }
 
-    @OneToMany(mappedBy = "clienteByIdcliente")
+    @OneToMany(mappedBy = "clientePersona")
     public Collection<Personas> getPersonasesByIdcliente() {
         return personasesByIdcliente;
     }
@@ -161,7 +135,7 @@ public class Cliente {
         this.personasesByIdcliente = personasesByIdcliente;
     }
 
-    @OneToMany(mappedBy = "clienteByIdcliente")
+    @OneToMany(mappedBy = "clienteRetencion")
     public Collection<Retencion> getRetencionsByIdcliente() {
         return retencionsByIdcliente;
     }
@@ -170,7 +144,7 @@ public class Cliente {
         this.retencionsByIdcliente = retencionsByIdcliente;
     }
 
-    @OneToMany(mappedBy = "clienteByIdcliente")
+    @OneToMany(mappedBy = "cliente")
     public Collection<Pedidos> getPedidosesByIdcliente() {
         return pedidosesByIdcliente;
     }

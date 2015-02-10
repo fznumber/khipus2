@@ -20,12 +20,6 @@
         <property name="codigo">
             <column name="CODIGO" sql-type="varchar" length="10"/>
         </property>
-        <property name="idinstitucion">
-            <column name="IDINSTITUCION" sql-type="bigint" not-null="true"/>
-        </property>
-        <property name="idtipocliente">
-            <column name="IDTIPOCLIENTE" sql-type="bigint" not-null="true"/>
-        </property>
         <many-to-one name="institucionByIdinstitucion" class="encens.khipus.model.purchases.Institucion">
             <column name="IDINSTITUCION" not-null="true"/>
         </many-to-one>

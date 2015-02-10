@@ -11,7 +11,7 @@
         <property name="observacion">
             <column name="OBSERVACION" sql-type="varchar" length="50"/>
         </property>
-        <set name="pedidosesByIddistribuidor" inverse="true">
+        <set name="pedidos" inverse="true">
             <key>
                 <column name="IDDISTRIBUIDOR" not-null="true"/>
             </key>

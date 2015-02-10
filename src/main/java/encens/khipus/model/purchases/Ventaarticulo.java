@@ -8,9 +8,8 @@ import javax.persistence.*;
 @Entity
 public class Ventaarticulo {
     private long idventaarticulo;
-    private Long precio;
-    private Long precioespecial;
-    private long idcliente;
+    private Double precio;
+    private Double precioespecial;
     private String noCia;
     private String codArt;
     private Cliente clienteByIdcliente;
@@ -28,32 +27,22 @@ public class Ventaarticulo {
 
     @Basic
     @Column(name = "PRECIO", nullable = true, insertable = true, updatable = true)
-    public Long getPrecio() {
+    public Double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(Long precio) {
+    public void setPrecio(Double precio) {
         this.precio = precio;
     }
 
     @Basic
     @Column(name = "PRECIOESPECIAL", nullable = true, insertable = true, updatable = true)
-    public Long getPrecioespecial() {
+    public Double getPrecioespecial() {
         return precioespecial;
     }
 
-    public void setPrecioespecial(Long precioespecial) {
+    public void setPrecioespecial(Double precioespecial) {
         this.precioespecial = precioespecial;
-    }
-
-    @Basic
-    @Column(name = "IDCLIENTE", nullable = false, insertable = true, updatable = true)
-    public long getIdcliente() {
-        return idcliente;
-    }
-
-    public void setIdcliente(long idcliente) {
-        this.idcliente = idcliente;
     }
 
     @Basic
@@ -83,7 +72,6 @@ public class Ventaarticulo {
 
         Ventaarticulo that = (Ventaarticulo) o;
 
-        if (idcliente != that.idcliente) return false;
         if (idventaarticulo != that.idventaarticulo) return false;
         if (codArt != null ? !codArt.equals(that.codArt) : that.codArt != null) return false;
         if (noCia != null ? !noCia.equals(that.noCia) : that.noCia != null) return false;
@@ -99,7 +87,6 @@ public class Ventaarticulo {
         int result = (int) (idventaarticulo ^ (idventaarticulo >>> 32));
         result = 31 * result + (precio != null ? precio.hashCode() : 0);
         result = 31 * result + (precioespecial != null ? precioespecial.hashCode() : 0);
-        result = 31 * result + (int) (idcliente ^ (idcliente >>> 32));
         result = 31 * result + (noCia != null ? noCia.hashCode() : 0);
         result = 31 * result + (codArt != null ? codArt.hashCode() : 0);
         return result;

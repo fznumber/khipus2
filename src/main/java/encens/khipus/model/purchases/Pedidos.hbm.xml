@@ -11,10 +11,10 @@
         <property name="descripcion">
             <column name="DESCRIPCION" sql-type="varchar" length="200"/>
         </property>
-        <property name="estadoPedido">
+        <property name="estado">
             <column name="ESTADO_PEDIDO" sql-type="bigint" not-null="true"/>
         </property>
-        <property name="tipoPedido">
+        <property name="tipo">
             <column name="TIPO_PEDIDO" sql-type="varchar" length="10" not-null="true"/>
         </property>
         <property name="id">
@@ -22,9 +22,6 @@
         </property>
         <property name="fechaPedido">
             <column name="FECHA_PEDIDO" sql-type="date" not-null="true"/>
-        </property>
-        <property name="idempleado">
-            <column name="IDEMPLEADO" sql-type="bigint" not-null="true"/>
         </property>
         <property name="iddireccion">
             <column name="IDDIRECCION" sql-type="bigint"/>
@@ -59,28 +56,19 @@
         <property name="porcenRetencion">
             <column name="PORCEN_RETENCION" sql-type="bigint"/>
         </property>
-        <property name="idtipopedido">
-            <column name="IDTIPOPEDIDO" sql-type="bigint" not-null="true"/>
-        </property>
-        <property name="idcliente">
-            <column name="IDCLIENTE" sql-type="bigint" not-null="true"/>
-        </property>
-        <property name="iddistribuidor">
-            <column name="IDDISTRIBUIDOR" sql-type="bigint" not-null="true"/>
-        </property>
-        <many-to-one name="clienteByIdcliente" class="encens.khipus.model.purchases.Cliente">
+        <many-to-one name="cliente" class="encens.khipus.model.purchases.Cliente">
             <column name="IDCLIENTE" not-null="true"/>
         </many-to-one>
-        <many-to-one name="distribuidorByIddistribuidor" class="encens.khipus.model.purchases.Distribuidor">
+        <many-to-one name="distribuidor" class="encens.khipus.model.purchases.Distribuidor">
             <column name="IDDISTRIBUIDOR" not-null="true"/>
         </many-to-one>
-        <many-to-one name="empleadoByIdempleado" class="encens.khipus.model.purchases.Empleado">
+        <many-to-one name="empleado" class="encens.khipus.model.purchases.Empleado">
             <column name="IDEMPLEADO" not-null="true"/>
         </many-to-one>
-        <many-to-one name="estadoPedidosByEstadoPedido" class="encens.khipus.model.purchases.EstadoPedidos">
+        <many-to-one name="estado" class="encens.khipus.model.purchases.EstadoPedidos">
             <column name="ESTADO_PEDIDO" not-null="true"/>
         </many-to-one>
-        <many-to-one name="tipopedidoByIdtipopedido" class="encens.khipus.model.purchases.Tipopedido">
+        <many-to-one name="tipoPedido" class="encens.khipus.model.purchases.Tipopedido">
             <column name="IDTIPOPEDIDO" not-null="true"/>
         </many-to-one>
     </class>

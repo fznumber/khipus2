@@ -8,9 +8,6 @@
         <id name="idarticulospaquete">
             <column name="IDARTICULOSPAQUETE" sql-type="bigint" not-null="true"/>
         </id>
-        <property name="idpaquetes">
-            <column name="IDPAQUETES" sql-type="bigint"/>
-        </property>
         <property name="idCuenta">
             <column name="ID_CUENTA" sql-type="bigint"/>
         </property>
@@ -32,8 +29,11 @@
         <property name="total">
             <column name="TOTAL" sql-type="double" precision="10" scale="2"/>
         </property>
-        <property name="idcliente">
-            <column name="IDCLIENTE" sql-type="bigint" not-null="true"/>
-        </property>
+        <many-to-one name="paquete" class="encens.khipus.model.purchases.Paquetes">
+            <column name="IDPAQUETES" not-null="false"/>
+        </many-to-one>
+        <many-to-one name="cliente" class="encens.khipus.model.purchases.Cliente">
+            <column name="IDCLIENTE"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>

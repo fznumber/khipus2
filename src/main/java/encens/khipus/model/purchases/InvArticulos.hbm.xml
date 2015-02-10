@@ -19,9 +19,6 @@
         <property name="cantiadEqui">
             <column name="CANTIAD_EQUI" sql-type="double" precision="10" scale="2"/>
         </property>
-        <property name="codGru">
-            <column name="COD_GRU" sql-type="varchar" length="3"/>
-        </property>
         <property name="codMedMay">
             <column name="COD_MED_MAY" sql-type="varchar" length="6"/>
         </property>

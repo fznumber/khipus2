@@ -11,7 +11,7 @@
         <property name="razonsocial">
             <column name="RAZONSOCIAL" sql-type="varchar" length="100" not-null="true"/>
         </property>
-        <set name="clientesByIdinstitucion" inverse="true">
+        <set name="clientes" inverse="true">
             <key>
                 <column name="IDINSTITUCION" not-null="true"/>
             </key>

@@ -12,7 +12,6 @@ public class ArticulosPedido {
     private long idCuenta;
     private String codArt;
     private String noCia;
-    private long pedido;
     private String id;
     private long id1;
     private Long cantidad;
@@ -77,16 +76,6 @@ public class ArticulosPedido {
 
     public void setNoCia(String noCia) {
         this.noCia = noCia;
-    }
-
-    @Basic
-    @Column(name = "PEDIDO", nullable = false, insertable = true, updatable = true)
-    public long getPedido() {
-        return pedido;
-    }
-
-    public void setPedido(long pedido) {
-        this.pedido = pedido;
     }
 
     @Basic
@@ -209,7 +198,6 @@ public class ArticulosPedido {
         if (id1 != that.id1) return false;
         if (idCuenta != that.idCuenta) return false;
         if (idarticulospedido != that.idarticulospedido) return false;
-        if (pedido != that.pedido) return false;
         if (caja != null ? !caja.equals(that.caja) : that.caja != null) return false;
         if (cantidad != null ? !cantidad.equals(that.cantidad) : that.cantidad != null) return false;
         if (codAlm != null ? !codAlm.equals(that.codAlm) : that.codAlm != null) return false;
@@ -232,7 +220,6 @@ public class ArticulosPedido {
         result = 31 * result + (int) (idCuenta ^ (idCuenta >>> 32));
         result = 31 * result + (codArt != null ? codArt.hashCode() : 0);
         result = 31 * result + (noCia != null ? noCia.hashCode() : 0);
-        result = 31 * result + (int) (pedido ^ (pedido >>> 32));
         result = 31 * result + (id != null ? id.hashCode() : 0);
         result = 31 * result + (int) (id1 ^ (id1 >>> 32));
         result = 31 * result + (cantidad != null ? cantidad.hashCode() : 0);

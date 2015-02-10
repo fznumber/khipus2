@@ -1,6 +1,5 @@
 package encens.khipus.services.admin;
 
-import encens.khipus.model.admin.User;
 import encens.khipus.model.admin.Usuario;
 import org.hibernate.Query;
 import org.hibernate.Session;

@@ -11,7 +11,7 @@ import java.util.Collection;
 public class EstadoPedidos {
     private long idestadopedido;
     private String estado;
-    private Collection<Pedidos> pedidosesByIdestadopedido;
+    private Collection<Pedidos> pedidos;
 
     @Id
     @Column(name = "IDESTADOPEDIDO", nullable = false, insertable = true, updatable = true)
@@ -53,12 +53,12 @@ public class EstadoPedidos {
         return result;
     }
 
-    @OneToMany(mappedBy = "estadoPedidosByEstadoPedido")
-    public Collection<Pedidos> getPedidosesByIdestadopedido() {
-        return pedidosesByIdestadopedido;
+    @OneToMany(mappedBy = "estadoPedidos")
+    public Collection<Pedidos> getPedidos() {
+        return pedidos;
     }
 
-    public void setPedidosesByIdestadopedido(Collection<Pedidos> pedidosesByIdestadopedido) {
-        this.pedidosesByIdestadopedido = pedidosesByIdestadopedido;
+    public void setPedidos(Collection<Pedidos> pedidosesByIdestadopedido) {
+        this.pedidos = pedidosesByIdestadopedido;
     }
 }

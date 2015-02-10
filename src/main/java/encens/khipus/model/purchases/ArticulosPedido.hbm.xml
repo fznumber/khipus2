@@ -17,9 +17,6 @@
         <property name="noCia">
             <column name="NO_CIA" sql-type="varchar" length="2" not-null="true"/>
         </property>
-        <property name="pedido">
-            <column name="PEDIDO" sql-type="bigint" not-null="true"/>
-        </property>
         <property name="id">
             <column name="ID" sql-type="varchar" length="20" not-null="true"/>
         </property>

@@ -1,10 +1,7 @@
 package encens.khipus.action.purchases;
 
 
-import encens.khipus.model.admin.Usuario;
 import encens.khipus.model.purchases.*;
-import encens.khipus.services.admin.ServiceBeanUser;
-import encens.khipus.util.Encrypt;
 import encens.khipus.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -13,7 +10,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 

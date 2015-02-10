@@ -10,8 +10,7 @@ public class Retencion {
     private long idretencion;
     private String nombre;
     private Double porcentage;
-    private long idcliente;
-    private Cliente clienteByIdcliente;
+    private Cliente clienteRetencion;
 
     @Id
     @Column(name = "IDRETENCION", nullable = false, insertable = true, updatable = true)
@@ -43,16 +42,6 @@ public class Retencion {
         this.porcentage = porcentage;
     }
 
-    @Basic
-    @Column(name = "IDCLIENTE", nullable = false, insertable = true, updatable = true)
-    public long getIdcliente() {
-        return idcliente;
-    }
-
-    public void setIdcliente(long idcliente) {
-        this.idcliente = idcliente;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -60,7 +49,6 @@ public class Retencion {
 
         Retencion retencion = (Retencion) o;
 
-        if (idcliente != retencion.idcliente) return false;
         if (idretencion != retencion.idretencion) return false;
         if (nombre != null ? !nombre.equals(retencion.nombre) : retencion.nombre != null) return false;
         if (porcentage != null ? !porcentage.equals(retencion.porcentage) : retencion.porcentage != null) return false;
@@ -73,17 +61,16 @@ public class Retencion {
         int result = (int) (idretencion ^ (idretencion >>> 32));
         result = 31 * result + (nombre != null ? nombre.hashCode() : 0);
         result = 31 * result + (porcentage != null ? porcentage.hashCode() : 0);
-        result = 31 * result + (int) (idcliente ^ (idcliente >>> 32));
         return result;
     }
 
     @ManyToOne
     @JoinColumn(name = "IDCLIENTE", referencedColumnName = "IDCLIENTE", nullable = false)
-    public Cliente getClienteByIdcliente() {
-        return clienteByIdcliente;
+    public Cliente getClienteRetencion() {
+        return clienteRetencion;
     }
 
-    public void setClienteByIdcliente(Cliente clienteByIdcliente) {
-        this.clienteByIdcliente = clienteByIdcliente;
+    public void setClienteRetencion(Cliente clienteByIdcliente) {
+        this.clienteRetencion = clienteByIdcliente;
     }
 }
