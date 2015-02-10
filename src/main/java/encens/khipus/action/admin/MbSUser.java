@@ -61,7 +61,7 @@ public class MbSUser implements Serializable {
                     HttpSession httpSession=(HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
                     httpSession.setAttribute("userName", this.userName);
                     
-                    return "/usuario/registroPedido";
+                    return "/usuario/registroPedidos";
                 }
             }
             

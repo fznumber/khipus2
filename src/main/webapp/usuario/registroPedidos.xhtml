@@ -16,7 +16,29 @@
             </ui:define>
             <h:form id="form">
                 <p:growl id="msgs" showDetail="true"/>
+                <p:panel header="Registro de pedidos" style="margin-bottom:20px">
+                    <h:panelGrid columns="2" cellpadding="5">
 
+                        <p:outputLabel value="Articulo:" for="itemTip" />
+                        <p:autoComplete id="itemTip" value="#{pedidosRegistro.articuloElegido}" completeMethod="#{pedidosRegistro.completarArticulo}"
+                                        var="articulo" itemLabel="#{articulo.descri}" itemValue="#{articulo}" converter="themeConverter" forceSelection="true">
+                            <f:facet name="itemtip">
+                                <h:panelGrid columns="2" cellpadding="5">
+                                    <f:facet name="header">
+                                        <h:outputText styleClass="ui-theme ui-theme-#{articulo.descri}" style="margin-left:50px" />
+                                    </f:facet>
+
+                                    <h:outputText value="Display:" />
+                                    <h:outputText value="#{articulo.descri}" />
+
+                                    <h:outputText value="Key" />
+                                    <h:outputText value="#{articulo.codArt}" />
+                                </h:panelGrid>
+                            </f:facet>
+                        </p:autoComplete>
+
+                    </h:panelGrid>
+                </p:panel>
                 <p:dataTable id="checkboxDT" var="articulo" value="#{pedidosRegistro.articulosPedidos}" selection="#{pedidosRegistro.articulosPedidosElegidos}" rowKey="#{articulo.idarticulospedido}" style="margin-bottom:0">
                     <f:facet name="header">
                         Lista de productos elegidos

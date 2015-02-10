@@ -1,10 +1,20 @@
 package encens.khipus.action.purchases;
 
 
+import encens.khipus.model.admin.Usuario;
 import encens.khipus.model.purchases.*;
+import encens.khipus.services.admin.ServiceBeanUser;
+import encens.khipus.util.Encrypt;
+import encens.khipus.util.HibernateUtil;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,13 +25,53 @@ import java.util.List;
 public class MbVRegistroPedidos {
     private List<ArticulosPedido> articulosPedidos;
     private List<ArticulosPedido> articulosPedidosElegidos;
+    private List<InvArticulos> articulos;
     private Cliente cliente;
     private Distribuidor distribuidor;
     private Tipopedido tipopedido;
     private Integer importeTotal = 0;
     private Pedidos pedido;
+    private Session session;
+    private Transaction transaccion;
+    private InvArticulos articuloElegido;
 
+    public MbVRegistroPedidos() {
+        this.session=null;
+        this.transaccion=null;
 
+        try
+        {
+
+            this.session= HibernateUtil.getSessionFactory().openSession();
+            this.transaccion=this.session.beginTransaction();
+            articulos = session.createCriteria(InvArticulos.class).list();
+
+        }
+        catch(Exception ex)
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error fatal:", "Por favor contacte con su administrador "+ex.getMessage()));
+        }
+        finally
+        {
+            if(this.session!=null)
+            {
+                this.session.close();
+            }
+        }
+    }
+
+    public List<InvArticulos> completarArticulo(String query) {
+        List<InvArticulos> articulosFiltrados = new ArrayList<InvArticulos>();
+
+        for(InvArticulos articulo:articulos) {
+
+            if(articulo.getDescri().toLowerCase().contains(query)) {
+                articulosFiltrados.add(articulo);
+            }
+        }
+
+        return articulosFiltrados;
+    }
 
     public List<ArticulosPedido> getArticulosPedidos() {
         return articulosPedidos;
@@ -69,5 +119,21 @@ public class MbVRegistroPedidos {
 
     public void setImporteTotal(Integer importeTotal) {
         this.importeTotal = importeTotal;
+    }
+
+    public List<InvArticulos> getArticulos() {
+        return articulos;
+    }
+
+    public void setArticulos(List<InvArticulos> articulos) {
+        this.articulos = articulos;
+    }
+
+    public InvArticulos getArticuloElegido() {
+        return articuloElegido;
+    }
+
+    public void setArticuloElegido(InvArticulos articuloElegido) {
+        this.articuloElegido = articuloElegido;
     }
 }
