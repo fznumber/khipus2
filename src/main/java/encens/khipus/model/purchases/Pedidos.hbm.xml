@@ -11,9 +11,6 @@
         <property name="descripcion">
             <column name="DESCRIPCION" sql-type="varchar" length="200"/>
         </property>
-        <property name="estado">
-            <column name="ESTADO_PEDIDO" sql-type="bigint" not-null="true"/>
-        </property>
         <property name="tipo">
             <column name="TIPO_PEDIDO" sql-type="varchar" length="10" not-null="true"/>
         </property>
@@ -65,7 +62,7 @@
         <many-to-one name="empleado" class="encens.khipus.model.purchases.Empleado">
             <column name="IDEMPLEADO" not-null="true"/>
         </many-to-one>
-        <many-to-one name="estado" class="encens.khipus.model.purchases.EstadoPedidos">
+        <many-to-one name="estadoPedidos" class="encens.khipus.model.purchases.EstadoPedidos">
             <column name="ESTADO_PEDIDO" not-null="true"/>
         </many-to-one>
         <many-to-one name="tipoPedido" class="encens.khipus.model.purchases.Tipopedido">

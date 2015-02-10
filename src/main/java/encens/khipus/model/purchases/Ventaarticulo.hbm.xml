@@ -14,12 +14,6 @@
         <property name="precioespecial">
             <column name="PRECIOESPECIAL" sql-type="double"/>
         </property>
-        <property name="noCia">
-            <column name="NO_CIA" sql-type="varchar" length="2" not-null="true"/>
-        </property>
-        <property name="codArt">
-            <column name="COD_ART" sql-type="varchar" length="6" not-null="true"/>
-        </property>
         <many-to-one name="clienteByIdcliente" class="encens.khipus.model.purchases.Cliente">
             <column name="IDCLIENTE" not-null="true"/>
         </many-to-one>

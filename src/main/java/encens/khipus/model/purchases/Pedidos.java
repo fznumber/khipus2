@@ -11,7 +11,6 @@ import java.util.Collection;
 public class Pedidos {
     private long idpedidos;
     private String descripcion;
-    private long estado;
     private String tipo;
     private String id;
     private Date fechaPedido;
@@ -51,14 +50,6 @@ public class Pedidos {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public long getEstado() {
-        return estado;
-    }
-
-    public void setEstado(long estadoPedido) {
-        this.estado = estadoPedido;
     }
 
     @Basic
@@ -208,7 +199,6 @@ public class Pedidos {
 
         Pedidos pedidos = (Pedidos) o;
 
-        if (estado != pedidos.estado) return false;
         if (id1 != pedidos.id1) return false;
         if (idpedidos != pedidos.idpedidos) return false;
         if (Double.compare(pedidos.total, total) != 0) return false;
@@ -240,7 +230,6 @@ public class Pedidos {
         long temp;
         result = (int) (idpedidos ^ (idpedidos >>> 32));
         result = 31 * result + (descripcion != null ? descripcion.hashCode() : 0);
-        result = 31 * result + (int) (estado ^ (estado >>> 32));
         result = 31 * result + (tipo != null ? tipo.hashCode() : 0);
         result = 31 * result + (id != null ? id.hashCode() : 0);
         result = 31 * result + (fechaPedido != null ? fechaPedido.hashCode() : 0);

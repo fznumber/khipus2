@@ -10,8 +10,6 @@ public class Ventaarticulo {
     private long idventaarticulo;
     private Double precio;
     private Double precioespecial;
-    private String noCia;
-    private String codArt;
     private Cliente clienteByIdcliente;
     private InvArticulos invArticulos;
 
@@ -45,26 +43,6 @@ public class Ventaarticulo {
         this.precioespecial = precioespecial;
     }
 
-    @Basic
-    @Column(name = "NO_CIA", nullable = false, insertable = true, updatable = true, length = 2)
-    public String getNoCia() {
-        return noCia;
-    }
-
-    public void setNoCia(String noCia) {
-        this.noCia = noCia;
-    }
-
-    @Basic
-    @Column(name = "COD_ART", nullable = false, insertable = true, updatable = true, length = 6)
-    public String getCodArt() {
-        return codArt;
-    }
-
-    public void setCodArt(String codArt) {
-        this.codArt = codArt;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -73,8 +51,6 @@ public class Ventaarticulo {
         Ventaarticulo that = (Ventaarticulo) o;
 
         if (idventaarticulo != that.idventaarticulo) return false;
-        if (codArt != null ? !codArt.equals(that.codArt) : that.codArt != null) return false;
-        if (noCia != null ? !noCia.equals(that.noCia) : that.noCia != null) return false;
         if (precio != null ? !precio.equals(that.precio) : that.precio != null) return false;
         if (precioespecial != null ? !precioespecial.equals(that.precioespecial) : that.precioespecial != null)
             return false;
@@ -87,8 +63,6 @@ public class Ventaarticulo {
         int result = (int) (idventaarticulo ^ (idventaarticulo >>> 32));
         result = 31 * result + (precio != null ? precio.hashCode() : 0);
         result = 31 * result + (precioespecial != null ? precioespecial.hashCode() : 0);
-        result = 31 * result + (noCia != null ? noCia.hashCode() : 0);
-        result = 31 * result + (codArt != null ? codArt.hashCode() : 0);
         return result;
     }
 
