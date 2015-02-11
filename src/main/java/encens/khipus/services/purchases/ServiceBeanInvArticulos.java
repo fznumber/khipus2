@@ -7,6 +7,8 @@ import org.hibernate.Session;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.persistence.NoResultException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Diego on 09/02/2015.
@@ -27,6 +29,35 @@ public class ServiceBeanInvArticulos implements ServiceInvArticulos {
             return null;
         }
 
+        finally
+        {
+            if(session!=null)
+            {
+                session.close();
+            }
+        }
         return invArticulo;
+    }
+
+    @Override
+    public List<InvArticulos> findAllInvArticulos() {
+        Session session= HibernateUtil.getSessionFactory().openSession();
+        List<InvArticulos> articulos = new ArrayList<>();
+        try{
+            articulos = (List<InvArticulos>)session.createQuery("from InvArticulos articulo inner join articulo.invGrupos grupo where grupo.tipo =:venta")
+                    .setParameter("venta","venta")
+                    .list();
+        }catch (NoResultException e)
+        {
+            return articulos;
+        }
+        finally
+        {
+            if(session!=null)
+            {
+                session.close();
+            }
+        }
+        return articulos;
     }
 }

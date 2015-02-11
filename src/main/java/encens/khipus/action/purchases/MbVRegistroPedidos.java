@@ -2,14 +2,17 @@ package encens.khipus.action.purchases;
 
 
 import encens.khipus.model.purchases.*;
+import encens.khipus.services.purchases.ServiceInvArticulos;
 import encens.khipus.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,30 +33,12 @@ public class MbVRegistroPedidos {
     private Session session;
     private Transaction transaccion;
     private InvArticulos articuloElegido;
+    @Inject
+    private ServiceInvArticulos serviceInvArticulos;
 
-    public MbVRegistroPedidos() {
-        this.session=null;
-        this.transaccion=null;
-
-        try
-        {
-
-            this.session= HibernateUtil.getSessionFactory().openSession();
-            this.transaccion=this.session.beginTransaction();
-            articulos = session.createCriteria(InvArticulos.class).list();
-
-        }
-        catch(Exception ex)
-        {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error fatal:", "Por favor contacte con su administrador "+ex.getMessage()));
-        }
-        finally
-        {
-            if(this.session!=null)
-            {
-                this.session.close();
-            }
-        }
+    @PostConstruct
+    public void init() {
+        articulos = serviceInvArticulos.findAllInvArticulos();
     }
 
     public List<InvArticulos> completarArticulo(String query) {
