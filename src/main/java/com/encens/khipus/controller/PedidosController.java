@@ -1,13 +1,16 @@
 package com.encens.khipus.controller;
 
+import com.encens.khipus.ejb.InvArticulosFacade;
 import com.encens.khipus.ejb.PedidosFacade;
-import com.encens.khipus.model.Pedidos;
+import com.encens.khipus.model.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import com.encens.khipus.util.JSFUtil;
 import com.encens.khipus.util.JSFUtil.PersistAction;
 import javax.ejb.EJB;
@@ -26,9 +29,19 @@ public class PedidosController implements Serializable {
 
     @Inject
     private PedidosFacade ejbFacade;
+    @Inject
+    private InvArticulosFacade invArticulosFacade;
+
+    private List<ArticulosPedido> articulosPedidos;
+    private List<ArticulosPedido> articulosPedidosElegidos;
+    private List<InvArticulos> articulos;
     private List<Pedidos> items = null;
     private Pedidos selected;
-
+    private Cliente cliente;
+    private Distribuidor distribuidor;
+    private Tipopedido tipopedido;
+    private Integer importeTotal = 0;
+    private InvArticulos articuloElegido;
     public PedidosController() {
     }
 
@@ -44,6 +57,19 @@ public class PedidosController implements Serializable {
     }
 
     protected void initializeEmbeddableKey() {
+    }
+
+    public List<InvArticulos> completarArticulo(String query) {
+        List<InvArticulos> articulosFiltrados = new ArrayList<InvArticulos>();
+        articulos = invArticulosFacade.findAllInvArticulos();
+        for(InvArticulos articulo:articulos) {
+
+            if(articulo.getDescri().toLowerCase().contains(query)) {
+                articulosFiltrados.add(articulo);
+            }
+        }
+
+        return articulosFiltrados;
     }
 
     private PedidosFacade getFacade() {
@@ -163,4 +189,67 @@ public class PedidosController implements Serializable {
 
     }
 
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Distribuidor getDistribuidor() {
+        return distribuidor;
+    }
+
+    public void setDistribuidor(Distribuidor distribuidor) {
+        this.distribuidor = distribuidor;
+    }
+
+    public Tipopedido getTipopedido() {
+        return tipopedido;
+    }
+
+    public void setTipopedido(Tipopedido tipopedido) {
+        this.tipopedido = tipopedido;
+    }
+
+    public List<ArticulosPedido> getArticulosPedidos() {
+        return articulosPedidos;
+    }
+
+    public void setArticulosPedidos(List<ArticulosPedido> articulosPedidos) {
+        this.articulosPedidos = articulosPedidos;
+    }
+
+    public List<ArticulosPedido> getArticulosPedidosElegidos() {
+        return articulosPedidosElegidos;
+    }
+
+    public void setArticulosPedidosElegidos(List<ArticulosPedido> articulosPedidosElegidos) {
+        this.articulosPedidosElegidos = articulosPedidosElegidos;
+    }
+
+    public List<InvArticulos> getArticulos() {
+        return articulos;
+    }
+
+    public void setArticulos(List<InvArticulos> articulos) {
+        this.articulos = articulos;
+    }
+
+    public Integer getImporteTotal() {
+        return importeTotal;
+    }
+
+    public void setImporteTotal(Integer importeTotal) {
+        this.importeTotal = importeTotal;
+    }
+
+    public InvArticulos getArticuloElegido() {
+        return articuloElegido;
+    }
+
+    public void setArticuloElegido(InvArticulos articuloElegido) {
+        this.articuloElegido = articuloElegido;
+    }
 }

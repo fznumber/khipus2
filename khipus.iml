@@ -16,7 +16,7 @@
     <facet type="jpa" name="JPA">
       <configuration>
         <setting name="validation-enabled" value="true" />
-        <setting name="provider-name" value="" />
+        <setting name="provider-name" value="EclipseLink" />
         <datasource-mapping>
           <factory-entry name="khipusPU" value="8617c663-1c7a-4bf6-8a9a-ba8f1f769b31" />
         </datasource-mapping>
