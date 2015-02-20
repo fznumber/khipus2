@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PedidosEditDlg" widgetVar="PedidosEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditPedidosTitle}">
+            <h:form id="PedidosEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{pedidosController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditPedidosLabel_idpedidos}" for="idpedidos" />
+                        <p:inputText id="idpedidos" value="#{pedidosController.selected.idpedidos}" title="#{bundle.EditPedidosTitle_idpedidos}" />
+                        <p:outputLabel value="#{bundle.EditPedidosLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{pedidosController.selected.descripcion}" title="#{bundle.EditPedidosTitle_descripcion}" />
+                        <p:outputLabel value="#{bundle.EditPedidosLabel_tipoPedido}" for="tipoPedido" />
+                        <p:inputText id="tipoPedido" value="#{pedidosController.selected.tipoPedido}" title="#{bundle.EditPedidosTitle_tipoPedido}" required="true" requiredMessage="#{bundle.EditPedidosRequiredMessage_tipoPedido}"/>
+                        <p:outputLabel value="#{bundle.EditPedidosLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{pedidosController.selected.id}" title="#{bundle.EditPedidosTitle_id}" required="true" requiredMessage="#{bundle.EditPedidosRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.EditPedidosLabel_fechaPedido}" for="fechaPedido" />
+                        <p:calendar id="fechaPedido" pattern="MM/dd/yyyy" value="#{pedidosController.selected.fechaPedido}" title="#{bundle.EditPedidosTitle_fechaPedido}" required="true" requiredMessage="#{bundle.EditPedidosRequiredMessage_fechaPedido}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditPedidosLabel_iddireccion}" for="iddireccion" />
+                        <p:inputText id="iddireccion" value="#{pedidosController.selected.iddireccion}" title="#{bundle.EditPedidosTitle_iddireccion}" />
+                        <p:outputLabel value="#{bundle.EditPedidosLabel_idzona}" for="idzona" />
+                        <p:inputText id="idzona" value="#{pedidosController.selected.idzona}" title="#{bundle.EditPedidosTitle_idzona}" />
+                        <p:outputLabel value="#{bundle.EditPedidosLabel_id1}" for="id1" />
+                        <p:inputText id="id1" value="#{pedidosController.selected.id1}" title="#{bundle.EditPedidosTitle_id1}" required="true" requiredMessage="#{bundle.EditPedidosRequiredMessage_id1}"/>
+                        <p:outputLabel value="#{bundle.EditPedidosLabel_total}" for="total" />
+                        <p:inputText id="total" value="#{pedidosController.selected.total}" title="#{bundle.EditPedidosTitle_total}" required="true" requiredMessage="#{bundle.EditPedidosRequiredMessage_total}"/>
+                        <p:outputLabel value="#{bundle.EditPedidosLabel_fechaEntrega}" for="fechaEntrega" />
+                        <p:calendar id="fechaEntrega" pattern="MM/dd/yyyy" value="#{pedidosController.selected.fechaEntrega}" title="#{bundle.EditPedidosTitle_fechaEntrega}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditPedidosLabel_fechaAPagar}" for="fechaAPagar" />
+                        <p:calendar id="fechaAPagar" pattern="MM/dd/yyyy" value="#{pedidosController.selected.fechaAPagar}" title="#{bundle.EditPedidosTitle_fechaAPagar}" required="true" requiredMessage="#{bundle.EditPedidosRequiredMessage_fechaAPagar}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditPedidosLabel_observacion}" for="observacion" />
+                        <p:inputText id="observacion" value="#{pedidosController.selected.observacion}" title="#{bundle.EditPedidosTitle_observacion}" />
+                        <p:outputLabel value="#{bundle.EditPedidosLabel_factura}" for="factura" />
+                        <p:inputText id="factura" value="#{pedidosController.selected.factura}" title="#{bundle.EditPedidosTitle_factura}" required="true" requiredMessage="#{bundle.EditPedidosRequiredMessage_factura}"/>
+                        <p:outputLabel value="#{bundle.EditPedidosLabel_supervisor}" for="supervisor" />
+                        <p:inputText id="supervisor" value="#{pedidosController.selected.supervisor}" title="#{bundle.EditPedidosTitle_supervisor}" />
+                        <p:outputLabel value="#{bundle.EditPedidosLabel_porcenDescuento}" for="porcenDescuento" />
+                        <p:inputText id="porcenDescuento" value="#{pedidosController.selected.porcenDescuento}" title="#{bundle.EditPedidosTitle_porcenDescuento}" />
+                        <p:outputLabel value="#{bundle.EditPedidosLabel_porcenRetencion}" for="porcenRetencion" />
+                        <p:inputText id="porcenRetencion" value="#{pedidosController.selected.porcenRetencion}" title="#{bundle.EditPedidosTitle_porcenRetencion}" />
+                        <p:outputLabel value="#{bundle.EditPedidosLabel_idcliente}" for="idcliente" />
+                        <p:selectOneMenu id="idcliente" value="#{pedidosController.selected.idcliente}" required="true" requiredMessage="#{bundle.EditPedidosRequiredMessage_idcliente}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{clienteController.itemsAvailableSelectOne}"
+                                           var="idclienteItem"
+                                           itemValue="#{idclienteItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditPedidosLabel_iddistribuidor}" for="iddistribuidor" />
+                        <p:selectOneMenu id="iddistribuidor" value="#{pedidosController.selected.iddistribuidor}" required="true" requiredMessage="#{bundle.EditPedidosRequiredMessage_iddistribuidor}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{distribuidorController.itemsAvailableSelectOne}"
+                                           var="iddistribuidorItem"
+                                           itemValue="#{iddistribuidorItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditPedidosLabel_idempleado}" for="idempleado" />
+                        <p:selectOneMenu id="idempleado" value="#{pedidosController.selected.idempleado}" required="true" requiredMessage="#{bundle.EditPedidosRequiredMessage_idempleado}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{empleadoController.itemsAvailableSelectOne}"
+                                           var="idempleadoItem"
+                                           itemValue="#{idempleadoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditPedidosLabel_estadoPedido}" for="estadoPedido" />
+                        <p:selectOneMenu id="estadoPedido" value="#{pedidosController.selected.estadoPedido}" required="true" requiredMessage="#{bundle.EditPedidosRequiredMessage_estadoPedido}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{estadoPedidosController.itemsAvailableSelectOne}"
+                                           var="estadoPedidoItem"
+                                           itemValue="#{estadoPedidoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditPedidosLabel_idtipopedido}" for="idtipopedido" />
+                        <p:selectOneMenu id="idtipopedido" value="#{pedidosController.selected.idtipopedido}" required="true" requiredMessage="#{bundle.EditPedidosRequiredMessage_idtipopedido}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipopedidoController.itemsAvailableSelectOne}"
+                                           var="idtipopedidoItem"
+                                           itemValue="#{idtipopedidoItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{pedidosController.update}" value="#{bundle.Save}" update="display,:PedidosListForm:datalist,:growl" oncomplete="handleSubmit(args, 'PedidosEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PedidosEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

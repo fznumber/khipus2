@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="khipusPU" transaction-type="JTA">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <jta-data-source>java:/jdbc/KhipusDS</jta-data-source>
+    <class>com.encens.khipus.model.ArticulosPaquete</class>
+    <class>com.encens.khipus.model.ArticulosPedido</class>
+    <class>com.encens.khipus.model.Cliente</class>
+    <class>com.encens.khipus.model.Compania</class>
+    <class>com.encens.khipus.model.Derechoacceso</class>
+    <class>com.encens.khipus.model.Distribuidor</class>
+    <class>com.encens.khipus.model.Empleado</class>
+    <class>com.encens.khipus.model.EstadoPedidos</class>
+    <class>com.encens.khipus.model.Funcionalidad</class>
+    <class>com.encens.khipus.model.Institucion</class>
+    <class>com.encens.khipus.model.InvArticulos</class>
+    <class>com.encens.khipus.model.InvGrupos</class>
+    <class>com.encens.khipus.model.Modulo</class>
+    <class>com.encens.khipus.model.Modulocompania</class>
+    <class>com.encens.khipus.model.Paquetes</class>
+    <class>com.encens.khipus.model.Pedidos</class>
+    <class>com.encens.khipus.model.Personas</class>
+    <class>com.encens.khipus.model.Retencion</class>
+    <class>com.encens.khipus.model.Rol</class>
+    <class>com.encens.khipus.model.Tipocliente</class>
+    <class>com.encens.khipus.model.Tipopedido</class>
+    <class>com.encens.khipus.model.Usuario</class>
+    <class>com.encens.khipus.model.Ventaarticulo</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <properties>
+      <property name="eclipselink.target-server" value="JBoss"/>
+      <property name="eclipselink.weaving" value="static"/>
+    </properties>
+  </persistence-unit>
+</persistence>

@@ -1,37 +1,70 @@
-<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	  xmlns:p="http://primefaces.org/ui"
-	  xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui" xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-<body>
+    <body>
 
-<ui:composition template="./layout/layout.xhtml">
+        <ui:composition template="./template.xhtml">
+            <!--
+            <ui:define name="top">
+                top
+            </ui:define>
 
-	<ui:define name="top">
-	</ui:define>
+            <ui:define name="bottom">
+                bottom
+            </ui:define>
 
-	<ui:define name="content">
-		<h2>Inicio de sesión</h2>
-		<hr />
-		<h:form id="frmLogin">
-			<p:growl id="mensageGeneral" showDetail="true" sticky="false"/>
-			<h:panelGrid columns="2">
-				<p:outputLabel value="Usuario" for="txtUsuario"/>
-				<p:inputText id="txtUsuario" size="40" value="#{mbSUser.userName}"/>
-				<p:outputLabel value="Contraseña" for="txtContrasenia"/>
-				<p:password id="txtContrasenia" size="40" value="#{mbSUser.contrasenia}"/>
-				<h:panelGroup></h:panelGroup>
-				<p:commandButton value="Ingresar" ajax="false" action="#{mbSUser.login()}"/>
-			</h:panelGrid>
-		</h:form>
-	</ui:define>
+            <ui:define name="left">
+                left
+            </ui:define>
+            -->
 
-	<ui:define name="bottom">
-	</ui:define>
+            <ui:define name="center">
+                <h:form id="formtopnologeado" rendered="#{!loginBean.logeado}">
+                    <p:growl id="growl" life="1500"/>
+                    <p:dialog visible="true" header="Khipus" closable="false" showEffect="clip" hideEffect="fade" widgetVar="loginDialog">
+                        <h:panelGrid columns="2">
+                            <f:facet name="header">
+                                <h:outputLabel value="Login"/>
+                            </f:facet>
+                            <h:outputText value="Usuario:"></h:outputText>
+                            <h:inputText value="#{loginBean.usuario.usuario}" required="true"/>
+                            <h:outputText value="Contraseña:"></h:outputText>
+                            <h:inputSecret value="#{loginBean.usuario.clave}" required="true"/>
+                            <f:facet name="footer">
+                                <p:commandButton action="#{loginBean.verificarLogin}" value="ingresar" ajax="false"/>
+                            </f:facet>
+                        </h:panelGrid>
+                    </p:dialog>
+                </h:form>
+            </ui:define>
 
-</ui:composition>
+        </ui:composition>
 
-</body>
+        <br />
+        <h:link outcome="/page/sales/cliente/List" value="Show All Cliente Items"/>
+        <br />
+        <h:link outcome="/page/sales/distribuidor/List" value="Show All Distribuidor Items"/>
+        <br />
+        <h:link outcome="/page/sales/empleado/List" value="Show All Empleado Items"/>
+        <br />
+        <h:link outcome="/page/sales/estadoPedidos/List" value="Show All EstadoPedidos Items"/>
+        <br />
+        <h:link outcome="/page/sales/institucion/List" value="Show All Institucion Items"/>
+        <br />
+        <h:link outcome="/page/sales/pedidos/List" value="Show All Pedidos Items"/>
+        <br />
+        <h:link outcome="/page/sales/tipocliente/List" value="Show All Tipocliente Items"/>
+        <br />
+        <h:link outcome="/page/sales/tipopedido/List" value="Show All Tipopedido Items"/>
+    </body>
+
+
+
+
+
+
+
+
 </html>

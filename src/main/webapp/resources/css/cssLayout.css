@@ -1,32 +1,68 @@
-#divSesionUsuario
-{
-    position: fixed;
-    right: 10px;
-    top: 15px;
-}
 
-#divSesionUsuario > span
-{
-    color: white;
-}
-
-#top 
-{
+#top {
+    position: relative;
     background-color: #036fab;
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.7);
-    height: 105px;
-    left: 0px;
-    position: fixed;
-    top: 0px;
-    width: 100%;
-    z-index: 1000;
+    color: white;
+    padding: 5px;
+    margin: 0px 0px 10px 0px;
 }
 
-.center_content 
-{
-    background-color: white;
-    box-shadow: 0px 0px 2px black;
-    margin-top: 110px;
+#bottom {
+    position: relative;
+    background-color: #c2dfef;
     padding: 5px;
-    position: relative;    
+    margin: 10px 0px 0px 0px;
+}
+
+#left {
+    float: left;
+    background-color: #ece3a5;
+    padding: 5px;
+    width: 150px;
+}
+
+#right {
+    float: right;
+    background-color: #ece3a5;
+    padding: 5px;
+    width: 150px;
+}
+
+.center_content {
+    position: relative;
+    background-color: #dddddd;
+    padding: 5px;
+}
+
+.left_content {
+    background-color: #dddddd;
+    padding: 5px;
+    margin-left: 170px;
+}
+
+.right_content {
+    background-color: #dddddd;
+    padding: 5px;
+    margin: 0px 170px 0px 170px;
+}
+
+#top a:link, #top a:visited {
+  color: white;
+  font-weight : bold;
+  text-decoration: none;
+}
+
+#top a:link:hover, #top a:visited:hover  {
+  color: black;
+  font-weight : bold;
+  text-decoration : underline;
+}
+
+
+.ui-layout-north{
+    z-index:20 !important;
+    overflow:visible !important;;
+}
+.ui-layout-north .ui-layout-unit-content{
+    overflow: visible !important;
 }
