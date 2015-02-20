@@ -45,6 +45,20 @@ public class InvArticulosFacade extends AbstractFacade<InvArticulos> {
         return invArticulo;
     }
 
+     public InvArticulos findByCodArt(String codArt)
+    {
+        InvArticulos invArticulo;
+        try {
+            invArticulo = (InvArticulos)em.createNamedQuery("InvArticulos.findByCodArt")
+                    .setParameter("codArt", codArt)
+                    .getSingleResult();
+        }catch (NoResultException e)
+        {
+            return null;
+        }
+        return invArticulo;
+    }
+    
     public List<InvArticulos> findAllInvArticulos() {
 
         List<InvArticulos> articulos = new ArrayList<>();

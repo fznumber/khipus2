@@ -32,9 +32,9 @@ public class PedidosController implements Serializable {
     @Inject
     private InvArticulosFacade invArticulosFacade;
 
-    private List<ArticulosPedido> articulosPedidos;
-    private List<ArticulosPedido> articulosPedidosElegidos;
-    private List<InvArticulos> articulos;
+    private List<ArticulosPedido> articulosPedidos = new ArrayList<>();
+    private List<ArticulosPedido> articulosPedidosElegidos = new ArrayList<>();
+    private List<InvArticulos> articulos = new ArrayList<>();
     private List<Pedidos> items = null;
     private Pedidos selected;
     private Cliente cliente;
@@ -72,6 +72,11 @@ public class PedidosController implements Serializable {
         return articulosFiltrados;
     }
 
+    public void agregarArticulo()
+    {
+        if(articuloElegido != null)
+        articulos.add(articuloElegido);
+    }
 
     private PedidosFacade getFacade() {
         return ejbFacade;

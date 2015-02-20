@@ -1,5 +1,6 @@
 package com.encens.khipus.showcase;
 
+import com.encens.khipus.controller.InvArticulosController;
 import com.encens.khipus.ejb.InvArticulosFacade;
 import com.encens.khipus.model.InvArticulos;
 import com.encens.khipus.model.Pedidos;
@@ -21,19 +22,21 @@ public class InvArticuloControllerConverter implements Converter {
         if (value == null || value.length() == 0) {
             return null;
         }
-        InvArticulosFacade controller = (InvArticulosFacade) facesContext.getApplication().getELResolver().
-                getValue(facesContext.getELContext(), null, "invArticulosFacade");
+        InvArticulosController controller = (InvArticulosController) facesContext.getApplication().getELResolver().
+                getValue(facesContext.getELContext(), null, "invArticulosController");
 
-            return controller.findByName(value);
+            return controller.getInvArticulos(value);
     }
 
     @Override
     public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
-        if (object == null) {
+        if (object == null ) {
             return null;
         }
-        if (object instanceof Pedidos) {
+        if (object instanceof InvArticulos) {
             InvArticulos o = (InvArticulos) object;
+            if(o.getInvArticulosPK() == null)
+                return null;
             return o.getInvArticulosPK().getCodArt();
         } else {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), InvArticulos.class.getName()});
