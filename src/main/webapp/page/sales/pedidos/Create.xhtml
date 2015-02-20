@@ -14,33 +14,58 @@
 
 
             <h:form id="PedidosCreateForm">
-                <p:growl id="growl"/>
                 <p:messages autoUpdate="true"/>
+                <p:growl id="msgs" showDetail="true" />
                 <!--<p:dialog visible="true" id="PedidosCreateDlg" showEffect="clip" closable="true" widgetVar="PedidosCreateDialog" hideEffect="fade" resizable="false"  header="#{bundle.CreatePedidosTitle}">-->
-                    <h:panelGroup id="display">
-                        <p:panelGrid columns="2">
+
+                <p:panel id="display" header="Registrar Pedidos" style="margin-bottom:20px">
+                    <h:panelGrid columns="4" cellpadding="5">
                             <p:outputLabel value="Articulo:" for="itemTip" />
-                            <p:autoComplete id="itemTip" value="#{pedidosController.articuloElegido}" completeMethod="#{pedidosController.completarArticulo}"
-                                            var="articulo" itemLabel="#{articulo.descri}" itemValue="#{articulo}" converter="convertirArticulos" forceSelection="true">
-                                <f:facet name="itemtip">
-                                    <h:panelGrid columns="2" cellpadding="5">
-                                        <f:facet name="header">
-                                            <h:outputText styleClass="ui-theme ui-theme-#{articulo.descri}" style="margin-left:50px" />
-                                        </f:facet>
+                                <p:autoComplete id="itemTip" value="#{pedidosController.articuloElegido}" completeMethod="#{pedidosController.completarArticulo}"
+                                                var="articulo" itemLabel="#{articulo.descri}" itemValue="#{articulo}" converter="convertirArticulos" forceSelection="true">
+                                    <f:facet name="itemtip">
+                                        <h:panelGrid columns="2" cellpadding="5">
+                                            <f:facet name="header">
+                                                <h:outputText styleClass="ui-theme ui-theme-#{articulo.descri}" style="margin-left:50px" />
+                                            </f:facet>
 
-                                        <h:outputText value="Display:" />
-                                        <h:outputText value="#{articulo.descri}" />
+                                            <h:outputText value="Nombre:" />
+                                            <h:outputText value="#{articulo.descri}" />
 
-                                        <h:outputText value="Key" />
-                                        <h:outputText value="#{articulo.costoUni}" />
-                                    </h:panelGrid>
-                                </f:facet>
-                            </p:autoComplete>
-                        </p:panelGrid>
-                        <p:commandButton actionListener="#{pedidosController.create}" value="#{bundle.Save}" update="display,growl" oncomplete="handleSubmit(args,'PedidosCreateDialog');"/>
-                        <p:commandButton value="#{bundle.Cancel}" onclick="PedidosCreateDialog.hide()"/>
-                    </h:panelGroup>
+                                            <h:outputText value="Precio:" />
+                                            <h:outputText value="#{articulo.costoUni}" />
+                                        </h:panelGrid>
+                                    </f:facet>
+                                </p:autoComplete>
+                        <p:commandButton id="btn_reset" value="limpiar" type="reset"/>
+                        <p:commandButton id="btn_add" value="agregar" update="display,articulos,msgs" action="#{pedidosController.reinit}" >
+                            <p:collector value="#{pedidosController.articuloElegido}" addTo="#{pedidosController.articulosPedidosElegidos}" unique="true"/>
+                        </p:commandButton>
+                    </h:panelGrid>
+                </p:panel>
                 <!--</p:dialog>-->
+                <p:outputPanel id="articulos">
+                    <p:dataTable value="#{pedidosController.articulosPedidosElegidos}" var="articulo" id="articulosTable">
+
+                        <p:column headerText="Producto">
+                            <h:outputText value="#{articulo.descri}" />
+                        </p:column>
+
+                        <p:column headerText="Author">
+                            <f:facet name="header">
+                                <h:outputText value="Author" />
+                            </f:facet>
+                            <h:outputText value="#{articulo.costoUni}" />
+                        </p:column>
+
+                        <p:column headerText="Action">
+                            <p:commandLink value="Quitar" update=":Pedidos:CreateForm:articulos" process=":Pedidos:CreateForm:articulos">
+                                <p:collector value="#{articulo}" removeFrom="#{pedidosController.articulosPedidosElegidos}" unique="true"/>
+                            </p:commandLink>
+                        </p:column>
+
+                    </p:dataTable>
+                </p:outputPanel>
             </h:form>
 
         </f:view>

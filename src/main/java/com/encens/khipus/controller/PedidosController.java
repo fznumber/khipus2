@@ -72,6 +72,7 @@ public class PedidosController implements Serializable {
         return articulosFiltrados;
     }
 
+
     private PedidosFacade getFacade() {
         return ejbFacade;
     }
@@ -106,6 +107,10 @@ public class PedidosController implements Serializable {
             items = getFacade().findAll();
         }
         return items;
+    }
+    public String reinit() {
+        articuloElegido = new InvArticulos();
+        return null;
     }
 
     private void persist(PersistAction persistAction, String successMessage) {
