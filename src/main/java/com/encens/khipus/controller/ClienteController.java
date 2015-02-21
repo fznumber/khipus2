@@ -154,7 +154,7 @@ public class ClienteController implements Serializable {
             }
             if (object instanceof Cliente) {
                 Cliente o = (Cliente) object;
-                return getStringKey(o.getIdcliente());
+                return getStringKey(o.getPiId());
             } else {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Cliente.class.getName()});
                 return null;

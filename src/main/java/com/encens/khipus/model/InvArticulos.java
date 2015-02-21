@@ -50,6 +50,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "InvArticulos.findByCodMed", query = "SELECT i FROM InvArticulos i WHERE i.codMed = :codMed"),
     @NamedQuery(name = "InvArticulos.findByVersion", query = "SELECT i FROM InvArticulos i WHERE i.version = :version")})
 public class InvArticulos implements Serializable {
+    @OneToMany(mappedBy = "invArticulos")
+    private Collection<ArticulosPedido> articulosPedidoCollection;
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected InvArticulosPK invArticulosPK;
@@ -280,6 +282,15 @@ public class InvArticulos implements Serializable {
     @Override
     public String toString() {
         return "com.encens.khipus.model.InvArticulos[ invArticulosPK=" + invArticulosPK + " ]";
+    }
+
+    @XmlTransient
+    public Collection<ArticulosPedido> getArticulosPedidoCollection() {
+        return articulosPedidoCollection;
+    }
+
+    public void setArticulosPedidoCollection(Collection<ArticulosPedido> articulosPedidoCollection) {
+        this.articulosPedidoCollection = articulosPedidoCollection;
     }
     
 }

@@ -5,6 +5,7 @@ import com.encens.khipus.ejb.PedidosFacade;
 import com.encens.khipus.model.*;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -74,8 +75,17 @@ public class PedidosController implements Serializable {
 
     public void agregarArticulo()
     {
-        if(articuloElegido != null)
-        articulos.add(articuloElegido);
+        if(articuloElegido == null)
+        return;
+        ArticulosPedido articulosPedido = new ArticulosPedido();
+        articulosPedido.setInvArticulos(articuloElegido);
+        articulosPedido.setCantidad(BigInteger.ZERO);
+        articulosPedido.setPrecio(0.0);
+        articulosPedido.setReposicion(BigInteger.ZERO);
+        articulosPedido.setTotal(0.0);
+        articulosPedido.setTotalInv(BigInteger.ZERO);
+        articulosPedidosElegidos.add(articulosPedido);
+        articuloElegido = null;
     }
 
     private PedidosFacade getFacade() {

@@ -7,15 +7,7 @@ package com.encens.khipus.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -26,6 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "personas")
+@Inheritance(strategy = InheritanceType.JOINED)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Personas.findAll", query = "SELECT p FROM Personas p"),
@@ -40,12 +33,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Personas.findByCemCod", query = "SELECT p FROM Personas p WHERE p.cemCod = :cemCod"),
     @NamedQuery(name = "Personas.findByOcuCod", query = "SELECT p FROM Personas p WHERE p.ocuCod = :ocuCod"),
     @NamedQuery(name = "Personas.findByTdoCod", query = "SELECT p FROM Personas p WHERE p.tdoCod = :tdoCod"),
-    @NamedQuery(name = "Personas.findBySisCod", query = "SELECT p FROM Personas p WHERE p.sisCod = :sisCod"),
-    @NamedQuery(name = "Personas.findByIdcliente", query = "SELECT p FROM Personas p WHERE p.idcliente = :idcliente")})
+    @NamedQuery(name = "Personas.findBySisCod", query = "SELECT p FROM Personas p WHERE p.sisCod = :sisCod")})
 public class Personas implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @NotNull
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "PI_ID")
     private Long piId;
     @Size(max = 20)
@@ -83,10 +76,7 @@ public class Personas implements Serializable {
     @Size(max = 20)
     @Column(name = "SIS_COD")
     private String sisCod;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "IDCLIENTE")
-    private long idcliente;
+
 
     public Personas() {
     }
@@ -98,7 +88,6 @@ public class Personas implements Serializable {
     public Personas(Long piId, String nom, long idcliente) {
         this.piId = piId;
         this.nom = nom;
-        this.idcliente = idcliente;
     }
 
     public Long getPiId() {
@@ -195,14 +184,6 @@ public class Personas implements Serializable {
 
     public void setSisCod(String sisCod) {
         this.sisCod = sisCod;
-    }
-
-    public long getIdcliente() {
-        return idcliente;
-    }
-
-    public void setIdcliente(long idcliente) {
-        this.idcliente = idcliente;
     }
 
     @Override

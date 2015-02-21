@@ -37,11 +37,8 @@
                                         </h:panelGrid>
                                     </f:facet>
                                 </p:autoComplete>
-                        <p:commandButton id="btn_reset" value="limpiar" type="reset"/>
-                        <p:commandButton id="agregarArticulo" value = "agregar" action="#{pedidosController.agregarArticulo}" update="display,articulosTable,msgs" />-
-                        <!--<p:commandButton id="btn_add" value="agregar" update="itemTip,articulosTable"  >
-                           <p:collector value="#{pedidosController.articuloElegido}" addTo="#{pedidosController.articulos}" unique="true" action="#{pedidosController.reinit}"/>
-                        </p:commandButton>-->
+                        <!--<p:commandButton id="btn_reset" value="limpiar" type="reset"/>-->
+                        <p:commandButton id="agregarArticulo" value = "agregar" action="#{pedidosController.agregarArticulo}" update="display,articulosTable,msgs" />
                     </h:panelGrid>
                 </p:panel>
                 <!--</p:dialog>-->
@@ -49,20 +46,18 @@
                     <p:dataTable value="#{pedidosController.articulosPedidosElegidos}" var="articulo" id="articulosTable">
 
                         <p:column headerText="Producto">
-                            <h:outputText value="#{articulo.descri}" />
+                            <h:outputText value="#{articulo.invArticulos.descri}" />
                         </p:column>
 
                         <p:column headerText="Author">
                             <f:facet name="header">
                                 <h:outputText value="Author" />
                             </f:facet>
-                            <h:outputText value="#{articulo.costoUni}" />
+                            <h:outputText value="#{articulo.invArticulos.costoUni}" />
                         </p:column>
 
                         <p:column headerText="Action">
-                            <p:commandLink value="Quitar" update="articulosTable">
-                                <p:collector value="#{articulo}" removeFrom="#{pedidosController.articuloElegido}" unique="true"/>
-                            </p:commandLink>
+
                         </p:column>
 
                     </p:dataTable>

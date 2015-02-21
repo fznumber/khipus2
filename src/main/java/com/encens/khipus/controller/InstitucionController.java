@@ -153,7 +153,7 @@ public class InstitucionController implements Serializable {
             }
             if (object instanceof Institucion) {
                 Institucion o = (Institucion) object;
-                return getStringKey(o.getIdinstitucion());
+                return getStringKey(o.getPiId());
             } else {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Institucion.class.getName()});
                 return null;

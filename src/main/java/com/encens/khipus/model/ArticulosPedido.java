@@ -6,11 +6,15 @@
 package com.encens.khipus.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -29,8 +33,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ArticulosPedido.findAll", query = "SELECT a FROM ArticulosPedido a"),
     @NamedQuery(name = "ArticulosPedido.findByIdarticulospedido", query = "SELECT a FROM ArticulosPedido a WHERE a.idarticulospedido = :idarticulospedido"),
     @NamedQuery(name = "ArticulosPedido.findByIdCuenta", query = "SELECT a FROM ArticulosPedido a WHERE a.idCuenta = :idCuenta"),
-    @NamedQuery(name = "ArticulosPedido.findByCodArt", query = "SELECT a FROM ArticulosPedido a WHERE a.codArt = :codArt"),
-    @NamedQuery(name = "ArticulosPedido.findByNoCia", query = "SELECT a FROM ArticulosPedido a WHERE a.noCia = :noCia"),
     @NamedQuery(name = "ArticulosPedido.findByPedido", query = "SELECT a FROM ArticulosPedido a WHERE a.pedido = :pedido"),
     @NamedQuery(name = "ArticulosPedido.findById", query = "SELECT a FROM ArticulosPedido a WHERE a.id = :id"),
     @NamedQuery(name = "ArticulosPedido.findById1", query = "SELECT a FROM ArticulosPedido a WHERE a.id1 = :id1"),
@@ -44,37 +46,27 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ArticulosPedido.findByPrecioInv", query = "SELECT a FROM ArticulosPedido a WHERE a.precioInv = :precioInv"),
     @NamedQuery(name = "ArticulosPedido.findByTotalInv", query = "SELECT a FROM ArticulosPedido a WHERE a.totalInv = :totalInv")})
 public class ArticulosPedido implements Serializable {
+    @Column(name = "ID1")
+    private BigInteger id1;
+    @Column(name = "ID_CUENTA")
+    private BigInteger idCuenta;
+    @Column(name = "PEDIDO")
+    private BigInteger pedido;
+    @JoinColumns({
+        @JoinColumn(name = "COD_ART", referencedColumnName = "COD_ART"),
+        @JoinColumn(name = "NO_CIA", referencedColumnName = "NO_CIA")})
+    @ManyToOne
+    private InvArticulos invArticulos;
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "IDARTICULOSPEDIDO")
     private Long idarticulospedido;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ID_CUENTA")
-    private long idCuenta;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 6)
-    @Column(name = "COD_ART")
-    private String codArt;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2)
-    @Column(name = "NO_CIA")
-    private String noCia;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "PEDIDO")
-    private long pedido;
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
     @Column(name = "ID")
     private String id;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ID1")
-    private long id1;
     @Column(name = "CANTIDAD")
     private BigInteger cantidad;
     @Size(max = 6)
@@ -103,11 +95,9 @@ public class ArticulosPedido implements Serializable {
         this.idarticulospedido = idarticulospedido;
     }
 
-    public ArticulosPedido(Long idarticulospedido, long idCuenta, String codArt, String noCia, long pedido, String id, long id1) {
+    public ArticulosPedido(Long idarticulospedido, BigInteger idCuenta, BigInteger pedido, String id, BigInteger id1) {
         this.idarticulospedido = idarticulospedido;
         this.idCuenta = idCuenta;
-        this.codArt = codArt;
-        this.noCia = noCia;
         this.pedido = pedido;
         this.id = id;
         this.id1 = id1;
@@ -121,38 +111,6 @@ public class ArticulosPedido implements Serializable {
         this.idarticulospedido = idarticulospedido;
     }
 
-    public long getIdCuenta() {
-        return idCuenta;
-    }
-
-    public void setIdCuenta(long idCuenta) {
-        this.idCuenta = idCuenta;
-    }
-
-    public String getCodArt() {
-        return codArt;
-    }
-
-    public void setCodArt(String codArt) {
-        this.codArt = codArt;
-    }
-
-    public String getNoCia() {
-        return noCia;
-    }
-
-    public void setNoCia(String noCia) {
-        this.noCia = noCia;
-    }
-
-    public long getPedido() {
-        return pedido;
-    }
-
-    public void setPedido(long pedido) {
-        this.pedido = pedido;
-    }
-
     public String getId() {
         return id;
     }
@@ -161,13 +119,6 @@ public class ArticulosPedido implements Serializable {
         this.id = id;
     }
 
-    public long getId1() {
-        return id1;
-    }
-
-    public void setId1(long id1) {
-        this.id1 = id1;
-    }
 
     public BigInteger getCantidad() {
         return cantidad;
@@ -264,6 +215,38 @@ public class ArticulosPedido implements Serializable {
     @Override
     public String toString() {
         return "com.encens.khipus.model.ArticulosPedido[ idarticulospedido=" + idarticulospedido + " ]";
+    }
+
+    public BigInteger getId1() {
+        return id1;
+    }
+
+    public void setId1(BigInteger id1) {
+        this.id1 = id1;
+    }
+
+    public BigInteger getIdCuenta() {
+        return idCuenta;
+    }
+
+    public void setIdCuenta(BigInteger idCuenta) {
+        this.idCuenta = idCuenta;
+    }
+
+    public BigInteger getPedido() {
+        return pedido;
+    }
+
+    public void setPedido(BigInteger pedido) {
+        this.pedido = pedido;
+    }
+
+    public InvArticulos getInvArticulos() {
+        return invArticulos;
+    }
+
+    public void setInvArticulos(InvArticulos invArticulos) {
+        this.invArticulos = invArticulos;
     }
     
 }
