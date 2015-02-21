@@ -12,10 +12,32 @@
             <h:form id="DistribuidorCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{distribuidorController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateDistribuidorLabel_iddistribuidor}" for="iddistribuidor" />
-                        <p:inputText id="iddistribuidor" value="#{distribuidorController.selected.iddistribuidor}" title="#{bundle.CreateDistribuidorTitle_iddistribuidor}" />
                         <p:outputLabel value="#{bundle.CreateDistribuidorLabel_observacion}" for="observacion" />
                         <p:inputText id="observacion" value="#{distribuidorController.selected.observacion}" title="#{bundle.CreateDistribuidorTitle_observacion}" />
+                        <p:outputLabel value="#{bundle.CreateDistribuidorLabel_piId}" for="piId" />
+                        <p:inputText id="piId" value="#{distribuidorController.selected.piId}" title="#{bundle.CreateDistribuidorTitle_piId}" />
+                        <p:outputLabel value="#{bundle.CreateDistribuidorLabel_nroDoc}" for="nroDoc" />
+                        <p:inputText id="nroDoc" value="#{distribuidorController.selected.nroDoc}" title="#{bundle.CreateDistribuidorTitle_nroDoc}" />
+                        <p:outputLabel value="#{bundle.CreateDistribuidorLabel_ap}" for="ap" />
+                        <p:inputText id="ap" value="#{distribuidorController.selected.ap}" title="#{bundle.CreateDistribuidorTitle_ap}" />
+                        <p:outputLabel value="#{bundle.CreateDistribuidorLabel_am}" for="am" />
+                        <p:inputText id="am" value="#{distribuidorController.selected.am}" title="#{bundle.CreateDistribuidorTitle_am}" />
+                        <p:outputLabel value="#{bundle.CreateDistribuidorLabel_nom}" for="nom" />
+                        <p:inputText id="nom" value="#{distribuidorController.selected.nom}" title="#{bundle.CreateDistribuidorTitle_nom}" required="true" requiredMessage="#{bundle.CreateDistribuidorRequiredMessage_nom}"/>
+                        <p:outputLabel value="#{bundle.CreateDistribuidorLabel_sexo}" for="sexo" />
+                        <p:inputText id="sexo" value="#{distribuidorController.selected.sexo}" title="#{bundle.CreateDistribuidorTitle_sexo}" />
+                        <p:outputLabel value="#{bundle.CreateDistribuidorLabel_estCivil}" for="estCivil" />
+                        <p:inputText id="estCivil" value="#{distribuidorController.selected.estCivil}" title="#{bundle.CreateDistribuidorTitle_estCivil}" />
+                        <p:outputLabel value="#{bundle.CreateDistribuidorLabel_fechaNac}" for="fechaNac" />
+                        <p:calendar id="fechaNac" pattern="MM/dd/yyyy" value="#{distribuidorController.selected.fechaNac}" title="#{bundle.EditDistribuidorTitle_fechaNac}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateDistribuidorLabel_cemCod}" for="cemCod" />
+                        <p:inputText id="cemCod" value="#{distribuidorController.selected.cemCod}" title="#{bundle.CreateDistribuidorTitle_cemCod}" />
+                        <p:outputLabel value="#{bundle.CreateDistribuidorLabel_ocuCod}" for="ocuCod" />
+                        <p:inputText id="ocuCod" value="#{distribuidorController.selected.ocuCod}" title="#{bundle.CreateDistribuidorTitle_ocuCod}" />
+                        <p:outputLabel value="#{bundle.CreateDistribuidorLabel_tdoCod}" for="tdoCod" />
+                        <p:inputText id="tdoCod" value="#{distribuidorController.selected.tdoCod}" title="#{bundle.CreateDistribuidorTitle_tdoCod}" />
+                        <p:outputLabel value="#{bundle.CreateDistribuidorLabel_sisCod}" for="sisCod" />
+                        <p:inputText id="sisCod" value="#{distribuidorController.selected.sisCod}" title="#{bundle.CreateDistribuidorTitle_sisCod}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{distribuidorController.create}" value="#{bundle.Save}" update="display,:DistribuidorListForm:datalist,:growl" oncomplete="handleSubmit(args,'DistribuidorCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="DistribuidorCreateDialog.hide()"/>

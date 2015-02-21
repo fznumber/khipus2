@@ -20,12 +20,6 @@
                         <p:inputText id="nit" value="#{clienteController.selected.nit}" title="#{bundle.CreateClienteTitle_nit}" />
                         <p:outputLabel value="#{bundle.CreateClienteLabel_codigo}" for="codigo" />
                         <p:inputText id="codigo" value="#{clienteController.selected.codigo}" title="#{bundle.CreateClienteTitle_codigo}" />
-                        <p:outputLabel value="#{bundle.CreateClienteLabel_idinstitucion}" for="idinstitucion" />
-                        <p:selectOneMenu id="idinstitucion" value="#{clienteController.selected.idinstitucion}" required="true" requiredMessage="#{bundle.EditClienteRequiredMessage_idinstitucion}">
-                            <f:selectItems value="#{institucionController.itemsAvailableSelectOne}"
-                                           var="idinstitucionItem"
-                                           itemValue="#{idinstitucionItem}"/>
-                        </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.CreateClienteLabel_idtipocliente}" for="idtipocliente" />
                         <p:selectOneMenu id="idtipocliente" value="#{clienteController.selected.idtipocliente}" required="true" requiredMessage="#{bundle.EditClienteRequiredMessage_idtipocliente}">
                             <f:selectItems value="#{tipoclienteController.itemsAvailableSelectOne}"
@@ -56,8 +50,6 @@
                         <p:inputText id="tdoCod" value="#{clienteController.selected.tdoCod}" title="#{bundle.CreateClienteTitle_tdoCod}" />
                         <p:outputLabel value="#{bundle.CreateClienteLabel_sisCod}" for="sisCod" />
                         <p:inputText id="sisCod" value="#{clienteController.selected.sisCod}" title="#{bundle.CreateClienteTitle_sisCod}" />
-                        <p:outputLabel value="#{bundle.CreateClienteLabel_idcliente}" for="idcliente" />
-                        <p:inputText id="idcliente" value="#{clienteController.selected.idcliente}" title="#{bundle.CreateClienteTitle_idcliente}" required="true" requiredMessage="#{bundle.CreateClienteRequiredMessage_idcliente}"/>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{clienteController.create}" value="#{bundle.Save}" update="display,:ClienteListForm:datalist,:growl" oncomplete="handleSubmit(args,'ClienteCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="ClienteCreateDialog.hide()"/>

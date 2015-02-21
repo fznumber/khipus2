@@ -19,7 +19,7 @@
                     <p:dataTable id="datalist" value="#{distribuidorController.items}" var="item"
                                  selectionMode="single" selection="#{distribuidorController.selected}"
                                  paginator="true"
-                                 rowKey="#{item.iddistribuidor}"
+                                 rowKey="#{item.piId}"
                                  rows="10"
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  >
@@ -29,15 +29,83 @@
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDistribuidorTitle_iddistribuidor}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.iddistribuidor}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListDistribuidorTitle_observacion}"/>
                             </f:facet>
                             <h:outputText value="#{item.observacion}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDistribuidorTitle_piId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.piId}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDistribuidorTitle_nroDoc}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nroDoc}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDistribuidorTitle_ap}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.ap}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDistribuidorTitle_am}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.am}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDistribuidorTitle_nom}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nom}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDistribuidorTitle_sexo}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.sexo}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDistribuidorTitle_estCivil}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.estCivil}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDistribuidorTitle_fechaNac}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.fechaNac}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDistribuidorTitle_cemCod}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cemCod}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDistribuidorTitle_ocuCod}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.ocuCod}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDistribuidorTitle_tdoCod}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.tdoCod}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDistribuidorTitle_sisCod}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.sisCod}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{distribuidorController.prepareCreate}" update=":DistribuidorCreateForm" oncomplete="PF('DistribuidorCreateDialog').show()"/>

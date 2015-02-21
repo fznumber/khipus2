@@ -4,7 +4,6 @@ import com.encens.khipus.ejb.ClienteFacade;
 import com.encens.khipus.model.Cliente;
 import com.encens.khipus.util.JSFUtil;
 import com.encens.khipus.util.JSFUtil.PersistAction;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -12,7 +11,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -24,7 +22,7 @@ import javax.faces.convert.FacesConverter;
 @SessionScoped
 public class ClienteController implements Serializable {
 
-    @Inject
+    @EJB
     private ClienteFacade ejbFacade;
     private List<Cliente> items = null;
     private Cliente selected;

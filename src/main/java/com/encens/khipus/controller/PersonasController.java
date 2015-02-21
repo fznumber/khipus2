@@ -1,7 +1,7 @@
 package com.encens.khipus.controller;
 
-import com.encens.khipus.ejb.DistribuidorFacade;
-import com.encens.khipus.model.Distribuidor;
+import com.encens.khipus.ejb.PersonasFacade;
+import com.encens.khipus.model.Personas;
 import com.encens.khipus.util.JSFUtil;
 import com.encens.khipus.util.JSFUtil.PersistAction;
 import java.io.Serializable;
@@ -18,23 +18,23 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@Named("distribuidorController")
+@Named("personasController")
 @SessionScoped
-public class DistribuidorController implements Serializable {
+public class PersonasController implements Serializable {
 
     @EJB
-    private DistribuidorFacade ejbFacade;
-    private List<Distribuidor> items = null;
-    private Distribuidor selected;
+    private PersonasFacade ejbFacade;
+    private List<Personas> items = null;
+    private Personas selected;
 
-    public DistribuidorController() {
+    public PersonasController() {
     }
 
-    public Distribuidor getSelected() {
+    public Personas getSelected() {
         return selected;
     }
 
-    public void setSelected(Distribuidor selected) {
+    public void setSelected(Personas selected) {
         this.selected = selected;
     }
 
@@ -44,36 +44,36 @@ public class DistribuidorController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private DistribuidorFacade getFacade() {
+    private PersonasFacade getFacade() {
         return ejbFacade;
     }
 
-    public Distribuidor prepareCreate() {
-        selected = new Distribuidor();
+    public Personas prepareCreate() {
+        selected = new Personas();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("DistribuidorCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PersonasCreated"));
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("DistribuidorUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PersonasUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("DistribuidorDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("PersonasDeleted"));
         if (!JSFUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<Distribuidor> getItems() {
+    public List<Personas> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -108,29 +108,29 @@ public class DistribuidorController implements Serializable {
         }
     }
 
-    public Distribuidor getDistribuidor(java.lang.Long id) {
+    public Personas getPersonas(java.lang.Long id) {
         return getFacade().find(id);
     }
 
-    public List<Distribuidor> getItemsAvailableSelectMany() {
+    public List<Personas> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<Distribuidor> getItemsAvailableSelectOne() {
+    public List<Personas> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = Distribuidor.class)
-    public static class DistribuidorControllerConverter implements Converter {
+    @FacesConverter(forClass = Personas.class)
+    public static class PersonasControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            DistribuidorController controller = (DistribuidorController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "distribuidorController");
-            return controller.getDistribuidor(getKey(value));
+            PersonasController controller = (PersonasController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "personasController");
+            return controller.getPersonas(getKey(value));
         }
 
         java.lang.Long getKey(String value) {
@@ -150,11 +150,11 @@ public class DistribuidorController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Distribuidor) {
-                Distribuidor o = (Distribuidor) object;
+            if (object instanceof Personas) {
+                Personas o = (Personas) object;
                 return getStringKey(o.getPiId());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Distribuidor.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Personas.class.getName()});
                 return null;
             }
         }
