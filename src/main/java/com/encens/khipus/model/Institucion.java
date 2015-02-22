@@ -5,10 +5,21 @@
  */
 package com.encens.khipus.model;
 
-import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Collection;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -17,10 +28,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "institucion")
 @XmlRootElement
-@PrimaryKeyJoinColumn(referencedColumnName = "PI_ID")
 @NamedQueries({
-    @NamedQuery(name = "Institucion.findAll", query = "SELECT i FROM Institucion i"),
-    @NamedQuery(name = "Institucion.findByRazonsocial", query = "SELECT i FROM Institucion i WHERE i.razonsocial = :razonsocial")})
+        @NamedQuery(name = "Institucion.findAll", query = "SELECT i FROM Institucion i"),
+        @NamedQuery(name = "Institucion.findByRazonsocial", query = "SELECT i FROM Institucion i WHERE i.razonsocial = :razonsocial")})
 public class Institucion extends Cliente {
 
     @Basic(optional = false)
@@ -31,16 +41,6 @@ public class Institucion extends Cliente {
 
     public Institucion() {
     }
-
-    public Institucion(Long idinstitucion) {
-        super.setPiId(idinstitucion);
-    }
-
-    public Institucion(Long idinstitucion, String razonsocial) {
-        super.setPiId(idinstitucion);
-        this.razonsocial = razonsocial;
-    }
-
 
     public String getRazonsocial() {
         return razonsocial;
@@ -54,5 +54,5 @@ public class Institucion extends Cliente {
     public String toString() {
         return "com.encens.khipus.model.Institucion[ idinstitucion=" + super.getPiId() + " ]";
     }
-    
+
 }

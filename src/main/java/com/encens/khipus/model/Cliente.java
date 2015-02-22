@@ -16,8 +16,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "cliente")
 @XmlRootElement
-@PrimaryKeyJoinColumn(referencedColumnName = "PI_ID")
-@Inheritance(strategy = InheritanceType.JOINED)
+@MappedSuperclass
+/*@PrimaryKeyJoinColumn(referencedColumnName = "PI_ID")*/
+/*@Inheritance(strategy = InheritanceType.JOINED)*/
 @NamedQueries({
     @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c"),
     @NamedQuery(name = "Cliente.findByDireccion", query = "SELECT c FROM Cliente c WHERE c.direccion = :direccion"),

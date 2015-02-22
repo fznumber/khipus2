@@ -52,7 +52,7 @@
                         <p:outputLabel value="#{bundle.EditClienteLabel_sisCod}" for="sisCod" />
                         <p:inputText id="sisCod" value="#{clienteController.selected.sisCod}" title="#{bundle.EditClienteTitle_sisCod}" />
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{clienteController.update}" value="#{bundle.Save}" update="display,:ClienteListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ClienteEditDialog');"/>
+                    <p:commandButton actionListener="#{clienteController.update}" value="#{bundle.Save}" update="display,:ClienteListForm:datalist,:ClienteListForm:growl" oncomplete="handleSubmit(args, 'ClienteEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="ClienteEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

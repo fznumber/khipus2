@@ -19,6 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "personas")
 @Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "tipo_persona")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Personas.findAll", query = "SELECT p FROM Personas p"),
@@ -38,7 +39,6 @@ public class Personas implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @NotNull
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "PI_ID")
     private Long piId;
     @Size(max = 20)

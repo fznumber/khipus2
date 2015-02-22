@@ -17,7 +17,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "distribuidor")
 @XmlRootElement
-@PrimaryKeyJoinColumn(referencedColumnName = "PI_ID")
 @NamedQueries({
     @NamedQuery(name = "Distribuidor.findAll", query = "SELECT d FROM Distribuidor d"),
     @NamedQuery(name = "Distribuidor.findByObservacion", query = "SELECT d FROM Distribuidor d WHERE d.observacion = :observacion")})
