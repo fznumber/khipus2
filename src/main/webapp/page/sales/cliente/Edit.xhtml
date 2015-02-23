@@ -27,8 +27,6 @@
                                            var="idtipoclienteItem"
                                            itemValue="#{idtipoclienteItem}"/>
                         </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.EditClienteLabel_piId}" for="piId" />
-                        <p:inputText id="piId" value="#{clienteController.selected.piId}" title="#{bundle.EditClienteTitle_piId}" />
                         <p:outputLabel value="#{bundle.EditClienteLabel_nroDoc}" for="nroDoc" />
                         <p:inputText id="nroDoc" value="#{clienteController.selected.nroDoc}" title="#{bundle.EditClienteTitle_nroDoc}" />
                         <p:outputLabel value="#{bundle.EditClienteLabel_ap}" for="ap" />
@@ -39,18 +37,6 @@
                         <p:inputText id="nom" value="#{clienteController.selected.nom}" title="#{bundle.EditClienteTitle_nom}" required="true" requiredMessage="#{bundle.EditClienteRequiredMessage_nom}"/>
                         <p:outputLabel value="#{bundle.EditClienteLabel_sexo}" for="sexo" />
                         <p:inputText id="sexo" value="#{clienteController.selected.sexo}" title="#{bundle.EditClienteTitle_sexo}" />
-                        <p:outputLabel value="#{bundle.EditClienteLabel_estCivil}" for="estCivil" />
-                        <p:inputText id="estCivil" value="#{clienteController.selected.estCivil}" title="#{bundle.EditClienteTitle_estCivil}" />
-                        <p:outputLabel value="#{bundle.EditClienteLabel_fechaNac}" for="fechaNac" />
-                        <p:calendar id="fechaNac" pattern="MM/dd/yyyy" value="#{clienteController.selected.fechaNac}" title="#{bundle.EditClienteTitle_fechaNac}"  showOn="button"/>
-                        <p:outputLabel value="#{bundle.EditClienteLabel_cemCod}" for="cemCod" />
-                        <p:inputText id="cemCod" value="#{clienteController.selected.cemCod}" title="#{bundle.EditClienteTitle_cemCod}" />
-                        <p:outputLabel value="#{bundle.EditClienteLabel_ocuCod}" for="ocuCod" />
-                        <p:inputText id="ocuCod" value="#{clienteController.selected.ocuCod}" title="#{bundle.EditClienteTitle_ocuCod}" />
-                        <p:outputLabel value="#{bundle.EditClienteLabel_tdoCod}" for="tdoCod" />
-                        <p:inputText id="tdoCod" value="#{clienteController.selected.tdoCod}" title="#{bundle.EditClienteTitle_tdoCod}" />
-                        <p:outputLabel value="#{bundle.EditClienteLabel_sisCod}" for="sisCod" />
-                        <p:inputText id="sisCod" value="#{clienteController.selected.sisCod}" title="#{bundle.EditClienteTitle_sisCod}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{clienteController.update}" value="#{bundle.Save}" update="display,:ClienteListForm:datalist,:ClienteListForm:growl" oncomplete="handleSubmit(args, 'ClienteEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="ClienteEditDialog.hide()"/>

@@ -12,8 +12,8 @@
             <h:form id="PersonasCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{personasController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreatePersonasLabel_piId}" for="piId" />
-                        <p:inputText id="piId" value="#{personasController.selected.piId}" title="#{bundle.CreatePersonasTitle_piId}" />
+                        <p:outputLabel value="#{bundle.CreatePersonasLabel_piId}" for="clienteRetencion" />
+                        <p:inputText id="clienteRetencion" value="#{personasController.selected.clienteRetencion}" title="#{bundle.CreatePersonasTitle_piId}" />
                         <p:outputLabel value="#{bundle.CreatePersonasLabel_nroDoc}" for="nroDoc" />
                         <p:inputText id="nroDoc" value="#{personasController.selected.nroDoc}" title="#{bundle.CreatePersonasTitle_nroDoc}" />
                         <p:outputLabel value="#{bundle.CreatePersonasLabel_ap}" for="ap" />

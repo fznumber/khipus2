@@ -105,10 +105,10 @@ public class Pedidos implements Serializable {
     private BigInteger porcenDescuento;
     @Column(name = "PORCEN_RETENCION")
     private BigInteger porcenRetencion;
-    @JoinColumn(name = "IDCLIENTE", referencedColumnName = "IDCLIENTE")
+    @JoinColumn(name = "IDCLIENTE", referencedColumnName = "PI_ID")
     @ManyToOne(optional = false)
     private Cliente idcliente;
-    @JoinColumn(name = "IDDISTRIBUIDOR", referencedColumnName = "IDDISTRIBUIDOR")
+    @JoinColumn(name = "IDDISTRIBUIDOR", referencedColumnName = "PI_ID")
     @ManyToOne(optional = false)
     private Distribuidor iddistribuidor;
     @JoinColumn(name = "IDEMPLEADO", referencedColumnName = "IDEMPLEADO")

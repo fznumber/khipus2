@@ -8,6 +8,8 @@ package com.encens.khipus.model;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Collection;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -40,6 +42,10 @@ public class Cliente extends Personas {
     @JoinColumn(name = "IDTIPOCLIENTE", referencedColumnName = "IDTIPOCLIENTE")
     @ManyToOne(optional = false)
     private Tipocliente idtipocliente;
+    @OneToMany(cascade = CascadeType.PERSIST,mappedBy = "cliente")
+    private Collection<Ventaarticulo> ventaarticulos;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clienteRetencion")
+    private Collection<Tiporetencion> tiporetenciones;
 
     public Cliente() {
     }
@@ -84,9 +90,26 @@ public class Cliente extends Personas {
         this.idtipocliente = idtipocliente;
     }
 
+    public Collection<Ventaarticulo> getVentaarticulos() {
+        return ventaarticulos;
+    }
+
+    public void setVentaarticulos(Collection<Ventaarticulo> ventaarticulos) {
+        this.ventaarticulos = ventaarticulos;
+    }
+
+    @XmlTransient
+    public Collection<Tiporetencion> getTiporetenciones() {
+        return tiporetenciones;
+    }
+
+    public void setTiporetenciones(Collection<Tiporetencion> tiporetencionCollection) {
+        this.tiporetenciones = tiporetencionCollection;
+    }
+
     @Override
     public String toString() {
-        return "com.encens.khipus.model.Cliente[ idcliente=" + super.getPiId() + " ]";
+        return "com.encens.khipus.model.Cliente[ piId=" + super.getPiId() + " ]";
     }
     
 }

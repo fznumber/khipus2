@@ -15,11 +15,12 @@
 
         <ui:define name="center">
             <h:form id="ClienteListForm">
+                <p:growl id="growl" life="2500"/>
                 <p:panel header="#{bundle.ListClienteTitle}">
                     <p:dataTable id="datalist" value="#{clienteController.items}" var="item"
                                  selectionMode="single" selection="#{clienteController.selected}"
                                  paginator="true"
-                                 rowKey="#{item.piId}"
+                                 rowKey="#{item.clienteRetencion}"
                                  rows="10"
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  >
@@ -61,7 +62,7 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListClienteTitle_piId}"/>
                             </f:facet>
-                            <h:outputText value="#{item.piId}"/>
+                            <h:outputText value="#{item.clienteRetencion}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
@@ -93,49 +94,12 @@
                             </f:facet>
                             <h:outputText value="#{item.sexo}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListClienteTitle_estCivil}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.estCivil}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListClienteTitle_fechaNac}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.fechaNac}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
-                            </h:outputText>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListClienteTitle_cemCod}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.cemCod}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListClienteTitle_ocuCod}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.ocuCod}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListClienteTitle_tdoCod}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.tdoCod}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListClienteTitle_sisCod}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.sisCod}"/>
-                        </p:column>
+
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{clienteController.prepareCreate}" update=":ClienteCreateForm" oncomplete="PF('ClienteCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":ClienteViewForm" oncomplete="PF('ClienteViewDialog').show()" disabled="#{empty clienteController.selected}"/>
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":ClienteEditForm" oncomplete="PF('ClienteEditDialog').show()" disabled="#{empty clienteController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{clienteController.destroy}" update=":growl,datalist" disabled="#{empty clienteController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{clienteController.destroy}" update=":ClienteListForm:growl,datalist" disabled="#{empty clienteController.selected}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

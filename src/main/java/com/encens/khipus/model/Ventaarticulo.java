@@ -6,7 +6,6 @@
 package com.encens.khipus.model;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -16,7 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -41,9 +39,9 @@ public class Ventaarticulo implements Serializable {
     private Double precio;
     @Column(name = "PRECIOESPECIAL")
     private Double precioespecial;
-    @JoinColumn(name = "IDCLIENTE", referencedColumnName = "IDCLIENTE")
+    @JoinColumn(name = "IDCLIENTE", referencedColumnName = "pi_id")
     @ManyToOne(optional = false)
-    private Cliente idcliente;
+    private Cliente cliente;
     @JoinColumns({
         @JoinColumn(name = "NO_CIA", referencedColumnName = "NO_CIA"),
         @JoinColumn(name = "COD_ART", referencedColumnName = "COD_ART")})
@@ -81,12 +79,12 @@ public class Ventaarticulo implements Serializable {
         this.precioespecial = precioespecial;
     }
 
-    public Cliente getIdcliente() {
-        return idcliente;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setIdcliente(Cliente idcliente) {
-        this.idcliente = idcliente;
+    public void setCliente(Cliente idcliente) {
+        this.cliente = idcliente;
     }
 
     public InvArticulos getInvArticulos() {

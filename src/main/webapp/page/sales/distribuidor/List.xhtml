@@ -19,7 +19,7 @@
                     <p:dataTable id="datalist" value="#{distribuidorController.items}" var="item"
                                  selectionMode="single" selection="#{distribuidorController.selected}"
                                  paginator="true"
-                                 rowKey="#{item.piId}"
+                                 rowKey="#{item.clienteRetencion}"
                                  rows="10"
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  >
@@ -37,7 +37,7 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListDistribuidorTitle_piId}"/>
                             </f:facet>
-                            <h:outputText value="#{item.piId}"/>
+                            <h:outputText value="#{item.clienteRetencion}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
