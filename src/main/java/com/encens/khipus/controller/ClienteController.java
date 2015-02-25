@@ -1,7 +1,10 @@
 package com.encens.khipus.controller;
 
 import com.encens.khipus.ejb.ClienteFacade;
+import com.encens.khipus.ejb.RetencionFacade;
 import com.encens.khipus.model.Cliente;
+import com.encens.khipus.model.Institucion;
+import com.encens.khipus.model.Retencion;
 import com.encens.khipus.util.JSFUtil;
 import com.encens.khipus.util.JSFUtil.PersistAction;
 import java.io.Serializable;
@@ -24,8 +27,15 @@ public class ClienteController implements Serializable {
 
     @EJB
     private ClienteFacade ejbFacade;
+    @EJB
+    private RetencionFacade retencionFacade;
     private List<Cliente> items = null;
     private Cliente selected;
+    private Boolean esPersona;
+    private Institucion institucion;
+    private Boolean tieneRetencion;
+    private Boolean tieneDescuento;
+    private Retencion retencion;
 
     public ClienteController() {
     }
@@ -51,10 +61,25 @@ public class ClienteController implements Serializable {
     public Cliente prepareCreate() {
         selected = new Cliente();
         initializeEmbeddableKey();
+        institucion = new Institucion();
+        esPersona = true;
+        tieneRetencion = false;
+        tieneDescuento = false;
         return selected;
     }
 
+    public void cambiarRetencion()
+    {
+        if(tieneRetencion)
+            retencion = retencionFacade.findActivo();
+        else
+            retencion = null;
+    }
+
     public void create() {
+        if(retencion != null)
+        selected.setRetencion(retencion);
+
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("ClienteCreated"));
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
@@ -84,11 +109,15 @@ public class ClienteController implements Serializable {
         if (selected != null) {
             setEmbeddableKeys();
             try {
-                if (persistAction != PersistAction.DELETE) {
+                if(persistAction == PersistAction.CREATE)
+                {
+                    getFacade().create(selected);
+                }
+                /*if (persistAction != PersistAction.DELETE) {
                     getFacade().edit(selected);
                 } else {
                     getFacade().remove(selected);
-                }
+                }*/
                 JSFUtil.addSuccessMessage(successMessage);
             } catch (EJBException ex) {
                 String msg = "";
@@ -161,4 +190,43 @@ public class ClienteController implements Serializable {
 
     }
 
+    public Boolean getEsPersona() {
+        return esPersona;
+    }
+
+    public void setEsPersona(Boolean esPersona) {
+        this.esPersona = esPersona;
+    }
+
+    public Institucion getInstitucion() {
+        return institucion;
+    }
+
+    public void setInstitucion(Institucion institucion) {
+        this.institucion = institucion;
+    }
+
+    public Boolean getTieneRetencion() {
+        return tieneRetencion;
+    }
+
+    public void setTieneRetencion(Boolean tieneRetencion) {
+        this.tieneRetencion = tieneRetencion;
+    }
+
+    public Boolean getTieneDescuento() {
+        return tieneDescuento;
+    }
+
+    public void setTieneDescuento(Boolean tieneDescuento) {
+        this.tieneDescuento = tieneDescuento;
+    }
+
+    public Retencion getRetencion() {
+        return retencion;
+    }
+
+    public void setRetencion(Retencion retencion) {
+        this.retencion = retencion;
+    }
 }

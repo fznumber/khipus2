@@ -16,17 +16,19 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Diego
  */
 @Entity
-@Table(name = "cliente")
 @XmlRootElement
-@MappedSuperclass
-/*@PrimaryKeyJoinColumn(referencedColumnName = "PI_ID")*/
+/*@MappedSuperclass*/
+/*@PrimaryKeyJoinColumn(name = "PI_ID",referencedColumnName = "PI_ID")*/
 /*@Inheritance(strategy = InheritanceType.JOINED)*/
+/*@PrimaryKeyJoinColumn(name = "PI_ID",referencedColumnName="PI_ID")*/
+@DiscriminatorValue("cliente")
 @NamedQueries({
     @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c"),
     @NamedQuery(name = "Cliente.findByDireccion", query = "SELECT c FROM Cliente c WHERE c.direccion = :direccion"),
     @NamedQuery(name = "Cliente.findByTelefono", query = "SELECT c FROM Cliente c WHERE c.telefono = :telefono"),
     @NamedQuery(name = "Cliente.findByNit", query = "SELECT c FROM Cliente c WHERE c.nit = :nit"),
     @NamedQuery(name = "Cliente.findByCodigo", query = "SELECT c FROM Cliente c WHERE c.codigo = :codigo")})
+
 public class Cliente extends Personas {
     @Size(max = 100)
     @Column(name = "DIRECCION")
@@ -36,18 +38,38 @@ public class Cliente extends Personas {
     @Size(max = 40)
     @Column(name = "NIT")
     private String nit;
+    @Column(name = "DESCUENTO")
+    private Double descuento;
     @Size(max = 10)
     @Column(name = "CODIGO")
     private String codigo;
+    @JoinColumn(name = "IDRETENCION", referencedColumnName = "IDRETENCION")
+    @ManyToOne(optional = true)
+    private Retencion retencion;
     @JoinColumn(name = "IDTIPOCLIENTE", referencedColumnName = "IDTIPOCLIENTE")
-    @ManyToOne(optional = false)
-    private Tipocliente idtipocliente;
+    @ManyToOne(optional = true)
+    private Tipocliente tipocliente;
     @OneToMany(cascade = CascadeType.PERSIST,mappedBy = "cliente")
     private Collection<Ventaarticulo> ventaarticulos;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clienteRetencion")
-    private Collection<Tiporetencion> tiporetenciones;
 
     public Cliente() {
+        super();
+    }
+
+    public Cliente(Long piId, String direccion, Integer telefono, String nit, Double descuento, String codigo, Retencion retencion, Tipocliente tipocliente, Collection<Ventaarticulo> ventaarticulos) {
+        super(piId);
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.nit = nit;
+        this.descuento = descuento;
+        this.codigo = codigo;
+        this.retencion = retencion;
+        this.tipocliente = tipocliente;
+        this.ventaarticulos = ventaarticulos;
+    }
+
+    public Cliente(Long piId) {
+        super(piId);
     }
 
     public String getDireccion() {
@@ -82,14 +104,6 @@ public class Cliente extends Personas {
         this.codigo = codigo;
     }
 
-    public Tipocliente getIdtipocliente() {
-        return idtipocliente;
-    }
-
-    public void setIdtipocliente(Tipocliente idtipocliente) {
-        this.idtipocliente = idtipocliente;
-    }
-
     public Collection<Ventaarticulo> getVentaarticulos() {
         return ventaarticulos;
     }
@@ -98,13 +112,28 @@ public class Cliente extends Personas {
         this.ventaarticulos = ventaarticulos;
     }
 
-    @XmlTransient
-    public Collection<Tiporetencion> getTiporetenciones() {
-        return tiporetenciones;
+    public Retencion getRetencion() {
+        return retencion;
     }
 
-    public void setTiporetenciones(Collection<Tiporetencion> tiporetencionCollection) {
-        this.tiporetenciones = tiporetencionCollection;
+    public void setRetencion(Retencion retencion) {
+        this.retencion = retencion;
+    }
+
+    public Double getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(Double descuento) {
+        this.descuento = descuento;
+    }
+
+    public Tipocliente getTipocliente() {
+        return tipocliente;
+    }
+
+    public void setTipocliente(Tipocliente tipocliente) {
+        this.tipocliente = tipocliente;
     }
 
     @Override

@@ -12,30 +12,50 @@
             <h:form id="ClienteCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{clienteController.selected != null}">
+                        <h:outputText value="Tipo Cliente: " />
+                        <p:selectBooleanButton id="tipoCliente" value="#{clienteController.esPersona}" onLabel="Persona" offLabel="Institución">
+                            <p:ajax update="display" />
+                        </p:selectBooleanButton>
+                        <p:outputLabel value="C.I.:" for="nroDoc" rendered="#{clienteController.esPersona}"/>
+                        <p:inputText id="nroDoc" value="#{clienteController.selected.nroDoc}" title="Cedula de identidad" rendered="#{clienteController.esPersona}"/>
+                        <p:outputLabel value="Nombre(s):" for="nom" rendered="#{clienteController.esPersona}">
+                        </p:outputLabel>
+                        <p:inputText id="nom" value="#{clienteController.selected.nom}" title="nombres" required="true" requiredMessage="campo requerido." rendered="#{clienteController.esPersona}"/>
+                        <p:outputLabel value="Ap. Paterno:" for="ap" rendered="#{clienteController.esPersona}">
+                        </p:outputLabel>
+                        <p:inputText id="ap" value="#{clienteController.selected.ap}" title="Ap. Paterno." required="true" requiredMessage="campo requerido." rendered="#{clienteController.esPersona}"/>
+                        <p:outputLabel value="Ap. Materno" for="am" rendered="#{clienteController.esPersona}"/>
+                        <p:inputText id="am" value="#{clienteController.selected.am}" title="Ap. Materno." required="true" requiredMessage="campo requerido." rendered="#{clienteController.esPersona}"/>
+                        <p:outputLabel value="Razon social:" for="razon" rendered="#{!clienteController.esPersona}"/>
+                        <p:inputText id="razon" value="#{clienteController.institucion.razonsocial}" title="Razon social" required="true" requiredMessage="campo requerido." rendered="#{!clienteController.esPersona}">
+                        </p:inputText>
+                        <p:outputLabel value="#{bundle.CreateClienteLabel_codigo}" for="codigo" />
+                        <p:inputText id="codigo" value="#{clienteController.selected.codigo}" title="#{bundle.CreateClienteTitle_codigo}" />
+                            <p:outputLabel value="#{bundle.CreateClienteLabel_sexo}" for="sexo"/>
+                            <p:selectOneRadio id="sexo" value="#{clienteController.selected.sexo}">
+                                <f:selectItem itemLabel="Masculino" itemValue="m" />
+                                <f:selectItem itemLabel="Femenino" itemValue="f" />
+                            </p:selectOneRadio>
                         <p:outputLabel value="#{bundle.CreateClienteLabel_direccion}" for="direccion" />
                         <p:inputText id="direccion" value="#{clienteController.selected.direccion}" title="#{bundle.CreateClienteTitle_direccion}" />
                         <p:outputLabel value="#{bundle.CreateClienteLabel_telefono}" for="telefono" />
                         <p:inputText id="telefono" value="#{clienteController.selected.telefono}" title="#{bundle.CreateClienteTitle_telefono}" />
                         <p:outputLabel value="#{bundle.CreateClienteLabel_nit}" for="nit" />
                         <p:inputText id="nit" value="#{clienteController.selected.nit}" title="#{bundle.CreateClienteTitle_nit}" />
-                        <p:outputLabel value="#{bundle.CreateClienteLabel_codigo}" for="codigo" />
-                        <p:inputText id="codigo" value="#{clienteController.selected.codigo}" title="#{bundle.CreateClienteTitle_codigo}" />
+                        <p:selectBooleanButton id="retencion" value="#{clienteController.tieneRetencion}" onLabel="Retención" offLabel="Sin retención" onIcon="ui-icon-check" offIcon="ui-icon-close">
+                            <p:ajax listener="#{clienteController.cambiarRetencion}" update="retencionCampo"/>
+                        </p:selectBooleanButton>
+                        <p:outputLabel id="retencionCampo" value="#{clienteController.retencion}"/>
+                        <p:selectBooleanButton id="descuento" value="#{clienteController.tieneDescuento}" onLabel="Descuento" offLabel="Sin descuento" onIcon="ui-icon-check" offIcon="ui-icon-close">
+                            <p:ajax update="descuentoCampo" />
+                        </p:selectBooleanButton>
+                        <p:spinner id="descuentoCampo" value="#{clienteController.selected.descuento}" prefix="%" min="0" max="100" disabled="#{!clienteController.tieneDescuento}"/>
                         <p:outputLabel value="#{bundle.CreateClienteLabel_idtipocliente}" for="idtipocliente" />
-                        <p:selectOneMenu id="idtipocliente" value="#{clienteController.selected.idtipocliente}" required="true" requiredMessage="#{bundle.EditClienteRequiredMessage_idtipocliente}">
+                        <p:selectOneMenu id="idtipocliente" value="#{clienteController.selected.tipocliente}" required="true" requiredMessage="#{bundle.EditClienteRequiredMessage_idtipocliente}">
                             <f:selectItems value="#{tipoclienteController.itemsAvailableSelectOne}"
                                            var="idtipoclienteItem"
                                            itemValue="#{idtipoclienteItem}"/>
                         </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.CreateClienteLabel_nroDoc}" for="nroDoc" />
-                        <p:inputText id="nroDoc" value="#{clienteController.selected.nroDoc}" title="#{bundle.CreateClienteTitle_nroDoc}" />
-                        <p:outputLabel value="#{bundle.CreateClienteLabel_ap}" for="ap" />
-                        <p:inputText id="ap" value="#{clienteController.selected.ap}" title="#{bundle.CreateClienteTitle_ap}" />
-                        <p:outputLabel value="#{bundle.CreateClienteLabel_am}" for="am" />
-                        <p:inputText id="am" value="#{clienteController.selected.am}" title="#{bundle.CreateClienteTitle_am}" />
-                        <p:outputLabel value="#{bundle.CreateClienteLabel_nom}" for="nom" />
-                        <p:inputText id="nom" value="#{clienteController.selected.nom}" title="#{bundle.CreateClienteTitle_nom}" required="true" requiredMessage="#{bundle.CreateClienteRequiredMessage_nom}"/>
-                        <p:outputLabel value="#{bundle.CreateClienteLabel_sexo}" for="sexo" />
-                        <p:inputText id="sexo" value="#{clienteController.selected.sexo}" title="#{bundle.CreateClienteTitle_sexo}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{clienteController.create}" value="#{bundle.Save}" update="display,:ClienteListForm:datalist,:ClienteListForm:growl" oncomplete="handleSubmit(args,'ClienteCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="ClienteCreateDialog.hide()"/>

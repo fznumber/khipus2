@@ -21,7 +21,7 @@
                         <p:outputLabel value="#{bundle.EditClienteLabel_codigo}" for="codigo" />
                         <p:inputText id="codigo" value="#{clienteController.selected.codigo}" title="#{bundle.EditClienteTitle_codigo}" />
                         <p:outputLabel value="#{bundle.EditClienteLabel_idtipocliente}" for="idtipocliente" />
-                        <p:selectOneMenu id="idtipocliente" value="#{clienteController.selected.idtipocliente}" required="true" requiredMessage="#{bundle.EditClienteRequiredMessage_idtipocliente}">
+                        <p:selectOneMenu id="idtipocliente" value="#{clienteController.selected.tipocliente}" required="true" requiredMessage="#{bundle.EditClienteRequiredMessage_idtipocliente}">
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{tipoclienteController.itemsAvailableSelectOne}"
                                            var="idtipoclienteItem"

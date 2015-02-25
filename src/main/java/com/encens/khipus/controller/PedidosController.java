@@ -28,9 +28,9 @@ import javax.faces.convert.FacesConverter;
 @SessionScoped
 public class PedidosController implements Serializable {
 
-    @Inject
+    @EJB
     private PedidosFacade ejbFacade;
-    @Inject
+    @EJB
     private InvArticulosFacade invArticulosFacade;
 
     private List<ArticulosPedido> articulosPedidos = new ArrayList<>();

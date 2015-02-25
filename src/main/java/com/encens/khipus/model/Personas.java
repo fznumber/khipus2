@@ -20,6 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "personas")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "tipo_persona")
+@DiscriminatorValue(value = "personas")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Personas.findAll", query = "SELECT p FROM Personas p"),
@@ -39,6 +40,7 @@ public class Personas implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @NotNull
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "PI_ID")
     private Long piId;
     @Size(max = 20)
@@ -85,7 +87,7 @@ public class Personas implements Serializable {
         this.piId = piId;
     }
 
-    public Personas(Long piId, String nom, long idcliente) {
+    public Personas(Long piId, String nom) {
         this.piId = piId;
         this.nom = nom;
     }
@@ -131,6 +133,8 @@ public class Personas implements Serializable {
     }
 
     public String getSexo() {
+        if(this.sexo == null)
+            this.sexo = "m";
         return sexo;
     }
 

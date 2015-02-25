@@ -15,12 +15,12 @@
 
         <ui:define name="center">
             <h:form id="ClienteListForm">
-                <p:growl id="growl" life="2500"/>
+                <p:growl id="growl" life="25000"/>
                 <p:panel header="#{bundle.ListClienteTitle}">
                     <p:dataTable id="datalist" value="#{clienteController.items}" var="item"
                                  selectionMode="single" selection="#{clienteController.selected}"
                                  paginator="true"
-                                 rowKey="#{item.clienteRetencion}"
+                                 rowKey="#{item.retencion}"
                                  rows="10"
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  >
@@ -56,13 +56,7 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListClienteTitle_idtipocliente}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idtipocliente}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListClienteTitle_piId}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.clienteRetencion}"/>
+                            <h:outputText value="#{item.idtipocliente.nombre}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">

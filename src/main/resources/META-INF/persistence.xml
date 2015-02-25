@@ -24,7 +24,6 @@
     <class>com.encens.khipus.model.Rol</class>
     <class>com.encens.khipus.model.Tipocliente</class>
     <class>com.encens.khipus.model.Tipopedido</class>
-    <class>com.encens.khipus.model.Tiporetencion</class>
     <class>com.encens.khipus.model.Usuario</class>
     <class>com.encens.khipus.model.Ventaarticulo</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>

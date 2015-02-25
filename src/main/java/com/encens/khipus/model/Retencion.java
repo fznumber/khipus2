@@ -5,24 +5,12 @@
  */
 package com.encens.khipus.model;
 
-import java.io.Serializable;
-import java.math.BigInteger;
-import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
+import java.util.Collection;
 
 /**
  *
@@ -35,6 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Retencion.findAll", query = "SELECT r FROM Retencion r"),
     @NamedQuery(name = "Retencion.findByIdretencion", query = "SELECT r FROM Retencion r WHERE r.idretencion = :idretencion"),
     @NamedQuery(name = "Retencion.findByNombre", query = "SELECT r FROM Retencion r WHERE r.nombre = :nombre"),
+    @NamedQuery(name = "Retencion.findActive", query = "SELECT r FROM Retencion r WHERE r.estado = true"),
     @NamedQuery(name = "Retencion.findByPorcentage", query = "SELECT r FROM Retencion r WHERE r.porcentage = :porcentage")})
 public class Retencion implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -44,11 +33,13 @@ public class Retencion implements Serializable {
     @Size(max = 50)
     @Column(name = "NOMBRE")
     private String nombre;
+    @Column(name = "ESTADO")
+    private Boolean estado;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "PORCENTAGE")
     private Double porcentage;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "retencion")
-    private Collection<Tiporetencion> tiporetencionCollection;
+    private Collection<Cliente> clientes;
 
     public Retencion() {
     }
@@ -85,6 +76,13 @@ public class Retencion implements Serializable {
         this.porcentage = porcentage;
     }
 
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
 
     @Override
     public int hashCode() {
@@ -108,16 +106,15 @@ public class Retencion implements Serializable {
 
     @Override
     public String toString() {
-        return "com.encens.khipus.model.Retencion[ idretencion=" + idretencion + " ]";
+        return porcentage.toString()+"%";
     }
 
     @XmlTransient
-    public Collection<Tiporetencion> getTiporetencionCollection() {
-        return tiporetencionCollection;
+    public Collection<Cliente> getClientes() {
+        return clientes;
     }
 
-    public void setTiporetencionCollection(Collection<Tiporetencion> tiporetencionCollection) {
-        this.tiporetencionCollection = tiporetencionCollection;
+    public void setClientes(Collection<Cliente> clientes) {
+        this.clientes = clientes;
     }
-    
 }

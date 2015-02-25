@@ -7,7 +7,6 @@ package com.encens.khipus.model;
 
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +15,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -40,8 +38,8 @@ public class Tipocliente implements Serializable {
     @Size(max = 50)
     @Column(name = "NOMBRE")
     private String nombre;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idtipocliente")
-    private Collection<Cliente> clienteCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipocliente")
+    private Collection<Cliente> clientes;
 
     public Tipocliente() {
     }
@@ -67,12 +65,12 @@ public class Tipocliente implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Cliente> getClienteCollection() {
-        return clienteCollection;
+    public Collection<Cliente> getClientes() {
+        return clientes;
     }
 
-    public void setClienteCollection(Collection<Cliente> clienteCollection) {
-        this.clienteCollection = clienteCollection;
+    public void setClientes(Collection<Cliente> clienteCollection) {
+        this.clientes = clienteCollection;
     }
 
     @Override
@@ -97,7 +95,7 @@ public class Tipocliente implements Serializable {
 
     @Override
     public String toString() {
-        return "com.encens.khipus.model.Tipocliente[ idtipocliente=" + idtipocliente + " ]";
+        return nombre;
     }
     
 }

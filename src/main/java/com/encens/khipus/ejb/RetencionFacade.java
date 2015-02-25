@@ -8,6 +8,7 @@ package com.encens.khipus.ejb;
 import com.encens.khipus.model.Retencion;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -26,6 +27,17 @@ public class RetencionFacade extends AbstractFacade<Retencion> {
 
     public RetencionFacade() {
         super(Retencion.class);
+    }
+
+    public Retencion findActivo(){
+        Retencion retencion;
+        try {
+            retencion = (Retencion)em.createNamedQuery("Retencion.findActive").getSingleResult();
+        }catch (NoResultException e){
+            return null;
+        }
+
+        return retencion;
     }
     
 }
