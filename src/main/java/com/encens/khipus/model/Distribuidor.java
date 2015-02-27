@@ -5,7 +5,6 @@
  */
 package com.encens.khipus.model;
 
-import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -15,12 +14,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Diego
  */
 @Entity
-@Table(name = "distribuidor")
 @XmlRootElement
+@DiscriminatorValue("distribuidor")
 @NamedQueries({
     @NamedQuery(name = "Distribuidor.findAll", query = "SELECT d FROM Distribuidor d"),
     @NamedQuery(name = "Distribuidor.findByObservacion", query = "SELECT d FROM Distribuidor d WHERE d.observacion = :observacion")})
-public class Distribuidor extends Personas {
+public class Distribuidor extends Persona {
     @Size(max = 50)
     @Column(name = "OBSERVACION")
     private String observacion;

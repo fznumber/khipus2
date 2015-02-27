@@ -17,31 +17,35 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Diego
  */
 @Entity
-@Table(name = "personas")
-@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "persona")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "tipo_persona")
-@DiscriminatorValue(value = "personas")
+@DiscriminatorValue(value = "persona")
+@TableGenerator(name = "Persona_Gen"
+                ,table="ID_GEN"
+                ,pkColumnName = "GEN_NAME"
+                ,valueColumnName = "GEN_VAL")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Personas.findAll", query = "SELECT p FROM Personas p"),
-    @NamedQuery(name = "Personas.findByPiId", query = "SELECT p FROM Personas p WHERE p.piId = :piId"),
-    @NamedQuery(name = "Personas.findByNroDoc", query = "SELECT p FROM Personas p WHERE p.nroDoc = :nroDoc"),
-    @NamedQuery(name = "Personas.findByAp", query = "SELECT p FROM Personas p WHERE p.ap = :ap"),
-    @NamedQuery(name = "Personas.findByAm", query = "SELECT p FROM Personas p WHERE p.am = :am"),
-    @NamedQuery(name = "Personas.findByNom", query = "SELECT p FROM Personas p WHERE p.nom = :nom"),
-    @NamedQuery(name = "Personas.findBySexo", query = "SELECT p FROM Personas p WHERE p.sexo = :sexo"),
-    @NamedQuery(name = "Personas.findByEstCivil", query = "SELECT p FROM Personas p WHERE p.estCivil = :estCivil"),
-    @NamedQuery(name = "Personas.findByFechaNac", query = "SELECT p FROM Personas p WHERE p.fechaNac = :fechaNac"),
-    @NamedQuery(name = "Personas.findByCemCod", query = "SELECT p FROM Personas p WHERE p.cemCod = :cemCod"),
-    @NamedQuery(name = "Personas.findByOcuCod", query = "SELECT p FROM Personas p WHERE p.ocuCod = :ocuCod"),
-    @NamedQuery(name = "Personas.findByTdoCod", query = "SELECT p FROM Personas p WHERE p.tdoCod = :tdoCod"),
-    @NamedQuery(name = "Personas.findBySisCod", query = "SELECT p FROM Personas p WHERE p.sisCod = :sisCod")})
-public class Personas implements Serializable {
+    @NamedQuery(name = "Personas.findAll", query = "SELECT p FROM Persona p"),
+    @NamedQuery(name = "Personas.findByPiId", query = "SELECT p FROM Persona p WHERE p.piId = :piId"),
+    @NamedQuery(name = "Personas.findByNroDoc", query = "SELECT p FROM Persona p WHERE p.nroDoc = :nroDoc"),
+    @NamedQuery(name = "Personas.findByAp", query = "SELECT p FROM Persona p WHERE p.ap = :ap"),
+    @NamedQuery(name = "Personas.findByAm", query = "SELECT p FROM Persona p WHERE p.am = :am"),
+    @NamedQuery(name = "Personas.findByNom", query = "SELECT p FROM Persona p WHERE p.nom = :nom"),
+    @NamedQuery(name = "Personas.findBySexo", query = "SELECT p FROM Persona p WHERE p.sexo = :sexo"),
+    @NamedQuery(name = "Personas.findByEstCivil", query = "SELECT p FROM Persona p WHERE p.estCivil = :estCivil"),
+    @NamedQuery(name = "Personas.findByFechaNac", query = "SELECT p FROM Persona p WHERE p.fechaNac = :fechaNac"),
+    @NamedQuery(name = "Personas.findByCemCod", query = "SELECT p FROM Persona p WHERE p.cemCod = :cemCod"),
+    @NamedQuery(name = "Personas.findByOcuCod", query = "SELECT p FROM Persona p WHERE p.ocuCod = :ocuCod"),
+    @NamedQuery(name = "Personas.findByTdoCod", query = "SELECT p FROM Persona p WHERE p.tdoCod = :tdoCod"),
+    @NamedQuery(name = "Personas.findBySisCod", query = "SELECT p FROM Persona p WHERE p.sisCod = :sisCod")})
+public class Persona implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @NotNull
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "PI_ID")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "Persona_Gen")
+    @Column(name = "IDPERSONA")
     private Long piId;
     @Size(max = 20)
     @Column(name = "NRO_DOC")
@@ -53,11 +57,9 @@ public class Personas implements Serializable {
     @Column(name = "AM")
     private String am;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @Size( max = 100)
     @Column(name = "NOM")
     private String nom;
-    @Size(max = 1)
     @Column(name = "SEXO")
     private String sexo;
     @Size(max = 1)
@@ -78,16 +80,18 @@ public class Personas implements Serializable {
     @Size(max = 20)
     @Column(name = "SIS_COD")
     private String sisCod;
+    @Column(name="tipo_persona")
+    private String tipoPersona;
 
 
-    public Personas() {
+    public Persona() {
     }
 
-    public Personas(Long piId) {
+    public Persona(Long piId) {
         this.piId = piId;
     }
 
-    public Personas(Long piId, String nom) {
+    public Persona(Long piId, String nom) {
         this.piId = piId;
         this.nom = nom;
     }
@@ -134,7 +138,7 @@ public class Personas implements Serializable {
 
     public String getSexo() {
         if(this.sexo == null)
-            this.sexo = "m";
+            this.sexo = "MASCULINO";
         return sexo;
     }
 
@@ -190,6 +194,14 @@ public class Personas implements Serializable {
         this.sisCod = sisCod;
     }
 
+    public String getTipoPersona() {
+        return tipoPersona;
+    }
+
+    public void setTipoPersona(String tipoPersona) {
+        this.tipoPersona = tipoPersona;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -200,10 +212,10 @@ public class Personas implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Personas)) {
+        if (!(object instanceof Persona)) {
             return false;
         }
-        Personas other = (Personas) object;
+        Persona other = (Persona) object;
         if ((this.piId == null && other.piId != null) || (this.piId != null && !this.piId.equals(other.piId))) {
             return false;
         }
@@ -213,6 +225,10 @@ public class Personas implements Serializable {
     @Override
     public String toString() {
         return "com.encens.khipus.model.Personas[ piId=" + piId + " ]";
+    }
+
+    public String getNombreCompleto(){
+        return nom+" "+ap+" "+am;
     }
     
 }
