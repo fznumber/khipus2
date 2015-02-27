@@ -77,7 +77,6 @@ public class DistribuidorController implements Serializable {
     public void cancel()
     {
         selected = new Distribuidor(); // Remove selection
-        items = null;    // Invalidate list of items to trigger re-query.
     }
 
     public List<Distribuidor> getItems() {
