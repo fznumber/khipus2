@@ -8,7 +8,7 @@
 
     <ui:composition>
 
-        <p:dialog id="ClienteCreateDlg" widgetVar="ClienteCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateClienteTitle}">
+        <p:dialog id="ClienteCreateDlg" widgetVar="ClienteCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Registrar Cliente">
             <h:form id="ClienteCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{clienteController.selected != null}">
@@ -64,7 +64,7 @@
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{clienteController.create}" value="#{bundle.Save}" update="display,:ClienteListForm:datalist,:ClienteListForm:growl" oncomplete="handleSubmit(args,'ClienteCreateDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="ClienteCreateDialog.hide()" ajax="true"/>
+                    <p:commandButton actionListener="#{clienteController.cancel}" value="#{bundle.Cancel}" update=":ClienteListForm:datalist,:ClienteListForm" onclick="ClienteCreateDialog.hide()" ajax="true"/>
                 </h:panelGroup>
             </h:form>
 

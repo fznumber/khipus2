@@ -48,9 +48,6 @@ public class Cliente extends Persona {
     @JoinColumn(name = "IDTIPOCLIENTE", referencedColumnName = "IDTIPOCLIENTE")
     @ManyToOne(optional = true)
     private Tipocliente tipocliente;
-    @JoinColumn(name = "IDDEPARTAMENTO",referencedColumnName = "IDDEPARTAMENTO")
-    @ManyToOne(optional = true)
-    private Departamento departamento;
     @OneToMany(cascade = CascadeType.PERSIST,mappedBy = "cliente")
     private Collection<Ventaarticulo> ventaarticulos;
 
@@ -132,14 +129,6 @@ public class Cliente extends Persona {
 
     public void setRazonsocial(String razonsocial) {
         this.razonsocial = razonsocial;
-    }
-
-    public Departamento getDepartamento() {
-        return departamento;
-    }
-
-    public void setDepartamento(Departamento departamento) {
-        this.departamento = departamento;
     }
 
     @Override

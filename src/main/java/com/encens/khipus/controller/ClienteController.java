@@ -91,12 +91,15 @@ public class ClienteController implements Serializable {
             selected.setAp("");
             selected.setAm("");
         }
-        /*persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("ClienteCreated"));*/
-        personasFacade.create(selected);
-        JSFUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ClienteCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("ClienteCreated"));
+        /*personasFacade.create(selected);*/
+        /*JSFUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ClienteCreated"));*/
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
+    }
+
+    public void cancel(){
         selected = new Cliente();
     }
 
