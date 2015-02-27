@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
@@ -12,26 +11,28 @@
             <h:form id="ClienteViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{clienteController.selected != null}">
-                        <h:outputText value="#{bundle.ViewClienteLabel_direccion}"/>
-                        <h:outputText value="#{clienteController.selected.direccion}" title="#{bundle.ViewClienteTitle_direccion}"/>
-                        <h:outputText value="#{bundle.ViewClienteLabel_telefono}"/>
-                        <h:outputText value="#{clienteController.selected.telefono}" title="#{bundle.ViewClienteTitle_telefono}"/>
-                        <h:outputText value="#{bundle.ViewClienteLabel_nit}"/>
-                        <h:outputText value="#{clienteController.selected.nit}" title="#{bundle.ViewClienteTitle_nit}"/>
-                        <h:outputText value="#{bundle.ViewClienteLabel_codigo}"/>
-                        <h:outputText value="#{clienteController.selected.codigo}" title="#{bundle.ViewClienteTitle_codigo}"/>
-                        <h:outputText value="#{bundle.ViewClienteLabel_idtipocliente}"/>
-                        <h:outputText value="#{clienteController.selected.idtipocliente}" title="#{bundle.ViewClienteTitle_idtipocliente}"/>
-                        <h:outputText value="#{bundle.ViewClienteLabel_nroDoc}"/>
-                        <h:outputText value="#{clienteController.selected.nroDoc}" title="#{bundle.ViewClienteTitle_nroDoc}"/>
-                        <h:outputText value="#{bundle.ViewClienteLabel_ap}"/>
-                        <h:outputText value="#{clienteController.selected.ap}" title="#{bundle.ViewClienteTitle_ap}"/>
-                        <h:outputText value="#{bundle.ViewClienteLabel_am}"/>
-                        <h:outputText value="#{clienteController.selected.am}" title="#{bundle.ViewClienteTitle_am}"/>
-                        <h:outputText value="#{bundle.ViewClienteLabel_nom}"/>
-                        <h:outputText value="#{clienteController.selected.nom}" title="#{bundle.ViewClienteTitle_nom}"/>
-                        <h:outputText value="#{bundle.ViewClienteLabel_sexo}"/>
-                        <h:outputText value="#{clienteController.selected.sexo}" title="#{bundle.ViewClienteTitle_sexo}"/>
+                        <p:outputLabel value="C.I.:" for="nroDoc"/>
+                        <p:outputLabel id="nroDoc" value="#{clienteController.selected.nroDoc}" title="Cedula de identidad" />
+                        <p:outputLabel value="Nombre:" for="nom" />
+                        <p:outputLabel id="nom" value="#{clienteController.selected.nombreCompleto}" title="Nombre/Razon Social"/>
+                        <p:outputLabel value="#{bundle.CreateClienteLabel_codigo}" for="codigo" />
+                        <p:outputLabel id="codigo" value="#{clienteController.selected.codigo}" title="#{bundle.CreateClienteTitle_codigo}"/>
+                        <p:outputLabel value="#{bundle.CreateClienteLabel_sexo}" for="sexo" rendered="#{clienteController.esPersona}"/>
+                        <p:outputLabel id="sexo" value="#{clienteController.selected.sexo}" title="sexo" rendered="#{clienteController.esPersona}"/>
+                        <p:outputLabel value="#{bundle.CreateClienteLabel_direccion}" for="direccion" />
+                        <p:outputLabel id="direccion" value="#{clienteController.selected.direccion}" title="#{bundle.CreateClienteTitle_direccion}" />
+                        <p:outputLabel value="#{bundle.CreateClienteLabel_telefono}" for="telefono" />
+                        <p:outputLabel id="telefono" value="#{clienteController.selected.telefono}" title="#{bundle.CreateClienteTitle_telefono}" />
+                        <p:outputLabel value="#{bundle.CreateClienteLabel_nit}" for="nit" />
+                        <p:outputLabel id="nit" value="#{clienteController.selected.nit}" title="#{bundle.CreateClienteTitle_nit}" />
+                        <p:outputLabel value="Retención:" for="retencion" />
+                        <p:outputLabel id="retencion" value="#{clienteController.selected.retencion}" title="retención" />
+                        <p:outputLabel value="Descuento:" for="descuento" />
+                        <p:outputLabel id="descuento" value="#{clienteController.selected.descuentoPorcentaje}" title="Descuento" />
+                        <p:outputLabel value="Negocio:" for="negocio" />
+                        <p:outputLabel id="negocio" value="#{clienteController.selected.tipocliente.nombre}" title="Negocio" />
+                        <p:outputLabel value="Departamento:" for="departamento" />
+                        <p:outputLabel id="departamento" value="#{clienteController.selected.departamento.nombre}" title="Departamento" />
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="ClienteViewDialog.hide()"/>
                 </h:panelGroup>

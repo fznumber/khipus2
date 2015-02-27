@@ -27,14 +27,14 @@
                         <p:outputLabel value="Ap. Materno" for="am" rendered="#{clienteController.esPersona}"/>
                         <p:inputText id="am" value="#{clienteController.selected.am}" title="Ap. Materno." required="true" requiredMessage="campo requerido." rendered="#{clienteController.esPersona}"/>
                         <p:outputLabel value="Razon social:" for="razon" rendered="#{!clienteController.esPersona}"/>
-                        <p:inputText id="razon" value="#{clienteController.institucion.razonsocial}" title="Razon social" required="true" requiredMessage="campo requerido." rendered="#{!clienteController.esPersona}">
+                        <p:inputText id="razon" value="#{clienteController.selected.razonsocial}" title="Razon social" required="true" requiredMessage="campo requerido." rendered="#{!clienteController.esPersona}">
                         </p:inputText>
                         <p:outputLabel value="#{bundle.CreateClienteLabel_codigo}" for="codigo" />
-                        <p:inputText id="codigo" value="#{clienteController.selected.codigo}" title="#{bundle.CreateClienteTitle_codigo}" />
-                            <p:outputLabel value="#{bundle.CreateClienteLabel_sexo}" for="sexo"/>
-                            <p:selectOneRadio id="sexo" value="#{clienteController.selected.sexo}">
-                                <f:selectItem itemLabel="Masculino" itemValue="m" />
-                                <f:selectItem itemLabel="Femenino" itemValue="f" />
+                        <p:inputText id="codigo" value="#{clienteController.selected.codigo}" title="#{bundle.CreateClienteTitle_codigo}"/>
+                            <p:outputLabel value="#{bundle.CreateClienteLabel_sexo}" for="sexo" rendered="#{clienteController.esPersona}"/>
+                            <p:selectOneRadio id="sexo" value="#{clienteController.selected.sexo}" rendered="#{clienteController.esPersona}">
+                                <f:selectItem itemLabel="Masculino" itemValue="MASCULINO" />
+                                <f:selectItem itemLabel="Femenino" itemValue="FEMENINO" />
                             </p:selectOneRadio>
                         <p:outputLabel value="#{bundle.CreateClienteLabel_direccion}" for="direccion" />
                         <p:inputText id="direccion" value="#{clienteController.selected.direccion}" title="#{bundle.CreateClienteTitle_direccion}" />
@@ -56,11 +56,18 @@
                                            var="idtipoclienteItem"
                                            itemValue="#{idtipoclienteItem}"/>
                         </p:selectOneMenu>
+                        <p:outputLabel value="Departamento:" for="departamento" />
+                        <p:selectOneMenu id="departamento" value="#{clienteController.selected.departamento}" required="true" requiredMessage="#{bundle.EditClienteRequiredMessage_idtipocliente}">
+                            <f:selectItems value="#{departamentoController.itemsAvailableSelectOne}"
+                                           var="departamento"
+                                           itemValue="#{departamento}"/>
+                        </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{clienteController.create}" value="#{bundle.Save}" update="display,:ClienteListForm:datalist,:ClienteListForm:growl" oncomplete="handleSubmit(args,'ClienteCreateDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="ClienteCreateDialog.hide()"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ClienteCreateDialog.hide()" ajax="true"/>
                 </h:panelGroup>
             </h:form>
+
         </p:dialog>
 
     </ui:composition>

@@ -7,6 +7,7 @@
     <class>com.encens.khipus.model.ArticulosPedido</class>
     <class>com.encens.khipus.model.Cliente</class>
     <class>com.encens.khipus.model.Compania</class>
+    <class>com.encens.khipus.model.Departamento</class>
     <class>com.encens.khipus.model.Derechoacceso</class>
     <class>com.encens.khipus.model.Distribuidor</class>
     <class>com.encens.khipus.model.Empleado</class>
@@ -19,7 +20,7 @@
     <class>com.encens.khipus.model.Modulocompania</class>
     <class>com.encens.khipus.model.Paquetes</class>
     <class>com.encens.khipus.model.Pedidos</class>
-    <class>com.encens.khipus.model.Personas</class>
+    <class>com.encens.khipus.model.Persona</class>
     <class>com.encens.khipus.model.Retencion</class>
     <class>com.encens.khipus.model.Rol</class>
     <class>com.encens.khipus.model.Tipocliente</class>

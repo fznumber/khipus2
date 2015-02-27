@@ -7,20 +7,17 @@ package com.encens.khipus.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Collection;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Diego
  */
 @Entity
-@XmlRootElement
+/*@XmlRootElement*/
 /*@MappedSuperclass*/
-/*@PrimaryKeyJoinColumn(name = "PI_ID",referencedColumnName = "PI_ID")*/
+/*@PrimaryKeyJoinColumn(name = "idcliente", referencedColumnName = "idpersonas")*/
 /*@Inheritance(strategy = InheritanceType.JOINED)*/
-/*@PrimaryKeyJoinColumn(name = "PI_ID",referencedColumnName="PI_ID")*/
 @DiscriminatorValue("cliente")
 @NamedQueries({
     @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c"),
@@ -29,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Cliente.findByNit", query = "SELECT c FROM Cliente c WHERE c.nit = :nit"),
     @NamedQuery(name = "Cliente.findByCodigo", query = "SELECT c FROM Cliente c WHERE c.codigo = :codigo")})
 
-public class Cliente extends Personas {
+public class Cliente extends Persona {
     @Size(max = 100)
     @Column(name = "DIRECCION")
     private String direccion;
@@ -38,10 +35,12 @@ public class Cliente extends Personas {
     @Size(max = 40)
     @Column(name = "NIT")
     private String nit;
+    @Column(name = "RAZONSOCIAL")
+    private String razonsocial;
     @Column(name = "DESCUENTO")
     private Double descuento;
     @Size(max = 10)
-    @Column(name = "CODIGO")
+    @Column(name = "CODIGOCLIENTE")
     private String codigo;
     @JoinColumn(name = "IDRETENCION", referencedColumnName = "IDRETENCION")
     @ManyToOne(optional = true)
@@ -49,28 +48,11 @@ public class Cliente extends Personas {
     @JoinColumn(name = "IDTIPOCLIENTE", referencedColumnName = "IDTIPOCLIENTE")
     @ManyToOne(optional = true)
     private Tipocliente tipocliente;
+    @JoinColumn(name = "IDDEPARTAMENTO",referencedColumnName = "IDDEPARTAMENTO")
+    @ManyToOne(optional = true)
+    private Departamento departamento;
     @OneToMany(cascade = CascadeType.PERSIST,mappedBy = "cliente")
     private Collection<Ventaarticulo> ventaarticulos;
-
-    public Cliente() {
-        super();
-    }
-
-    public Cliente(Long piId, String direccion, Integer telefono, String nit, Double descuento, String codigo, Retencion retencion, Tipocliente tipocliente, Collection<Ventaarticulo> ventaarticulos) {
-        super(piId);
-        this.direccion = direccion;
-        this.telefono = telefono;
-        this.nit = nit;
-        this.descuento = descuento;
-        this.codigo = codigo;
-        this.retencion = retencion;
-        this.tipocliente = tipocliente;
-        this.ventaarticulos = ventaarticulos;
-    }
-
-    public Cliente(Long piId) {
-        super(piId);
-    }
 
     public String getDireccion() {
         return direccion;
@@ -123,6 +105,14 @@ public class Cliente extends Personas {
     public Double getDescuento() {
         return descuento;
     }
+    public String getDescuentoPorcentaje()
+    {
+        if(descuento != null)
+            return descuento.toString()+" "+"%";
+        else
+            return "";
+
+    }
 
     public void setDescuento(Double descuento) {
         this.descuento = descuento;
@@ -136,9 +126,33 @@ public class Cliente extends Personas {
         this.tipocliente = tipocliente;
     }
 
+    public String getRazonsocial() {
+        return razonsocial;
+    }
+
+    public void setRazonsocial(String razonsocial) {
+        this.razonsocial = razonsocial;
+    }
+
+    public Departamento getDepartamento() {
+        return departamento;
+    }
+
+    public void setDepartamento(Departamento departamento) {
+        this.departamento = departamento;
+    }
+
     @Override
     public String toString() {
         return "com.encens.khipus.model.Cliente[ piId=" + super.getPiId() + " ]";
+    }
+
+    @Override
+    public String getNombreCompleto()
+    {
+        if(razonsocial != null)
+        return razonsocial;
+        return  super.getNombreCompleto();
     }
     
 }

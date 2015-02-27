@@ -1,9 +1,10 @@
 package com.encens.khipus.controller;
 
-import com.encens.khipus.ejb.PersonasFacade;
-import com.encens.khipus.model.Persona;
+import com.encens.khipus.ejb.DepartamentoFacade;
+import com.encens.khipus.model.Departamento;
 import com.encens.khipus.util.JSFUtil;
 import com.encens.khipus.util.JSFUtil.PersistAction;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -18,23 +19,23 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@Named("personasController")
+@Named("departamentoController")
 @SessionScoped
-public class PersonasController implements Serializable {
+public class DepartamentoController implements Serializable {
 
     @EJB
-    private PersonasFacade ejbFacade;
-    private List<Persona> items = null;
-    private Persona selected;
+    private DepartamentoFacade ejbFacade;
+    private List<Departamento> items = null;
+    private Departamento selected;
 
-    public PersonasController() {
+    public DepartamentoController() {
     }
 
-    public Persona getSelected() {
+    public Departamento getSelected() {
         return selected;
     }
 
-    public void setSelected(Persona selected) {
+    public void setSelected(Departamento selected) {
         this.selected = selected;
     }
 
@@ -44,36 +45,36 @@ public class PersonasController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private PersonasFacade getFacade() {
+    private DepartamentoFacade getFacade() {
         return ejbFacade;
     }
 
-    public Persona prepareCreate() {
-        selected = new Persona();
+    public Departamento prepareCreate() {
+        selected = new Departamento();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PersonasCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("DepartamentoCreated"));
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PersonasUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("DepartamentoUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("PersonasDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("DepartamentoDeleted"));
         if (!JSFUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<Persona> getItems() {
+    public List<Departamento> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -108,29 +109,29 @@ public class PersonasController implements Serializable {
         }
     }
 
-    public Persona getPersonas(java.lang.Long id) {
+    public Departamento getDepartamento(java.lang.Long id) {
         return getFacade().find(id);
     }
 
-    public List<Persona> getItemsAvailableSelectMany() {
+    public List<Departamento> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<Persona> getItemsAvailableSelectOne() {
+    public List<Departamento> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = Persona.class)
-    public static class PersonasControllerConverter implements Converter {
+    @FacesConverter(forClass = Departamento.class)
+    public static class DepartamentoControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            PersonasController controller = (PersonasController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "personasController");
-            return controller.getPersonas(getKey(value));
+            DepartamentoController controller = (DepartamentoController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "departamentoController");
+            return controller.getDepartamento(getKey(value));
         }
 
         java.lang.Long getKey(String value) {
@@ -150,11 +151,11 @@ public class PersonasController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Persona) {
-                Persona o = (Persona) object;
-                return getStringKey(o.getPiId());
+            if (object instanceof Departamento) {
+                Departamento o = (Departamento) object;
+                return getStringKey(o.getIddepartamento());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Persona.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Departamento.class.getName()});
                 return null;
             }
         }

@@ -15,12 +15,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Diego
  */
 @Entity
-@Table(name = "institucion")
 @XmlRootElement
+@DiscriminatorValue("institucion")
 @NamedQueries({
         @NamedQuery(name = "Institucion.findAll", query = "SELECT i FROM Institucion i"),
         @NamedQuery(name = "Institucion.findByRazonsocial", query = "SELECT i FROM Institucion i WHERE i.razonsocial = :razonsocial")})
-public class Institucion extends Cliente {
+public class Institucion extends Persona {
 
     @Basic(optional = false)
     @NotNull
@@ -41,7 +41,13 @@ public class Institucion extends Cliente {
 
     @Override
     public String toString() {
-        return "com.encens.khipus.model.Institucion[ idinstitucion=" + super.getPiId() + " ]";
+        return razonsocial;
+    }
+
+    @Override
+    public String getNombreCompleto()
+    {
+        return razonsocial;
     }
 
 }

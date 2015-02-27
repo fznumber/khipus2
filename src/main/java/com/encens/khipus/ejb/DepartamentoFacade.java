@@ -5,8 +5,8 @@
  */
 package com.encens.khipus.ejb;
 
-import com.encens.khipus.model.Persona;
 
+import com.encens.khipus.model.Departamento;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,7 +16,7 @@ import javax.persistence.PersistenceContext;
  * @author Diego
  */
 @Stateless
-public class PersonasFacade extends AbstractFacade<Persona> {
+public class DepartamentoFacade extends AbstractFacade<Departamento> {
     @PersistenceContext(unitName = "khipusPU")
     private EntityManager em;
 
@@ -25,8 +25,8 @@ public class PersonasFacade extends AbstractFacade<Persona> {
         return em;
     }
 
-    public PersonasFacade() {
-        super(Persona.class);
+    public DepartamentoFacade() {
+        super(Departamento.class);
     }
     
 }
