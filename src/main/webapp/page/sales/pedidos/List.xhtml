@@ -13,9 +13,10 @@
             <h:outputText value="#{bundle.ListPedidosTitle}"></h:outputText>
         </ui:define>
 
-        <ui:define name="body">
+        <ui:define name="center">
             <h:form id="PedidosListForm">
-                <p:panel header="#{bundle.ListPedidosTitle}">
+                <p:growl id="growl" life="15000"/>
+                <p:panel header="Listado Pedidos">
                     <p:dataTable id="datalist" value="#{pedidosController.items}" var="item"
                                  selectionMode="single" selection="#{pedidosController.selected}"
                                  paginator="true"
@@ -29,31 +30,7 @@
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPedidosTitle_idpedidos}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idpedidos}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPedidosTitle_descripcion}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.descripcion}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPedidosTitle_tipoPedido}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.tipoPedido}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPedidosTitle_id}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.id}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPedidosTitle_fechaPedido}"/>
+                                <h:outputText value="Fecha pedido"/>
                             </f:facet>
                             <h:outputText value="#{item.fechaPedido}">
                                 <f:convertDateTime pattern="MM/dd/yyyy" />
@@ -61,31 +38,7 @@
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPedidosTitle_iddireccion}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.iddireccion}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPedidosTitle_idzona}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idzona}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPedidosTitle_id1}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.id1}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPedidosTitle_total}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.total}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPedidosTitle_fechaEntrega}"/>
+                                <h:outputText value="Fecha Entrega"/>
                             </f:facet>
                             <h:outputText value="#{item.fechaEntrega}">
                                 <f:convertDateTime pattern="MM/dd/yyyy" />
@@ -93,69 +46,37 @@
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPedidosTitle_fechaAPagar}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.fechaAPagar}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
-                            </h:outputText>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPedidosTitle_observacion}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.observacion}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPedidosTitle_factura}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.factura}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPedidosTitle_supervisor}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.supervisor}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPedidosTitle_porcenDescuento}"/>
+                                <h:outputText value="Descuento"/>
                             </f:facet>
                             <h:outputText value="#{item.porcenDescuento}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPedidosTitle_porcenRetencion}"/>
+                                <h:outputText value="Retención"/>
                             </f:facet>
                             <h:outputText value="#{item.porcenRetencion}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPedidosTitle_idcliente}"/>
+                                <h:outputText value="Cliente"/>
                             </f:facet>
                             <h:outputText value="#{item.idcliente}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPedidosTitle_iddistribuidor}"/>
+                                <h:outputText value="Distribuidor"/>
                             </f:facet>
                             <h:outputText value="#{item.iddistribuidor}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPedidosTitle_idempleado}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idempleado}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPedidosTitle_estadoPedido}"/>
+                                <h:outputText value="Estado"/>
                             </f:facet>
                             <h:outputText value="#{item.estadoPedido}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPedidosTitle_idtipopedido}"/>
+                                <h:outputText value="Tipo Pedido"/>
                             </f:facet>
                             <h:outputText value="#{item.idtipopedido}"/>
                         </p:column>
@@ -163,7 +84,7 @@
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{pedidosController.prepareCreate}" update=":PedidosCreateForm" oncomplete="PF('PedidosCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":PedidosViewForm" oncomplete="PF('PedidosViewDialog').show()" disabled="#{empty pedidosController.selected}"/>
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":PedidosEditForm" oncomplete="PF('PedidosEditDialog').show()" disabled="#{empty pedidosController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{pedidosController.destroy}" update=":growl,datalist" disabled="#{empty pedidosController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{pedidosController.destroy}" update=":PedidosListForm:growl,datalist" disabled="#{empty pedidosController.selected}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

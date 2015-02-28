@@ -5,22 +5,16 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-<body>
 
-<ui:composition template="./../../../template.xhtml">
+    <ui:composition>
 
-    <ui:define name="center">
-        <f:view>
-
-
+        <p:dialog id="PedidosCreateDlg" widgetVar="PedidosCreateDialog" modal="true" resizable="true" width="680px" appendTo="@(body)" header="Crear pedido">
             <h:form id="PedidosCreateForm">
-                <p:messages autoUpdate="true"/>
-                <p:growl id="msgs" showDetail="true" />
-                <!--<p:dialog visible="true" id="PedidosCreateDlg" showEffect="clip" closable="true" widgetVar="PedidosCreateDialog" hideEffect="fade" resizable="false"  header="#{bundle.CreatePedidosTitle}">-->
 
-                <p:panel id="display" header="Registrar Pedidos" style="margin-bottom:20px">
-                    <h:panelGrid columns="4" cellpadding="5">
-                            <p:outputLabel value="Articulo:" for="itemTip" />
+                    <p:panelGrid columns="2" rendered="#{pedidosController.selected != null}">
+                        <p:panel id="display" header="Registrar Pedidos" style="margin-bottom:20px">
+                            <h:panelGrid columns="4" cellpadding="5">
+                                <p:outputLabel value="Articulo:" for="itemTip" />
                                 <p:autoComplete id="itemTip" value="#{pedidosController.articuloElegido}" completeMethod="#{pedidosController.completarArticulo}"
                                                 var="articulo" itemLabel="#{articulo.descri}" itemValue="#{articulo}" converter="convertirArticulos" forceSelection="true">
                                     <f:facet name="itemtip">
@@ -37,37 +31,36 @@
                                         </h:panelGrid>
                                     </f:facet>
                                 </p:autoComplete>
-                        <!--<p:commandButton id="btn_reset" value="limpiar" type="reset"/>-->
-                        <p:commandButton id="agregarArticulo" value = "agregar" action="#{pedidosController.agregarArticulo}" update="display,articulosTable,msgs" />
-                    </h:panelGrid>
-                </p:panel>
-                <!--</p:dialog>-->
+                                <!--<p:commandButton id="btn_reset" value="limpiar" type="reset"/>-->
+                                <p:commandButton id="agregarArticulo" value = "agregar" action="#{pedidosController.agregarArticulo}" update="display,articulosTable,:PedidosListForm:growl" />
+                            </h:panelGrid>
+                        </p:panel>
+                        <!--</p:dialog>-->
 
-                    <p:dataTable value="#{pedidosController.articulosPedidosElegidos}" var="articulo" id="articulosTable">
+                        <p:dataTable value="#{pedidosController.articulosPedidosElegidos}" var="articulo" id="articulosTable">
 
-                        <p:column headerText="Producto">
-                            <h:outputText value="#{articulo.invArticulos.descri}" />
-                        </p:column>
+                            <p:column headerText="Producto">
+                                <h:outputText value="#{articulo.invArticulos.descri}" />
+                            </p:column>
 
-                        <p:column headerText="Author">
-                            <f:facet name="header">
-                                <h:outputText value="Author" />
-                            </f:facet>
-                            <h:outputText value="#{articulo.invArticulos.costoUni}" />
-                        </p:column>
+                            <p:column headerText="Author">
+                                <f:facet name="header">
+                                    <h:outputText value="Author" />
+                                </f:facet>
+                                <h:outputText value="#{articulo.invArticulos.costoUni}" />
+                            </p:column>
 
-                        <p:column headerText="Action">
+                            <p:column headerText="Action">
 
-                        </p:column>
+                            </p:column>
 
-                    </p:dataTable>
+                        </p:dataTable>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{pedidosController.create}" value="#{bundle.Save}" update="display,:PedidosListForm:datalist,:PedidosListForm:growl" oncomplete="handleSubmit(args,'PedidosCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PedidosCreateDialog.hide()"/>
 
             </h:form>
+        </p:dialog>
 
-        </f:view>
-    </ui:define>
-
-</ui:composition>
-
-</body>
+    </ui:composition>
 </html>
