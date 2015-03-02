@@ -1,7 +1,9 @@
 package com.encens.khipus.controller;
 
+import com.encens.khipus.ejb.DistribuidorFacade;
 import com.encens.khipus.ejb.InvArticulosFacade;
 import com.encens.khipus.ejb.PedidosFacade;
+import com.encens.khipus.ejb.PersonasFacade;
 import com.encens.khipus.model.*;
 
 import java.io.Serializable;
@@ -16,7 +18,6 @@ import com.encens.khipus.util.JSFUtil;
 import com.encens.khipus.util.JSFUtil.PersistAction;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -32,13 +33,20 @@ public class PedidosController implements Serializable {
     private PedidosFacade ejbFacade;
     @EJB
     private InvArticulosFacade invArticulosFacade;
+    @EJB
+    private PersonasFacade personasFacade;
+    @EJB
+    private DistribuidorFacade distribuidorFacade;
 
     private List<ArticulosPedido> articulosPedidos = new ArrayList<>();
     private List<ArticulosPedido> articulosPedidosElegidos = new ArrayList<>();
-    private List<InvArticulos> articulos = new ArrayList<>();
+    private List<InvArticulos> articulos;
     private List<Pedidos> items = null;
     private Pedidos selected;
-    private Cliente cliente;
+    private Persona personaElegido;
+    private Persona distribuidorElegido;
+    private List<Persona> personas;
+    private List<Persona> distribuidores;
     private Distribuidor distribuidor;
     private Tipopedido tipopedido;
     private Integer importeTotal = 0;
@@ -61,8 +69,7 @@ public class PedidosController implements Serializable {
     }
 
     public List<InvArticulos> completarArticulo(String query) {
-        List<InvArticulos> articulosFiltrados = new ArrayList<InvArticulos>();
-        articulos = invArticulosFacade.findAllInvArticulos();
+        List<InvArticulos> articulosFiltrados = new ArrayList<>();
         for(InvArticulos articulo:articulos) {
 
             if(articulo.getDescri().toLowerCase().contains(query)) {
@@ -71,6 +78,30 @@ public class PedidosController implements Serializable {
         }
 
         return articulosFiltrados;
+    }
+
+    public List<Persona> completarCliente(String query) {
+        List<Persona> clientesFiltrados = new ArrayList<>();
+        for(Persona persona: personas) {
+
+            if(persona.getNombreCompleto().toLowerCase().contains(query)) {
+                clientesFiltrados.add(persona);
+            }
+        }
+
+        return clientesFiltrados;
+    }
+
+    public List<Persona> completarDistribuidor(String query) {
+        List<Persona> distribuidoresFiltrados = new ArrayList<>();
+        for(Persona persona: distribuidores) {
+
+            if(persona.getNombreCompleto().toLowerCase().contains(query)) {
+                distribuidoresFiltrados.add(persona);
+            }
+        }
+
+        return distribuidoresFiltrados;
     }
 
     public void agregarArticulo()
@@ -94,6 +125,9 @@ public class PedidosController implements Serializable {
 
     public Pedidos prepareCreate() {
         selected = new Pedidos();
+        personas = personasFacade.findAllClientesPersonaInstitucion();
+        articulos = invArticulosFacade.findAllInvArticulos();
+        distribuidores = personasFacade.findAlldistribuidores();
         initializeEmbeddableKey();
         return selected;
     }
@@ -209,12 +243,12 @@ public class PedidosController implements Serializable {
 
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public Persona getPersonaElegido() {
+        return personaElegido;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setPersonaElegido(Persona personaElegido) {
+        this.personaElegido = personaElegido;
     }
 
     public Distribuidor getDistribuidor() {
@@ -271,5 +305,13 @@ public class PedidosController implements Serializable {
 
     public void setArticuloElegido(InvArticulos articuloElegido) {
         this.articuloElegido = articuloElegido;
+    }
+
+    public Persona getDistribuidorElegido() {
+        return distribuidorElegido;
+    }
+
+    public void setDistribuidorElegido(Persona distribuidorElegido) {
+        this.distribuidorElegido = distribuidorElegido;
     }
 }

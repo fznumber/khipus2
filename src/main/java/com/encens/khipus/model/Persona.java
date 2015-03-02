@@ -102,6 +102,13 @@ public class Persona implements Serializable {
     @ManyToOne(optional = true)
     private Departamento departamento;
 
+    @JoinColumn(name = "IDRETENCION", referencedColumnName = "IDRETENCION")
+    @ManyToOne(optional = true)
+    private Retencion retencion;
+
+    @JoinColumn(name = "IDTIPOCLIENTE", referencedColumnName = "IDTIPOCLIENTE")
+    @ManyToOne(optional = true)
+    private Tipocliente tipocliente;
 
     public Persona() {
     }
@@ -275,6 +282,22 @@ public class Persona implements Serializable {
 
     public void setDepartamento(Departamento departamento) {
         this.departamento = departamento;
+    }
+
+    public Retencion getRetencion() {
+        return retencion;
+    }
+
+    public void setRetencion(Retencion retencion) {
+        this.retencion = retencion;
+    }
+
+    public Tipocliente getTipocliente() {
+        return tipocliente;
+    }
+
+    public void setTipocliente(Tipocliente tipocliente) {
+        this.tipocliente = tipocliente;
     }
 
     @Override

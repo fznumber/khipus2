@@ -120,7 +120,7 @@ public class PersonasController implements Serializable {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = Persona.class)
+    @FacesConverter(value = "convertirPersona",forClass = Persona.class)
     public static class PersonasControllerConverter implements Converter {
 
         @Override
@@ -152,6 +152,8 @@ public class PersonasController implements Serializable {
             }
             if (object instanceof Persona) {
                 Persona o = (Persona) object;
+                if(o.getPiId() == null)
+                    return null;
                 return getStringKey(o.getPiId());
             } else {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Persona.class.getName()});
