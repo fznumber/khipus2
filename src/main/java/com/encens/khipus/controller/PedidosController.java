@@ -47,7 +47,6 @@ public class PedidosController implements Serializable {
     private Persona distribuidorElegido;
     private List<Persona> personas;
     private List<Persona> distribuidores;
-    private Distribuidor distribuidor;
     private Tipopedido tipopedido;
     private Integer importeTotal = 0;
     private InvArticulos articuloElegido;
@@ -249,14 +248,6 @@ public class PedidosController implements Serializable {
 
     public void setPersonaElegido(Persona personaElegido) {
         this.personaElegido = personaElegido;
-    }
-
-    public Distribuidor getDistribuidor() {
-        return distribuidor;
-    }
-
-    public void setDistribuidor(Distribuidor distribuidor) {
-        this.distribuidor = distribuidor;
     }
 
     public Tipopedido getTipopedido() {

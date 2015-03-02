@@ -11,14 +11,11 @@
         <p:dialog id="PedidosCreateDlg" widgetVar="PedidosCreateDialog" modal="true" resizable="true" width="680px" appendTo="@(body)" header="Crear pedido">
             <h:form id="PedidosCreateForm">
 
-                    <p:panel id="display" rendered="#{pedidosController.selected != null}" header="Registrar Pedidos" style="margin-bottom:20px">
-
-                        <div class="ui-grid-row">
-                            <div class="ui-grid-col-1"><p:outputLabel value="Cliente:" for="cliente" /></div>
-                            <div class="ui-grid-col-2">
+                    <p:panelGrid id="display" rendered="#{pedidosController.selected != null}" columns="6" >
+                        <p:outputLabel value="Cliente:" for="cliente" />
                                 <p:autoComplete id="cliente" value="#{pedidosController.personaElegido}" completeMethod="#{pedidosController.completarCliente}"
                                                                        var="cliente" itemLabel="#{cliente.nombreCompleto}" itemValue="#{cliente}" converter="convertirPersona" forceSelection="true">
-                                    <f:facet name="clientetip">
+                                    <f:facet name="itemtip">
                                         <h:panelGrid columns="2" cellpadding="5">
                                             <f:facet name="header">
                                                 <h:outputText styleClass="ui-theme ui-theme-#{cliente.nombreCompleto}" style="margin-left:50px" />
@@ -36,16 +33,12 @@
                                         </h:panelGrid>
                                     </f:facet>
                                 </p:autoComplete>
-                            </div>
-                            <div class="ui-grid-col-1"><p:outputLabel value="Nit:"/></div><div class="ui-grid-col-1"><p:outputLabel id="nit" value="#{pedidosController.cliente.nit}"/></div>
-                            <div class="ui-grid-col-1"><p:outputLabel value="% Descuento:"/></div><div class="ui-grid-col-1"><p:outputLabel id="descuento" value="#{pedidosController.cliente.descuento}"/></div>
-                        </div>
-                        <div class="ui-grid-row">
-                            <div class="ui-grid-col-1"><p:outputLabel value="Discribuidor:" for="distribuidor" /></div>
-                            <div class="ui-grid-col-2">
+                            <p:outputLabel value="Nit:" for="nit"/><p:outputLabel id="nit" value="#{pedidosController.personaElegido.nit}"/>
+                            <p:outputLabel value="% Descuento:" for="descuento"/><p:outputLabel id="descuento" value="#{pedidosController.personaElegido.descuento}" />
+                            <p:outputLabel value="Discribuidor:" for="distribuidor" />
                                 <p:autoComplete id="distribuidor" value="#{pedidosController.distribuidorElegido}" completeMethod="#{pedidosController.completarDistribuidor}"
                                                 var="distribuidor" itemLabel="#{distribuidor.nombreCompleto}" itemValue="#{distribuidor}" converter="convertirPersona" forceSelection="true">
-                                    <f:facet name="distribuidortip">
+                                    <f:facet name="itemtip">
                                         <h:panelGrid columns="2" cellpadding="5">
                                             <f:facet name="header">
                                                 <h:outputText styleClass="ui-theme ui-theme-#{distribuidor.nombreCompleto}" style="margin-left:50px" />
@@ -63,28 +56,20 @@
                                         </h:panelGrid>
                                     </f:facet>
                                 </p:autoComplete>
-                            </div>
-                            <div class="ui-grid-col-1"><p:outputLabel value="Tipo Cliente:"/></div>
-                            <div class="ui-grid-col-1"><p:outputLabel value="#{pedidosController.personaElegido.tipocliente}"/></div>
-                            <div class="ui-grid-col-1"><p:outputLabel value="% Retención:"/></div><div class="ui-grid-col-1"><p:outputLabel value="#{pedidosController.personaElegido.retencion}"/></div>
-                        </div>
-                        <div class="ui-grid-row">
-                            <div class="ui-grid-col-1"><p:outputLabel for="fechaEntrega" value="Fecha Entrega:" /></div>
-                            <div class="ui-grid-col-1"><p:calendar id="fechaEntrega" value="#{pedidosController.selected.fechaEntrega}" /></div>
-                            <div class="ui-grid-col-1"><p:outputLabel value="Tipo pedido:"/></div>
-                            <div class="ui-grid-col-1">
+                            <p:outputLabel value="Tipo Cliente:"/>
+                            <p:outputLabel value="#{pedidosController.personaElegido.tipocliente}"/>
+                            <p:outputLabel value="% Retención:"/><p:outputLabel value="#{pedidosController.personaElegido.retencion}"/>
+                        <p:outputLabel for="fechaEntrega" value="Fecha Entrega:" />
+                            <p:calendar id="fechaEntrega" value="#{pedidosController.selected.fechaEntrega}" />
+                            <p:outputLabel value="Tipo pedido:"/>
+
                                 <p:selectOneMenu id="tipo" value="#{pedidosController.selected.idtipopedido}" required="true" requiredMessage="campo requerido">
                                     <f:selectItems value="#{tipopedidoController.itemsAvailableSelectOne}"
                                                    var="tipoPedido"
                                                    itemValue="#{tipoPedido}"/>
                                 </p:selectOneMenu>
-                            </div>
-                            <div class="ui-grid-col-1"></div>
-                            <div class="ui-grid-col-1"></div>
-                            <div class="ui-grid-col-1"></div>
-                        </div>
 
-                    </p:panel>
+                    </p:panelGrid>
                     <p:commandButton actionListener="#{pedidosController.create}" value="#{bundle.Save}" update="display,:PedidosListForm:datalist,:PedidosListForm:growl" oncomplete="handleSubmit(args,'PedidosCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="PedidosCreateDialog.hide()"/>
 
