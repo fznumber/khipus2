@@ -104,9 +104,9 @@ public class Retencion implements Serializable {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return porcentage.toString()+"%";
+    public String getPorcentageString()
+    {
+        return porcentage.toString() +" %";
     }
 
     @XmlTransient

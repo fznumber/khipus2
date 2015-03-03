@@ -45,7 +45,7 @@
                         <p:selectBooleanButton id="retencion" value="#{clienteController.tieneRetencion}" onLabel="Retención" offLabel="Sin retención" onIcon="ui-icon-check" offIcon="ui-icon-close">
                             <p:ajax listener="#{clienteController.cambiarRetencion}" update="retencionCampo"/>
                         </p:selectBooleanButton>
-                        <p:outputLabel id="retencionCampo" value="#{clienteController.retencion}"/>
+                        <p:outputLabel id="retencionCampo" value="#{clienteController.retencion.porcentageString}"/>
                         <p:selectBooleanButton id="descuento" value="#{clienteController.tieneDescuento}" onLabel="Descuento" offLabel="Sin descuento" onIcon="ui-icon-check" offIcon="ui-icon-close">
                             <p:ajax update="descuentoCampo" />
                         </p:selectBooleanButton>

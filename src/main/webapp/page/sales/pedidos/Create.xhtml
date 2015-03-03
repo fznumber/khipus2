@@ -8,7 +8,7 @@
 
     <ui:composition>
 
-        <p:dialog id="PedidosCreateDlg" widgetVar="PedidosCreateDialog" modal="true" resizable="true" width="680px" appendTo="@(body)" header="Crear pedido">
+        <p:dialog id="PedidosCreateDlg" widgetVar="PedidosCreateDialog" modal="true" resizable="true" width="780px" appendTo="@(body)" header="Crear pedido">
             <h:form id="PedidosCreateForm">
 
                     <p:panelGrid id="display" rendered="#{pedidosController.selected != null}" columns="6" >
@@ -32,10 +32,13 @@
                                             <h:outputText value="#{cliente.departamento}" />
                                         </h:panelGrid>
                                     </f:facet>
+                                    <p:ajax event="itemSelect" update="nit,descuento,retencion,tipocliente"></p:ajax>
                                 </p:autoComplete>
-                            <p:outputLabel value="Nit:" for="nit"/><p:outputLabel id="nit" value="#{pedidosController.personaElegido.nit}"/>
-                            <p:outputLabel value="% Descuento:" for="descuento"/><p:outputLabel id="descuento" value="#{pedidosController.personaElegido.descuento}" />
-                            <p:outputLabel value="Discribuidor:" for="distribuidor" />
+                            <p:outputLabel value="Nit:" for="nit"/>
+                            <p:outputLabel id="nit" value="#{pedidosController.personaElegido.nit}"/>
+                            <p:outputLabel value="% Descuento:" for="descuento"/>
+                            <p:outputLabel id="descuento" value="#{pedidosController.personaElegido.descuento}" />
+                            <p:outputLabel value="Distribuidor:" for="distribuidor" />
                                 <p:autoComplete id="distribuidor" value="#{pedidosController.distribuidorElegido}" completeMethod="#{pedidosController.completarDistribuidor}"
                                                 var="distribuidor" itemLabel="#{distribuidor.nombreCompleto}" itemValue="#{distribuidor}" converter="convertirPersona" forceSelection="true">
                                     <f:facet name="itemtip">
@@ -56,9 +59,10 @@
                                         </h:panelGrid>
                                     </f:facet>
                                 </p:autoComplete>
-                            <p:outputLabel value="Tipo Cliente:"/>
-                            <p:outputLabel value="#{pedidosController.personaElegido.tipocliente}"/>
-                            <p:outputLabel value="% Retención:"/><p:outputLabel value="#{pedidosController.personaElegido.retencion}"/>
+                            <p:outputLabel value="Tipo Cliente:" for="tipocliente"/>
+                            <p:outputLabel id="tipocliente" value="#{pedidosController.personaElegido.tipocliente.nombre}"/>
+                            <p:outputLabel value="% Retención:" for="retencion"/>
+                            <p:outputLabel id="retencion" value="#{pedidosController.personaElegido.retencion.porcentageString}"/>
                         <p:outputLabel for="fechaEntrega" value="Fecha Entrega:" />
                             <p:calendar id="fechaEntrega" value="#{pedidosController.selected.fechaEntrega}" />
                             <p:outputLabel value="Tipo pedido:"/>

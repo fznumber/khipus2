@@ -51,84 +51,48 @@ public class Cliente extends Persona {
     @OneToMany(cascade = CascadeType.PERSIST,mappedBy = "cliente")
     private Collection<Ventaarticulo> ventaarticulos;
 
+    @Override
     public String getDireccion() {
-        return direccion;
+        return super.getDireccion();
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
+    @Override
     public Integer getTelefono() {
-        return telefono;
+        return super.getTelefono();
     }
 
-    public void setTelefono(Integer telefono) {
-        this.telefono = telefono;
-    }
-
+    @Override
     public String getNit() {
-        return nit;
+        return super.getNit();
     }
 
-    public void setNit(String nit) {
-        this.nit = nit;
+    @Override
+    public String getRazonsocial() {
+        return super.getRazonsocial();
     }
 
+    @Override
+    public Double getDescuento() {
+        return super.getDescuento();
+    }
+
+    @Override
     public String getCodigo() {
-        return codigo;
+        return super.getCodigo();
     }
 
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
+    @Override
+    public Retencion getRetencion() {
+        return super.getRetencion();
+    }
+
+    @Override
+    public Tipocliente getTipocliente() {
+        return super.getTipocliente();
     }
 
     public Collection<Ventaarticulo> getVentaarticulos() {
         return ventaarticulos;
-    }
-
-    public void setVentaarticulos(Collection<Ventaarticulo> ventaarticulos) {
-        this.ventaarticulos = ventaarticulos;
-    }
-
-    public Retencion getRetencion() {
-        return retencion;
-    }
-
-    public void setRetencion(Retencion retencion) {
-        this.retencion = retencion;
-    }
-
-    public Double getDescuento() {
-        return descuento;
-    }
-    public String getDescuentoPorcentaje()
-    {
-        if(descuento != null)
-            return descuento.toString()+" "+"%";
-        else
-            return "";
-
-    }
-
-    public void setDescuento(Double descuento) {
-        this.descuento = descuento;
-    }
-
-    public Tipocliente getTipocliente() {
-        return tipocliente;
-    }
-
-    public void setTipocliente(Tipocliente tipocliente) {
-        this.tipocliente = tipocliente;
-    }
-
-    public String getRazonsocial() {
-        return razonsocial;
-    }
-
-    public void setRazonsocial(String razonsocial) {
-        this.razonsocial = razonsocial;
     }
 
     @Override
