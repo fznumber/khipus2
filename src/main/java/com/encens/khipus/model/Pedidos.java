@@ -102,9 +102,11 @@ public class Pedidos implements Serializable {
     @Column(name = "SUPERVISOR")
     private BigInteger supervisor;
     @Column(name = "PORCEN_DESCUENTO")
-    private BigInteger porcenDescuento;
+    private Double porcenDescuento;
     @Column(name = "PORCEN_RETENCION")
-    private BigInteger porcenRetencion;
+    private Double porcenRetencion;
+    @Column(name = "ESTADO")
+    private String estado;
     @JoinColumn(name = "IDCLIENTE", referencedColumnName = "IDPERSONA")
     @ManyToOne(optional = false)
     private Cliente idcliente;
@@ -251,19 +253,19 @@ public class Pedidos implements Serializable {
         this.supervisor = supervisor;
     }
 
-    public BigInteger getPorcenDescuento() {
+    public Double getPorcenDescuento() {
         return porcenDescuento;
     }
 
-    public void setPorcenDescuento(BigInteger porcenDescuento) {
+    public void setPorcenDescuento(Double porcenDescuento) {
         this.porcenDescuento = porcenDescuento;
     }
 
-    public BigInteger getPorcenRetencion() {
+    public Double getPorcenRetencion() {
         return porcenRetencion;
     }
 
-    public void setPorcenRetencion(BigInteger porcenRetencion) {
+    public void setPorcenRetencion(Double porcenRetencion) {
         this.porcenRetencion = porcenRetencion;
     }
 
@@ -305,6 +307,18 @@ public class Pedidos implements Serializable {
 
     public void setIdtipopedido(Tipopedido idtipopedido) {
         this.idtipopedido = idtipopedido;
+    }
+
+    public String getEstado() {
+        if(estado == null)
+        {
+            estado = "ACTIVO";
+        }
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     @Override

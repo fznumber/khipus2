@@ -48,8 +48,6 @@ public class Cliente extends Persona {
     @JoinColumn(name = "IDTIPOCLIENTE", referencedColumnName = "IDTIPOCLIENTE")
     @ManyToOne(optional = true)
     private Tipocliente tipocliente;
-    @OneToMany(cascade = CascadeType.PERSIST,mappedBy = "cliente")
-    private Collection<Ventaarticulo> ventaarticulos;
 
     @Override
     public String getDireccion() {
@@ -91,9 +89,6 @@ public class Cliente extends Persona {
         return super.getTipocliente();
     }
 
-    public Collection<Ventaarticulo> getVentaarticulos() {
-        return ventaarticulos;
-    }
 
     @Override
     public String toString() {

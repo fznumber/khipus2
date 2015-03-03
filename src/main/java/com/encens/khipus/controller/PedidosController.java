@@ -1,9 +1,6 @@
 package com.encens.khipus.controller;
 
-import com.encens.khipus.ejb.DistribuidorFacade;
-import com.encens.khipus.ejb.InvArticulosFacade;
-import com.encens.khipus.ejb.PedidosFacade;
-import com.encens.khipus.ejb.PersonasFacade;
+import com.encens.khipus.ejb.*;
 import com.encens.khipus.model.*;
 
 import java.io.Serializable;
@@ -37,6 +34,10 @@ public class PedidosController implements Serializable {
     private PersonasFacade personasFacade;
     @EJB
     private DistribuidorFacade distribuidorFacade;
+    @EJB
+    private VentaarticuloFacade ventaarticuloFacade;
+    @EJB
+    private VentaclienteFacade ventaclienteFacade;
 
     private List<ArticulosPedido> articulosPedidos = new ArrayList<>();
     private List<ArticulosPedido> articulosPedidosElegidos = new ArrayList<>();
@@ -50,6 +51,7 @@ public class PedidosController implements Serializable {
     private Tipopedido tipopedido;
     private Integer importeTotal = 0;
     private InvArticulos articuloElegido;
+    private List<Ventacliente> ventaclientes;
     public PedidosController() {
     }
 
@@ -107,10 +109,18 @@ public class PedidosController implements Serializable {
     {
         if(articuloElegido == null)
         return;
+        Ventaarticulo ventaarticulo = ventaarticuloFacade.findByInvArticulo(articuloElegido);
+        /*Ventacliente ventacliente = ventaclienteFacade.findByInvArticuloPersona(ventaarticulo, personaElegido);*/
         ArticulosPedido articulosPedido = new ArticulosPedido();
+
         articulosPedido.setInvArticulos(articuloElegido);
         articulosPedido.setCantidad(BigInteger.ZERO);
-        articulosPedido.setPrecio(0.0);
+        articulosPedido.setPrecioInv(ventaarticulo.getPrecio());
+        /*if(ventacliente != null) {
+            articulosPedido.setPrecio(ventacliente.getPrecioespecial());
+        }
+        else*/
+        articulosPedido.setPrecio(ventaarticulo.getPrecio());
         articulosPedido.setReposicion(BigInteger.ZERO);
         articulosPedido.setTotal(0.0);
         articulosPedido.setTotalInv(BigInteger.ZERO);
@@ -132,6 +142,8 @@ public class PedidosController implements Serializable {
     }
 
     public void create() {
+        selected.setPorcenDescuento(personaElegido.getDescuento());
+        selected.setPorcenRetencion(personaElegido.getRetencion().getPorcentage());
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PedidosCreated"));
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.

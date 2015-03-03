@@ -5,8 +5,9 @@
  */
 package com.encens.khipus.ejb;
 
-import com.encens.khipus.model.InvArticulos;
+import com.encens.khipus.model.Persona;
 import com.encens.khipus.model.Ventaarticulo;
+import com.encens.khipus.model.Ventacliente;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -17,7 +18,7 @@ import javax.persistence.PersistenceContext;
  * @author Diego
  */
 @Stateless
-public class VentaarticuloFacade extends AbstractFacade<Ventaarticulo> {
+public class VentaclienteFacade extends AbstractFacade<Ventacliente> {
     @PersistenceContext(unitName = "khipusPU")
     private EntityManager em;
 
@@ -26,19 +27,21 @@ public class VentaarticuloFacade extends AbstractFacade<Ventaarticulo> {
         return em;
     }
 
-    public VentaarticuloFacade() {
-        super(Ventaarticulo.class);
+    public VentaclienteFacade() {
+        super(Ventacliente.class);
     }
 
-    public Ventaarticulo findByInvArticulo(InvArticulos articuloElegido) {
-        Ventaarticulo ventaarticulo = null;
+    public Ventacliente findByInvArticuloPersona(Ventaarticulo ventaarticulo, Persona personaElegido) {
+        Ventacliente ventacliente = null;
         try{
-            ventaarticulo = (Ventaarticulo)em.createNamedQuery("Ventaarticulo.findByInvArticulo")
-                    .setParameter("invArticulos",articuloElegido)
-                    .getSingleResult();
+            ventacliente = (Ventacliente)em.createNamedQuery("Ventacliente.findByVentaclientePersona")
+            .setParameter("ventaarticulo",ventaarticulo)
+            .setParameter("persona",personaElegido)
+            .getSingleResult();
+
         }catch (NoResultException e){
             return null;
         }
-        return ventaarticulo;
+        return ventacliente;
     }
 }

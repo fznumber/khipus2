@@ -26,6 +26,8 @@ import java.util.Collection;
     @NamedQuery(name = "Retencion.findActive", query = "SELECT r FROM Retencion r WHERE r.estado = true"),
     @NamedQuery(name = "Retencion.findByPorcentage", query = "SELECT r FROM Retencion r WHERE r.porcentage = :porcentage")})
 public class Retencion implements Serializable {
+    @OneToMany(mappedBy = "idretencion")
+    private Collection<Institucion> institucionCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "IDRETENCION")
@@ -116,5 +118,14 @@ public class Retencion implements Serializable {
 
     public void setClientes(Collection<Cliente> clientes) {
         this.clientes = clientes;
+    }
+
+    @XmlTransient
+    public Collection<Institucion> getInstitucionCollection() {
+        return institucionCollection;
+    }
+
+    public void setInstitucionCollection(Collection<Institucion> institucionCollection) {
+        this.institucionCollection = institucionCollection;
     }
 }

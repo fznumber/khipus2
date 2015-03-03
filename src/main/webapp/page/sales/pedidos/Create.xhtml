@@ -74,6 +74,32 @@
                                 </p:selectOneMenu>
 
                     </p:panelGrid>
+                    <p:dataTable id="articulosTable" var="articulo" value="#{pedidosController.articulosPedidosElegidos}" selectionMode="multiple" selection="#{pedidosController.articulosPedidosElegidos}" rowKey="#{articulo.idarticulospedido}">
+                        <f:facet name="header">
+                            Articulos Elegidos
+                        </f:facet>
+                        <p:column headerText="Producto">
+                            <h:outputText value="#{articulo.invArticulos.descri}" />
+                        </p:column>
+                        <p:column headerText="Cant.">
+                            <h:outputText value="#{articulo.cantidad}" />
+                        </p:column>
+                        <p:column headerText="P.U.">
+                            <h:outputText value="#{articulo.precio}" />
+                        </p:column>
+                        <p:column headerText="Importe">
+                            <h:outputText value="#{articulo.}" />
+                        </p:column>
+                        <p:column headerText="Repos.">
+                            <h:outputText value="#{articulo}" />
+                        </p:column>
+                        <p:column headerText="Cant. T.">
+                            <h:outputText value="#{articulo.}" />
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton process="articulosTable" update=":form:multiCarDetail" icon="ui-icon-search" value="View" oncomplete="PF('multiCarDialog').show()" />
+                        </f:facet>
+                    </p:dataTable>
                     <p:commandButton actionListener="#{pedidosController.create}" value="#{bundle.Save}" update="display,:PedidosListForm:datalist,:PedidosListForm:growl" oncomplete="handleSubmit(args,'PedidosCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="PedidosCreateDialog.hide()"/>
 

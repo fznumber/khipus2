@@ -31,6 +31,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Tipocliente.findByIdtipocliente", query = "SELECT t FROM Tipocliente t WHERE t.idtipocliente = :idtipocliente"),
     @NamedQuery(name = "Tipocliente.findByNombre", query = "SELECT t FROM Tipocliente t WHERE t.nombre = :nombre")})
 public class Tipocliente implements Serializable {
+    @OneToMany(mappedBy = "idtipocliente")
+    private Collection<Institucion> institucionCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "IDTIPOCLIENTE")
@@ -96,6 +98,15 @@ public class Tipocliente implements Serializable {
     @Override
     public String toString() {
         return nombre;
+    }
+
+    @XmlTransient
+    public Collection<Institucion> getInstitucionCollection() {
+        return institucionCollection;
+    }
+
+    public void setInstitucionCollection(Collection<Institucion> institucionCollection) {
+        this.institucionCollection = institucionCollection;
     }
     
 }

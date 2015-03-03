@@ -11,6 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -24,6 +25,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Departamento.findByIddepartamento", query = "SELECT d FROM Departamento d WHERE d.iddepartamento = :iddepartamento"),
     @NamedQuery(name = "Departamento.findByNombre", query = "SELECT d FROM Departamento d WHERE d.nombre = :nombre")})
 public class Departamento implements Serializable {
+    @OneToMany(mappedBy = "iddepartamento")
+    private Collection<Institucion> institucionCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @NotNull
@@ -89,6 +92,15 @@ public class Departamento implements Serializable {
     @Override
     public String toString() {
         return nombre;
+    }
+
+    @XmlTransient
+    public Collection<Institucion> getInstitucionCollection() {
+        return institucionCollection;
+    }
+
+    public void setInstitucionCollection(Collection<Institucion> institucionCollection) {
+        this.institucionCollection = institucionCollection;
     }
     
 }

@@ -101,7 +101,7 @@ public class InvArticulos implements Serializable {
     @ManyToOne(optional = false)
     private InvGrupos invGrupos;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "invArticulos")
-    private Collection<Ventaarticulo> ventaarticuloCollection;
+    private Collection<Ventaarticulo> ventaArticulos;
 
     public InvArticulos() {
     }
@@ -251,12 +251,12 @@ public class InvArticulos implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Ventaarticulo> getVentaarticuloCollection() {
-        return ventaarticuloCollection;
+    public Collection<Ventaarticulo> getVentaArticulos() {
+        return ventaArticulos;
     }
 
-    public void setVentaarticuloCollection(Collection<Ventaarticulo> ventaarticuloCollection) {
-        this.ventaarticuloCollection = ventaarticuloCollection;
+    public void setVentaArticulos(Collection<Ventaarticulo> ventaarticuloCollection) {
+        this.ventaArticulos = ventaarticuloCollection;
     }
 
     @Override
