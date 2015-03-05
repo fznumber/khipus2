@@ -6,6 +6,7 @@ import com.encens.khipus.ejb.PersonasFacade;
 import com.encens.khipus.ejb.RetencionFacade;
 import com.encens.khipus.model.Cliente;
 import com.encens.khipus.model.Institucion;
+import com.encens.khipus.model.Persona;
 import com.encens.khipus.model.Retencion;
 import com.encens.khipus.util.JSFUtil;
 import com.encens.khipus.util.JSFUtil.PersistAction;
@@ -33,7 +34,7 @@ public class ClienteController implements Serializable {
     private RetencionFacade retencionFacade;
     @EJB
     private PersonasFacade personasFacade;
-    private List<Cliente> items = null;
+    private List<Persona> items = null;
     private Cliente selected;
     private Boolean esPersona;
     private Boolean tieneRetencion;
@@ -115,9 +116,9 @@ public class ClienteController implements Serializable {
         }
     }
 
-    public List<Cliente> getItems() {
+    public List<Persona> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = personasFacade.findAll();
         }
         return items;
     }
@@ -208,10 +209,10 @@ public class ClienteController implements Serializable {
     }
 
     public Boolean getEsPersona() {
-        if(selected.getRazonsocial() != null)
+        /*if(selected.getRazonsocial() != null)
             esPersona = false;
         else
-            esPersona = true;
+            esPersona = true;*/
 
         return esPersona;
     }

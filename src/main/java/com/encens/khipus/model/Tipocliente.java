@@ -31,8 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Tipocliente.findByIdtipocliente", query = "SELECT t FROM Tipocliente t WHERE t.idtipocliente = :idtipocliente"),
     @NamedQuery(name = "Tipocliente.findByNombre", query = "SELECT t FROM Tipocliente t WHERE t.nombre = :nombre")})
 public class Tipocliente implements Serializable {
-    @OneToMany(mappedBy = "idtipocliente")
-    private Collection<Institucion> institucionCollection;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "IDTIPOCLIENTE")
@@ -41,7 +40,7 @@ public class Tipocliente implements Serializable {
     @Column(name = "NOMBRE")
     private String nombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipocliente")
-    private Collection<Cliente> clientes;
+    private Collection<Persona> personas;
 
     public Tipocliente() {
     }
@@ -67,12 +66,12 @@ public class Tipocliente implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Cliente> getClientes() {
-        return clientes;
+    public Collection<Persona> getClientes() {
+        return personas;
     }
 
-    public void setClientes(Collection<Cliente> clienteCollection) {
-        this.clientes = clienteCollection;
+    public void setClientes(Collection<Persona> personasCollec) {
+        this.personas = personasCollec;
     }
 
     @Override
@@ -98,15 +97,6 @@ public class Tipocliente implements Serializable {
     @Override
     public String toString() {
         return nombre;
-    }
-
-    @XmlTransient
-    public Collection<Institucion> getInstitucionCollection() {
-        return institucionCollection;
-    }
-
-    public void setInstitucionCollection(Collection<Institucion> institucionCollection) {
-        this.institucionCollection = institucionCollection;
     }
     
 }

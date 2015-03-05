@@ -1,7 +1,9 @@
 package com.encens.khipus.controller;
 
 import com.encens.khipus.ejb.PersonasFacade;
+import com.encens.khipus.ejb.RetencionFacade;
 import com.encens.khipus.model.Persona;
+import com.encens.khipus.model.Retencion;
 import com.encens.khipus.util.JSFUtil;
 import com.encens.khipus.util.JSFUtil.PersistAction;
 import java.io.Serializable;
@@ -11,8 +13,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
-import javax.faces.application.FacesMessage;
-import javax.faces.convert.ConverterException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -20,16 +20,22 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@Named("personasController")
+@Named("personaController")
 @SessionScoped
-public class PersonasController implements Serializable {
+public class PersonaController implements Serializable {
 
     @EJB
     private PersonasFacade ejbFacade;
+    @EJB
+    private RetencionFacade retencionFacade;
     private List<Persona> items = null;
     private Persona selected;
+    private Boolean esPersona;
+    private Boolean tieneRetencion;
+    private Boolean tieneDescuento;
+    private Retencion retencion;
 
-    public PersonasController() {
+    public PersonaController() {
     }
 
     public Persona getSelected() {
@@ -53,10 +59,22 @@ public class PersonasController implements Serializable {
     public Persona prepareCreate() {
         selected = new Persona();
         initializeEmbeddableKey();
+        esPersona = true;
+        tieneRetencion = false;
+        tieneDescuento = false;
         return selected;
     }
 
     public void create() {
+        if(retencion != null)
+            selected.setRetencion(retencion);
+        if(esPersona) {
+            selected.setRazonsocial(null);
+        }else{
+            selected.setNom("");
+            selected.setAp("");
+            selected.setAm("");
+        }
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PersonasCreated"));
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
@@ -130,7 +148,7 @@ public class PersonasController implements Serializable {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            PersonasController controller = (PersonasController) facesContext.getApplication().getELResolver().
+            PersonaController controller = (PersonaController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "personasController");
             return controller.getPersonas(getKey(value));
         }
@@ -165,4 +183,35 @@ public class PersonasController implements Serializable {
 
     }
 
+    public Boolean getEsPersona() {
+        return esPersona;
+    }
+
+    public void setEsPersona(Boolean esPersona) {
+        this.esPersona = esPersona;
+    }
+
+    public Boolean getTieneRetencion() {
+        return tieneRetencion;
+    }
+
+    public void setTieneRetencion(Boolean tieneRetencion) {
+        this.tieneRetencion = tieneRetencion;
+    }
+
+    public Boolean getTieneDescuento() {
+        return tieneDescuento;
+    }
+
+    public void setTieneDescuento(Boolean tieneDescuento) {
+        this.tieneDescuento = tieneDescuento;
+    }
+
+    public Retencion getRetencion() {
+        return retencion;
+    }
+
+    public void setRetencion(Retencion retencion) {
+        this.retencion = retencion;
+    }
 }

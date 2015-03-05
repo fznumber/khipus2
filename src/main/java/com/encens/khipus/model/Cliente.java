@@ -42,12 +42,6 @@ public class Cliente extends Persona {
     @Size(max = 10)
     @Column(name = "CODIGOCLIENTE")
     private String codigo;
-    @JoinColumn(name = "IDRETENCION", referencedColumnName = "IDRETENCION")
-    @ManyToOne(optional = true)
-    private Retencion retencion;
-    @JoinColumn(name = "IDTIPOCLIENTE", referencedColumnName = "IDTIPOCLIENTE")
-    @ManyToOne(optional = true)
-    private Tipocliente tipocliente;
 
     @Override
     public String getDireccion() {
