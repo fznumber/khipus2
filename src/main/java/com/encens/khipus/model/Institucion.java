@@ -22,8 +22,6 @@ import javax.xml.bind.annotation.XmlRootElement;
         @NamedQuery(name = "Institucion.findByRazonsocial", query = "SELECT i FROM Institucion i WHERE i.razonsocial = :razonsocial")})
 public class Institucion extends Persona {
 
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "RAZONSOCIAL")
     private String razonsocial;
@@ -41,12 +39,6 @@ public class Institucion extends Persona {
 
     @Override
     public String toString() {
-        return razonsocial;
-    }
-
-    @Override
-    public String getNombreCompleto()
-    {
         return razonsocial;
     }
 

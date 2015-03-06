@@ -88,13 +88,5 @@ public class Cliente extends Persona {
     public String toString() {
         return "com.encens.khipus.model.Cliente[ piId=" + super.getPiId() + " ]";
     }
-
-    @Override
-    public String getNombreCompleto()
-    {
-        if(razonsocial != null)
-        return razonsocial;
-        return  super.getNombreCompleto();
-    }
     
 }

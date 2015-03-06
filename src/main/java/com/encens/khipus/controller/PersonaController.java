@@ -1,9 +1,7 @@
 package com.encens.khipus.controller;
 
-import com.encens.khipus.ejb.PersonasFacade;
-import com.encens.khipus.ejb.RetencionFacade;
-import com.encens.khipus.model.Persona;
-import com.encens.khipus.model.Retencion;
+import com.encens.khipus.ejb.*;
+import com.encens.khipus.model.*;
 import com.encens.khipus.util.JSFUtil;
 import com.encens.khipus.util.JSFUtil.PersistAction;
 import java.io.Serializable;
@@ -28,6 +26,10 @@ public class PersonaController implements Serializable {
     private PersonasFacade ejbFacade;
     @EJB
     private RetencionFacade retencionFacade;
+    @EJB
+    private ClienteFacade clienteFacade;
+    @EJB
+    private InstitucionFacade institucionFacade;
     private List<Persona> items = null;
     private Persona selected;
     private Boolean esPersona;
@@ -66,19 +68,49 @@ public class PersonaController implements Serializable {
     }
 
     public void create() {
-        if(retencion != null)
-            selected.setRetencion(retencion);
+
         if(esPersona) {
-            selected.setRazonsocial(null);
-        }else{
-            selected.setNom("");
-            selected.setAp("");
-            selected.setAm("");
+            Cliente cliente = new Cliente();
+            cliente.setAm(selected.getAm());
+            cliente.setAp(selected.getAp());
+            cliente.setNom(selected.getNom());
+            cliente.setDescuento(selected.getDescuento());
+            cliente.setNroDoc(selected.getNroDoc());
+            cliente.setDireccion(selected.getDireccion());
+            cliente.setDepartamento(selected.getDepartamento());
+            cliente.setNit(selected.getNit());
+            cliente.setSexo(selected.getSexo());
+            cliente.setTelefono(selected.getTelefono());
+            cliente.setTipocliente(selected.getTipocliente());
+            cliente.setRetencion(retencion);
+            clienteFacade.create(cliente);
         }
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PersonasCreated"));
+        else {
+            Institucion institucion = new Institucion();
+            institucion.setRazonsocial(selected.getRazonsocial());
+            institucion.setDescuento(selected.getDescuento());
+            institucion.setDireccion(selected.getDireccion());
+            institucion.setDepartamento(selected.getDepartamento());
+            institucion.setNit(selected.getNit());
+            institucion.setTelefono(selected.getTelefono());
+            institucion.setTipocliente(selected.getTipocliente());
+            institucion.setRetencion(retencion);
+            institucionFacade.create(institucion);
+        }
+        //persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PersonasCreated"));
+        JSFUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ClienteCreated"));
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
+    }
+
+    public void cambiarRetencion()
+    {
+        if(tieneRetencion)
+            retencion = retencionFacade.findActivo();
+        else
+            retencion = null;
+        selected.setRetencion(retencion);
     }
 
     public void update() {

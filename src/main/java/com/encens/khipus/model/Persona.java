@@ -326,7 +326,7 @@ public class Persona implements Serializable {
     }
 
     public String getNombreCompleto(){
-        if(tipoPersona.equals("cliente"))
+        if(nom!=null)
             return nom+" "+ap+" "+am;
         else
             return razonsocial;
