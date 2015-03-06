@@ -97,7 +97,7 @@ public class Tipopedido implements Serializable {
 
     @Override
     public String toString() {
-        return "com.encens.khipus.model.Tipopedido[ idtipopedido=" + idtipopedido + " ]";
+        return nombre;
     }
     
 }

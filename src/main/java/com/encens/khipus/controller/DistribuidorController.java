@@ -58,6 +58,7 @@ public class DistribuidorController implements Serializable {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("DistribuidorCreated"));
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
+            selected = new Distribuidor();
         }
     }
 
@@ -71,6 +72,11 @@ public class DistribuidorController implements Serializable {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
+    }
+
+    public void cancel()
+    {
+        selected = new Distribuidor(); // Remove selection
     }
 
     public List<Distribuidor> getItems() {

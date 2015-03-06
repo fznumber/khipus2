@@ -127,7 +127,7 @@ public class InvArticulosController implements Serializable {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = InvArticulos.class)
+    @FacesConverter(value = "convertirArticulos",forClass = InvArticulos.class)
     public static class InvArticulosControllerConverter implements Converter {
 
         private static final String SEPARATOR = "#";
@@ -140,7 +140,8 @@ public class InvArticulosController implements Serializable {
             }
             InvArticulosController controller = (InvArticulosController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "invArticulosController");
-            return controller.getInvArticulos(getKey(value));
+
+            return controller.getInvArticulos(value);
         }
 
         com.encens.khipus.model.InvArticulosPK getKey(String value) {
@@ -162,12 +163,14 @@ public class InvArticulosController implements Serializable {
 
         @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
-            if (object == null) {
+            if (object == null ) {
                 return null;
             }
             if (object instanceof InvArticulos) {
                 InvArticulos o = (InvArticulos) object;
-                return getStringKey(o.getInvArticulosPK());
+                if(o.getInvArticulosPK() == null)
+                    return null;
+                return o.getInvArticulosPK().getCodArt();
             } else {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), InvArticulos.class.getName()});
                 return null;

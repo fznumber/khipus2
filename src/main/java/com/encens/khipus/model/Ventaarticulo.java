@@ -6,6 +6,8 @@
 package com.encens.khipus.model;
 
 import java.io.Serializable;
+import java.util.Collection;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,8 +16,10 @@ import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -28,25 +32,22 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Ventaarticulo.findAll", query = "SELECT v FROM Ventaarticulo v"),
     @NamedQuery(name = "Ventaarticulo.findByIdventaarticulo", query = "SELECT v FROM Ventaarticulo v WHERE v.idventaarticulo = :idventaarticulo"),
     @NamedQuery(name = "Ventaarticulo.findByPrecio", query = "SELECT v FROM Ventaarticulo v WHERE v.precio = :precio"),
-    @NamedQuery(name = "Ventaarticulo.findByPrecioespecial", query = "SELECT v FROM Ventaarticulo v WHERE v.precioespecial = :precioespecial")})
+    @NamedQuery(name = "Ventaarticulo.findByInvArticulo", query = "SELECT v FROM Ventaarticulo v WHERE v.invArticulos = :invArticulos")})
 public class Ventaarticulo implements Serializable {
-    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "IDVENTAARTICULO")
     private Long idventaarticulo;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "PRECIO")
     private Double precio;
-    @Column(name = "PRECIOESPECIAL")
-    private Double precioespecial;
-    @JoinColumn(name = "IDCLIENTE", referencedColumnName = "pi_id")
-    @ManyToOne(optional = false)
-    private Cliente cliente;
     @JoinColumns({
         @JoinColumn(name = "NO_CIA", referencedColumnName = "NO_CIA"),
         @JoinColumn(name = "COD_ART", referencedColumnName = "COD_ART")})
     @ManyToOne(optional = false)
     private InvArticulos invArticulos;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ventaarticulo")
+    private Collection<Ventacliente> ventaclientes;
+    private static final long serialVersionUID = 1L;
 
     public Ventaarticulo() {
     }
@@ -69,22 +70,6 @@ public class Ventaarticulo implements Serializable {
 
     public void setPrecio(Double precio) {
         this.precio = precio;
-    }
-
-    public Double getPrecioespecial() {
-        return precioespecial;
-    }
-
-    public void setPrecioespecial(Double precioespecial) {
-        this.precioespecial = precioespecial;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente idcliente) {
-        this.cliente = idcliente;
     }
 
     public InvArticulos getInvArticulos() {
@@ -118,6 +103,15 @@ public class Ventaarticulo implements Serializable {
     @Override
     public String toString() {
         return "com.encens.khipus.model.Ventaarticulo[ idventaarticulo=" + idventaarticulo + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Ventacliente> getVentaclientes() {
+        return ventaclientes;
+    }
+
+    public void setVentaclientes(Collection<Ventacliente> ventaclienteCollection) {
+        this.ventaclientes = ventaclienteCollection;
     }
     
 }

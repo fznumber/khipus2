@@ -1,13 +1,7 @@
 package com.encens.khipus.controller;
 
-import com.encens.khipus.ejb.ClienteFacade;
-import com.encens.khipus.ejb.InstitucionFacade;
-import com.encens.khipus.ejb.PersonasFacade;
-import com.encens.khipus.ejb.RetencionFacade;
-import com.encens.khipus.model.Cliente;
-import com.encens.khipus.model.Institucion;
-import com.encens.khipus.model.Persona;
-import com.encens.khipus.model.Retencion;
+import com.encens.khipus.ejb.*;
+import com.encens.khipus.model.*;
 import com.encens.khipus.util.JSFUtil;
 import com.encens.khipus.util.JSFUtil.PersistAction;
 import java.io.Serializable;
@@ -24,34 +18,33 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@Named("clienteController")
+@Named("personaController")
 @SessionScoped
-public class ClienteController implements Serializable {
+public class PersonaController implements Serializable {
 
     @EJB
-    private ClienteFacade ejbFacade;
+    private PersonasFacade ejbFacade;
     @EJB
     private RetencionFacade retencionFacade;
     @EJB
-    private PersonasFacade personasFacade;
+    private ClienteFacade clienteFacade;
+    @EJB
+    private InstitucionFacade institucionFacade;
     private List<Persona> items = null;
-    private Cliente selected;
+    private Persona selected;
     private Boolean esPersona;
     private Boolean tieneRetencion;
     private Boolean tieneDescuento;
     private Retencion retencion;
 
-    public ClienteController() {
+    public PersonaController() {
     }
 
-    public Cliente getSelected() {
-        if(selected == null && ejbFacade.findAll().size() >0)
-            selected = ejbFacade.findAll().get(0);
-
+    public Persona getSelected() {
         return selected;
     }
 
-    public void setSelected(Cliente selected) {
+    public void setSelected(Persona selected) {
         this.selected = selected;
     }
 
@@ -61,17 +54,54 @@ public class ClienteController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private ClienteFacade getFacade() {
+    private PersonasFacade getFacade() {
         return ejbFacade;
     }
 
-    public Cliente prepareCreate() {
-        selected = new Cliente();
+    public Persona prepareCreate() {
+        selected = new Persona();
         initializeEmbeddableKey();
         esPersona = true;
         tieneRetencion = false;
         tieneDescuento = false;
         return selected;
+    }
+
+    public void create() {
+
+        if(esPersona) {
+            Cliente cliente = new Cliente();
+            cliente.setAm(selected.getAm());
+            cliente.setAp(selected.getAp());
+            cliente.setNom(selected.getNom());
+            cliente.setDescuento(selected.getDescuento());
+            cliente.setNroDoc(selected.getNroDoc());
+            cliente.setDireccion(selected.getDireccion());
+            cliente.setDepartamento(selected.getDepartamento());
+            cliente.setNit(selected.getNit());
+            cliente.setSexo(selected.getSexo());
+            cliente.setTelefono(selected.getTelefono());
+            cliente.setTipocliente(selected.getTipocliente());
+            cliente.setRetencion(retencion);
+            clienteFacade.create(cliente);
+        }
+        else {
+            Institucion institucion = new Institucion();
+            institucion.setRazonsocial(selected.getRazonsocial());
+            institucion.setDescuento(selected.getDescuento());
+            institucion.setDireccion(selected.getDireccion());
+            institucion.setDepartamento(selected.getDepartamento());
+            institucion.setNit(selected.getNit());
+            institucion.setTelefono(selected.getTelefono());
+            institucion.setTipocliente(selected.getTipocliente());
+            institucion.setRetencion(retencion);
+            institucionFacade.create(institucion);
+        }
+        //persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PersonasCreated"));
+        JSFUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ClienteCreated"));
+        if (!JSFUtil.isValidationFailed()) {
+            items = null;    // Invalidate list of items to trigger re-query.
+        }
     }
 
     public void cambiarRetencion()
@@ -80,36 +110,15 @@ public class ClienteController implements Serializable {
             retencion = retencionFacade.findActivo();
         else
             retencion = null;
-    }
-
-    public void create() {
-        if(retencion != null)
         selected.setRetencion(retencion);
-        if(esPersona) {
-            selected.setRazonsocial(null);
-        }else{
-            selected.setNom("");
-            selected.setAp("");
-            selected.setAm("");
-        }
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("ClienteCreated"));
-        /*personasFacade.create(selected);*/
-        /*JSFUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ClienteCreated"));*/
-        if (!JSFUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
-        }
-    }
-
-    public void cancel(){
-        selected = new Cliente();
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("ClienteUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PersonasUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("ClienteDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("PersonasDeleted"));
         if (!JSFUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
@@ -118,7 +127,7 @@ public class ClienteController implements Serializable {
 
     public List<Persona> getItems() {
         if (items == null) {
-            items = personasFacade.findAll();
+            items = getFacade().findAll();
         }
         return items;
     }
@@ -127,10 +136,6 @@ public class ClienteController implements Serializable {
         if (selected != null) {
             setEmbeddableKeys();
             try {
-                /*if(persistAction == PersistAction.CREATE)
-                {
-                    getFacade().create(selected);
-                }*/
                 if (persistAction != PersistAction.DELETE) {
                     getFacade().edit(selected);
                 } else {
@@ -155,29 +160,29 @@ public class ClienteController implements Serializable {
         }
     }
 
-    public Cliente getCliente(java.lang.Long id) {
+    public Persona getPersonas(java.lang.Long id) {
         return getFacade().find(id);
     }
 
-    public List<Cliente> getItemsAvailableSelectMany() {
+    public List<Persona> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<Cliente> getItemsAvailableSelectOne() {
+    public List<Persona> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = Cliente.class)
-    public static class ClienteControllerConverter implements Converter {
+    @FacesConverter(value = "convertirPersona",forClass = Persona.class)
+    public static class PersonasControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            ClienteController controller = (ClienteController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "clienteController");
-            return controller.getCliente(getKey(value));
+            PersonaController controller = (PersonaController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "personasController");
+            return controller.getPersonas(getKey(value));
         }
 
         java.lang.Long getKey(String value) {
@@ -197,11 +202,13 @@ public class ClienteController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Cliente) {
-                Cliente o = (Cliente) object;
+            if (object instanceof Persona) {
+                Persona o = (Persona) object;
+                if(o.getPiId() == null)
+                    return null;
                 return getStringKey(o.getPiId());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Cliente.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Persona.class.getName()});
                 return null;
             }
         }
@@ -209,11 +216,6 @@ public class ClienteController implements Serializable {
     }
 
     public Boolean getEsPersona() {
-        /*if(selected.getRazonsocial() != null)
-            esPersona = false;
-        else
-            esPersona = true;*/
-
         return esPersona;
     }
 

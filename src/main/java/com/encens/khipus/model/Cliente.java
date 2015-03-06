@@ -42,117 +42,51 @@ public class Cliente extends Persona {
     @Size(max = 10)
     @Column(name = "CODIGOCLIENTE")
     private String codigo;
-    @JoinColumn(name = "IDRETENCION", referencedColumnName = "IDRETENCION")
-    @ManyToOne(optional = true)
-    private Retencion retencion;
-    @JoinColumn(name = "IDTIPOCLIENTE", referencedColumnName = "IDTIPOCLIENTE")
-    @ManyToOne(optional = true)
-    private Tipocliente tipocliente;
-    @JoinColumn(name = "IDDEPARTAMENTO",referencedColumnName = "IDDEPARTAMENTO")
-    @ManyToOne(optional = true)
-    private Departamento departamento;
-    @OneToMany(cascade = CascadeType.PERSIST,mappedBy = "cliente")
-    private Collection<Ventaarticulo> ventaarticulos;
 
+    @Override
     public String getDireccion() {
-        return direccion;
+        return super.getDireccion();
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
+    @Override
     public Integer getTelefono() {
-        return telefono;
+        return super.getTelefono();
     }
 
-    public void setTelefono(Integer telefono) {
-        this.telefono = telefono;
-    }
-
+    @Override
     public String getNit() {
-        return nit;
+        return super.getNit();
     }
 
-    public void setNit(String nit) {
-        this.nit = nit;
-    }
-
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
-
-    public Collection<Ventaarticulo> getVentaarticulos() {
-        return ventaarticulos;
-    }
-
-    public void setVentaarticulos(Collection<Ventaarticulo> ventaarticulos) {
-        this.ventaarticulos = ventaarticulos;
-    }
-
-    public Retencion getRetencion() {
-        return retencion;
-    }
-
-    public void setRetencion(Retencion retencion) {
-        this.retencion = retencion;
-    }
-
-    public Double getDescuento() {
-        return descuento;
-    }
-    public String getDescuentoPorcentaje()
-    {
-        if(descuento != null)
-            return descuento.toString()+" "+"%";
-        else
-            return "";
-
-    }
-
-    public void setDescuento(Double descuento) {
-        this.descuento = descuento;
-    }
-
-    public Tipocliente getTipocliente() {
-        return tipocliente;
-    }
-
-    public void setTipocliente(Tipocliente tipocliente) {
-        this.tipocliente = tipocliente;
-    }
-
+    @Override
     public String getRazonsocial() {
-        return razonsocial;
+        return super.getRazonsocial();
     }
 
-    public void setRazonsocial(String razonsocial) {
-        this.razonsocial = razonsocial;
+    @Override
+    public Double getDescuento() {
+        return super.getDescuento();
     }
 
-    public Departamento getDepartamento() {
-        return departamento;
+    @Override
+    public String getCodigo() {
+        return super.getCodigo();
     }
 
-    public void setDepartamento(Departamento departamento) {
-        this.departamento = departamento;
+    @Override
+    public Retencion getRetencion() {
+        return super.getRetencion();
     }
+
+    @Override
+    public Tipocliente getTipocliente() {
+        return super.getTipocliente();
+    }
+
 
     @Override
     public String toString() {
         return "com.encens.khipus.model.Cliente[ piId=" + super.getPiId() + " ]";
-    }
-
-    @Override
-    public String getNombreCompleto()
-    {
-        if(razonsocial != null)
-        return razonsocial;
-        return  super.getNombreCompleto();
     }
     
 }

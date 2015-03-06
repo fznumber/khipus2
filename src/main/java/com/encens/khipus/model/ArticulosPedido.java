@@ -84,7 +84,7 @@ public class ArticulosPedido implements Serializable {
     @Column(name = "CAJA")
     private BigInteger caja;
     @Column(name = "PRECIO_INV")
-    private BigInteger precioInv;
+    private Double precioInv;
     @Column(name = "TOTAL_INV")
     private BigInteger totalInv;
 
@@ -176,11 +176,11 @@ public class ArticulosPedido implements Serializable {
         this.caja = caja;
     }
 
-    public BigInteger getPrecioInv() {
+    public Double getPrecioInv() {
         return precioInv;
     }
 
-    public void setPrecioInv(BigInteger precioInv) {
+    public void setPrecioInv(Double precioInv) {
         this.precioInv = precioInv;
     }
 
@@ -248,5 +248,5 @@ public class ArticulosPedido implements Serializable {
     public void setInvArticulos(InvArticulos invArticulos) {
         this.invArticulos = invArticulos;
     }
-    
+
 }

@@ -5,6 +5,8 @@
  */
 package com.encens.khipus.ejb;
 
+import com.encens.khipus.model.InvArticulos;
+import com.encens.khipus.model.Ventaarticulo;
 import com.encens.khipus.util.JSFUtil;
 
 import java.util.Iterator;
@@ -84,5 +86,5 @@ public abstract class AbstractFacade<T> {
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
     }
-    
+
 }

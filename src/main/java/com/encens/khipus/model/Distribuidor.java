@@ -27,7 +27,6 @@ public class Distribuidor extends Persona {
     public Distribuidor() {
     }
 
-
     public String getObservacion() {
         return observacion;
     }
@@ -38,7 +37,7 @@ public class Distribuidor extends Persona {
 
     @Override
     public String toString() {
-        return "com.encens.khipus.model.Distribuidor[ iddistribuidor=" + super.getPiId() + " ]";
+        return super.getNombreCompleto();
     }
     
 }

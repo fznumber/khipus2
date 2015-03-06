@@ -26,7 +26,7 @@ import java.util.Collection;
     @NamedQuery(name = "Retencion.findActive", query = "SELECT r FROM Retencion r WHERE r.estado = true"),
     @NamedQuery(name = "Retencion.findByPorcentage", query = "SELECT r FROM Retencion r WHERE r.porcentage = :porcentage")})
 public class Retencion implements Serializable {
-    private static final long serialVersionUID = 1L;
+
     @Id
     @Column(name = "IDRETENCION")
     private Long idretencion;
@@ -39,7 +39,7 @@ public class Retencion implements Serializable {
     @Column(name = "PORCENTAGE")
     private Double porcentage;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "retencion")
-    private Collection<Cliente> clientes;
+    private Collection<Persona> personas;
 
     public Retencion() {
     }
@@ -104,17 +104,18 @@ public class Retencion implements Serializable {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return porcentage.toString()+"%";
+    public String getPorcentageString()
+    {
+        return porcentage.toString() +" %";
     }
 
     @XmlTransient
-    public Collection<Cliente> getClientes() {
-        return clientes;
+    public Collection<Persona> getClientes() {
+        return personas;
     }
 
-    public void setClientes(Collection<Cliente> clientes) {
-        this.clientes = clientes;
+    public void setClientes(Collection<Persona> pers) {
+        this.personas = pers;
     }
+
 }

@@ -3,23 +3,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
 
-        <p:dialog id="ClienteViewDlg" widgetVar="ClienteViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewClienteTitle}">
-            <h:form id="ClienteViewForm">
+        <p:dialog id="PersonaViewDlg" widgetVar="PersonaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewPersonaTitle}">
+            <h:form id="PersonaViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{clienteController.selected != null}">
                         <p:outputLabel value="C.I.:" for="nroDoc"/>
                         <p:outputLabel id="nroDoc" value="#{clienteController.selected.nroDoc}" title="Cedula de identidad" />
                         <p:outputLabel value="Nombre:" for="nom" />
                         <p:outputLabel id="nom" value="#{clienteController.selected.nombreCompleto}" title="Nombre/Razon Social"/>
-                        <p:outputLabel value="#{bundle.CreateClienteLabel_codigo}" for="codigo" />
-                        <p:outputLabel id="codigo" value="#{clienteController.selected.codigo}" title="#{bundle.CreateClienteTitle_codigo}"/>
                         <p:outputLabel value="#{bundle.CreateClienteLabel_sexo}" for="sexo" rendered="#{clienteController.esPersona}"/>
                         <p:outputLabel id="sexo" value="#{clienteController.selected.sexo}" title="sexo" rendered="#{clienteController.esPersona}"/>
-
                         <p:outputLabel value="#{bundle.CreateClienteLabel_direccion}" for="direccion" />
                         <p:outputLabel id="direccion" value="#{clienteController.selected.direccion}" title="#{bundle.CreateClienteTitle_direccion}" />
                         <p:outputLabel value="#{bundle.CreateClienteLabel_telefono}" for="telefono" />
@@ -35,7 +33,7 @@
                         <p:outputLabel value="Departamento:" for="departamento" />
                         <p:outputLabel id="departamento" value="#{clienteController.selected.departamento.nombre}" title="Departamento" />
                     </p:panelGrid>
-                    <p:commandButton value="#{bundle.Close}" onclick="ClienteViewDialog.hide()"/>
+                    <p:commandButton value="#{bundle.Close}" onclick="PersonaViewDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

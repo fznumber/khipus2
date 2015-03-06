@@ -8,16 +8,14 @@
 
     <ui:composition>
 
-        <p:dialog id="ClienteEditDlg" widgetVar="ClienteEditDialog" modal="true" resizable="false" appendTo="@(body)" header="Registrar Cliente">
-            <h:form id="ClienteEditForm">
+        <p:dialog id="PersonaEditDlg" widgetVar="PersonaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditPersonaTitle}">
+            <h:form id="PersonaEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{clienteController.selected != null}">
                         <h:outputText value="Tipo Cliente: " />
                         <p:selectBooleanButton id="tipoCliente" value="#{clienteController.esPersona}" onLabel="Persona" offLabel="Institución">
                             <p:ajax update="display" />
                         </p:selectBooleanButton>
-                        <p:outputLabel value="C.I.:" for="nroDoc" rendered="#{clienteController.esPersona}"/>
-                        <p:inputText id="nroDoc" value="#{clienteController.selected.nroDoc}" title="Cedula de identidad" rendered="#{clienteController.esPersona}"/>
                         <p:outputLabel value="Nombre(s):" for="nom" rendered="#{clienteController.esPersona}">
                         </p:outputLabel>
                         <p:inputText id="nom" value="#{clienteController.selected.nom}" title="nombres" required="true" requiredMessage="campo requerido." rendered="#{clienteController.esPersona}"/>
@@ -29,8 +27,8 @@
                         <p:outputLabel value="Razon social:" for="razon" rendered="#{!clienteController.esPersona}"/>
                         <p:inputText id="razon" value="#{clienteController.selected.razonsocial}" title="Razon social" required="true" requiredMessage="campo requerido." rendered="#{!clienteController.esPersona}">
                         </p:inputText>
-                        <p:outputLabel value="#{bundle.CreateClienteLabel_codigo}" for="codigo" />
-                        <p:inputText id="codigo" value="#{clienteController.selected.codigo}" title="#{bundle.CreateClienteTitle_codigo}"/>
+                        <p:outputLabel value="C.I.:" for="nroDoc" rendered="#{clienteController.esPersona}"/>
+                        <p:inputText id="nroDoc" value="#{clienteController.selected.nroDoc}" title="Cedula de identidad" rendered="#{clienteController.esPersona}"/>
                         <p:outputLabel value="#{bundle.CreateClienteLabel_sexo}" for="sexo" rendered="#{clienteController.esPersona}"/>
                         <p:selectOneRadio id="sexo" value="#{clienteController.selected.sexo}" rendered="#{clienteController.esPersona}">
                             <f:selectItem itemLabel="Masculino" itemValue="MASCULINO" />
@@ -63,8 +61,8 @@
                                            itemValue="#{departamento}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{clienteController.update}" value="#{bundle.Save}" update="display,:ClienteListForm:datalist,:ClienteListForm:growl" oncomplete="handleSubmit(args, 'ClienteEditDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="ClienteEditDialog.hide()"/>
+                    <p:commandButton actionListener="#{personaController.update}" value="#{bundle.Save}" update="display,:PersonaListForm:datalist,:PersonaListForm:growl" oncomplete="handleSubmit(args, 'PersonaEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PersonaEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

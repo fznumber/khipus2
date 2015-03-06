@@ -82,7 +82,33 @@ public class Persona implements Serializable {
     private String sisCod;
     @Column(name="tipo_persona")
     private String tipoPersona;
+    @Size(max = 100)
+    @Column(name = "DIRECCION")
+    private String direccion;
+    @Column(name = "TELEFONO")
+    private Integer telefono;
+    @Size(max = 40)
+    @Column(name = "NIT")
+    private String nit;
+    @Column(name = "RAZONSOCIAL")
+    private String razonsocial;
+    @Column(name = "DESCUENTO")
+    private Double descuento;
+    @Size(max = 10)
+    @Column(name = "CODIGOCLIENTE")
+    private String codigo;
 
+    @JoinColumn(name = "IDDEPARTAMENTO",referencedColumnName = "IDDEPARTAMENTO")
+    @ManyToOne(optional = true)
+    private Departamento departamento;
+
+    @JoinColumn(name = "IDRETENCION", referencedColumnName = "IDRETENCION")
+    @ManyToOne(optional = true)
+    private Retencion retencion;
+
+    @JoinColumn(name = "IDTIPOCLIENTE", referencedColumnName = "IDTIPOCLIENTE")
+    @ManyToOne(optional = true)
+    private Tipocliente tipocliente;
 
     public Persona() {
     }
@@ -202,6 +228,78 @@ public class Persona implements Serializable {
         this.tipoPersona = tipoPersona;
     }
 
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public Integer getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(Integer telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getNit() {
+        return nit;
+    }
+
+    public void setNit(String nit) {
+        this.nit = nit;
+    }
+
+    public String getRazonsocial() {
+        return razonsocial;
+    }
+
+    public void setRazonsocial(String razonsocial) {
+        this.razonsocial = razonsocial;
+    }
+
+    public Double getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(Double descuento) {
+        this.descuento = descuento;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public Departamento getDepartamento() {
+        return departamento;
+    }
+
+    public void setDepartamento(Departamento departamento) {
+        this.departamento = departamento;
+    }
+
+    public Retencion getRetencion() {
+        return retencion;
+    }
+
+    public void setRetencion(Retencion retencion) {
+        this.retencion = retencion;
+    }
+
+    public Tipocliente getTipocliente() {
+        return tipocliente;
+    }
+
+    public void setTipocliente(Tipocliente tipocliente) {
+        this.tipocliente = tipocliente;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -228,7 +326,10 @@ public class Persona implements Serializable {
     }
 
     public String getNombreCompleto(){
-        return nom+" "+ap+" "+am;
+        if(nom!=null)
+            return nom+" "+ap+" "+am;
+        else
+            return razonsocial;
     }
     
 }

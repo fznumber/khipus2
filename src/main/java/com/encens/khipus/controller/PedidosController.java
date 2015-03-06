@@ -1,7 +1,6 @@
 package com.encens.khipus.controller;
 
-import com.encens.khipus.ejb.InvArticulosFacade;
-import com.encens.khipus.ejb.PedidosFacade;
+import com.encens.khipus.ejb.*;
 import com.encens.khipus.model.*;
 
 import java.io.Serializable;
@@ -16,7 +15,6 @@ import com.encens.khipus.util.JSFUtil;
 import com.encens.khipus.util.JSFUtil.PersistAction;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -32,17 +30,28 @@ public class PedidosController implements Serializable {
     private PedidosFacade ejbFacade;
     @EJB
     private InvArticulosFacade invArticulosFacade;
+    @EJB
+    private PersonasFacade personasFacade;
+    @EJB
+    private DistribuidorFacade distribuidorFacade;
+    @EJB
+    private VentaarticuloFacade ventaarticuloFacade;
+    @EJB
+    private VentaclienteFacade ventaclienteFacade;
 
     private List<ArticulosPedido> articulosPedidos = new ArrayList<>();
     private List<ArticulosPedido> articulosPedidosElegidos = new ArrayList<>();
-    private List<InvArticulos> articulos = new ArrayList<>();
+    private List<InvArticulos> articulos;
     private List<Pedidos> items = null;
     private Pedidos selected;
-    private Cliente cliente;
-    private Distribuidor distribuidor;
+    private Persona personaElegido;
+    private Persona distribuidorElegido;
+    private List<Persona> personas;
+    private List<Persona> distribuidores;
     private Tipopedido tipopedido;
     private Integer importeTotal = 0;
     private InvArticulos articuloElegido;
+    private List<Ventacliente> ventaclientes;
     public PedidosController() {
     }
 
@@ -61,8 +70,7 @@ public class PedidosController implements Serializable {
     }
 
     public List<InvArticulos> completarArticulo(String query) {
-        List<InvArticulos> articulosFiltrados = new ArrayList<InvArticulos>();
-        articulos = invArticulosFacade.findAllInvArticulos();
+        List<InvArticulos> articulosFiltrados = new ArrayList<>();
         for(InvArticulos articulo:articulos) {
 
             if(articulo.getDescri().toLowerCase().contains(query)) {
@@ -73,14 +81,46 @@ public class PedidosController implements Serializable {
         return articulosFiltrados;
     }
 
+    public List<Persona> completarCliente(String query) {
+        List<Persona> clientesFiltrados = new ArrayList<>();
+        for(Persona persona: personas) {
+
+            if(persona.getNombreCompleto().toLowerCase().contains(query)) {
+                clientesFiltrados.add(persona);
+            }
+        }
+
+        return clientesFiltrados;
+    }
+
+    public List<Persona> completarDistribuidor(String query) {
+        List<Persona> distribuidoresFiltrados = new ArrayList<>();
+        for(Persona persona: distribuidores) {
+
+            if(persona.getNombreCompleto().toLowerCase().contains(query)) {
+                distribuidoresFiltrados.add(persona);
+            }
+        }
+
+        return distribuidoresFiltrados;
+    }
+
     public void agregarArticulo()
     {
         if(articuloElegido == null)
         return;
+        Ventaarticulo ventaarticulo = ventaarticuloFacade.findByInvArticulo(articuloElegido);
+        /*Ventacliente ventacliente = ventaclienteFacade.findByInvArticuloPersona(ventaarticulo, personaElegido);*/
         ArticulosPedido articulosPedido = new ArticulosPedido();
+
         articulosPedido.setInvArticulos(articuloElegido);
         articulosPedido.setCantidad(BigInteger.ZERO);
-        articulosPedido.setPrecio(0.0);
+        articulosPedido.setPrecioInv(ventaarticulo.getPrecio());
+        /*if(ventacliente != null) {
+            articulosPedido.setPrecio(ventacliente.getPrecioespecial());
+        }
+        else*/
+        articulosPedido.setPrecio(ventaarticulo.getPrecio());
         articulosPedido.setReposicion(BigInteger.ZERO);
         articulosPedido.setTotal(0.0);
         articulosPedido.setTotalInv(BigInteger.ZERO);
@@ -94,11 +134,16 @@ public class PedidosController implements Serializable {
 
     public Pedidos prepareCreate() {
         selected = new Pedidos();
+        personas = personasFacade.findAllClientesPersonaInstitucion();
+        articulos = invArticulosFacade.findAllInvArticulos();
+        distribuidores = personasFacade.findAlldistribuidores();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
+        selected.setPorcenDescuento(personaElegido.getDescuento());
+        selected.setPorcenRetencion(personaElegido.getRetencion().getPorcentage());
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PedidosCreated"));
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
@@ -209,20 +254,12 @@ public class PedidosController implements Serializable {
 
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public Persona getPersonaElegido() {
+        return personaElegido;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public Distribuidor getDistribuidor() {
-        return distribuidor;
-    }
-
-    public void setDistribuidor(Distribuidor distribuidor) {
-        this.distribuidor = distribuidor;
+    public void setPersonaElegido(Persona personaElegido) {
+        this.personaElegido = personaElegido;
     }
 
     public Tipopedido getTipopedido() {
@@ -271,5 +308,13 @@ public class PedidosController implements Serializable {
 
     public void setArticuloElegido(InvArticulos articuloElegido) {
         this.articuloElegido = articuloElegido;
+    }
+
+    public Persona getDistribuidorElegido() {
+        return distribuidorElegido;
+    }
+
+    public void setDistribuidorElegido(Persona distribuidorElegido) {
+        this.distribuidorElegido = distribuidorElegido;
     }
 }

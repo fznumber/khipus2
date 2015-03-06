@@ -5,11 +5,17 @@
  */
 package com.encens.khipus.ejb;
 
+import antlr.LexerSharedInputState;
+import com.encens.khipus.model.Cliente;
+import com.encens.khipus.model.Distribuidor;
 import com.encens.khipus.model.Persona;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -28,5 +34,28 @@ public class PersonasFacade extends AbstractFacade<Persona> {
     public PersonasFacade() {
         super(Persona.class);
     }
-    
+
+    public List<Persona> findAllClientesPersonaInstitucion() {
+        List<Persona> personas = new ArrayList<>();
+        try {
+            personas = (List<Persona>)em.createQuery("select persona from Persona persona where persona.tipoPersona in ('cliente','institucion')")
+                    .getResultList();
+
+        }catch (NoResultException e){
+            return personas;
+        }
+        return personas;
+    }
+
+    public List<Persona> findAlldistribuidores() {
+        List<Persona> personas = new ArrayList<>();
+        try {
+            personas = (List<Persona>)em.createQuery("select persona from Persona persona where persona.tipoPersona = 'distribuidor'")
+                    .getResultList();
+
+        }catch (NoResultException e){
+            return personas;
+        }
+        return personas;
+    }
 }
