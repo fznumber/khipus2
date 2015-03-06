@@ -114,16 +114,13 @@ public class PedidosController implements Serializable {
         ArticulosPedido articulosPedido = new ArticulosPedido();
 
         articulosPedido.setInvArticulos(articuloElegido);
-        articulosPedido.setCantidad(BigInteger.ZERO);
         articulosPedido.setPrecioInv(ventaarticulo.getPrecio());
         /*if(ventacliente != null) {
             articulosPedido.setPrecio(ventacliente.getPrecioespecial());
         }
         else*/
         articulosPedido.setPrecio(ventaarticulo.getPrecio());
-        articulosPedido.setReposicion(BigInteger.ZERO);
-        articulosPedido.setTotal(0.0);
-        articulosPedido.setTotalInv(BigInteger.ZERO);
+        articulosPedido.setReposicion(0);
         articulosPedidosElegidos.add(articulosPedido);
         articuloElegido = null;
     }

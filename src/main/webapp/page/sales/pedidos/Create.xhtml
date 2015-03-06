@@ -74,7 +74,49 @@
                                 </p:selectOneMenu>
 
                     </p:panelGrid>
+                    <p:panelGrid columns="3">
+                        <p:outputLabel value="Articulo:" for="itemTip" />
+                        <p:autoComplete id="itemTip" value="#{pedidosController.articuloElegido}" completeMethod="#{pedidosController.completarArticulo}"
+                                        var="articulo" itemLabel="#{articulo.descri}" itemValue="#{articulo}" converter="convertirArticulos" forceSelection="true">
+                            <f:facet name="itemtip">
+                                <h:panelGrid columns="2" cellpadding="5">
+                                    <f:facet name="header">
+                                        <h:outputText styleClass="ui-theme ui-theme-#{articulo.descri}" style="margin-left:50px" />
+                                    </f:facet>
 
+                                    <h:outputText value="Nombre:" />
+                                    <h:outputText value="#{articulo.descri}" />
+
+                                    <h:outputText value="Codigo:" />
+                                    <h:outputText value="#{articulo.invArticulosPK.codArt}" />
+                                </h:panelGrid>
+                            </f:facet>
+                        </p:autoComplete>
+                        <p:commandButton actionListener="#{pedidosController.agregarArticulo}" value="Agregar" update="articulosTable"/>
+                    </p:panelGrid>
+                    <p:dataTable id="articulosTable" var="item" value="#{pedidosController.articulosPedidosElegidos}" rowKey="#{articulo.idarticulospedido}">
+                        <f:facet name="header">
+                            Articulos Elegidos
+                        </f:facet>
+                        <p:column headerText="Producto">
+                            <h:outputText value="#{item.invArticulos.descri}" />
+                        </p:column>
+                        <p:column headerText="Cant.">
+                            <h:outputText value="#{item.cantidad}" />
+                        </p:column>
+                        <p:column headerText="P.U.">
+                            <h:outputText value="#{item.precio}" />
+                        </p:column>
+                        <p:column headerText="Importe">
+                            <h:outputText value="#{item.importe}" />
+                        </p:column>
+                        <p:column headerText="Repos.">
+                            <h:outputText value="#{item.reposicion}" />
+                        </p:column>
+                        <p:column headerText="Cant. T.">
+                            <h:outputText value="#{item.total}" />
+                        </p:column>
+                    </p:dataTable>
                     <p:commandButton actionListener="#{pedidosController.create}" value="#{bundle.Save}" update="display,:PedidosListForm:datalist,:PedidosListForm:growl" oncomplete="handleSubmit(args,'PedidosCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="PedidosCreateDialog.hide()"/>
 
