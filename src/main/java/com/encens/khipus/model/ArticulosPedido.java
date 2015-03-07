@@ -221,7 +221,7 @@ public class ArticulosPedido implements Serializable {
 
     @Override
     public String toString() {
-        return "com.encens.khipus.model.ArticulosPedido[ idarticulospedido=" + idarticulospedido + " ]";
+        return invArticulos.getDescri();
     }
 
     public BigInteger getId1() {
