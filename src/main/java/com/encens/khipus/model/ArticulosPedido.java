@@ -68,25 +68,27 @@ public class ArticulosPedido implements Serializable {
     @Column(name = "ID")
     private String id;
     @Column(name = "CANTIDAD")
-    private BigInteger cantidad;
+    private Integer cantidad;
     @Size(max = 6)
     @Column(name = "COD_ALM")
     private String codAlm;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "PRECIO")
     private Double precio;
+    @Column(name = "IMPORTE")
+    private Double importe;
     @Column(name = "REPOSICION")
-    private BigInteger reposicion;
+    private Integer reposicion;
     @Column(name = "TOTAL")
-    private Double total;
+    private Integer total;
     @Column(name = "PROMOCION")
-    private BigInteger promocion;
+    private Integer promocion;
     @Column(name = "CAJA")
     private BigInteger caja;
     @Column(name = "PRECIO_INV")
     private Double precioInv;
     @Column(name = "TOTAL_INV")
-    private BigInteger totalInv;
+    private Integer totalInv;
 
     public ArticulosPedido() {
     }
@@ -120,11 +122,13 @@ public class ArticulosPedido implements Serializable {
     }
 
 
-    public BigInteger getCantidad() {
+    public Integer getCantidad() {
+        if(cantidad == null)
+            cantidad =0;
         return cantidad;
     }
 
-    public void setCantidad(BigInteger cantidad) {
+    public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
     }
 
@@ -144,27 +148,30 @@ public class ArticulosPedido implements Serializable {
         this.precio = precio;
     }
 
-    public BigInteger getReposicion() {
+    public Integer getReposicion() {
+        if(reposicion == null)
+            reposicion = 0;
         return reposicion;
     }
 
-    public void setReposicion(BigInteger reposicion) {
+    public void setReposicion(Integer reposicion) {
         this.reposicion = reposicion;
     }
 
-    public Double getTotal() {
+    public Integer getTotal() {
+        total = reposicion + cantidad;
         return total;
     }
 
-    public void setTotal(Double total) {
+    public void setTotal(Integer total) {
         this.total = total;
     }
 
-    public BigInteger getPromocion() {
+    public Integer getPromocion() {
         return promocion;
     }
 
-    public void setPromocion(BigInteger promocion) {
+    public void setPromocion(Integer promocion) {
         this.promocion = promocion;
     }
 
@@ -184,11 +191,11 @@ public class ArticulosPedido implements Serializable {
         this.precioInv = precioInv;
     }
 
-    public BigInteger getTotalInv() {
+    public Integer getTotalInv() {
         return totalInv;
     }
 
-    public void setTotalInv(BigInteger totalInv) {
+    public void setTotalInv(Integer totalInv) {
         this.totalInv = totalInv;
     }
 
@@ -214,7 +221,7 @@ public class ArticulosPedido implements Serializable {
 
     @Override
     public String toString() {
-        return "com.encens.khipus.model.ArticulosPedido[ idarticulospedido=" + idarticulospedido + " ]";
+        return invArticulos.getDescri();
     }
 
     public BigInteger getId1() {
@@ -249,4 +256,15 @@ public class ArticulosPedido implements Serializable {
         this.invArticulos = invArticulos;
     }
 
+    public Double getImporte() {
+        if(cantidad != null && precio != null)
+            importe=cantidad.doubleValue() * precio;
+        else
+            importe = 0.0;
+        return importe;
+    }
+
+    public void setImporte(Double importe) {
+        this.importe = importe;
+    }
 }
