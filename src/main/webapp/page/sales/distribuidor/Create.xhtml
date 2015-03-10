@@ -12,8 +12,6 @@
         <h:form id="ClienteCreateForm">
             <h:panelGroup id="display">
                 <p:panelGrid columns="2" rendered="#{distribuidorController.selected != null}">
-                    <p:outputLabel value="C.I.:" for="nroDoc" />
-                    <p:inputText id="nroDoc" value="#{distribuidorController.selected.nroDoc}" title="Cedula de identidad"/>
                     <p:outputLabel value="Nombre(s):" for="nom">
                     </p:outputLabel>
                     <p:inputText id="nom" value="#{distribuidorController.selected.nom}" title="nombres" required="true" requiredMessage="campo requerido."/>
@@ -22,8 +20,8 @@
                     <p:inputText id="ap" value="#{distribuidorController.selected.ap}" title="Ap. Paterno." required="true" requiredMessage="campo requerido." />
                     <p:outputLabel value="Ap. Materno" for="am" />
                     <p:inputText id="am" value="#{distribuidorController.selected.am}" title="Ap. Materno." required="true" requiredMessage="campo requerido." />
-                    <p:outputLabel value="#{bundle.CreateClienteLabel_codigo}" for="codigo" />
-                    <p:inputText id="codigo" value="#{distribuidorController.selected.codigo}" title="#{bundle.CreateClienteTitle_codigo}"/>
+                    <p:outputLabel value="C.I.:" for="nroDoc" />
+                    <p:inputText id="nroDoc" value="#{distribuidorController.selected.nroDoc}" title="Cedula de identidad"/>
                     <p:outputLabel value="#{bundle.CreateClienteLabel_sexo}" for="sexo" />
                     <p:selectOneRadio id="sexo" value="#{distribuidorController.selected.sexo}" >
                         <f:selectItem itemLabel="Masculino" itemValue="MASCULINO" />

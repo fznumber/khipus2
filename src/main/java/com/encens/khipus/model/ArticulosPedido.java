@@ -8,16 +8,7 @@ package com.encens.khipus.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -32,10 +23,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "ArticulosPedido.findAll", query = "SELECT a FROM ArticulosPedido a"),
     @NamedQuery(name = "ArticulosPedido.findByIdarticulospedido", query = "SELECT a FROM ArticulosPedido a WHERE a.idarticulospedido = :idarticulospedido"),
-    @NamedQuery(name = "ArticulosPedido.findByIdCuenta", query = "SELECT a FROM ArticulosPedido a WHERE a.idCuenta = :idCuenta"),
-    @NamedQuery(name = "ArticulosPedido.findByPedido", query = "SELECT a FROM ArticulosPedido a WHERE a.pedido = :pedido"),
-    @NamedQuery(name = "ArticulosPedido.findById", query = "SELECT a FROM ArticulosPedido a WHERE a.id = :id"),
-    @NamedQuery(name = "ArticulosPedido.findById1", query = "SELECT a FROM ArticulosPedido a WHERE a.id1 = :id1"),
     @NamedQuery(name = "ArticulosPedido.findByCantidad", query = "SELECT a FROM ArticulosPedido a WHERE a.cantidad = :cantidad"),
     @NamedQuery(name = "ArticulosPedido.findByCodAlm", query = "SELECT a FROM ArticulosPedido a WHERE a.codAlm = :codAlm"),
     @NamedQuery(name = "ArticulosPedido.findByPrecio", query = "SELECT a FROM ArticulosPedido a WHERE a.precio = :precio"),
@@ -45,13 +32,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ArticulosPedido.findByCaja", query = "SELECT a FROM ArticulosPedido a WHERE a.caja = :caja"),
     @NamedQuery(name = "ArticulosPedido.findByPrecioInv", query = "SELECT a FROM ArticulosPedido a WHERE a.precioInv = :precioInv"),
     @NamedQuery(name = "ArticulosPedido.findByTotalInv", query = "SELECT a FROM ArticulosPedido a WHERE a.totalInv = :totalInv")})
+@TableGenerator(name = "ArticulosPedido_Gen"
+        ,table="ID_GEN"
+        ,pkColumnName = "GEN_NAME"
+        ,valueColumnName = "GEN_VAL")
 public class ArticulosPedido implements Serializable {
-    @Column(name = "ID1")
-    private BigInteger id1;
-    @Column(name = "ID_CUENTA")
-    private BigInteger idCuenta;
-    @Column(name = "PEDIDO")
-    private BigInteger pedido;
     @JoinColumns({
         @JoinColumn(name = "COD_ART", referencedColumnName = "COD_ART"),
         @JoinColumn(name = "NO_CIA", referencedColumnName = "NO_CIA")})
@@ -59,36 +44,33 @@ public class ArticulosPedido implements Serializable {
     private InvArticulos invArticulos;
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "ArticulosPedido_Gen")
     @Column(name = "IDARTICULOSPEDIDO")
     private Long idarticulospedido;
-
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
-    @Column(name = "ID")
-    private String id;
     @Column(name = "CANTIDAD")
-    private Integer cantidad;
-    @Size(max = 6)
+    private Integer cantidad = 0;
     @Column(name = "COD_ALM")
     private String codAlm;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "PRECIO")
-    private Double precio;
+    private Double precio = 0.0;
     @Column(name = "IMPORTE")
-    private Double importe;
+    private Double importe = 0.0;
     @Column(name = "REPOSICION")
-    private Integer reposicion;
+    private Integer reposicion = 0;
     @Column(name = "TOTAL")
-    private Integer total;
+    private Integer total = 0;
     @Column(name = "PROMOCION")
-    private Integer promocion;
+    private Integer promocion = 0;
     @Column(name = "CAJA")
     private BigInteger caja;
     @Column(name = "PRECIO_INV")
-    private Double precioInv;
+    private Double precioInv = 0.0;
     @Column(name = "TOTAL_INV")
-    private Integer totalInv;
+    private Integer totalInv = 0;
+    @JoinColumn(name = "IDPEDIDOS",referencedColumnName = "IDPEDIDOS")
+    @ManyToOne(optional = false)
+    private Pedidos pedidos;
 
     public ArticulosPedido() {
     }
@@ -97,13 +79,6 @@ public class ArticulosPedido implements Serializable {
         this.idarticulospedido = idarticulospedido;
     }
 
-    public ArticulosPedido(Long idarticulospedido, BigInteger idCuenta, BigInteger pedido, String id, BigInteger id1) {
-        this.idarticulospedido = idarticulospedido;
-        this.idCuenta = idCuenta;
-        this.pedido = pedido;
-        this.id = id;
-        this.id1 = id1;
-    }
 
     public Long getIdarticulospedido() {
         return idarticulospedido;
@@ -112,15 +87,6 @@ public class ArticulosPedido implements Serializable {
     public void setIdarticulospedido(Long idarticulospedido) {
         this.idarticulospedido = idarticulospedido;
     }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
 
     public Integer getCantidad() {
         if(cantidad == null)
@@ -224,30 +190,6 @@ public class ArticulosPedido implements Serializable {
         return invArticulos.getDescri();
     }
 
-    public BigInteger getId1() {
-        return id1;
-    }
-
-    public void setId1(BigInteger id1) {
-        this.id1 = id1;
-    }
-
-    public BigInteger getIdCuenta() {
-        return idCuenta;
-    }
-
-    public void setIdCuenta(BigInteger idCuenta) {
-        this.idCuenta = idCuenta;
-    }
-
-    public BigInteger getPedido() {
-        return pedido;
-    }
-
-    public void setPedido(BigInteger pedido) {
-        this.pedido = pedido;
-    }
-
     public InvArticulos getInvArticulos() {
         return invArticulos;
     }
@@ -266,5 +208,13 @@ public class ArticulosPedido implements Serializable {
 
     public void setImporte(Double importe) {
         this.importe = importe;
+    }
+
+    public Pedidos getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(Pedidos pedidos) {
+        this.pedidos = pedidos;
     }
 }

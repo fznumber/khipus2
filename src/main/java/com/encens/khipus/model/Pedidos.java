@@ -7,18 +7,10 @@ package com.encens.khipus.model;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -34,12 +26,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Pedidos.findAll", query = "SELECT p FROM Pedidos p"),
     @NamedQuery(name = "Pedidos.findByIdpedidos", query = "SELECT p FROM Pedidos p WHERE p.idpedidos = :idpedidos"),
     @NamedQuery(name = "Pedidos.findByDescripcion", query = "SELECT p FROM Pedidos p WHERE p.descripcion = :descripcion"),
-    @NamedQuery(name = "Pedidos.findByTipoPedido", query = "SELECT p FROM Pedidos p WHERE p.tipoPedido = :tipoPedido"),
-    @NamedQuery(name = "Pedidos.findById", query = "SELECT p FROM Pedidos p WHERE p.id = :id"),
     @NamedQuery(name = "Pedidos.findByFechaPedido", query = "SELECT p FROM Pedidos p WHERE p.fechaPedido = :fechaPedido"),
     @NamedQuery(name = "Pedidos.findByIddireccion", query = "SELECT p FROM Pedidos p WHERE p.iddireccion = :iddireccion"),
     @NamedQuery(name = "Pedidos.findByIdzona", query = "SELECT p FROM Pedidos p WHERE p.idzona = :idzona"),
-    @NamedQuery(name = "Pedidos.findById1", query = "SELECT p FROM Pedidos p WHERE p.id1 = :id1"),
     @NamedQuery(name = "Pedidos.findByTotal", query = "SELECT p FROM Pedidos p WHERE p.total = :total"),
     @NamedQuery(name = "Pedidos.findByFechaEntrega", query = "SELECT p FROM Pedidos p WHERE p.fechaEntrega = :fechaEntrega"),
     @NamedQuery(name = "Pedidos.findByFechaAPagar", query = "SELECT p FROM Pedidos p WHERE p.fechaAPagar = :fechaAPagar"),
@@ -48,25 +37,21 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Pedidos.findBySupervisor", query = "SELECT p FROM Pedidos p WHERE p.supervisor = :supervisor"),
     @NamedQuery(name = "Pedidos.findByPorcenDescuento", query = "SELECT p FROM Pedidos p WHERE p.porcenDescuento = :porcenDescuento"),
     @NamedQuery(name = "Pedidos.findByPorcenRetencion", query = "SELECT p FROM Pedidos p WHERE p.porcenRetencion = :porcenRetencion")})
+@TableGenerator(name = "Pedidos_Gen"
+        ,table="ID_GEN"
+        ,pkColumnName = "GEN_NAME"
+        ,valueColumnName = "GEN_VAL")
 public class Pedidos implements Serializable {
     private static final long serialVersionUID = 1L;
+    //todo:revisar por q el id no es correlativo
     @Id
+    @NotNull
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "Pedidos_Gen")
     @Column(name = "IDPEDIDOS")
     private Long idpedidos;
     @Size(max = 200)
     @Column(name = "DESCRIPCION")
     private String descripcion;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 10)
-    @Column(name = "TIPO_PEDIDO")
-    private String tipoPedido;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
-    @Column(name = "ID")
-    private String id;
-    @Basic(optional = false)
     @NotNull
     @Column(name = "FECHA_PEDIDO")
     @Temporal(TemporalType.DATE)
@@ -76,27 +61,19 @@ public class Pedidos implements Serializable {
     @Column(name = "IDZONA")
     private BigInteger idzona;
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "ID1")
-    private long id1;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "TOTAL")
-    private double total;
+    private Double total;
+    @Column(name = "TOTALIMPORTE")
+    private Double totalImporte;
     @Column(name = "FECHA_ENTREGA")
     @Temporal(TemporalType.DATE)
     private Date fechaEntrega;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "FECHA_A_PAGAR")
     @Temporal(TemporalType.DATE)
     private Date fechaAPagar;
     @Size(max = 100)
     @Column(name = "OBSERVACION")
     private String observacion;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2)
     @Column(name = "FACTURA")
     private String factura;
     @Column(name = "SUPERVISOR")
@@ -122,6 +99,8 @@ public class Pedidos implements Serializable {
     @JoinColumn(name = "IDTIPOPEDIDO", referencedColumnName = "IDTIPOPEDIDO")
     @ManyToOne(optional = false)
     private Tipopedido idtipopedido;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "pedidos")
+    private Collection<ArticulosPedido> articulosPedidos = new ArrayList<>();
 
     public Pedidos() {
     }
@@ -130,12 +109,9 @@ public class Pedidos implements Serializable {
         this.idpedidos = idpedidos;
     }
 
-    public Pedidos(Long idpedidos, String tipoPedido, String id, Date fechaPedido, long id1, double total, Date fechaAPagar, String factura) {
+    public Pedidos(Long idpedidos, Date fechaPedido,Double total, Date fechaAPagar, String factura) {
         this.idpedidos = idpedidos;
-        this.tipoPedido = tipoPedido;
-        this.id = id;
         this.fechaPedido = fechaPedido;
-        this.id1 = id1;
         this.total = total;
         this.fechaAPagar = fechaAPagar;
         this.factura = factura;
@@ -155,22 +131,6 @@ public class Pedidos implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public String getTipoPedido() {
-        return tipoPedido;
-    }
-
-    public void setTipoPedido(String tipoPedido) {
-        this.tipoPedido = tipoPedido;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public Date getFechaPedido() {
@@ -197,19 +157,11 @@ public class Pedidos implements Serializable {
         this.idzona = idzona;
     }
 
-    public long getId1() {
-        return id1;
-    }
-
-    public void setId1(long id1) {
-        this.id1 = id1;
-    }
-
-    public double getTotal() {
+    public Double getTotal() {
         return total;
     }
 
-    public void setTotal(double total) {
+    public void setTotal(Double total) {
         this.total = total;
     }
 
@@ -345,5 +297,27 @@ public class Pedidos implements Serializable {
     public String toString() {
         return "com.encens.khipus.model.Pedidos[ idpedidos=" + idpedidos + " ]";
     }
-    
+
+    public Double getTotalImporte() {
+        totalImporte = 0.0;
+        if(articulosPedidos != null)
+        for(ArticulosPedido articulosPedido:articulosPedidos)
+        {
+            totalImporte +=articulosPedido.getImporte();
+        }
+        //todo: implementar importe y retención
+        return totalImporte;
+    }
+
+    public void setTotalImporte(Double totalImporte) {
+        this.totalImporte = totalImporte;
+    }
+
+    public Collection<ArticulosPedido> getArticulosPedidos() {
+        return articulosPedidos;
+    }
+
+    public void setArticulosPedidos(Collection<ArticulosPedido> articulosPedidos) {
+        this.articulosPedidos = articulosPedidos;
+    }
 }
