@@ -26,12 +26,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Pedidos.findAll", query = "SELECT p FROM Pedidos p"),
     @NamedQuery(name = "Pedidos.findByIdpedidos", query = "SELECT p FROM Pedidos p WHERE p.idpedidos = :idpedidos"),
     @NamedQuery(name = "Pedidos.findByDescripcion", query = "SELECT p FROM Pedidos p WHERE p.descripcion = :descripcion"),
-    @NamedQuery(name = "Pedidos.findByTipoPedido", query = "SELECT p FROM Pedidos p WHERE p.tipoPedido = :tipoPedido"),
-    @NamedQuery(name = "Pedidos.findById", query = "SELECT p FROM Pedidos p WHERE p.id = :id"),
     @NamedQuery(name = "Pedidos.findByFechaPedido", query = "SELECT p FROM Pedidos p WHERE p.fechaPedido = :fechaPedido"),
     @NamedQuery(name = "Pedidos.findByIddireccion", query = "SELECT p FROM Pedidos p WHERE p.iddireccion = :iddireccion"),
     @NamedQuery(name = "Pedidos.findByIdzona", query = "SELECT p FROM Pedidos p WHERE p.idzona = :idzona"),
-    @NamedQuery(name = "Pedidos.findById1", query = "SELECT p FROM Pedidos p WHERE p.id1 = :id1"),
     @NamedQuery(name = "Pedidos.findByTotal", query = "SELECT p FROM Pedidos p WHERE p.total = :total"),
     @NamedQuery(name = "Pedidos.findByFechaEntrega", query = "SELECT p FROM Pedidos p WHERE p.fechaEntrega = :fechaEntrega"),
     @NamedQuery(name = "Pedidos.findByFechaAPagar", query = "SELECT p FROM Pedidos p WHERE p.fechaAPagar = :fechaAPagar"),
@@ -46,6 +43,7 @@ import javax.xml.bind.annotation.XmlRootElement;
         ,valueColumnName = "GEN_VAL")
 public class Pedidos implements Serializable {
     private static final long serialVersionUID = 1L;
+    //todo:revisar por q el id no es correlativo
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "Pedidos_Gen")
@@ -54,15 +52,6 @@ public class Pedidos implements Serializable {
     @Size(max = 200)
     @Column(name = "DESCRIPCION")
     private String descripcion;
-    @Basic(optional = false)
-    @Size(min = 1, max = 10)
-    @Column(name = "TIPO_PEDIDO")
-    private String tipoPedido;
-    @Basic(optional = false)
-    @Size(min = 1, max = 20)
-    @Column(name = "ID")
-    private String id;
-    @Basic(optional = false)
     @NotNull
     @Column(name = "FECHA_PEDIDO")
     @Temporal(TemporalType.DATE)
@@ -72,10 +61,6 @@ public class Pedidos implements Serializable {
     @Column(name = "IDZONA")
     private BigInteger idzona;
     @Basic(optional = false)
-    @Column(name = "ID1")
-    private long id1;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "TOTAL")
     private Double total;
     @Column(name = "TOTALIMPORTE")
@@ -124,12 +109,9 @@ public class Pedidos implements Serializable {
         this.idpedidos = idpedidos;
     }
 
-    public Pedidos(Long idpedidos, String tipoPedido, String id, Date fechaPedido, long id1, Double total, Date fechaAPagar, String factura) {
+    public Pedidos(Long idpedidos, Date fechaPedido,Double total, Date fechaAPagar, String factura) {
         this.idpedidos = idpedidos;
-        this.tipoPedido = tipoPedido;
-        this.id = id;
         this.fechaPedido = fechaPedido;
-        this.id1 = id1;
         this.total = total;
         this.fechaAPagar = fechaAPagar;
         this.factura = factura;
@@ -149,22 +131,6 @@ public class Pedidos implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public String getTipoPedido() {
-        return tipoPedido;
-    }
-
-    public void setTipoPedido(String tipoPedido) {
-        this.tipoPedido = tipoPedido;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public Date getFechaPedido() {
@@ -189,14 +155,6 @@ public class Pedidos implements Serializable {
 
     public void setIdzona(BigInteger idzona) {
         this.idzona = idzona;
-    }
-
-    public long getId1() {
-        return id1;
-    }
-
-    public void setId1(long id1) {
-        this.id1 = id1;
     }
 
     public Double getTotal() {

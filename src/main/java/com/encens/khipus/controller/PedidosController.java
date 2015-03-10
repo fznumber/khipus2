@@ -6,6 +6,7 @@ import com.encens.khipus.model.*;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -116,6 +117,7 @@ public class PedidosController implements Serializable {
         articulosPedido.setPrecioInv(ventaarticulo.getPrecio());
         articulosPedido.setPrecio(ventaarticulo.getPrecio());
         articulosPedido.setReposicion(0);
+        articulosPedido.setPedidos(selected);
         selected.getArticulosPedidos().add(articulosPedido);
         articuloElegido = null;
     }
@@ -134,8 +136,11 @@ public class PedidosController implements Serializable {
     }
 
     public void create() {
+        //todo:fijar el usuario q realiza el registro
         selected.setPorcenDescuento(personaElegido.getDescuento());
         selected.setPorcenRetencion(personaElegido.getRetencion().getPorcentage());
+        selected.setEstado("ACTIVO");
+        selected.setFechaPedido(new Date());
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PedidosCreated"));
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.

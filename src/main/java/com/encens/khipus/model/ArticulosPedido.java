@@ -8,16 +8,7 @@ package com.encens.khipus.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -41,6 +32,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ArticulosPedido.findByCaja", query = "SELECT a FROM ArticulosPedido a WHERE a.caja = :caja"),
     @NamedQuery(name = "ArticulosPedido.findByPrecioInv", query = "SELECT a FROM ArticulosPedido a WHERE a.precioInv = :precioInv"),
     @NamedQuery(name = "ArticulosPedido.findByTotalInv", query = "SELECT a FROM ArticulosPedido a WHERE a.totalInv = :totalInv")})
+@TableGenerator(name = "ArticulosPedido_Gen"
+        ,table="ID_GEN"
+        ,pkColumnName = "GEN_NAME"
+        ,valueColumnName = "GEN_VAL")
 public class ArticulosPedido implements Serializable {
     @JoinColumns({
         @JoinColumn(name = "COD_ART", referencedColumnName = "COD_ART"),
@@ -49,14 +44,11 @@ public class ArticulosPedido implements Serializable {
     private InvArticulos invArticulos;
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "ArticulosPedido_Gen")
     @Column(name = "IDARTICULOSPEDIDO")
     private Long idarticulospedido;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
     @Column(name = "CANTIDAD")
     private Integer cantidad = 0;
-    @Size(max = 6)
     @Column(name = "COD_ALM")
     private String codAlm;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
