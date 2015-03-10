@@ -8,7 +8,7 @@
 
 <ui:composition>
 
-    <p:dialog id="PedidosCreateDlg" widgetVar="PedidosCreateDialog" modal="true" resizable="true" width="780px" appendTo="@(body)" header="Crear pedido">
+    <p:dialog id="PedidosCreateDlg" widgetVar="PedidosCreateDialog" modal="true" width="820px" appendTo="@(body)" header="Crear pedido">
         <h:form id="PedidosCreateForm">
 
             <p:panelGrid id="display" rendered="#{pedidosController.selected != null}" columns="6" >
@@ -97,7 +97,7 @@
             <p:dataTable
                     id="articulosTable"
                     var="item"
-                    value="#{pedidosController.articulosPedidosElegidos}"
+                    value="#{pedidosController.selected.articulosPedidos}"
                     rowKey="#{articulo.idarticulospedido}">
                 <f:facet name="header">
                     Articulos Elegidos
@@ -106,25 +106,41 @@
                     <h:outputText value="#{item.invArticulos.descri}" />
                 </p:column>
                 <p:column headerText="Cant.">
-                    <h:inputText value="#{item.cantidad}" size="4"/>
+                    <h:inputText value="#{item.cantidad}" size="4">
+                        <p:ajax event="blur" update="importe,total,totalImporte"/>
+                    </h:inputText>
                 </p:column>
                 <p:column headerText="P.U.">
-                    <h:inputText value="#{item.precio}" size="4"/>
-                </p:column>
-                <p:column headerText="Importe">
-                    <h:outputText value="#{item.importe}" />
+                    <h:inputText value="#{item.precio}" size="4">
+                        <p:ajax event="blur" update="importe,totalImporte"/>
+                    </h:inputText>
                 </p:column>
                 <p:column headerText="Repos.">
-                    <h:inputText value="#{item.reposicion}" size="4"/>
+                    <h:inputText value="#{item.reposicion}" size="4">
+                        <p:ajax event="blur" update="total,totalImporte"/>
+                    </h:inputText>
                 </p:column>
                 <p:column headerText="Cant. T.">
-                    <h:outputText value="#{item.total}" />
+                    <h:outputText id="total" value="#{item.total}" />
+                </p:column>
+                <p:column headerText="Importe">
+                    <h:outputText id="importe" value="#{item.importe}" />
                 </p:column>
                 <p:column headerText="Acción">
                     <p:commandLink value="Remover" update="articulosTable,:PedidosListForm:growl" >
-                        <p:collector value="#{item}" removeFrom="#{pedidosController.articulosPedidosElegidos}" unique="true"/>
+                        <p:collector value="#{item}" removeFrom="#{pedidosController.selected.articulosPedidos}" unique="true"/>
                     </p:commandLink>
                 </p:column>
+                <f:facet name="footer">
+                    <p:column colspan="5" style="text-align:right">
+                        <h:outputText value="Total: " />
+                    </p:column>
+                    <p:column id="totalImporte">
+                        <h:outputText value="#{pedidosController.selected.totalImporte}">
+                            <f:convertNumber type="currency" currencySymbol="Bs." />
+                        </h:outputText>
+                    </p:column>
+                </f:facet>
             </p:dataTable>
             <p:commandButton actionListener="#{pedidosController.create}" value="#{bundle.Save}" update="display,:PedidosListForm:datalist,:PedidosListForm:growl" oncomplete="handleSubmit(args,'PedidosCreateDialog');"/>
             <p:commandButton value="#{bundle.Cancel}" onclick="PedidosCreateDialog.hide()"/>

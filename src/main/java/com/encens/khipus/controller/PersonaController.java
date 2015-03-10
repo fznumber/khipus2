@@ -181,7 +181,7 @@ public class PersonaController implements Serializable {
                 return null;
             }
             PersonaController controller = (PersonaController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "personasController");
+                    getValue(facesContext.getELContext(), null, "personaController");
             return controller.getPersonas(getKey(value));
         }
 

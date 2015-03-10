@@ -61,7 +61,6 @@ public class ArticulosPedido implements Serializable {
     @Id
     @Column(name = "IDARTICULOSPEDIDO")
     private Long idarticulospedido;
-
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
@@ -89,6 +88,9 @@ public class ArticulosPedido implements Serializable {
     private Double precioInv;
     @Column(name = "TOTAL_INV")
     private Integer totalInv;
+    @JoinColumn(name = "IDPEDIDOS",referencedColumnName = "IDPEDIDOS")
+    @ManyToOne(optional = false)
+    private Pedidos pedidos;
 
     public ArticulosPedido() {
     }
@@ -266,5 +268,13 @@ public class ArticulosPedido implements Serializable {
 
     public void setImporte(Double importe) {
         this.importe = importe;
+    }
+
+    public Pedidos getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(Pedidos pedidos) {
+        this.pedidos = pedidos;
     }
 }
