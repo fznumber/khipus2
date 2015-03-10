@@ -32,10 +32,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "ArticulosPedido.findAll", query = "SELECT a FROM ArticulosPedido a"),
     @NamedQuery(name = "ArticulosPedido.findByIdarticulospedido", query = "SELECT a FROM ArticulosPedido a WHERE a.idarticulospedido = :idarticulospedido"),
-    @NamedQuery(name = "ArticulosPedido.findByIdCuenta", query = "SELECT a FROM ArticulosPedido a WHERE a.idCuenta = :idCuenta"),
-    @NamedQuery(name = "ArticulosPedido.findByPedido", query = "SELECT a FROM ArticulosPedido a WHERE a.pedido = :pedido"),
-    @NamedQuery(name = "ArticulosPedido.findById", query = "SELECT a FROM ArticulosPedido a WHERE a.id = :id"),
-    @NamedQuery(name = "ArticulosPedido.findById1", query = "SELECT a FROM ArticulosPedido a WHERE a.id1 = :id1"),
     @NamedQuery(name = "ArticulosPedido.findByCantidad", query = "SELECT a FROM ArticulosPedido a WHERE a.cantidad = :cantidad"),
     @NamedQuery(name = "ArticulosPedido.findByCodAlm", query = "SELECT a FROM ArticulosPedido a WHERE a.codAlm = :codAlm"),
     @NamedQuery(name = "ArticulosPedido.findByPrecio", query = "SELECT a FROM ArticulosPedido a WHERE a.precio = :precio"),
@@ -46,12 +42,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ArticulosPedido.findByPrecioInv", query = "SELECT a FROM ArticulosPedido a WHERE a.precioInv = :precioInv"),
     @NamedQuery(name = "ArticulosPedido.findByTotalInv", query = "SELECT a FROM ArticulosPedido a WHERE a.totalInv = :totalInv")})
 public class ArticulosPedido implements Serializable {
-    @Column(name = "ID1")
-    private BigInteger id1;
-    @Column(name = "ID_CUENTA")
-    private BigInteger idCuenta;
-    @Column(name = "PEDIDO")
-    private BigInteger pedido;
     @JoinColumns({
         @JoinColumn(name = "COD_ART", referencedColumnName = "COD_ART"),
         @JoinColumn(name = "NO_CIA", referencedColumnName = "NO_CIA")})
@@ -64,30 +54,28 @@ public class ArticulosPedido implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(name = "ID")
-    private String id;
     @Column(name = "CANTIDAD")
-    private Integer cantidad;
+    private Integer cantidad = 0;
     @Size(max = 6)
     @Column(name = "COD_ALM")
     private String codAlm;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "PRECIO")
-    private Double precio;
+    private Double precio = 0.0;
     @Column(name = "IMPORTE")
-    private Double importe;
+    private Double importe = 0.0;
     @Column(name = "REPOSICION")
-    private Integer reposicion;
+    private Integer reposicion = 0;
     @Column(name = "TOTAL")
-    private Integer total;
+    private Integer total = 0;
     @Column(name = "PROMOCION")
-    private Integer promocion;
+    private Integer promocion = 0;
     @Column(name = "CAJA")
     private BigInteger caja;
     @Column(name = "PRECIO_INV")
-    private Double precioInv;
+    private Double precioInv = 0.0;
     @Column(name = "TOTAL_INV")
-    private Integer totalInv;
+    private Integer totalInv = 0;
     @JoinColumn(name = "IDPEDIDOS",referencedColumnName = "IDPEDIDOS")
     @ManyToOne(optional = false)
     private Pedidos pedidos;
@@ -99,13 +87,6 @@ public class ArticulosPedido implements Serializable {
         this.idarticulospedido = idarticulospedido;
     }
 
-    public ArticulosPedido(Long idarticulospedido, BigInteger idCuenta, BigInteger pedido, String id, BigInteger id1) {
-        this.idarticulospedido = idarticulospedido;
-        this.idCuenta = idCuenta;
-        this.pedido = pedido;
-        this.id = id;
-        this.id1 = id1;
-    }
 
     public Long getIdarticulospedido() {
         return idarticulospedido;
@@ -114,15 +95,6 @@ public class ArticulosPedido implements Serializable {
     public void setIdarticulospedido(Long idarticulospedido) {
         this.idarticulospedido = idarticulospedido;
     }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
 
     public Integer getCantidad() {
         if(cantidad == null)
@@ -224,30 +196,6 @@ public class ArticulosPedido implements Serializable {
     @Override
     public String toString() {
         return invArticulos.getDescri();
-    }
-
-    public BigInteger getId1() {
-        return id1;
-    }
-
-    public void setId1(BigInteger id1) {
-        this.id1 = id1;
-    }
-
-    public BigInteger getIdCuenta() {
-        return idCuenta;
-    }
-
-    public void setIdCuenta(BigInteger idCuenta) {
-        this.idCuenta = idCuenta;
-    }
-
-    public BigInteger getPedido() {
-        return pedido;
-    }
-
-    public void setPedido(BigInteger pedido) {
-        this.pedido = pedido;
     }
 
     public InvArticulos getInvArticulos() {
