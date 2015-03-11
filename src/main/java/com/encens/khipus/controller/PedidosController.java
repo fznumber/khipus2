@@ -40,13 +40,12 @@ public class PedidosController implements Serializable {
     @EJB
     private VentaclienteFacade ventaclienteFacade;
 
+
     private List<ArticulosPedido> articulosPedidos = new ArrayList<>();
     private List<ArticulosPedido> articulosPedidosElegidos = new ArrayList<>();
     private List<InvArticulos> articulos;
     private List<Pedidos> items = null;
     private Pedidos selected;
-    private Persona personaElegido;
-    private Persona distribuidorElegido;
     private List<Persona> personas;
     private List<Persona> distribuidores;
     private Tipopedido tipopedido;
@@ -136,9 +135,10 @@ public class PedidosController implements Serializable {
     }
 
     public void create() {
-        //todo:fijar el usuario q realiza el registro
-        selected.setPorcenDescuento(personaElegido.getDescuento());
-        selected.setPorcenRetencion(personaElegido.getRetencion().getPorcentage());
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        LoginBean loginBean = (LoginBean) facesContext.getApplication().getELResolver().
+                getValue(facesContext.getELContext(), null, "loginBean");
+        selected.setUsuario(loginBean.getUsuario());
         selected.setEstado("ACTIVO");
         selected.setFechaPedido(new Date());
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PedidosCreated"));
@@ -251,14 +251,6 @@ public class PedidosController implements Serializable {
 
     }
 
-    public Persona getPersonaElegido() {
-        return personaElegido;
-    }
-
-    public void setPersonaElegido(Persona personaElegido) {
-        this.personaElegido = personaElegido;
-    }
-
     public Tipopedido getTipopedido() {
         return tipopedido;
     }
@@ -307,11 +299,4 @@ public class PedidosController implements Serializable {
         this.articuloElegido = articuloElegido;
     }
 
-    public Persona getDistribuidorElegido() {
-        return distribuidorElegido;
-    }
-
-    public void setDistribuidorElegido(Persona distribuidorElegido) {
-        this.distribuidorElegido = distribuidorElegido;
-    }
 }

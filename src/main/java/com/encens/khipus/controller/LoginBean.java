@@ -31,9 +31,9 @@ import java.io.Serializable;
 public class LoginBean implements Serializable {
 
     private static final long serialVersionUID = 1L; 
-    @Inject UsuarioFacade usuarioFacade;
+    @EJB UsuarioFacade usuarioFacade;
 
-    Usuario usuario = new Usuario();
+    private Usuario usuario = new Usuario();
     @Inject
     ResourcesFiles rf;
    /* @Inject
@@ -135,5 +135,6 @@ extContext.encodeActionURL(ctx.getApplication().getViewHandler().getActionURL(ct
             JSFUtil.addErrorMessage(ioe.getLocalizedMessage().toString()); 
         } 
     }
+
     
 }

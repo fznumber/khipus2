@@ -62,9 +62,11 @@ public class Pedidos implements Serializable {
     private BigInteger idzona;
     @Basic(optional = false)
     @Column(name = "TOTAL")
-    private Double total;
+    //total menos descuento y retencion
+    private Double total = 0.0;
     @Column(name = "TOTALIMPORTE")
-    private Double totalImporte;
+    //total a pagar sin descuentos ni retencion
+    private Double totalImporte = 0.0;
     @Column(name = "FECHA_ENTREGA")
     @Temporal(TemporalType.DATE)
     private Date fechaEntrega;
@@ -79,26 +81,31 @@ public class Pedidos implements Serializable {
     @Column(name = "SUPERVISOR")
     private BigInteger supervisor;
     @Column(name = "PORCEN_DESCUENTO")
-    private Double porcenDescuento;
+    private Double porcenDescuento = 0.0;
     @Column(name = "PORCEN_RETENCION")
-    private Double porcenRetencion;
+    private Double porcenRetencion = 0.0;
+    @Column(name = "VALORDESCUENTO")
+    private Double valorDescuento = 0.0;
+    @Column(name = "VALORRETENCION")
+    private Double valorRetencion = 0.0;
     @Column(name = "ESTADO")
     private String estado;
     @JoinColumn(name = "IDCLIENTE", referencedColumnName = "IDPERSONA")
     @ManyToOne(optional = false)
-    private Cliente idcliente;
+    private Persona cliente;
     @JoinColumn(name = "IDDISTRIBUIDOR", referencedColumnName = "IDPERSONA")
     @ManyToOne(optional = false)
-    private Distribuidor iddistribuidor;
-    @JoinColumn(name = "IDEMPLEADO", referencedColumnName = "IDEMPLEADO")
-    @ManyToOne(optional = false)
-    private Empleado idempleado;
+    private Distribuidor distribuidor;
     @JoinColumn(name = "ESTADO_PEDIDO", referencedColumnName = "IDESTADOPEDIDO")
     @ManyToOne(optional = false)
     private EstadoPedidos estadoPedido;
     @JoinColumn(name = "IDTIPOPEDIDO", referencedColumnName = "IDTIPOPEDIDO")
     @ManyToOne(optional = false)
     private Tipopedido idtipopedido;
+    @JoinColumn(name = "IDUSUARIO",referencedColumnName = "IDUSUARIO")
+    @ManyToOne
+    private Usuario usuario;
+
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "pedidos")
     private Collection<ArticulosPedido> articulosPedidos = new ArrayList<>();
 
@@ -221,28 +228,22 @@ public class Pedidos implements Serializable {
         this.porcenRetencion = porcenRetencion;
     }
 
-    public Cliente getIdcliente() {
-        return idcliente;
+    public Persona getCliente() {
+        return cliente;
     }
 
-    public void setIdcliente(Cliente idcliente) {
-        this.idcliente = idcliente;
+    public void setCliente(Persona cliente) {
+        this.porcenDescuento = cliente.getDescuento();
+        this.porcenRetencion = cliente.getRetencion().getPorcentage();
+        this.cliente = cliente;
     }
 
-    public Distribuidor getIddistribuidor() {
-        return iddistribuidor;
+    public Distribuidor getDistribuidor() {
+        return distribuidor;
     }
 
-    public void setIddistribuidor(Distribuidor iddistribuidor) {
-        this.iddistribuidor = iddistribuidor;
-    }
-
-    public Empleado getIdempleado() {
-        return idempleado;
-    }
-
-    public void setIdempleado(Empleado idempleado) {
-        this.idempleado = idempleado;
+    public void setDistribuidor(Distribuidor iddistribuidor) {
+        this.distribuidor = iddistribuidor;
     }
 
     public EstadoPedidos getEstadoPedido() {
@@ -282,7 +283,6 @@ public class Pedidos implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Pedidos)) {
             return false;
         }
@@ -305,7 +305,9 @@ public class Pedidos implements Serializable {
         {
             totalImporte +=articulosPedido.getImporte();
         }
-        //todo: implementar importe y retención
+        //todo: implementar retención
+        this.valorDescuento = totalImporte * (porcenDescuento /100);
+        this.total = totalImporte - valorDescuento;
         return totalImporte;
     }
 
@@ -319,5 +321,30 @@ public class Pedidos implements Serializable {
 
     public void setArticulosPedidos(Collection<ArticulosPedido> articulosPedidos) {
         this.articulosPedidos = articulosPedidos;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        if(this.usuario != null)
+        this.usuario = usuario;
+    }
+
+    public Double getValorDescuento() {
+        return valorDescuento;
+    }
+
+    public void setValorDescuento(Double valorDescuento) {
+        this.valorDescuento = valorDescuento;
+    }
+
+    public Double getValorRetencion() {
+        return valorRetencion;
+    }
+
+    public void setValorRetencion(Double valorRetencion) {
+        this.valorRetencion = valorRetencion;
     }
 }
