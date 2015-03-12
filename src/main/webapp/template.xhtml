@@ -21,7 +21,7 @@
 
 <h:body>  
         <p:layout fullPage="true">  
-            <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">  
+            <p:layoutUnit position="north" size="60" resizable="true" closable="true" collapsible="true">
                 <ui:insert name="top"> 
                     <ui:include src="menu.xhtml"/>
                 </ui:insert>  
@@ -30,13 +30,7 @@
                 <ui:insert name="bottom"> 
                     <h:outputText value="footer"/>
                 </ui:insert>  
-            </p:layoutUnit>  
-     <p:layoutUnit position="west" size="175" header="Left" collapsible="true">  
-                <ui:insert name="left">  
-                    Left  
-                </ui:insert>  
-            </p:layoutUnit>  
-   
+            </p:layoutUnit>
             <p:layoutUnit position="center">  
                 <ui:insert name="center"></ui:insert>  
             </p:layoutUnit>  

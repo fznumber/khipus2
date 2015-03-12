@@ -68,6 +68,8 @@ public class ArticulosPedido implements Serializable {
     private Double precioInv = 0.0;
     @Column(name = "TOTAL_INV")
     private Integer totalInv = 0;
+    @Column(name ="ESTADO")
+    private String estado;
     @JoinColumn(name = "IDPEDIDOS",referencedColumnName = "IDPEDIDOS")
     @ManyToOne(optional = false)
     private Pedidos pedidos;
@@ -216,5 +218,13 @@ public class ArticulosPedido implements Serializable {
 
     public void setPedidos(Pedidos pedidos) {
         this.pedidos = pedidos;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 }
