@@ -21,49 +21,54 @@
                                  selectionMode="single" selection="#{pedidosController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idpedidos}"
+                                 widgetVar="pedidosTabla"
                                  sortMode="multiple"
+                                 emptyMessage="No hay pedidos registrados"
+                                 filteredValue="#{pedidosController.pedidosFiltrado}"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column sortBy="#{item.fechaEntrega}">
-                            <f:facet name="header">
-                                <h:outputText value="Fecha pedido"/>
+                        <p:column sortBy="#{item.fechaPedido}" filterBy="#{item.fechaPedido}" headerText="Fecha pedido" filterMatchMode="equals">
+                            <f:facet name="filter">
+                                <p:calendar id="fechaPedido" value="#{pedidosController.fechaPedidoFiltro}" styleClass="customCalendar" pattern="dd/MM/yyyy" effect="fold">
+                                    <p:ajax event="dateSelect" oncomplete="PF('pedidosTabla').filter()" />
+                                </p:calendar>
                             </f:facet>
                             <h:outputText value="#{item.fechaPedido}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
                             </h:outputText>
                         </p:column>
-                        <p:column sortBy="#{item.fechaEntrega}">
-                            <f:facet name="header">
-                                <h:outputText value="Fecha Entrega"/>
+                        <p:column sortBy="#{item.fechaEntrega}" headerText="Fecha Entrega" filterBy="#{item.fechaEntrega}" filterMatchMode="equals">
+                            <f:facet name="filter">
+                                <p:calendar id="fechaEntrega" value="#{pedidosController.fechaEntregaFiltro}" styleClass="customCalendar" pattern="dd/MM/yyyy" effect="fold">
+                                    <p:ajax event="dateSelect" oncomplete="PF('pedidosTabla').filter()" />
+                                </p:calendar>
                             </f:facet>
                             <h:outputText value="#{item.fechaEntrega}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
                             </h:outputText>
                         </p:column>
-                        <p:column sortBy="#{item.cliente}">
-                            <f:facet name="header">
-                                <h:outputText value="Cliente"/>
-                            </f:facet>
+                        <p:column sortBy="#{item.cliente.nombreCompleto}" filterBy="#{item.cliente.nombreCompleto}" headerText="Cliente" filterMatchMode="contains">
                             <h:outputText value="#{item.cliente.nombreCompleto}"/>
                         </p:column>
-                        <p:column sortBy="#{item.distribuidor}">
-                            <f:facet name="header">
-                                <h:outputText value="Distribuidor"/>
-                            </f:facet>
+                        <p:column sortBy="#{item.distribuidor}" headerText="Distribuidor" filterBy="#{item.distribuidor.nombreCompleto}" filterMatchMode="contains">
                             <h:outputText value="#{item.distribuidor.nombreCompleto}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Estado"/>
+                        <p:column filterMatchMode="in" filterBy="#{item.estado}">
+                            <f:facet name="filter">
+                                <p:selectCheckboxMenu label="Estado" onchange="PF('pedidosTabla').filter()" panelStyle="width:125px" scrollHeight="150">
+                                    <f:selectItems value="#{pedidosController.estados}" />
+                                </p:selectCheckboxMenu>
                             </f:facet>
                             <h:outputText value="#{item.estado}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Tipo Pedido"/>
+                        <p:column filterBy="#{item.idtipopedido.nombre}" filterMatchMode="in">
+                            <f:facet name="filter">
+                                    <p:selectCheckboxMenu label="Tipo" onchange="PF('pedidosTabla').filter()" panelStyle="width:125px" scrollHeight="150">
+                                        <f:selectItems value="#{tipopedidoController.itemsAvailableSelectMany}" />
+                                    </p:selectCheckboxMenu>
                             </f:facet>
                             <h:outputText value="#{item.idtipopedido.nombre}"/>
                         </p:column>

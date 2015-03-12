@@ -4,7 +4,6 @@ import com.encens.khipus.ejb.*;
 import com.encens.khipus.model.*;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -51,7 +50,11 @@ public class PedidosController implements Serializable {
     private Tipopedido tipopedido;
     private Integer importeTotal = 0;
     private InvArticulos articuloElegido;
-    private List<Ventacliente> ventaclientes;
+    private List<Pedidos> pedidosFiltrado;
+    private List<String> estados;
+    private Date fechaEntregaFiltro;
+    private Date fechaPedidoFiltro;
+
     public PedidosController() {
     }
 
@@ -299,4 +302,41 @@ public class PedidosController implements Serializable {
         this.articuloElegido = articuloElegido;
     }
 
+    public List<Pedidos> getPedidosFiltrado() {
+        return pedidosFiltrado;
+    }
+
+    public void setPedidosFiltrado(List<Pedidos> pedidosFiltrado) {
+        this.pedidosFiltrado = pedidosFiltrado;
+    }
+
+    public Date getFechaEntregaFiltro() {
+        return fechaEntregaFiltro;
+    }
+
+    public void setFechaEntregaFiltro(Date fechaEntregaFiltro) {
+        this.fechaEntregaFiltro = fechaEntregaFiltro;
+    }
+
+    public Date getFechaPedidoFiltro() {
+        return fechaPedidoFiltro;
+    }
+
+    public void setFechaPedidoFiltro(Date fechaPedidoFiltro) {
+        this.fechaPedidoFiltro = fechaPedidoFiltro;
+    }
+
+    public List<String> getEstados() {
+        if(estados == null) {
+            estados = new ArrayList<>();
+            estados.add("ACTIVO");
+            estados.add("ANULADO");
+            estados.add("ENVIADO");
+        }
+        return estados;
+    }
+
+    public void setEstados(List<String> estados) {
+        this.estados = estados;
+    }
 }
