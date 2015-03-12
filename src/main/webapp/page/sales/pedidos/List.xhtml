@@ -21,14 +21,13 @@
                                  selectionMode="single" selection="#{pedidosController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idpedidos}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 sortMode="multiple"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column>
+                        <p:column sortBy="#{item.fechaEntrega}">
                             <f:facet name="header">
                                 <h:outputText value="Fecha pedido"/>
                             </f:facet>
@@ -36,7 +35,7 @@
                                 <f:convertDateTime pattern="MM/dd/yyyy" />
                             </h:outputText>
                         </p:column>
-                        <p:column>
+                        <p:column sortBy="#{item.fechaEntrega}">
                             <f:facet name="header">
                                 <h:outputText value="Fecha Entrega"/>
                             </f:facet>
@@ -44,41 +43,29 @@
                                 <f:convertDateTime pattern="MM/dd/yyyy" />
                             </h:outputText>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Descuento"/>
-                            </f:facet>
-                            <h:outputText value="#{item.porcenDescuento}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Retención"/>
-                            </f:facet>
-                            <h:outputText value="#{item.porcenRetencion}"/>
-                        </p:column>
-                        <p:column>
+                        <p:column sortBy="#{item.cliente}">
                             <f:facet name="header">
                                 <h:outputText value="Cliente"/>
                             </f:facet>
-                            <h:outputText value="#{item.cliente}"/>
+                            <h:outputText value="#{item.cliente.nombreCompleto}"/>
                         </p:column>
-                        <p:column>
+                        <p:column sortBy="#{item.distribuidor}">
                             <f:facet name="header">
                                 <h:outputText value="Distribuidor"/>
                             </f:facet>
-                            <h:outputText value="#{item.distribuidor}"/>
+                            <h:outputText value="#{item.distribuidor.nombreCompleto}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="Estado"/>
                             </f:facet>
-                            <h:outputText value="#{item.estadoPedido}"/>
+                            <h:outputText value="#{item.estado}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="Tipo Pedido"/>
                             </f:facet>
-                            <h:outputText value="#{item.idtipopedido}"/>
+                            <h:outputText value="#{item.idtipopedido.nombre}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{pedidosController.prepareCreate}" update=":PedidosCreateForm" oncomplete="PF('PedidosCreateDialog').show()"/>
