@@ -118,7 +118,7 @@ public class ClienteController implements Serializable {
 
     public List<Persona> getItems() {
         if (items == null) {
-            items = personasFacade.findAll();
+            items = personasFacade.findAllClientesPersonaInstitucion();
         }
         return items;
     }

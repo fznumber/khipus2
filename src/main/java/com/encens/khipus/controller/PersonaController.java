@@ -127,7 +127,7 @@ public class PersonaController implements Serializable {
 
     public List<Persona> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = getFacade().findAllClientesPersonaInstitucion();
         }
         return items;
     }

@@ -38,7 +38,7 @@ public class PersonasFacade extends AbstractFacade<Persona> {
     public List<Persona> findAllClientesPersonaInstitucion() {
         List<Persona> personas = new ArrayList<>();
         try {
-            personas = (List<Persona>)em.createQuery("select persona from Persona persona where persona.tipoPersona in ('cliente','institucion')")
+            personas = (List<Persona>)em.createQuery("select persona from Persona persona where persona.tipoPersona = 'cliente' or persona.tipoPersona = 'institucion'")
                     .getResultList();
 
         }catch (NoResultException e){
