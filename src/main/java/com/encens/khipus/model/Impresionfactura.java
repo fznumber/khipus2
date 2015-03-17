@@ -35,9 +35,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Impresionfactura.findByFechaimpresion", query = "SELECT i FROM Impresionfactura i WHERE i.fechaimpresion = :fechaimpresion"),
     @NamedQuery(name = "Impresionfactura.findByTipo", query = "SELECT i FROM Impresionfactura i WHERE i.tipo = :tipo")})
 public class Impresionfactura implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
     @NotNull
     @Column(name = "IDIMPRECIONFACTURA")
     private Long idimprecionfactura;
@@ -51,10 +51,13 @@ public class Impresionfactura implements Serializable {
     private String tipo;
     @JoinColumn(name = "IDMOVIMIENTO", referencedColumnName = "IDMOVIMIENTO")
     @ManyToOne(optional = false)
-    private Movimiento idmovimiento;
+    private Movimiento movimiento;
     @JoinColumn(name = "IDUSUARIO", referencedColumnName = "IDUSUARIO")
     @ManyToOne(optional = false)
-    private Usuario idusuario;
+    private Usuario usuario;
+    @JoinColumn(name = "IDDOSIFICACION", referencedColumnName = "IDDOSIFICACION")
+    @ManyToOne
+    private Dosificacion dosificacion;
 
     public Impresionfactura() {
     }
@@ -92,20 +95,20 @@ public class Impresionfactura implements Serializable {
         this.tipo = tipo;
     }
 
-    public Movimiento getIdmovimiento() {
-        return idmovimiento;
+    public Movimiento getMovimiento() {
+        return movimiento;
     }
 
-    public void setIdmovimiento(Movimiento idmovimiento) {
-        this.idmovimiento = idmovimiento;
+    public void setMovimiento(Movimiento idmovimiento) {
+        this.movimiento = idmovimiento;
     }
 
-    public Usuario getIdusuario() {
-        return idusuario;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setIdusuario(Usuario idusuario) {
-        this.idusuario = idusuario;
+    public void setUsuario(Usuario idusuario) {
+        this.usuario = idusuario;
     }
 
     @Override
@@ -131,6 +134,14 @@ public class Impresionfactura implements Serializable {
     @Override
     public String toString() {
         return "com.encens.khipus.model.Impresionfactura[ idimprecionfactura=" + idimprecionfactura + " ]";
+    }
+
+    public Dosificacion getDosificacion() {
+        return dosificacion;
+    }
+
+    public void setDosificacion(Dosificacion iddosificacion) {
+        this.dosificacion = iddosificacion;
     }
     
 }

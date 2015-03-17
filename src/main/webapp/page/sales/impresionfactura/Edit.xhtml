@@ -19,14 +19,14 @@
                         <p:outputLabel value="#{bundle.EditImpresionfacturaLabel_tipo}" for="tipo" />
                         <p:inputText id="tipo" value="#{impresionfacturaController.selected.tipo}" title="#{bundle.EditImpresionfacturaTitle_tipo}" />
                         <p:outputLabel value="#{bundle.EditImpresionfacturaLabel_idmovimiento}" for="idmovimiento" />
-                        <p:selectOneMenu id="idmovimiento" value="#{impresionfacturaController.selected.idmovimiento}" required="true" requiredMessage="#{bundle.EditImpresionfacturaRequiredMessage_idmovimiento}">
+                        <p:selectOneMenu id="idmovimiento" value="#{impresionfacturaController.selected.movimiento}" required="true" requiredMessage="#{bundle.EditImpresionfacturaRequiredMessage_idmovimiento}">
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{movimientoController.itemsAvailableSelectOne}"
                                            var="idmovimientoItem"
                                            itemValue="#{idmovimientoItem}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.EditImpresionfacturaLabel_idusuario}" for="idusuario" />
-                        <p:selectOneMenu id="idusuario" value="#{impresionfacturaController.selected.idusuario}" required="true" requiredMessage="#{bundle.EditImpresionfacturaRequiredMessage_idusuario}">
+                        <p:selectOneMenu id="idusuario" value="#{impresionfacturaController.selected.usuario}" required="true" requiredMessage="#{bundle.EditImpresionfacturaRequiredMessage_idusuario}">
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
                                            var="idusuarioItem"

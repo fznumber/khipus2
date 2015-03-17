@@ -51,13 +51,13 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListImpresionfacturaTitle_idmovimiento}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idmovimiento}"/>
+                            <h:outputText value="#{item.movimiento}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListImpresionfacturaTitle_idusuario}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idusuario}"/>
+                            <h:outputText value="#{item.usuario}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{impresionfacturaController.prepareCreate}" update=":ImpresionfacturaCreateForm" oncomplete="PF('ImpresionfacturaCreateDialog').show()"/>

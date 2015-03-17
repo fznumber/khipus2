@@ -80,7 +80,7 @@ public class Movimiento implements Serializable {
     @Column(name = "FECHAREGISTRO")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecharegistro;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmovimiento")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "movimiento")
     private Collection<Impresionfactura> impresionfacturaCollection;
     @JoinColumn(name = "IDPEDIDOS", referencedColumnName = "IDPEDIDOS")
     @ManyToOne(optional = false)

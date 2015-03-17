@@ -23,7 +23,7 @@ import javax.faces.convert.FacesConverter;
 public class PromocionController implements Serializable {
 
     @EJB
-    private com.encens.khipus.ejb.PromocionFacade ejbFacade;
+    private PromocionFacade ejbFacade;
     private List<Promocion> items = null;
     private Promocion selected;
 

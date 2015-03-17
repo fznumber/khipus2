@@ -7,19 +7,21 @@ package com.encens.khipus.model;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.Collection;
 import java.util.Date;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -37,11 +39,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Dosificacion.findByEstado", query = "SELECT d FROM Dosificacion d WHERE d.estado = :estado"),
     @NamedQuery(name = "Dosificacion.findByFacturadel", query = "SELECT d FROM Dosificacion d WHERE d.facturadel = :facturadel"),
     @NamedQuery(name = "Dosificacion.findByFacturaal", query = "SELECT d FROM Dosificacion d WHERE d.facturaal = :facturaal"),
+    @NamedQuery(name = "Dosificacion.findByPeriodo", query = "SELECT d FROM Dosificacion d WHERE d.fechavencimiento >= :fechaFactura and d.estado = 'ACTIVO'"),
     @NamedQuery(name = "Dosificacion.findByNumeroactual", query = "SELECT d FROM Dosificacion d WHERE d.numeroactual = :numeroactual")})
 public class Dosificacion implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
     @NotNull
     @Column(name = "IDDOSIFICACION")
     private Long iddosificacion;
@@ -62,6 +64,8 @@ public class Dosificacion implements Serializable {
     private BigInteger facturaal;
     @Column(name = "NUMEROACTUAL")
     private BigInteger numeroactual;
+    @OneToMany(mappedBy = "dosificacion")
+    private Collection<Impresionfactura> impresionfacturas;
 
     public Dosificacion() {
     }
@@ -157,6 +161,15 @@ public class Dosificacion implements Serializable {
     @Override
     public String toString() {
         return "com.encens.khipus.model.Dosificacion[ iddosificacion=" + iddosificacion + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Impresionfactura> getImpresionfacturas() {
+        return impresionfacturas;
+    }
+
+    public void setImpresionfacturas(Collection<Impresionfactura> impresionfacturaCollection) {
+        this.impresionfacturas = impresionfacturaCollection;
     }
     
 }

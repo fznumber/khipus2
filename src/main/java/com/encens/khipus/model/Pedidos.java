@@ -14,7 +14,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -24,26 +23,25 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "pedidos")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Pedidos.findAll", query = "SELECT p FROM Pedidos p"),
-    @NamedQuery(name = "Pedidos.findByIdpedidos", query = "SELECT p FROM Pedidos p WHERE p.idpedidos = :idpedidos"),
-    @NamedQuery(name = "Pedidos.findByDescripcion", query = "SELECT p FROM Pedidos p WHERE p.descripcion = :descripcion"),
-    @NamedQuery(name = "Pedidos.findByFechaPedido", query = "SELECT p FROM Pedidos p WHERE p.fechaPedido = :fechaPedido"),
-    @NamedQuery(name = "Pedidos.findByIddireccion", query = "SELECT p FROM Pedidos p WHERE p.iddireccion = :iddireccion"),
-    @NamedQuery(name = "Pedidos.findByIdzona", query = "SELECT p FROM Pedidos p WHERE p.idzona = :idzona"),
-    @NamedQuery(name = "Pedidos.findByTotal", query = "SELECT p FROM Pedidos p WHERE p.total = :total"),
-    @NamedQuery(name = "Pedidos.findByFechaEntrega", query = "SELECT p FROM Pedidos p WHERE p.fechaEntrega = :fechaEntrega"),
-    @NamedQuery(name = "Pedidos.findByFechaAPagar", query = "SELECT p FROM Pedidos p WHERE p.fechaAPagar = :fechaAPagar"),
-    @NamedQuery(name = "Pedidos.findByObservacion", query = "SELECT p FROM Pedidos p WHERE p.observacion = :observacion"),
-    @NamedQuery(name = "Pedidos.findByFactura", query = "SELECT p FROM Pedidos p WHERE p.factura = :factura"),
-    @NamedQuery(name = "Pedidos.findBySupervisor", query = "SELECT p FROM Pedidos p WHERE p.supervisor = :supervisor"),
-    @NamedQuery(name = "Pedidos.findByPorcenDescuento", query = "SELECT p FROM Pedidos p WHERE p.porcenDescuento = :porcenDescuento"),
-    @NamedQuery(name = "Pedidos.findByPorcenRetencion", query = "SELECT p FROM Pedidos p WHERE p.porcenRetencion = :porcenRetencion")})
+        @NamedQuery(name = "Pedidos.findAll", query = "SELECT p FROM Pedidos p"),
+        @NamedQuery(name = "Pedidos.findByIdpedidos", query = "SELECT p FROM Pedidos p WHERE p.idpedidos = :idpedidos"),
+        @NamedQuery(name = "Pedidos.findByDescripcion", query = "SELECT p FROM Pedidos p WHERE p.descripcion = :descripcion"),
+        @NamedQuery(name = "Pedidos.findByFechaPedido", query = "SELECT p FROM Pedidos p WHERE p.fechaPedido = :fechaPedido"),
+        @NamedQuery(name = "Pedidos.findByIddireccion", query = "SELECT p FROM Pedidos p WHERE p.iddireccion = :iddireccion"),
+        @NamedQuery(name = "Pedidos.findByIdzona", query = "SELECT p FROM Pedidos p WHERE p.idzona = :idzona"),
+        @NamedQuery(name = "Pedidos.findByTotal", query = "SELECT p FROM Pedidos p WHERE p.total = :total"),
+        @NamedQuery(name = "Pedidos.findByFechaEntrega", query = "SELECT p FROM Pedidos p WHERE p.fechaEntrega = :fechaEntrega"),
+        @NamedQuery(name = "Pedidos.findByFechaAPagar", query = "SELECT p FROM Pedidos p WHERE p.fechaAPagar = :fechaAPagar"),
+        @NamedQuery(name = "Pedidos.findByObservacion", query = "SELECT p FROM Pedidos p WHERE p.observacion = :observacion"),
+        @NamedQuery(name = "Pedidos.findByFactura", query = "SELECT p FROM Pedidos p WHERE p.factura = :factura"),
+        @NamedQuery(name = "Pedidos.findBySupervisor", query = "SELECT p FROM Pedidos p WHERE p.supervisor = :supervisor"),
+        @NamedQuery(name = "Pedidos.findByPorcenDescuento", query = "SELECT p FROM Pedidos p WHERE p.porcenDescuento = :porcenDescuento"),
+        @NamedQuery(name = "Pedidos.findByPorcenRetencion", query = "SELECT p FROM Pedidos p WHERE p.porcenRetencion = :porcenRetencion")})
 @TableGenerator(name = "Pedidos_Gen"
         ,table="ID_GEN"
         ,pkColumnName = "GEN_NAME"
         ,valueColumnName = "GEN_VAL")
 public class Pedidos implements Serializable {
-
     private static final long serialVersionUID = 1L;
     //todo:revisar por q el id no es correlativo
     @Id
@@ -66,6 +64,9 @@ public class Pedidos implements Serializable {
     @Column(name = "TOTAL")
     //total menos descuento y retencion
     private Double total = 0.0;
+    @Column(name = "TOTALIMPORTE")
+    //total a pagar sin descuentos ni retencion
+    private Double totalImporte = 0.0;
     @Column(name = "FECHA_ENTREGA")
     @Temporal(TemporalType.DATE)
     private Date fechaEntrega;
@@ -83,6 +84,8 @@ public class Pedidos implements Serializable {
     private Double porcenDescuento = 0.0;
     @Column(name = "PORCEN_RETENCION")
     private Double porcenRetencion = 0.0;
+    @Column(name = "VALORDESCUENTO")
+    private Double valorDescuento = 0.0;
     @Column(name = "VALORRETENCION")
     private Double valorRetencion = 0.0;
     @Column(name = "ESTADO")
@@ -102,19 +105,10 @@ public class Pedidos implements Serializable {
     @JoinColumn(name = "IDUSUARIO",referencedColumnName = "IDUSUARIO")
     @ManyToOne
     private Usuario usuario;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "TOTALIMPORTE")
-    private double totalimporte;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "VALORDESCUENTO")
-    private double valordescuento;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedidos")
-    private Collection<Movimiento> movimientos;
-
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "pedidos")
     private Collection<ArticulosPedido> articulosPedidos = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedidos")
+    private Collection<Movimiento> movimientos;
 
     public Pedidos() {
     }
@@ -305,6 +299,22 @@ public class Pedidos implements Serializable {
         return "com.encens.khipus.model.Pedidos[ idpedidos=" + idpedidos + " ]";
     }
 
+    public Double getTotalImporte() {
+        totalImporte = 0.0;
+        if(articulosPedidos != null)
+            for(ArticulosPedido articulosPedido:articulosPedidos)
+            {
+                totalImporte +=articulosPedido.getImporte();
+            }
+        //todo: implementar retención
+        this.valorDescuento = totalImporte * (porcenDescuento /100);
+        this.total = totalImporte - valorDescuento;
+        return totalImporte;
+    }
+
+    public void setTotalImporte(Double totalImporte) {
+        this.totalImporte = totalImporte;
+    }
 
     public Collection<ArticulosPedido> getArticulosPedidos() {
         return articulosPedidos;
@@ -320,9 +330,16 @@ public class Pedidos implements Serializable {
 
     public void setUsuario(Usuario usuario) {
         if(this.usuario != null)
-        this.usuario = usuario;
+            this.usuario = usuario;
     }
 
+    public Double getValorDescuento() {
+        return valorDescuento;
+    }
+
+    public void setValorDescuento(Double valorDescuento) {
+        this.valorDescuento = valorDescuento;
+    }
 
     public Double getValorRetencion() {
         return valorRetencion;
@@ -332,28 +349,11 @@ public class Pedidos implements Serializable {
         this.valorRetencion = valorRetencion;
     }
 
-    public double getTotalimporte() {
-        return totalimporte;
-    }
-
-    public void setTotalimporte(double totalimporte) {
-        this.totalimporte = totalimporte;
-    }
-
-    public double getValordescuento() {
-        return valordescuento;
-    }
-
-    public void setValordescuento(double valordescuento) {
-        this.valordescuento = valordescuento;
-    }
-
-    @XmlTransient
     public Collection<Movimiento> getMovimientos() {
         return movimientos;
     }
 
-    public void setMovimientos(Collection<Movimiento> movimientoCollection) {
-        this.movimientos = movimientoCollection;
+    public void setMovimientos(Collection<Movimiento> movimientos) {
+        this.movimientos = movimientos;
     }
 }

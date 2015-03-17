@@ -6,9 +6,13 @@
 package com.encens.khipus.ejb;
 
 import com.encens.khipus.model.Dosificacion;
+import javassist.bytecode.stackmap.BasicBlock;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import java.util.Date;
 
 /**
  *
@@ -27,5 +31,16 @@ public class DosificacionFacade extends AbstractFacade<Dosificacion> {
     public DosificacionFacade() {
         super(Dosificacion.class);
     }
-    
+
+    public Dosificacion findByPeriodo(Date date) {
+        Dosificacion dosificacion;
+        try{
+            dosificacion =(Dosificacion)em.createNamedQuery("Dosificacion.findByPeriodo")
+                    .setParameter("fechaFactura",date)
+                    .getSingleResult();
+        }catch (NoResultException e){
+            return null;
+        }
+        return dosificacion;
+    }
 }
