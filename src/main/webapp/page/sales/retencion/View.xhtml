@@ -20,6 +20,10 @@
                         <h:outputText value="#{retencionController.selected.porcentage}" title="#{bundle.ViewRetencionTitle_porcentage}"/>
                         <h:outputText value="#{bundle.ViewRetencionLabel_estado}"/>
                         <p:selectBooleanCheckbox value="#{retencionController.selected.estado}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewRetencionLabel_porcentageString}"/>
+                        <h:outputText value="#{retencionController.selected.porcentageString}" title="#{bundle.ViewRetencionTitle_porcentageString}"/>
+                        <h:outputText value="#{bundle.ViewRetencionLabel_clientes}"/>
+                        <h:outputText value="#{retencionController.selected.clientes}" title="#{bundle.ViewRetencionTitle_clientes}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="RetencionViewDialog.hide()"/>
                 </h:panelGroup>

@@ -13,70 +13,163 @@
             <h:outputText value="#{bundle.ListPedidosTitle}"></h:outputText>
         </ui:define>
 
-        <ui:define name="center">
+        <ui:define name="body">
             <h:form id="PedidosListForm">
-                <p:growl id="growl" life="15000"/>
-                <p:panel header="Listado Pedidos">
+                <p:panel header="#{bundle.ListPedidosTitle}">
                     <p:dataTable id="datalist" value="#{pedidosController.items}" var="item"
                                  selectionMode="single" selection="#{pedidosController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idpedidos}"
-                                 widgetVar="pedidosTabla"
-                                 sortMode="multiple"
-                                 emptyMessage="No hay pedidos registrados"
-                                 filteredValue="#{pedidosController.pedidosFiltrado}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column sortBy="#{item.fechaPedido}" filterBy="#{item.fechaPedido}" headerText="Fecha pedido" filterMatchMode="equals">
-                            <f:facet name="filter">
-                                <p:calendar id="fechaPedido" value="#{pedidosController.fechaPedidoFiltro}" styleClass="customCalendar" pattern="dd/MM/yyyy" effect="fold">
-                                    <p:ajax event="dateSelect" oncomplete="PF('pedidosTabla').filter()" />
-                                </p:calendar>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPedidosTitle_idpedidos}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idpedidos}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPedidosTitle_descripcion}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.descripcion}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPedidosTitle_fechaPedido}"/>
                             </f:facet>
                             <h:outputText value="#{item.fechaPedido}">
-                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
                             </h:outputText>
                         </p:column>
-                        <p:column sortBy="#{item.fechaEntrega}" headerText="Fecha Entrega" filterBy="#{item.fechaEntrega}" filterMatchMode="equals">
-                            <f:facet name="filter">
-                                <p:calendar id="fechaEntrega" value="#{pedidosController.fechaEntregaFiltro}" styleClass="customCalendar" pattern="dd/MM/yyyy" effect="fold">
-                                    <p:ajax event="dateSelect" oncomplete="PF('pedidosTabla').filter()" />
-                                </p:calendar>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPedidosTitle_iddireccion}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.iddireccion}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPedidosTitle_idzona}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idzona}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPedidosTitle_total}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.total}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPedidosTitle_fechaEntrega}"/>
                             </f:facet>
                             <h:outputText value="#{item.fechaEntrega}">
-                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
                             </h:outputText>
                         </p:column>
-                        <p:column sortBy="#{item.cliente.nombreCompleto}" filterBy="#{item.cliente.nombreCompleto}" headerText="Cliente" filterMatchMode="contains">
-                            <h:outputText value="#{item.cliente.nombreCompleto}"/>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPedidosTitle_fechaAPagar}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.fechaAPagar}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
                         </p:column>
-                        <p:column sortBy="#{item.distribuidor}" headerText="Distribuidor" filterBy="#{item.distribuidor.nombreCompleto}" filterMatchMode="contains">
-                            <h:outputText value="#{item.distribuidor.nombreCompleto}"/>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPedidosTitle_observacion}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.observacion}"/>
                         </p:column>
-                        <p:column filterMatchMode="in" filterBy="#{item.estado}">
-                            <f:facet name="filter">
-                                <p:selectCheckboxMenu label="Estado" onchange="PF('pedidosTabla').filter()" panelStyle="width:125px" scrollHeight="150">
-                                    <f:selectItems value="#{pedidosController.estados}" />
-                                </p:selectCheckboxMenu>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPedidosTitle_factura}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.factura}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPedidosTitle_supervisor}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.supervisor}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPedidosTitle_porcenDescuento}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.porcenDescuento}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPedidosTitle_porcenRetencion}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.porcenRetencion}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPedidosTitle_cliente}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cliente}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPedidosTitle_distribuidor}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.distribuidor}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPedidosTitle_estadoPedido}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.estadoPedido}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPedidosTitle_idtipopedido}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idtipopedido}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPedidosTitle_estado}"/>
                             </f:facet>
                             <h:outputText value="#{item.estado}"/>
                         </p:column>
-                        <p:column filterBy="#{item.idtipopedido.nombre}" filterMatchMode="in">
-                            <f:facet name="filter">
-                                    <p:selectCheckboxMenu label="Tipo" onchange="PF('pedidosTabla').filter()" panelStyle="width:125px" scrollHeight="150">
-                                        <f:selectItems value="#{tipopedidoController.itemsAvailableSelectMany}" />
-                                    </p:selectCheckboxMenu>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPedidosTitle_usuario}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idtipopedido.nombre}"/>
+                            <h:outputText value="#{item.usuario}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPedidosTitle_valorRetencion}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.valorRetencion}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPedidosTitle_totalimporte}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.totalimporte}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPedidosTitle_valordescuento}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.valordescuento}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{pedidosController.prepareCreate}" update=":PedidosCreateForm" oncomplete="PF('PedidosCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":PedidosViewForm" oncomplete="PF('PedidosViewDialog').show()" disabled="#{empty pedidosController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":PedidosEditForm" oncomplete="PF('PedidosEditDialog').show()" disabled="#{empty pedidosController.selected or !pedidosController.selected.estado.equals('CREADO')}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{pedidosController.destroy}" update=":PedidosListForm:growl,datalist" disabled="#{empty pedidosController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":PedidosEditForm" oncomplete="PF('PedidosEditDialog').show()" disabled="#{empty pedidosController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{pedidosController.destroy}" update=":growl,datalist" disabled="#{empty pedidosController.selected}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

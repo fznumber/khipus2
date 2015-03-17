@@ -6,47 +6,81 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-<ui:composition>
+    <ui:composition>
 
-    <p:dialog id="ClienteEditDlg" widgetVar="ClienteEditDialog" modal="true" resizable="false" appendTo="@(body)" header="Editar Distribuidor">
-        <h:form id="ClienteEditForm">
-            <h:panelGroup id="display">
-                <p:panelGrid columns="2" rendered="#{distribuidorController.selected != null}">
-                    <p:outputLabel value="C.I.:" for="nroDoc" />
-                    <p:inputText id="nroDoc" value="#{distribuidorController.selected.nroDoc}" title="Cedula de identidad"/>
-                    <p:outputLabel value="Nombre(s):" for="nom">
-                    </p:outputLabel>
-                    <p:inputText id="nom" value="#{distribuidorController.selected.nom}" title="nombres" required="true" requiredMessage="campo requerido."/>
-                    <p:outputLabel value="Ap. Paterno:" for="ap" >
-                    </p:outputLabel>
-                    <p:inputText id="ap" value="#{distribuidorController.selected.ap}" title="Ap. Paterno." required="true" requiredMessage="campo requerido." />
-                    <p:outputLabel value="Ap. Materno" for="am" />
-                    <p:inputText id="am" value="#{distribuidorController.selected.am}" title="Ap. Materno." required="true" requiredMessage="campo requerido." />
-                    <p:outputLabel value="#{bundle.CreateClienteLabel_codigo}" for="codigo" />
-                    <p:inputText id="codigo" value="#{distribuidorController.selected.codigo}" title="#{bundle.CreateClienteTitle_codigo}"/>
-                    <p:outputLabel value="#{bundle.CreateClienteLabel_sexo}" for="sexo" />
-                    <p:selectOneRadio id="sexo" value="#{distribuidorController.selected.sexo}" >
-                        <f:selectItem itemLabel="Masculino" itemValue="MASCULINO" />
-                        <f:selectItem itemLabel="Femenino" itemValue="FEMENINO" />
-                    </p:selectOneRadio>
-                    <p:outputLabel value="#{bundle.CreateClienteLabel_direccion}" for="direccion" />
-                    <p:inputText id="direccion" value="#{distribuidorController.selected.direccion}" title="#{bundle.CreateClienteTitle_direccion}" />
-                    <p:outputLabel value="#{bundle.CreateClienteLabel_telefono}" for="telefono" />
-                    <p:inputText id="telefono" value="#{distribuidorController.selected.telefono}" title="#{bundle.CreateClienteTitle_telefono}" />
-                    <p:outputLabel value="#{bundle.CreateClienteLabel_nit}" for="nit" />
-                    <p:inputText id="nit" value="#{distribuidorController.selected.nit}" title="#{bundle.CreateClienteTitle_nit}" />
-                    <p:outputLabel value="Departamento:" for="departamento" />
-                    <p:selectOneMenu id="departamento" value="#{distribuidorController.selected.departamento}" required="true" requiredMessage="#{bundle.EditClienteRequiredMessage_idtipocliente}">
-                        <f:selectItems value="#{departamentoController.itemsAvailableSelectOne}"
-                                       var="departamento"
-                                       itemValue="#{departamento}"/>
-                    </p:selectOneMenu>
-                </p:panelGrid>
-                <p:commandButton actionListener="#{distribuidorController.update}" value="#{bundle.Save}" update="display,:ClienteListForm:datalist,:ClienteListForm:growl" oncomplete="handleSubmit(args, 'ClienteEditDialog');"/>
-                <p:commandButton value="#{bundle.Cancel}" onclick="ClienteEditDialog.hide()"/>
-            </h:panelGroup>
-        </h:form>
-    </p:dialog>
+        <p:dialog id="DistribuidorEditDlg" widgetVar="DistribuidorEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditDistribuidorTitle}">
+            <h:form id="DistribuidorEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{distribuidorController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditDistribuidorLabel_observacion}" for="observacion" />
+                        <p:inputText id="observacion" value="#{distribuidorController.selected.observacion}" title="#{bundle.EditDistribuidorTitle_observacion}" />
+                        <p:outputLabel value="#{bundle.EditDistribuidorLabel_piId}" for="piId" />
+                        <p:inputText id="piId" value="#{distribuidorController.selected.piId}" title="#{bundle.EditDistribuidorTitle_piId}" />
+                        <p:outputLabel value="#{bundle.EditDistribuidorLabel_nroDoc}" for="nroDoc" />
+                        <p:inputText id="nroDoc" value="#{distribuidorController.selected.nroDoc}" title="#{bundle.EditDistribuidorTitle_nroDoc}" />
+                        <p:outputLabel value="#{bundle.EditDistribuidorLabel_ap}" for="ap" />
+                        <p:inputText id="ap" value="#{distribuidorController.selected.ap}" title="#{bundle.EditDistribuidorTitle_ap}" />
+                        <p:outputLabel value="#{bundle.EditDistribuidorLabel_am}" for="am" />
+                        <p:inputText id="am" value="#{distribuidorController.selected.am}" title="#{bundle.EditDistribuidorTitle_am}" />
+                        <p:outputLabel value="#{bundle.EditDistribuidorLabel_nom}" for="nom" />
+                        <p:inputText id="nom" value="#{distribuidorController.selected.nom}" title="#{bundle.EditDistribuidorTitle_nom}" required="true" requiredMessage="#{bundle.EditDistribuidorRequiredMessage_nom}"/>
+                        <p:outputLabel value="#{bundle.EditDistribuidorLabel_sexo}" for="sexo" />
+                        <p:inputText id="sexo" value="#{distribuidorController.selected.sexo}" title="#{bundle.EditDistribuidorTitle_sexo}" />
+                        <p:outputLabel value="#{bundle.EditDistribuidorLabel_estCivil}" for="estCivil" />
+                        <p:inputText id="estCivil" value="#{distribuidorController.selected.estCivil}" title="#{bundle.EditDistribuidorTitle_estCivil}" />
+                        <p:outputLabel value="#{bundle.EditDistribuidorLabel_fechaNac}" for="fechaNac" />
+                        <p:calendar id="fechaNac" pattern="MM/dd/yyyy" value="#{distribuidorController.selected.fechaNac}" title="#{bundle.EditDistribuidorTitle_fechaNac}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditDistribuidorLabel_cemCod}" for="cemCod" />
+                        <p:inputText id="cemCod" value="#{distribuidorController.selected.cemCod}" title="#{bundle.EditDistribuidorTitle_cemCod}" />
+                        <p:outputLabel value="#{bundle.EditDistribuidorLabel_ocuCod}" for="ocuCod" />
+                        <p:inputText id="ocuCod" value="#{distribuidorController.selected.ocuCod}" title="#{bundle.EditDistribuidorTitle_ocuCod}" />
+                        <p:outputLabel value="#{bundle.EditDistribuidorLabel_tdoCod}" for="tdoCod" />
+                        <p:inputText id="tdoCod" value="#{distribuidorController.selected.tdoCod}" title="#{bundle.EditDistribuidorTitle_tdoCod}" />
+                        <p:outputLabel value="#{bundle.EditDistribuidorLabel_sisCod}" for="sisCod" />
+                        <p:inputText id="sisCod" value="#{distribuidorController.selected.sisCod}" title="#{bundle.EditDistribuidorTitle_sisCod}" />
+                        <p:outputLabel value="#{bundle.EditDistribuidorLabel_tipoPersona}" for="tipoPersona" />
+                        <p:inputText id="tipoPersona" value="#{distribuidorController.selected.tipoPersona}" title="#{bundle.EditDistribuidorTitle_tipoPersona}" />
+                        <p:outputLabel value="#{bundle.EditDistribuidorLabel_direccion}" for="direccion" />
+                        <p:inputText id="direccion" value="#{distribuidorController.selected.direccion}" title="#{bundle.EditDistribuidorTitle_direccion}" />
+                        <p:outputLabel value="#{bundle.EditDistribuidorLabel_telefono}" for="telefono" />
+                        <p:inputText id="telefono" value="#{distribuidorController.selected.telefono}" title="#{bundle.EditDistribuidorTitle_telefono}" />
+                        <p:outputLabel value="#{bundle.EditDistribuidorLabel_nit}" for="nit" />
+                        <p:inputText id="nit" value="#{distribuidorController.selected.nit}" title="#{bundle.EditDistribuidorTitle_nit}" />
+                        <p:outputLabel value="#{bundle.EditDistribuidorLabel_razonsocial}" for="razonsocial" />
+                        <p:inputText id="razonsocial" value="#{distribuidorController.selected.razonsocial}" title="#{bundle.EditDistribuidorTitle_razonsocial}" />
+                        <p:outputLabel value="#{bundle.EditDistribuidorLabel_descuento}" for="descuento" />
+                        <p:inputText id="descuento" value="#{distribuidorController.selected.descuento}" title="#{bundle.EditDistribuidorTitle_descuento}" />
+                        <p:outputLabel value="#{bundle.EditDistribuidorLabel_codigo}" for="codigo" />
+                        <p:inputText id="codigo" value="#{distribuidorController.selected.codigo}" title="#{bundle.EditDistribuidorTitle_codigo}" />
+                        <p:outputLabel value="#{bundle.EditDistribuidorLabel_departamento}" for="departamento" />
+                        <p:selectOneMenu id="departamento" value="#{distribuidorController.selected.departamento}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{departamentoController.itemsAvailableSelectOne}"
+                                           var="departamentoItem"
+                                           itemValue="#{departamentoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditDistribuidorLabel_retencion}" for="retencion" />
+                        <p:selectOneMenu id="retencion" value="#{distribuidorController.selected.retencion}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{retencionController.itemsAvailableSelectOne}"
+                                           var="retencionItem"
+                                           itemValue="#{retencionItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditDistribuidorLabel_tipocliente}" for="tipocliente" />
+                        <p:selectOneMenu id="tipocliente" value="#{distribuidorController.selected.tipocliente}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoclienteController.itemsAvailableSelectOne}"
+                                           var="tipoclienteItem"
+                                           itemValue="#{tipoclienteItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditDistribuidorLabel_nombreCompleto}" for="nombreCompleto" />
+                        <p:inputText id="nombreCompleto" value="#{distribuidorController.selected.nombreCompleto}" title="#{bundle.EditDistribuidorTitle_nombreCompleto}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{distribuidorController.update}" value="#{bundle.Save}" update="display,:DistribuidorListForm:datalist,:growl" oncomplete="handleSubmit(args, 'DistribuidorEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="DistribuidorEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
 
-</ui:composition>
+    </ui:composition>
 </html>

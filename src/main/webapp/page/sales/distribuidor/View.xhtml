@@ -3,35 +3,70 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-<ui:composition>
+    <ui:composition>
 
-    <p:dialog id="ClienteViewDlg" widgetVar="ClienteViewDialog" modal="true" resizable="false" appendTo="@(body)" header="Distribuido">
-        <h:form id="ClienteViewForm">
-            <h:panelGroup id="display">
-                <p:panelGrid columns="2" rendered="#{distribuidorController.selected != null}">
-                    <p:outputLabel value="C.I.:" for="nroDoc"/>
-                    <p:outputLabel id="nroDoc" value="#{distribuidorController.selected.nroDoc}" title="Cedula de identidad" />
-                    <p:outputLabel value="Nombre:" for="nom" />
-                    <p:outputLabel id="nom" value="#{distribuidorController.selected.nombreCompleto}" title="Nombre/Razon Social"/>
-                    <p:outputLabel value="#{bundle.CreateClienteLabel_codigo}" for="codigo" />
-                    <p:outputLabel id="codigo" value="#{distribuidorController.selected.codigo}" title="#{bundle.CreateClienteTitle_codigo}"/>
-                    <p:outputLabel value="#{bundle.CreateClienteLabel_sexo}" for="sexo" />
-                    <p:outputLabel id="sexo" value="#{distribuidorController.selected.sexo}" title="sexo" />
-                    <p:outputLabel value="#{bundle.CreateClienteLabel_direccion}" for="direccion" />
-                    <p:outputLabel id="direccion" value="#{distribuidorController.selected.direccion}" title="#{bundle.CreateClienteTitle_direccion}" />
-                    <p:outputLabel value="#{bundle.CreateClienteLabel_telefono}" for="telefono" />
-                    <p:outputLabel id="telefono" value="#{distribuidorController.selected.telefono}" title="#{bundle.CreateClienteTitle_telefono}" />
-                    <p:outputLabel value="#{bundle.CreateClienteLabel_nit}" for="nit" />
-                    <p:outputLabel id="nit" value="#{distribuidorController.selected.nit}" title="#{bundle.CreateClienteTitle_nit}" />
-                    <p:outputLabel value="Departamento:" for="departamento" />
-                    <p:outputLabel id="departamento" value="#{distribuidorController.selected.departamento.nombre}" title="Departamento" />
-                </p:panelGrid>
-                <p:commandButton value="#{bundle.Close}" onclick="ClienteViewDialog.hide()"/>
-            </h:panelGroup>
-        </h:form>
-    </p:dialog>
+        <p:dialog id="DistribuidorViewDlg" widgetVar="DistribuidorViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDistribuidorTitle}">
+            <h:form id="DistribuidorViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{distribuidorController.selected != null}">
+                        <h:outputText value="#{bundle.ViewDistribuidorLabel_observacion}"/>
+                        <h:outputText value="#{distribuidorController.selected.observacion}" title="#{bundle.ViewDistribuidorTitle_observacion}"/>
+                        <h:outputText value="#{bundle.ViewDistribuidorLabel_piId}"/>
+                        <h:outputText value="#{distribuidorController.selected.piId}" title="#{bundle.ViewDistribuidorTitle_piId}"/>
+                        <h:outputText value="#{bundle.ViewDistribuidorLabel_nroDoc}"/>
+                        <h:outputText value="#{distribuidorController.selected.nroDoc}" title="#{bundle.ViewDistribuidorTitle_nroDoc}"/>
+                        <h:outputText value="#{bundle.ViewDistribuidorLabel_ap}"/>
+                        <h:outputText value="#{distribuidorController.selected.ap}" title="#{bundle.ViewDistribuidorTitle_ap}"/>
+                        <h:outputText value="#{bundle.ViewDistribuidorLabel_am}"/>
+                        <h:outputText value="#{distribuidorController.selected.am}" title="#{bundle.ViewDistribuidorTitle_am}"/>
+                        <h:outputText value="#{bundle.ViewDistribuidorLabel_nom}"/>
+                        <h:outputText value="#{distribuidorController.selected.nom}" title="#{bundle.ViewDistribuidorTitle_nom}"/>
+                        <h:outputText value="#{bundle.ViewDistribuidorLabel_sexo}"/>
+                        <h:outputText value="#{distribuidorController.selected.sexo}" title="#{bundle.ViewDistribuidorTitle_sexo}"/>
+                        <h:outputText value="#{bundle.ViewDistribuidorLabel_estCivil}"/>
+                        <h:outputText value="#{distribuidorController.selected.estCivil}" title="#{bundle.ViewDistribuidorTitle_estCivil}"/>
+                        <h:outputText value="#{bundle.ViewDistribuidorLabel_fechaNac}"/>
+                        <h:outputText value="#{distribuidorController.selected.fechaNac}" title="#{bundle.ViewDistribuidorTitle_fechaNac}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewDistribuidorLabel_cemCod}"/>
+                        <h:outputText value="#{distribuidorController.selected.cemCod}" title="#{bundle.ViewDistribuidorTitle_cemCod}"/>
+                        <h:outputText value="#{bundle.ViewDistribuidorLabel_ocuCod}"/>
+                        <h:outputText value="#{distribuidorController.selected.ocuCod}" title="#{bundle.ViewDistribuidorTitle_ocuCod}"/>
+                        <h:outputText value="#{bundle.ViewDistribuidorLabel_tdoCod}"/>
+                        <h:outputText value="#{distribuidorController.selected.tdoCod}" title="#{bundle.ViewDistribuidorTitle_tdoCod}"/>
+                        <h:outputText value="#{bundle.ViewDistribuidorLabel_sisCod}"/>
+                        <h:outputText value="#{distribuidorController.selected.sisCod}" title="#{bundle.ViewDistribuidorTitle_sisCod}"/>
+                        <h:outputText value="#{bundle.ViewDistribuidorLabel_tipoPersona}"/>
+                        <h:outputText value="#{distribuidorController.selected.tipoPersona}" title="#{bundle.ViewDistribuidorTitle_tipoPersona}"/>
+                        <h:outputText value="#{bundle.ViewDistribuidorLabel_direccion}"/>
+                        <h:outputText value="#{distribuidorController.selected.direccion}" title="#{bundle.ViewDistribuidorTitle_direccion}"/>
+                        <h:outputText value="#{bundle.ViewDistribuidorLabel_telefono}"/>
+                        <h:outputText value="#{distribuidorController.selected.telefono}" title="#{bundle.ViewDistribuidorTitle_telefono}"/>
+                        <h:outputText value="#{bundle.ViewDistribuidorLabel_nit}"/>
+                        <h:outputText value="#{distribuidorController.selected.nit}" title="#{bundle.ViewDistribuidorTitle_nit}"/>
+                        <h:outputText value="#{bundle.ViewDistribuidorLabel_razonsocial}"/>
+                        <h:outputText value="#{distribuidorController.selected.razonsocial}" title="#{bundle.ViewDistribuidorTitle_razonsocial}"/>
+                        <h:outputText value="#{bundle.ViewDistribuidorLabel_descuento}"/>
+                        <h:outputText value="#{distribuidorController.selected.descuento}" title="#{bundle.ViewDistribuidorTitle_descuento}"/>
+                        <h:outputText value="#{bundle.ViewDistribuidorLabel_codigo}"/>
+                        <h:outputText value="#{distribuidorController.selected.codigo}" title="#{bundle.ViewDistribuidorTitle_codigo}"/>
+                        <h:outputText value="#{bundle.ViewDistribuidorLabel_departamento}"/>
+                        <h:outputText value="#{distribuidorController.selected.departamento}" title="#{bundle.ViewDistribuidorTitle_departamento}"/>
+                        <h:outputText value="#{bundle.ViewDistribuidorLabel_retencion}"/>
+                        <h:outputText value="#{distribuidorController.selected.retencion}" title="#{bundle.ViewDistribuidorTitle_retencion}"/>
+                        <h:outputText value="#{bundle.ViewDistribuidorLabel_tipocliente}"/>
+                        <h:outputText value="#{distribuidorController.selected.tipocliente}" title="#{bundle.ViewDistribuidorTitle_tipocliente}"/>
+                        <h:outputText value="#{bundle.ViewDistribuidorLabel_nombreCompleto}"/>
+                        <h:outputText value="#{distribuidorController.selected.nombreCompleto}" title="#{bundle.ViewDistribuidorTitle_nombreCompleto}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="DistribuidorViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
 
-</ui:composition>
+    </ui:composition>
 </html>

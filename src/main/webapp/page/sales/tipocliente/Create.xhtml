@@ -16,6 +16,8 @@
                         <p:inputText id="idtipocliente" value="#{tipoclienteController.selected.idtipocliente}" title="#{bundle.CreateTipoclienteTitle_idtipocliente}" />
                         <p:outputLabel value="#{bundle.CreateTipoclienteLabel_nombre}" for="nombre" />
                         <p:inputText id="nombre" value="#{tipoclienteController.selected.nombre}" title="#{bundle.CreateTipoclienteTitle_nombre}" />
+                        <p:outputLabel value="#{bundle.CreateTipoclienteLabel_clientes}" for="clientes" />
+                        <p:inputText id="clientes" value="#{tipoclienteController.selected.clientes}" title="#{bundle.CreateTipoclienteTitle_clientes}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{tipoclienteController.create}" value="#{bundle.Save}" update="display,:TipoclienteListForm:datalist,:growl" oncomplete="handleSubmit(args,'TipoclienteCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="TipoclienteCreateDialog.hide()"/>

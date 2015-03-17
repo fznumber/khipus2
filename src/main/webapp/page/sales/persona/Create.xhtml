@@ -8,60 +8,70 @@
 
     <ui:composition>
 
-        <p:dialog id="PersonaCreateDlg" widgetVar="PersonaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Registrar Cliente">
+        <p:dialog id="PersonaCreateDlg" widgetVar="PersonaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreatePersonaTitle}">
             <h:form id="PersonaCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{personaController.selected != null}">
-                        <h:outputText value="Tipo Cliente: " />
-                        <p:selectBooleanButton id="tipoCliente" value="#{personaController.esPersona}" onLabel="Persona" offLabel="Institución">
-                            <p:ajax update="display" />
-                        </p:selectBooleanButton>
-                        <p:outputLabel value="Nombre(s):" for="nom" rendered="#{personaController.esPersona}">
-                        </p:outputLabel>
-                        <p:inputText id="nom" value="#{personaController.selected.nom}" title="nombres" required="true" requiredMessage="campo requerido." rendered="#{personaController.esPersona}"/>
-                        <p:outputLabel value="Ap. Paterno:" for="ap" rendered="#{personaController.esPersona}">
-                        </p:outputLabel>
-                        <p:inputText id="ap" value="#{personaController.selected.ap}" title="Ap. Paterno." required="true" requiredMessage="campo requerido." rendered="#{personaController.esPersona}"/>
-                        <p:outputLabel value="Ap. Materno" for="am" rendered="#{personaController.esPersona}"/>
-                        <p:inputText id="am" value="#{personaController.selected.am}" title="Ap. Materno." required="true" requiredMessage="campo requerido." rendered="#{personaController.esPersona}"/>
-                        <p:outputLabel value="Razon social:" for="razon" rendered="#{!personaController.esPersona}"/>
-                        <p:inputText id="razon" value="#{personaController.selected.razonsocial}" title="Razon social" required="true" requiredMessage="campo requerido." rendered="#{!personaController.esPersona}">
-                        </p:inputText>
-                        <p:outputLabel value="C.I.:" for="nroDoc" rendered="#{personaController.esPersona}"/>
-                        <p:inputText id="nroDoc" value="#{personaController.selected.nroDoc}" title="Cedula de identidad" rendered="#{personaController.esPersona}"/>
-                        <p:outputLabel value="#{bundle.CreateClienteLabel_sexo}" for="sexo" rendered="#{personaController.esPersona}"/>
-                        <p:selectOneRadio id="sexo" value="#{personaController.selected.sexo}" rendered="#{personaController.esPersona}">
-                            <f:selectItem itemLabel="Masculino" itemValue="MASCULINO" />
-                            <f:selectItem itemLabel="Femenino" itemValue="FEMENINO" />
-                        </p:selectOneRadio>
-                        <p:outputLabel value="#{bundle.CreateClienteLabel_direccion}" for="direccion" />
-                        <p:inputText id="direccion" value="#{personaController.selected.direccion}" title="#{bundle.CreateClienteTitle_direccion}" />
-                        <p:outputLabel value="#{bundle.CreateClienteLabel_telefono}" for="telefono" />
-                        <p:inputText id="telefono" value="#{personaController.selected.telefono}" title="#{bundle.CreateClienteTitle_telefono}" />
-                        <p:outputLabel value="#{bundle.CreateClienteLabel_nit}" for="nit" />
-                        <p:inputText id="nit" value="#{personaController.selected.nit}" title="#{bundle.CreateClienteTitle_nit}" />
-                        <p:selectBooleanButton id="retencion" value="#{personaController.tieneRetencion}" onLabel="Retención" offLabel="Sin retención" onIcon="ui-icon-check" offIcon="ui-icon-close">
-                            <p:ajax listener="#{personaController.cambiarRetencion}" update="retencionCampo"/>
-                        </p:selectBooleanButton>
-                        <p:outputLabel id="retencionCampo" value="#{personaController.retencion.porcentageString}"/>
-                        <p:selectBooleanButton id="descuento" value="#{personaController.tieneDescuento}" onLabel="Descuento" offLabel="Sin descuento" onIcon="ui-icon-check" offIcon="ui-icon-close">
-                            <p:ajax update="descuentoCampo" />
-                        </p:selectBooleanButton>
-                        <p:spinner id="descuentoCampo" value="#{personaController.selected.descuento}" prefix="%" min="0" max="100" disabled="#{!personaController.tieneDescuento}"/>
-                        <p:outputLabel value="#{bundle.CreateClienteLabel_idtipocliente}" for="idtipocliente" />
-                        <p:selectOneMenu id="idtipocliente" value="#{personaController.selected.tipocliente}" required="true" requiredMessage="#{bundle.EditClienteRequiredMessage_idtipocliente}">
-                            <f:selectItems value="#{tipoclienteController.itemsAvailableSelectOne}"
-                                           var="idtipoclienteItem"
-                                           itemValue="#{idtipoclienteItem}"/>
-                        </p:selectOneMenu>
-                        <p:outputLabel value="Departamento:" for="departamento" />
-                        <p:selectOneMenu id="departamento" value="#{personaController.selected.departamento}" required="true" requiredMessage="#{bundle.EditClienteRequiredMessage_idtipocliente}">
+                        <p:outputLabel value="#{bundle.CreatePersonaLabel_piId}" for="piId" />
+                        <p:inputText id="piId" value="#{personaController.selected.piId}" title="#{bundle.CreatePersonaTitle_piId}" />
+                        <p:outputLabel value="#{bundle.CreatePersonaLabel_nroDoc}" for="nroDoc" />
+                        <p:inputText id="nroDoc" value="#{personaController.selected.nroDoc}" title="#{bundle.CreatePersonaTitle_nroDoc}" />
+                        <p:outputLabel value="#{bundle.CreatePersonaLabel_ap}" for="ap" />
+                        <p:inputText id="ap" value="#{personaController.selected.ap}" title="#{bundle.CreatePersonaTitle_ap}" />
+                        <p:outputLabel value="#{bundle.CreatePersonaLabel_am}" for="am" />
+                        <p:inputText id="am" value="#{personaController.selected.am}" title="#{bundle.CreatePersonaTitle_am}" />
+                        <p:outputLabel value="#{bundle.CreatePersonaLabel_nom}" for="nom" />
+                        <p:inputText id="nom" value="#{personaController.selected.nom}" title="#{bundle.CreatePersonaTitle_nom}" required="true" requiredMessage="#{bundle.CreatePersonaRequiredMessage_nom}"/>
+                        <p:outputLabel value="#{bundle.CreatePersonaLabel_sexo}" for="sexo" />
+                        <p:inputText id="sexo" value="#{personaController.selected.sexo}" title="#{bundle.CreatePersonaTitle_sexo}" />
+                        <p:outputLabel value="#{bundle.CreatePersonaLabel_estCivil}" for="estCivil" />
+                        <p:inputText id="estCivil" value="#{personaController.selected.estCivil}" title="#{bundle.CreatePersonaTitle_estCivil}" />
+                        <p:outputLabel value="#{bundle.CreatePersonaLabel_fechaNac}" for="fechaNac" />
+                        <p:calendar id="fechaNac" pattern="MM/dd/yyyy" value="#{personaController.selected.fechaNac}" title="#{bundle.EditPersonaTitle_fechaNac}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreatePersonaLabel_cemCod}" for="cemCod" />
+                        <p:inputText id="cemCod" value="#{personaController.selected.cemCod}" title="#{bundle.CreatePersonaTitle_cemCod}" />
+                        <p:outputLabel value="#{bundle.CreatePersonaLabel_ocuCod}" for="ocuCod" />
+                        <p:inputText id="ocuCod" value="#{personaController.selected.ocuCod}" title="#{bundle.CreatePersonaTitle_ocuCod}" />
+                        <p:outputLabel value="#{bundle.CreatePersonaLabel_tdoCod}" for="tdoCod" />
+                        <p:inputText id="tdoCod" value="#{personaController.selected.tdoCod}" title="#{bundle.CreatePersonaTitle_tdoCod}" />
+                        <p:outputLabel value="#{bundle.CreatePersonaLabel_sisCod}" for="sisCod" />
+                        <p:inputText id="sisCod" value="#{personaController.selected.sisCod}" title="#{bundle.CreatePersonaTitle_sisCod}" />
+                        <p:outputLabel value="#{bundle.CreatePersonaLabel_tipoPersona}" for="tipoPersona" />
+                        <p:inputText id="tipoPersona" value="#{personaController.selected.tipoPersona}" title="#{bundle.CreatePersonaTitle_tipoPersona}" />
+                        <p:outputLabel value="#{bundle.CreatePersonaLabel_direccion}" for="direccion" />
+                        <p:inputText id="direccion" value="#{personaController.selected.direccion}" title="#{bundle.CreatePersonaTitle_direccion}" />
+                        <p:outputLabel value="#{bundle.CreatePersonaLabel_telefono}" for="telefono" />
+                        <p:inputText id="telefono" value="#{personaController.selected.telefono}" title="#{bundle.CreatePersonaTitle_telefono}" />
+                        <p:outputLabel value="#{bundle.CreatePersonaLabel_nit}" for="nit" />
+                        <p:inputText id="nit" value="#{personaController.selected.nit}" title="#{bundle.CreatePersonaTitle_nit}" />
+                        <p:outputLabel value="#{bundle.CreatePersonaLabel_razonsocial}" for="razonsocial" />
+                        <p:inputText id="razonsocial" value="#{personaController.selected.razonsocial}" title="#{bundle.CreatePersonaTitle_razonsocial}" />
+                        <p:outputLabel value="#{bundle.CreatePersonaLabel_descuento}" for="descuento" />
+                        <p:inputText id="descuento" value="#{personaController.selected.descuento}" title="#{bundle.CreatePersonaTitle_descuento}" />
+                        <p:outputLabel value="#{bundle.CreatePersonaLabel_codigo}" for="codigo" />
+                        <p:inputText id="codigo" value="#{personaController.selected.codigo}" title="#{bundle.CreatePersonaTitle_codigo}" />
+                        <p:outputLabel value="#{bundle.CreatePersonaLabel_departamento}" for="departamento" />
+                        <p:selectOneMenu id="departamento" value="#{personaController.selected.departamento}" >
                             <f:selectItems value="#{departamentoController.itemsAvailableSelectOne}"
-                                           var="departamento"
-                                           itemValue="#{departamento}"/>
+                                           var="departamentoItem"
+                                           itemValue="#{departamentoItem}"/>
                         </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreatePersonaLabel_retencion}" for="retencion" />
+                        <p:selectOneMenu id="retencion" value="#{personaController.selected.retencion}" >
+                            <f:selectItems value="#{retencionController.itemsAvailableSelectOne}"
+                                           var="retencionItem"
+                                           itemValue="#{retencionItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreatePersonaLabel_tipocliente}" for="tipocliente" />
+                        <p:selectOneMenu id="tipocliente" value="#{personaController.selected.tipocliente}" >
+                            <f:selectItems value="#{tipoclienteController.itemsAvailableSelectOne}"
+                                           var="tipoclienteItem"
+                                           itemValue="#{tipoclienteItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreatePersonaLabel_nombreCompleto}" for="nombreCompleto" />
+                        <p:inputText id="nombreCompleto" value="#{personaController.selected.nombreCompleto}" title="#{bundle.CreatePersonaTitle_nombreCompleto}" />
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{personaController.create}" value="#{bundle.Save}" update="display,:PersonaListForm:datalist,:PersonaListForm:growl" oncomplete="handleSubmit(args,'PersonaCreateDialog');"/>
+                    <p:commandButton actionListener="#{personaController.create}" value="#{bundle.Save}" update="display,:PersonaListForm:datalist,:growl" oncomplete="handleSubmit(args,'PersonaCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="PersonaCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

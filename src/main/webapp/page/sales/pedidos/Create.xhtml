@@ -6,150 +6,82 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-<ui:composition>
+    <ui:composition>
 
-    <p:dialog id="PedidosCreateDlg" widgetVar="PedidosCreateDialog" modal="true" width="820px" appendTo="@(body)" header="Crear pedido" closable="false">
-        <h:form id="PedidosCreateForm">
-            <p:panelGrid id="display" rendered="#{pedidosController.selected != null}" columns="6" >
-                <p:outputLabel value="Cliente:" for="cliente" />
-                <p:autoComplete id="cliente" value="#{pedidosController.personaElegida}" completeMethod="#{pedidosController.completarCliente}"
-                                var="cliente" itemLabel="#{cliente.nombreCompleto}" itemValue="#{cliente}" converter="convertirPersona">
-                    <f:facet name="itemtip">
-                        <h:panelGrid columns="2" cellpadding="5">
-                            <f:facet name="header">
-                                <h:outputText styleClass="ui-theme ui-theme-#{cliente.nombreCompleto}" style="margin-left:50px" />
-                            </f:facet>
-                            <h:outputText value="Nombre:" />
-                            <h:outputText value="#{cliente.nombreCompleto}" />
-                            <h:outputText value="Nit:" />
-                            <h:outputText value="#{cliente.nit}" />
-                            <h:outputText value="C.I.:" />
-                            <h:outputText value="#{cliente.nroDoc}" />
-                            <h:outputText value="Telefono:" />
-                            <h:outputText value="#{cliente.telefono}" />
-                            <h:outputText value="Ciudad:" />
-                            <h:outputText value="#{cliente.departamento}" />
-                        </h:panelGrid>
-                    </f:facet>
-                    <p:ajax event="itemSelect" update="nit,descuento,retencion,tipocliente"></p:ajax>
-                </p:autoComplete>
-                <p:outputLabel value="Nit:" for="nit"/>
-                <p:outputLabel id="nit" value="#{pedidosController.personaElegida.nit}"/>
-                <p:outputLabel value="% Descuento:" for="descuento"/>
-                <p:outputLabel id="descuento" value="#{pedidosController.personaElegida.descuento}" />
-                <p:outputLabel value="Distribuidor:" for="distribuidor" />
-                <p:autoComplete id="distribuidor" value="#{pedidosController.distribuidorElegido}" completeMethod="#{pedidosController.completarDistribuidor}"
-                                var="distribuidor" itemLabel="#{distribuidor.nombreCompleto}" itemValue="#{distribuidor}" converter="convertirPersona" >
-                    <f:facet name="itemtip">
-                        <h:panelGrid columns="2" cellpadding="5">
-                            <f:facet name="header">
-                                <h:outputText styleClass="ui-theme ui-theme-#{distribuidor.nombreCompleto}" style="margin-left:50px" />
-                            </f:facet>
-                            <h:outputText value="Nombre:" />
-                            <h:outputText value="#{distribuidor.nombreCompleto}" />
-                            <h:outputText value="Nit:" />
-                            <h:outputText value="#{distribuidor.nit}" />
-                            <h:outputText value="C.I.:" />
-                            <h:outputText value="#{distribuidor.nroDoc}" />
-                            <h:outputText value="Telefono:" />
-                            <h:outputText value="#{distribuidor.telefono}" />
-                            <h:outputText value="Ciudad:" />
-                            <h:outputText value="#{distribuidor.departamento}" />
-                        </h:panelGrid>
-                    </f:facet>
-                </p:autoComplete>
-                <p:outputLabel value="Tipo Cliente:" for="tipocliente"/>
-                <p:outputLabel id="tipocliente" value="#{pedidosController.personaElegida.tipocliente.nombre}"/>
-                <p:outputLabel value="% Retención:" for="retencion"/>
-                <p:outputLabel id="retencion" value="#{pedidosController.personaElegida.retencion.porcentageString}"/>
-                <p:outputLabel for="fechaEntrega" value="Fecha Entrega:" />
-                <p:calendar id="fechaEntrega" value="#{pedidosController.selected.fechaEntrega}" />
-                <p:outputLabel value="Tipo pedido:"/>
+        <p:dialog id="PedidosCreateDlg" widgetVar="PedidosCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreatePedidosTitle}">
+            <h:form id="PedidosCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{pedidosController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreatePedidosLabel_idpedidos}" for="idpedidos" />
+                        <p:inputText id="idpedidos" value="#{pedidosController.selected.idpedidos}" title="#{bundle.CreatePedidosTitle_idpedidos}" />
+                        <p:outputLabel value="#{bundle.CreatePedidosLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{pedidosController.selected.descripcion}" title="#{bundle.CreatePedidosTitle_descripcion}" />
+                        <p:outputLabel value="#{bundle.CreatePedidosLabel_fechaPedido}" for="fechaPedido" />
+                        <p:calendar id="fechaPedido" pattern="MM/dd/yyyy" value="#{pedidosController.selected.fechaPedido}" title="#{bundle.EditPedidosTitle_fechaPedido}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreatePedidosLabel_iddireccion}" for="iddireccion" />
+                        <p:inputText id="iddireccion" value="#{pedidosController.selected.iddireccion}" title="#{bundle.CreatePedidosTitle_iddireccion}" />
+                        <p:outputLabel value="#{bundle.CreatePedidosLabel_idzona}" for="idzona" />
+                        <p:inputText id="idzona" value="#{pedidosController.selected.idzona}" title="#{bundle.CreatePedidosTitle_idzona}" />
+                        <p:outputLabel value="#{bundle.CreatePedidosLabel_total}" for="total" />
+                        <p:inputText id="total" value="#{pedidosController.selected.total}" title="#{bundle.CreatePedidosTitle_total}" required="true" requiredMessage="#{bundle.CreatePedidosRequiredMessage_total}"/>
+                        <p:outputLabel value="#{bundle.CreatePedidosLabel_fechaEntrega}" for="fechaEntrega" />
+                        <p:calendar id="fechaEntrega" pattern="MM/dd/yyyy" value="#{pedidosController.selected.fechaEntrega}" title="#{bundle.EditPedidosTitle_fechaEntrega}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreatePedidosLabel_fechaAPagar}" for="fechaAPagar" />
+                        <p:calendar id="fechaAPagar" pattern="MM/dd/yyyy" value="#{pedidosController.selected.fechaAPagar}" title="#{bundle.EditPedidosTitle_fechaAPagar}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreatePedidosLabel_observacion}" for="observacion" />
+                        <p:inputText id="observacion" value="#{pedidosController.selected.observacion}" title="#{bundle.CreatePedidosTitle_observacion}" />
+                        <p:outputLabel value="#{bundle.CreatePedidosLabel_factura}" for="factura" />
+                        <p:inputText id="factura" value="#{pedidosController.selected.factura}" title="#{bundle.CreatePedidosTitle_factura}" />
+                        <p:outputLabel value="#{bundle.CreatePedidosLabel_supervisor}" for="supervisor" />
+                        <p:inputText id="supervisor" value="#{pedidosController.selected.supervisor}" title="#{bundle.CreatePedidosTitle_supervisor}" />
+                        <p:outputLabel value="#{bundle.CreatePedidosLabel_porcenDescuento}" for="porcenDescuento" />
+                        <p:inputText id="porcenDescuento" value="#{pedidosController.selected.porcenDescuento}" title="#{bundle.CreatePedidosTitle_porcenDescuento}" />
+                        <p:outputLabel value="#{bundle.CreatePedidosLabel_porcenRetencion}" for="porcenRetencion" />
+                        <p:inputText id="porcenRetencion" value="#{pedidosController.selected.porcenRetencion}" title="#{bundle.CreatePedidosTitle_porcenRetencion}" />
+                        <p:outputLabel value="#{bundle.CreatePedidosLabel_cliente}" for="cliente" />
+                        <p:selectOneMenu id="cliente" value="#{pedidosController.selected.cliente}" required="true" requiredMessage="#{bundle.EditPedidosRequiredMessage_cliente}">
+                            <f:selectItems value="#{personaController.itemsAvailableSelectOne}"
+                                           var="clienteItem"
+                                           itemValue="#{clienteItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreatePedidosLabel_distribuidor}" for="distribuidor" />
+                        <p:selectOneMenu id="distribuidor" value="#{pedidosController.selected.distribuidor}" required="true" requiredMessage="#{bundle.EditPedidosRequiredMessage_distribuidor}">
+                            <f:selectItems value="#{distribuidorController.itemsAvailableSelectOne}"
+                                           var="distribuidorItem"
+                                           itemValue="#{distribuidorItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreatePedidosLabel_estadoPedido}" for="estadoPedido" />
+                        <p:selectOneMenu id="estadoPedido" value="#{pedidosController.selected.estadoPedido}" required="true" requiredMessage="#{bundle.EditPedidosRequiredMessage_estadoPedido}">
+                            <f:selectItems value="#{estadoPedidosController.itemsAvailableSelectOne}"
+                                           var="estadoPedidoItem"
+                                           itemValue="#{estadoPedidoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreatePedidosLabel_idtipopedido}" for="idtipopedido" />
+                        <p:selectOneMenu id="idtipopedido" value="#{pedidosController.selected.idtipopedido}" required="true" requiredMessage="#{bundle.EditPedidosRequiredMessage_idtipopedido}">
+                            <f:selectItems value="#{tipopedidoController.itemsAvailableSelectOne}"
+                                           var="idtipopedidoItem"
+                                           itemValue="#{idtipopedidoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreatePedidosLabel_estado}" for="estado" />
+                        <p:inputText id="estado" value="#{pedidosController.selected.estado}" title="#{bundle.CreatePedidosTitle_estado}" />
+                        <p:outputLabel value="#{bundle.CreatePedidosLabel_usuario}" for="usuario" />
+                        <p:selectOneMenu id="usuario" value="#{pedidosController.selected.usuario}" >
+                            <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
+                                           var="usuarioItem"
+                                           itemValue="#{usuarioItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreatePedidosLabel_valorRetencion}" for="valorRetencion" />
+                        <p:inputText id="valorRetencion" value="#{pedidosController.selected.valorRetencion}" title="#{bundle.CreatePedidosTitle_valorRetencion}" />
+                        <p:outputLabel value="#{bundle.CreatePedidosLabel_totalimporte}" for="totalimporte" />
+                        <p:inputText id="totalimporte" value="#{pedidosController.selected.totalimporte}" title="#{bundle.CreatePedidosTitle_totalimporte}" required="true" requiredMessage="#{bundle.CreatePedidosRequiredMessage_totalimporte}"/>
+                        <p:outputLabel value="#{bundle.CreatePedidosLabel_valordescuento}" for="valordescuento" />
+                        <p:inputText id="valordescuento" value="#{pedidosController.selected.valordescuento}" title="#{bundle.CreatePedidosTitle_valordescuento}" required="true" requiredMessage="#{bundle.CreatePedidosRequiredMessage_valordescuento}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{pedidosController.create}" value="#{bundle.Save}" update="display,:PedidosListForm:datalist,:growl" oncomplete="handleSubmit(args,'PedidosCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PedidosCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
 
-                <p:selectOneMenu id="tipo" value="#{pedidosController.selected.idtipopedido}" required="true" requiredMessage="campo requerido">
-                    <f:selectItems value="#{tipopedidoController.itemsAvailableSelectOne}"
-                                   var="tipoPedido"
-                                   itemValue="#{tipoPedido}"/>
-                </p:selectOneMenu>
-            </p:panelGrid>
-            <p:panelGrid columns="3" rendered="#{pedidosController.selected != null}">
-                <p:outputLabel value="Articulo:" for="itemTip" />
-                <p:autoComplete id="itemTip" size="54" value="#{pedidosController.articuloElegido}" completeMethod="#{pedidosController.completarArticulo}"
-                                var="articulo" itemLabel="#{articulo.descri}" itemValue="#{articulo}" converter="convertirArticulos">
-                    <f:facet name="itemtip">
-                        <h:panelGrid columns="2" cellpadding="5">
-                            <f:facet name="header">
-                                <h:outputText styleClass="ui-theme ui-theme-#{articulo.descri}" style="margin-left:50px" />
-                            </f:facet>
-
-                            <h:outputText value="Nombre:" />
-                            <h:outputText value="#{articulo.descri}" />
-
-                            <h:outputText value="Codigo:" />
-                            <h:outputText value="#{articulo.invArticulosPK.codArt}" />
-                        </h:panelGrid>
-                    </f:facet>
-                </p:autoComplete>
-                <p:commandButton actionListener="#{pedidosController.agregarArticulo}" value="Agregar" update="articulosTable,itemTip"/>
-            </p:panelGrid>
-            <p:remoteCommand name="refreshFooter" update="PedidosCreateForm:articulosTable:totalImporte,PedidosCreateForm:articulosTable:totalPago,PedidosCreateForm:articulosTable:valorDescuento"/>
-            <p:dataTable
-                    id="articulosTable"
-                    var="item"
-                    value="#{pedidosController.selected.articulosPedidos}"
-                    rowKey="#{articulo.idarticulospedido}"
-                    rendered="#{pedidosController.selected != null}">
-                <f:facet name="header">
-                    Articulos Elegidos
-                </f:facet>
-                <p:column headerText="Producto">
-                    <h:outputText value="#{item.invArticulos.descri}" />
-                </p:column>
-                <p:column headerText="Cant.">
-                    <h:inputText value="#{item.cantidad}" size="4">
-                        <p:ajax event="blur"  process="@this" oncomplete="refreshFooter();" update="importe,total"/>
-                    </h:inputText>
-                </p:column>
-                <p:column headerText="P.U.">
-                    <h:inputText value="#{item.precio}" size="4">
-                        <p:ajax event="blur"  process="@this" oncomplete="refreshFooter();" update="importe"/>
-                    </h:inputText>
-                </p:column>
-                <p:column headerText="Repos.">
-                    <h:inputText value="#{item.reposicion}" size="4">
-                        <p:ajax event="blur"  process="@this" oncomplete="refreshFooter();" update="total"/>
-                    </h:inputText>
-                </p:column>
-                <p:column headerText="Cant. T.">
-                    <h:outputText id="total" value="#{item.total}" />
-                </p:column>
-                <p:column headerText="Importe">
-                    <h:outputText id="importe" value="#{item.importe}" />
-                </p:column>
-                <p:column headerText="Acción">
-                    <p:commandLink value="Remover" update="articulosTable,:PedidosListForm:growl" >
-                        <p:collector value="#{item}" removeFrom="#{pedidosController.selected.articulosPedidos}" unique="true"/>
-                    </p:commandLink>
-                </p:column>
-                <f:facet name="footer">
-                        <h:outputText value="Total Importe: " />
-                        <h:outputText id="totalImporte" value="#{pedidosController.selected.totalImporte}">
-                            <f:convertNumber type="currency" currencySymbol="Bs." />
-                        </h:outputText>
-                        <h:outputText value="Total: " />
-                        <h:outputText id="totalPago" value="#{pedidosController.selected.total}">
-                            <f:convertNumber type="currency" currencySymbol="Bs." />
-                        </h:outputText>
-                        <h:outputText value="Descuento: " />
-                        <h:outputText id="valorDescuento" value="#{pedidosController.selected.valorDescuento}">
-                            <f:convertNumber type="currency" currencySymbol="Bs." />
-                        </h:outputText>
-                </f:facet>
-            </p:dataTable>
-            <p:commandButton actionListener="#{pedidosController.create}" value="#{bundle.Save}" update="display,:PedidosListForm:datalist,:PedidosListForm:growl" oncomplete="handleSubmit(args,'PedidosCreateDialog');"/>
-            <p:commandButton value="#{bundle.Cancel}" actionListener="#{pedidosController.cancel}" onclick="PedidosCreateDialog.close()" update=":PedidosListForm:datalist"/>
-        </h:form>
-    </p:dialog>
-
-</ui:composition>
+    </ui:composition>
 </html>

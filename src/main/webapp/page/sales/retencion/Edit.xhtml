@@ -20,6 +20,10 @@
                         <p:inputText id="porcentage" value="#{retencionController.selected.porcentage}" title="#{bundle.EditRetencionTitle_porcentage}" />
                         <p:outputLabel value="#{bundle.EditRetencionLabel_estado}" for="estado" />
                         <p:selectBooleanCheckbox id="estado" value="#{retencionController.selected.estado}" />
+                        <p:outputLabel value="#{bundle.EditRetencionLabel_porcentageString}" for="porcentageString" />
+                        <p:inputText id="porcentageString" value="#{retencionController.selected.porcentageString}" title="#{bundle.EditRetencionTitle_porcentageString}" />
+                        <p:outputLabel value="#{bundle.EditRetencionLabel_clientes}" for="clientes" />
+                        <p:inputText id="clientes" value="#{retencionController.selected.clientes}" title="#{bundle.EditRetencionTitle_clientes}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{retencionController.update}" value="#{bundle.Save}" update="display,:RetencionListForm:datalist,:growl" oncomplete="handleSubmit(args, 'RetencionEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="RetencionEditDialog.hide()"/>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DosificacionEditDlg" widgetVar="DosificacionEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditDosificacionTitle}">
+            <h:form id="DosificacionEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{dosificacionController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditDosificacionLabel_iddosificacion}" for="iddosificacion" />
+                        <p:inputText id="iddosificacion" value="#{dosificacionController.selected.iddosificacion}" title="#{bundle.EditDosificacionTitle_iddosificacion}" required="true" requiredMessage="#{bundle.EditDosificacionRequiredMessage_iddosificacion}"/>
+                        <p:outputLabel value="#{bundle.EditDosificacionLabel_nroautorizacion}" for="nroautorizacion" />
+                        <p:inputText id="nroautorizacion" value="#{dosificacionController.selected.nroautorizacion}" title="#{bundle.EditDosificacionTitle_nroautorizacion}" />
+                        <p:outputLabel value="#{bundle.EditDosificacionLabel_fechavencimiento}" for="fechavencimiento" />
+                        <p:calendar id="fechavencimiento" pattern="MM/dd/yyyy" value="#{dosificacionController.selected.fechavencimiento}" title="#{bundle.EditDosificacionTitle_fechavencimiento}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditDosificacionLabel_llave}" for="llave" />
+                        <p:inputText id="llave" value="#{dosificacionController.selected.llave}" title="#{bundle.EditDosificacionTitle_llave}" />
+                        <p:outputLabel value="#{bundle.EditDosificacionLabel_estado}" for="estado" />
+                        <p:inputText id="estado" value="#{dosificacionController.selected.estado}" title="#{bundle.EditDosificacionTitle_estado}" />
+                        <p:outputLabel value="#{bundle.EditDosificacionLabel_facturadel}" for="facturadel" />
+                        <p:inputText id="facturadel" value="#{dosificacionController.selected.facturadel}" title="#{bundle.EditDosificacionTitle_facturadel}" />
+                        <p:outputLabel value="#{bundle.EditDosificacionLabel_facturaal}" for="facturaal" />
+                        <p:inputText id="facturaal" value="#{dosificacionController.selected.facturaal}" title="#{bundle.EditDosificacionTitle_facturaal}" />
+                        <p:outputLabel value="#{bundle.EditDosificacionLabel_numeroactual}" for="numeroactual" />
+                        <p:inputText id="numeroactual" value="#{dosificacionController.selected.numeroactual}" title="#{bundle.EditDosificacionTitle_numeroactual}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{dosificacionController.update}" value="#{bundle.Save}" update="display,:DosificacionListForm:datalist,:growl" oncomplete="handleSubmit(args, 'DosificacionEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="DosificacionEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

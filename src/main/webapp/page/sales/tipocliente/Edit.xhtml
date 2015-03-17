@@ -16,6 +16,8 @@
                         <p:inputText id="idtipocliente" value="#{tipoclienteController.selected.idtipocliente}" title="#{bundle.EditTipoclienteTitle_idtipocliente}" />
                         <p:outputLabel value="#{bundle.EditTipoclienteLabel_nombre}" for="nombre" />
                         <p:inputText id="nombre" value="#{tipoclienteController.selected.nombre}" title="#{bundle.EditTipoclienteTitle_nombre}" />
+                        <p:outputLabel value="#{bundle.EditTipoclienteLabel_clientes}" for="clientes" />
+                        <p:inputText id="clientes" value="#{tipoclienteController.selected.clientes}" title="#{bundle.EditTipoclienteTitle_clientes}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{tipoclienteController.update}" value="#{bundle.Save}" update="display,:TipoclienteListForm:datalist,:growl" oncomplete="handleSubmit(args, 'TipoclienteEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="TipoclienteEditDialog.hide()"/>

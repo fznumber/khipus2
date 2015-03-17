@@ -8,68 +8,63 @@
 
     <ui:composition>
 
-        <p:dialog id="PedidosViewDlg" widgetVar="PedidosViewDialog" modal="true" resizable="false" appendTo="@(body)" header="Pedido" width="820px">
+        <p:dialog id="PedidosViewDlg" widgetVar="PedidosViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewPedidosTitle}">
             <h:form id="PedidosViewForm">
-                <p:panelGrid id="display" rendered="#{pedidosController.selected != null}" columns="6" >
-                    <p:outputLabel value="Cliente:" for="cliente" />
-                    <p:outputLabel id="cliente" value="#{pedidosController.selected.cliente.nombreCompleto}"/>
-                    <p:outputLabel value="Nit:" for="nit"/>
-                    <p:outputLabel id="nit" value="#{pedidosController.selected.cliente.nit}"/>
-                    <p:outputLabel value="% Descuento:" for="descuento"/>
-                    <p:outputLabel id="descuento" value="#{pedidosController.selected.cliente.descuento}" />
-                    <p:outputLabel value="Distribuidor:" for="distribuidor" />
-                    <p:outputLabel id="distribuidor" value="#{pedidosController.selected.distribuidor.nombreCompleto}"/>
-                    <p:outputLabel value="Tipo Cliente:" for="tipocliente"/>
-                    <p:outputLabel id="tipocliente" value="#{pedidosController.selected.cliente.tipocliente.nombre}"/>
-                    <p:outputLabel value="% Retención:" for="retencion"/>
-                    <p:outputLabel id="retencion" value="#{pedidosController.selected.cliente.retencion.porcentageString}"/>
-                    <p:outputLabel for="fechaEntrega" value="Fecha Entrega:" />
-                    <p:outputLabel id="fechaEntrega" value="#{pedidosController.selected.fechaEntrega}" />
-                    <p:outputLabel value="Tipo pedido:" for = "tipoPedido"/>
-                    <p:outputLabel id = "tipoPedido" value="#{pedidosController.selected.idtipopedido.nombre}"/>
-                </p:panelGrid>
-                <p:dataTable
-                        id="articulosTable"
-                        var="item"
-                        value="#{pedidosController.selected.articulosPedidos}"
-                        rowKey="#{articulo.idarticulospedido}">
-                    <f:facet name="header">
-                        Articulos Elegidos
-                    </f:facet>
-                    <p:column headerText="Producto">
-                        <h:outputText value="#{item.invArticulos.descri}" />
-                    </p:column>
-                    <p:column headerText="Cant.">
-                        <h:outputText value="#{item.cantidad}" />
-                    </p:column>
-                    <p:column headerText="P.U.">
-                        <h:outputText value="#{item.precio}" />
-                    </p:column>
-                    <p:column headerText="Repos.">
-                        <h:outputText value="#{item.reposicion}" />
-                    </p:column>
-                    <p:column headerText="Cant. T.">
-                        <h:outputText id="total" value="#{item.total}" />
-                    </p:column>
-                    <p:column headerText="Importe">
-                        <h:outputText id="importe" value="#{item.importe}" />
-                    </p:column>
-                    <f:facet name="footer">
-                        <h:outputText value="Total Importe: " />
-                        <h:outputText id="totalImporte" value="#{pedidosController.selected.totalImporte}">
-                            <f:convertNumber type="currency" currencySymbol="Bs." />
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{pedidosController.selected != null}">
+                        <h:outputText value="#{bundle.ViewPedidosLabel_idpedidos}"/>
+                        <h:outputText value="#{pedidosController.selected.idpedidos}" title="#{bundle.ViewPedidosTitle_idpedidos}"/>
+                        <h:outputText value="#{bundle.ViewPedidosLabel_descripcion}"/>
+                        <h:outputText value="#{pedidosController.selected.descripcion}" title="#{bundle.ViewPedidosTitle_descripcion}"/>
+                        <h:outputText value="#{bundle.ViewPedidosLabel_fechaPedido}"/>
+                        <h:outputText value="#{pedidosController.selected.fechaPedido}" title="#{bundle.ViewPedidosTitle_fechaPedido}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
                         </h:outputText>
-                        <h:outputText value="Total: " />
-                        <h:outputText id="totalPago" value="#{pedidosController.selected.total}">
-                            <f:convertNumber type="currency" currencySymbol="Bs." />
+                        <h:outputText value="#{bundle.ViewPedidosLabel_iddireccion}"/>
+                        <h:outputText value="#{pedidosController.selected.iddireccion}" title="#{bundle.ViewPedidosTitle_iddireccion}"/>
+                        <h:outputText value="#{bundle.ViewPedidosLabel_idzona}"/>
+                        <h:outputText value="#{pedidosController.selected.idzona}" title="#{bundle.ViewPedidosTitle_idzona}"/>
+                        <h:outputText value="#{bundle.ViewPedidosLabel_total}"/>
+                        <h:outputText value="#{pedidosController.selected.total}" title="#{bundle.ViewPedidosTitle_total}"/>
+                        <h:outputText value="#{bundle.ViewPedidosLabel_fechaEntrega}"/>
+                        <h:outputText value="#{pedidosController.selected.fechaEntrega}" title="#{bundle.ViewPedidosTitle_fechaEntrega}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
                         </h:outputText>
-                        <h:outputText value="Descuento: " />
-                        <h:outputText id="valorDescuento" value="#{pedidosController.selected.valorDescuento}">
-                            <f:convertNumber type="currency" currencySymbol="Bs." />
+                        <h:outputText value="#{bundle.ViewPedidosLabel_fechaAPagar}"/>
+                        <h:outputText value="#{pedidosController.selected.fechaAPagar}" title="#{bundle.ViewPedidosTitle_fechaAPagar}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
                         </h:outputText>
-                    </f:facet>
-                </p:dataTable>
-                <p:commandButton value="#{bundle.Close}" onclick="PedidosViewDialog.hide()"/>
+                        <h:outputText value="#{bundle.ViewPedidosLabel_observacion}"/>
+                        <h:outputText value="#{pedidosController.selected.observacion}" title="#{bundle.ViewPedidosTitle_observacion}"/>
+                        <h:outputText value="#{bundle.ViewPedidosLabel_factura}"/>
+                        <h:outputText value="#{pedidosController.selected.factura}" title="#{bundle.ViewPedidosTitle_factura}"/>
+                        <h:outputText value="#{bundle.ViewPedidosLabel_supervisor}"/>
+                        <h:outputText value="#{pedidosController.selected.supervisor}" title="#{bundle.ViewPedidosTitle_supervisor}"/>
+                        <h:outputText value="#{bundle.ViewPedidosLabel_porcenDescuento}"/>
+                        <h:outputText value="#{pedidosController.selected.porcenDescuento}" title="#{bundle.ViewPedidosTitle_porcenDescuento}"/>
+                        <h:outputText value="#{bundle.ViewPedidosLabel_porcenRetencion}"/>
+                        <h:outputText value="#{pedidosController.selected.porcenRetencion}" title="#{bundle.ViewPedidosTitle_porcenRetencion}"/>
+                        <h:outputText value="#{bundle.ViewPedidosLabel_cliente}"/>
+                        <h:outputText value="#{pedidosController.selected.cliente}" title="#{bundle.ViewPedidosTitle_cliente}"/>
+                        <h:outputText value="#{bundle.ViewPedidosLabel_distribuidor}"/>
+                        <h:outputText value="#{pedidosController.selected.distribuidor}" title="#{bundle.ViewPedidosTitle_distribuidor}"/>
+                        <h:outputText value="#{bundle.ViewPedidosLabel_estadoPedido}"/>
+                        <h:outputText value="#{pedidosController.selected.estadoPedido}" title="#{bundle.ViewPedidosTitle_estadoPedido}"/>
+                        <h:outputText value="#{bundle.ViewPedidosLabel_idtipopedido}"/>
+                        <h:outputText value="#{pedidosController.selected.idtipopedido}" title="#{bundle.ViewPedidosTitle_idtipopedido}"/>
+                        <h:outputText value="#{bundle.ViewPedidosLabel_estado}"/>
+                        <h:outputText value="#{pedidosController.selected.estado}" title="#{bundle.ViewPedidosTitle_estado}"/>
+                        <h:outputText value="#{bundle.ViewPedidosLabel_usuario}"/>
+                        <h:outputText value="#{pedidosController.selected.usuario}" title="#{bundle.ViewPedidosTitle_usuario}"/>
+                        <h:outputText value="#{bundle.ViewPedidosLabel_valorRetencion}"/>
+                        <h:outputText value="#{pedidosController.selected.valorRetencion}" title="#{bundle.ViewPedidosTitle_valorRetencion}"/>
+                        <h:outputText value="#{bundle.ViewPedidosLabel_totalimporte}"/>
+                        <h:outputText value="#{pedidosController.selected.totalimporte}" title="#{bundle.ViewPedidosTitle_totalimporte}"/>
+                        <h:outputText value="#{bundle.ViewPedidosLabel_valordescuento}"/>
+                        <h:outputText value="#{pedidosController.selected.valordescuento}" title="#{bundle.ViewPedidosTitle_valordescuento}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="PedidosViewDialog.hide()"/>
+                </h:panelGroup>
             </h:form>
         </p:dialog>
 
