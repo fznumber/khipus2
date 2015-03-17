@@ -54,6 +54,8 @@ public class PedidosController implements Serializable {
     private List<String> estados;
     private Date fechaEntregaFiltro;
     private Date fechaPedidoFiltro;
+    private Persona personaElegida;
+    private Distribuidor distribuidorElegido;
 
     public PedidosController() {
     }
@@ -130,6 +132,8 @@ public class PedidosController implements Serializable {
 
     public Pedidos prepareCreate() {
         selected = new Pedidos();
+        personaElegida = new Persona();
+        distribuidorElegido = new Distribuidor();
         personas = personasFacade.findAllClientesPersonaInstitucion();
         articulos = invArticulosFacade.findAllInvArticulos();
         distribuidores = personasFacade.findAlldistribuidores();
@@ -142,12 +146,20 @@ public class PedidosController implements Serializable {
         LoginBean loginBean = (LoginBean) facesContext.getApplication().getELResolver().
                 getValue(facesContext.getELContext(), null, "loginBean");
         selected.setUsuario(loginBean.getUsuario());
-        selected.setEstado("ACTIVO");
+        selected.setDistribuidor(distribuidorElegido);
+        selected.setCliente(personaElegida);
+        selected.setEstado("CREADO");
         selected.setFechaPedido(new Date());
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PedidosCreated"));
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
+        }else{
+            prepareCreate();
         }
+    }
+
+    public void cancel(){
+        selected = null;
     }
 
     public void update() {
@@ -329,7 +341,7 @@ public class PedidosController implements Serializable {
     public List<String> getEstados() {
         if(estados == null) {
             estados = new ArrayList<>();
-            estados.add("ACTIVO");
+            estados.add("CREADO");
             estados.add("ANULADO");
             estados.add("ENVIADO");
         }
@@ -338,5 +350,21 @@ public class PedidosController implements Serializable {
 
     public void setEstados(List<String> estados) {
         this.estados = estados;
+    }
+
+    public Persona getPersonaElegida() {
+        return personaElegida;
+    }
+
+    public void setPersonaElegida(Persona personaElegida) {
+        this.personaElegida = personaElegida;
+    }
+
+    public Distribuidor getDistribuidorElegido() {
+        return distribuidorElegido;
+    }
+
+    public void setDistribuidorElegido(Distribuidor distribuidorElegido) {
+        this.distribuidorElegido = distribuidorElegido;
     }
 }
