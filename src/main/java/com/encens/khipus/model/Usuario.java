@@ -34,8 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByVersion", query = "SELECT u FROM Usuario u WHERE u.version = :version")})
 
 public class Usuario implements Serializable {
-   /* @ManyToMany(mappedBy = "usuarioCollection")
-    private Collection<Rol> rolCollection;*/
+
     @JoinColumn(name = "IDCOMPANIA", referencedColumnName = "IDCOMPANIA")
     @ManyToOne
     private Compania idcompania;
@@ -66,6 +65,10 @@ public class Usuario implements Serializable {
     private String usuario;
     @Column(name = "VERSION")
     private BigInteger version;
+    @OneToMany(mappedBy = "usuario")
+    private Collection<Pedidos> pedidos;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario")
+    private Collection<Impresionfactura> facturas;
 
     public Usuario() {
     }
@@ -183,6 +186,24 @@ public class Usuario implements Serializable {
 
     public void setIdcompania(Compania idcompania) {
         this.idcompania = idcompania;
+    }
+
+    @XmlTransient
+    public Collection<Pedidos> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(Collection<Pedidos> pedidosCollection) {
+        this.pedidos = pedidosCollection;
+    }
+
+    @XmlTransient
+    public Collection<Impresionfactura> getFacturas() {
+        return facturas;
+    }
+
+    public void setFacturas(Collection<Impresionfactura> impresionfacturaCollection) {
+        this.facturas = impresionfacturaCollection;
     }
     
 }
