@@ -51,6 +51,18 @@
                             </f:facet>
                             <p:selectBooleanCheckbox value="#{item.estado}" disabled="true"/>
                         </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListRetencionTitle_porcentageString}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.porcentageString}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListRetencionTitle_clientes}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.clientes}"/>
+                        </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{retencionController.prepareCreate}" update=":RetencionCreateForm" oncomplete="PF('RetencionCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":RetencionViewForm" oncomplete="PF('RetencionViewDialog').show()" disabled="#{empty retencionController.selected}"/>

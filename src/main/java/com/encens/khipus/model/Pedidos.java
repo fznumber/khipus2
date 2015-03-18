@@ -23,20 +23,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "pedidos")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Pedidos.findAll", query = "SELECT p FROM Pedidos p"),
-    @NamedQuery(name = "Pedidos.findByIdpedidos", query = "SELECT p FROM Pedidos p WHERE p.idpedidos = :idpedidos"),
-    @NamedQuery(name = "Pedidos.findByDescripcion", query = "SELECT p FROM Pedidos p WHERE p.descripcion = :descripcion"),
-    @NamedQuery(name = "Pedidos.findByFechaPedido", query = "SELECT p FROM Pedidos p WHERE p.fechaPedido = :fechaPedido"),
-    @NamedQuery(name = "Pedidos.findByIddireccion", query = "SELECT p FROM Pedidos p WHERE p.iddireccion = :iddireccion"),
-    @NamedQuery(name = "Pedidos.findByIdzona", query = "SELECT p FROM Pedidos p WHERE p.idzona = :idzona"),
-    @NamedQuery(name = "Pedidos.findByTotal", query = "SELECT p FROM Pedidos p WHERE p.total = :total"),
-    @NamedQuery(name = "Pedidos.findByFechaEntrega", query = "SELECT p FROM Pedidos p WHERE p.fechaEntrega = :fechaEntrega"),
-    @NamedQuery(name = "Pedidos.findByFechaAPagar", query = "SELECT p FROM Pedidos p WHERE p.fechaAPagar = :fechaAPagar"),
-    @NamedQuery(name = "Pedidos.findByObservacion", query = "SELECT p FROM Pedidos p WHERE p.observacion = :observacion"),
-    @NamedQuery(name = "Pedidos.findByFactura", query = "SELECT p FROM Pedidos p WHERE p.factura = :factura"),
-    @NamedQuery(name = "Pedidos.findBySupervisor", query = "SELECT p FROM Pedidos p WHERE p.supervisor = :supervisor"),
-    @NamedQuery(name = "Pedidos.findByPorcenDescuento", query = "SELECT p FROM Pedidos p WHERE p.porcenDescuento = :porcenDescuento"),
-    @NamedQuery(name = "Pedidos.findByPorcenRetencion", query = "SELECT p FROM Pedidos p WHERE p.porcenRetencion = :porcenRetencion")})
+        @NamedQuery(name = "Pedidos.findAll", query = "SELECT p FROM Pedidos p"),
+        @NamedQuery(name = "Pedidos.findByIdpedidos", query = "SELECT p FROM Pedidos p WHERE p.idpedidos = :idpedidos"),
+        @NamedQuery(name = "Pedidos.findByDescripcion", query = "SELECT p FROM Pedidos p WHERE p.descripcion = :descripcion"),
+        @NamedQuery(name = "Pedidos.findByFechaPedido", query = "SELECT p FROM Pedidos p WHERE p.fechaPedido = :fechaPedido"),
+        @NamedQuery(name = "Pedidos.findByIddireccion", query = "SELECT p FROM Pedidos p WHERE p.iddireccion = :iddireccion"),
+        @NamedQuery(name = "Pedidos.findByIdzona", query = "SELECT p FROM Pedidos p WHERE p.idzona = :idzona"),
+        @NamedQuery(name = "Pedidos.findByTotal", query = "SELECT p FROM Pedidos p WHERE p.total = :total"),
+        @NamedQuery(name = "Pedidos.findByFechaEntrega", query = "SELECT p FROM Pedidos p WHERE p.fechaEntrega = :fechaEntrega"),
+        @NamedQuery(name = "Pedidos.findByFechaAPagar", query = "SELECT p FROM Pedidos p WHERE p.fechaAPagar = :fechaAPagar"),
+        @NamedQuery(name = "Pedidos.findByObservacion", query = "SELECT p FROM Pedidos p WHERE p.observacion = :observacion"),
+        @NamedQuery(name = "Pedidos.findByFactura", query = "SELECT p FROM Pedidos p WHERE p.factura = :factura"),
+        @NamedQuery(name = "Pedidos.findBySupervisor", query = "SELECT p FROM Pedidos p WHERE p.supervisor = :supervisor"),
+        @NamedQuery(name = "Pedidos.findByPorcenDescuento", query = "SELECT p FROM Pedidos p WHERE p.porcenDescuento = :porcenDescuento"),
+        @NamedQuery(name = "Pedidos.findByPorcenRetencion", query = "SELECT p FROM Pedidos p WHERE p.porcenRetencion = :porcenRetencion")})
 @TableGenerator(name = "Pedidos_Gen"
         ,table="ID_GEN"
         ,pkColumnName = "GEN_NAME"
@@ -105,9 +105,10 @@ public class Pedidos implements Serializable {
     @JoinColumn(name = "IDUSUARIO",referencedColumnName = "IDUSUARIO")
     @ManyToOne
     private Usuario usuario;
-
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "pedidos")
     private Collection<ArticulosPedido> articulosPedidos = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedidos")
+    private Collection<Movimiento> movimientos;
 
     public Pedidos() {
     }
@@ -301,10 +302,10 @@ public class Pedidos implements Serializable {
     public Double getTotalImporte() {
         totalImporte = 0.0;
         if(articulosPedidos != null)
-        for(ArticulosPedido articulosPedido:articulosPedidos)
-        {
-            totalImporte +=articulosPedido.getImporte();
-        }
+            for(ArticulosPedido articulosPedido:articulosPedidos)
+            {
+                totalImporte +=articulosPedido.getImporte();
+            }
         //todo: implementar retención
         this.valorDescuento = totalImporte * (porcenDescuento /100);
         this.total = totalImporte - valorDescuento;
@@ -329,7 +330,7 @@ public class Pedidos implements Serializable {
 
     public void setUsuario(Usuario usuario) {
         if(this.usuario != null)
-        this.usuario = usuario;
+            this.usuario = usuario;
     }
 
     public Double getValorDescuento() {
@@ -346,5 +347,13 @@ public class Pedidos implements Serializable {
 
     public void setValorRetencion(Double valorRetencion) {
         this.valorRetencion = valorRetencion;
+    }
+
+    public Collection<Movimiento> getMovimientos() {
+        return movimientos;
+    }
+
+    public void setMovimientos(Collection<Movimiento> movimientos) {
+        this.movimientos = movimientos;
     }
 }

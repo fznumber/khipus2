@@ -153,9 +153,14 @@ public class PedidosController implements Serializable {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PedidosCreated"));
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
-        }else{
-            prepareCreate();
+            selected = new Pedidos();
+            personaElegida = new Persona();
+            distribuidorElegido = new Distribuidor();
+            personas = personasFacade.findAllClientesPersonaInstitucion();
+            articulos = invArticulosFacade.findAllInvArticulos();
+            distribuidores = personasFacade.findAlldistribuidores();
         }
+
     }
 
     public void cancel(){

@@ -6,72 +6,72 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition>
+<ui:composition>
 
-        <p:dialog id="PedidosViewDlg" widgetVar="PedidosViewDialog" modal="true" resizable="false" appendTo="@(body)" header="Pedido" width="820px">
-            <h:form id="PedidosViewForm">
-                <p:panelGrid id="display" rendered="#{pedidosController.selected != null}" columns="6" >
-                    <p:outputLabel value="Cliente:" for="cliente" />
-                    <p:outputLabel id="cliente" value="#{pedidosController.selected.cliente.nombreCompleto}"/>
-                    <p:outputLabel value="Nit:" for="nit"/>
-                    <p:outputLabel id="nit" value="#{pedidosController.selected.cliente.nit}"/>
-                    <p:outputLabel value="% Descuento:" for="descuento"/>
-                    <p:outputLabel id="descuento" value="#{pedidosController.selected.cliente.descuento}" />
-                    <p:outputLabel value="Distribuidor:" for="distribuidor" />
-                    <p:outputLabel id="distribuidor" value="#{pedidosController.selected.distribuidor.nombreCompleto}"/>
-                    <p:outputLabel value="Tipo Cliente:" for="tipocliente"/>
-                    <p:outputLabel id="tipocliente" value="#{pedidosController.selected.cliente.tipocliente.nombre}"/>
-                    <p:outputLabel value="% Retención:" for="retencion"/>
-                    <p:outputLabel id="retencion" value="#{pedidosController.selected.cliente.retencion.porcentageString}"/>
-                    <p:outputLabel for="fechaEntrega" value="Fecha Entrega:" />
-                    <p:outputLabel id="fechaEntrega" value="#{pedidosController.selected.fechaEntrega}" />
-                    <p:outputLabel value="Tipo pedido:" for = "tipoPedido"/>
-                    <p:outputLabel id = "tipoPedido" value="#{pedidosController.selected.idtipopedido.nombre}"/>
-                </p:panelGrid>
-                <p:dataTable
-                        id="articulosTable"
-                        var="item"
-                        value="#{pedidosController.selected.articulosPedidos}"
-                        rowKey="#{articulo.idarticulospedido}">
-                    <f:facet name="header">
-                        Articulos Elegidos
-                    </f:facet>
-                    <p:column headerText="Producto">
-                        <h:outputText value="#{item.invArticulos.descri}" />
-                    </p:column>
-                    <p:column headerText="Cant.">
-                        <h:outputText value="#{item.cantidad}" />
-                    </p:column>
-                    <p:column headerText="P.U.">
-                        <h:outputText value="#{item.precio}" />
-                    </p:column>
-                    <p:column headerText="Repos.">
-                        <h:outputText value="#{item.reposicion}" />
-                    </p:column>
-                    <p:column headerText="Cant. T.">
-                        <h:outputText id="total" value="#{item.total}" />
-                    </p:column>
-                    <p:column headerText="Importe">
-                        <h:outputText id="importe" value="#{item.importe}" />
-                    </p:column>
-                    <f:facet name="footer">
-                        <h:outputText value="Total Importe: " />
-                        <h:outputText id="totalImporte" value="#{pedidosController.selected.totalImporte}">
-                            <f:convertNumber type="currency" currencySymbol="Bs." />
-                        </h:outputText>
-                        <h:outputText value="Total: " />
-                        <h:outputText id="totalPago" value="#{pedidosController.selected.total}">
-                            <f:convertNumber type="currency" currencySymbol="Bs." />
-                        </h:outputText>
-                        <h:outputText value="Descuento: " />
-                        <h:outputText id="valorDescuento" value="#{pedidosController.selected.valorDescuento}">
-                            <f:convertNumber type="currency" currencySymbol="Bs." />
-                        </h:outputText>
-                    </f:facet>
-                </p:dataTable>
-                <p:commandButton value="#{bundle.Close}" onclick="PedidosViewDialog.hide()"/>
-            </h:form>
-        </p:dialog>
+    <p:dialog id="PedidosViewDlg" widgetVar="PedidosViewDialog" modal="true" resizable="false" appendTo="@(body)" header="Pedido" width="820px">
+        <h:form id="PedidosViewForm">
+            <p:panelGrid id="display" rendered="#{pedidosController.selected != null}" columns="6" >
+                <p:outputLabel value="Cliente:" for="cliente" />
+                <p:outputLabel id="cliente" value="#{pedidosController.selected.cliente.nombreCompleto}"/>
+                <p:outputLabel value="Nit:" for="nit"/>
+                <p:outputLabel id="nit" value="#{pedidosController.selected.cliente.nit}"/>
+                <p:outputLabel value="% Descuento:" for="descuento"/>
+                <p:outputLabel id="descuento" value="#{pedidosController.selected.cliente.descuento}" />
+                <p:outputLabel value="Distribuidor:" for="distribuidor" />
+                <p:outputLabel id="distribuidor" value="#{pedidosController.selected.distribuidor.nombreCompleto}"/>
+                <p:outputLabel value="Tipo Cliente:" for="tipocliente"/>
+                <p:outputLabel id="tipocliente" value="#{pedidosController.selected.cliente.tipocliente.nombre}"/>
+                <p:outputLabel value="% Retención:" for="retencion"/>
+                <p:outputLabel id="retencion" value="#{pedidosController.selected.cliente.retencion.porcentageString}"/>
+                <p:outputLabel for="fechaEntrega" value="Fecha Entrega:" />
+                <p:outputLabel id="fechaEntrega" value="#{pedidosController.selected.fechaEntrega}" />
+                <p:outputLabel value="Tipo pedido:" for = "tipoPedido"/>
+                <p:outputLabel id = "tipoPedido" value="#{pedidosController.selected.idtipopedido.nombre}"/>
+            </p:panelGrid>
+            <p:dataTable
+                    id="articulosTable"
+                    var="item"
+                    value="#{pedidosController.selected.articulosPedidos}"
+                    rowKey="#{articulo.idarticulospedido}">
+                <f:facet name="header">
+                    Articulos Elegidos
+                </f:facet>
+                <p:column headerText="Producto">
+                    <h:outputText value="#{item.invArticulos.descri}" />
+                </p:column>
+                <p:column headerText="Cant.">
+                    <h:outputText value="#{item.cantidad}" />
+                </p:column>
+                <p:column headerText="P.U.">
+                    <h:outputText value="#{item.precio}" />
+                </p:column>
+                <p:column headerText="Repos.">
+                    <h:outputText value="#{item.reposicion}" />
+                </p:column>
+                <p:column headerText="Cant. T.">
+                    <h:outputText id="total" value="#{item.total}" />
+                </p:column>
+                <p:column headerText="Importe">
+                    <h:outputText id="importe" value="#{item.importe}" />
+                </p:column>
+                <f:facet name="footer">
+                    <h:outputText value="Total Importe: " />
+                    <h:outputText id="totalImporte" value="#{pedidosController.selected.totalImporte}">
+                        <f:convertNumber type="currency" currencySymbol="Bs." />
+                    </h:outputText>
+                    <h:outputText value="Total: " />
+                    <h:outputText id="totalPago" value="#{pedidosController.selected.total}">
+                        <f:convertNumber type="currency" currencySymbol="Bs." />
+                    </h:outputText>
+                    <h:outputText value="Descuento: " />
+                    <h:outputText id="valorDescuento" value="#{pedidosController.selected.valorDescuento}">
+                        <f:convertNumber type="currency" currencySymbol="Bs." />
+                    </h:outputText>
+                </f:facet>
+            </p:dataTable>
+            <p:commandButton value="#{bundle.Close}" onclick="PedidosViewDialog.hide()"/>
+        </h:form>
+    </p:dialog>
 
-    </ui:composition>
+</ui:composition>
 </html>

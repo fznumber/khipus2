@@ -8,7 +8,7 @@
 
 <ui:composition>
 
-    <p:dialog id="PedidosCreateDlg" widgetVar="PedidosCreateDialog" modal="true" width="820px" appendTo="@(body)" header="Crear pedido" closable="false">
+    <p:dialog id="PedidosCreateDlg" widgetVar="PedidosCreateDialog" modal="true" width="820px" appendTo="@(body)" header="Crear pedido" closable="false" dynamic="true">
         <h:form id="PedidosCreateForm">
             <p:panelGrid id="display" rendered="#{pedidosController.selected != null}" columns="6" >
                 <p:outputLabel value="Cliente:" for="cliente" />
@@ -132,22 +132,22 @@
                     </p:commandLink>
                 </p:column>
                 <f:facet name="footer">
-                        <h:outputText value="Total Importe: " />
-                        <h:outputText id="totalImporte" value="#{pedidosController.selected.totalImporte}">
-                            <f:convertNumber type="currency" currencySymbol="Bs." />
-                        </h:outputText>
-                        <h:outputText value="Total: " />
-                        <h:outputText id="totalPago" value="#{pedidosController.selected.total}">
-                            <f:convertNumber type="currency" currencySymbol="Bs." />
-                        </h:outputText>
-                        <h:outputText value="Descuento: " />
-                        <h:outputText id="valorDescuento" value="#{pedidosController.selected.valorDescuento}">
-                            <f:convertNumber type="currency" currencySymbol="Bs." />
-                        </h:outputText>
+                    <h:outputText value="Total Importe: " />
+                    <h:outputText id="totalImporte" value="#{pedidosController.selected.totalImporte}">
+                        <f:convertNumber type="currency" currencySymbol="Bs." />
+                    </h:outputText>
+                    <h:outputText value="Total: " />
+                    <h:outputText id="totalPago" value="#{pedidosController.selected.total}">
+                        <f:convertNumber type="currency" currencySymbol="Bs." />
+                    </h:outputText>
+                    <h:outputText value="Descuento: " />
+                    <h:outputText id="valorDescuento" value="#{pedidosController.selected.valorDescuento}">
+                        <f:convertNumber type="currency" currencySymbol="Bs." />
+                    </h:outputText>
                 </f:facet>
             </p:dataTable>
-            <p:commandButton actionListener="#{pedidosController.create}" value="#{bundle.Save}" update="display,:PedidosListForm:datalist,:PedidosListForm:growl" oncomplete="handleSubmit(args,'PedidosCreateDialog');"/>
-            <p:commandButton value="#{bundle.Cancel}" actionListener="#{pedidosController.cancel}" onclick="PedidosCreateDialog.close()" update=":PedidosListForm:datalist"/>
+            <p:commandButton actionListener="#{pedidosController.create}" value="#{bundle.Save}" update="display,:PedidosListForm:datalist,:PedidosListForm:growl,PedidosCreateForm:articulosTable"/>
+            <p:commandButton actionListener="#{pedidosController.cancel}" value="#{bundle.Close}" update=":PedidosListForm:datalist" onclick="PedidosCreateDialog.close()" />
         </h:form>
     </p:dialog>
 

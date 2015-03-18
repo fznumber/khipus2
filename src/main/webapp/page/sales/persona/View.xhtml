@@ -6,37 +6,37 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition>
+<ui:composition>
 
-        <p:dialog id="PersonaViewDlg" widgetVar="PersonaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="Cliente">
-            <h:form id="PersonaViewForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{clienteController.selected != null}">
-                        <p:outputLabel value="C.I.:" for="nroDoc"/>
-                        <p:outputLabel id="nroDoc" value="#{clienteController.selected.nroDoc}" title="Cedula de identidad" />
-                        <p:outputLabel value="Nombre:" for="nom" />
-                        <p:outputLabel id="nom" value="#{clienteController.selected.nombreCompleto}" title="Nombre/Razon Social"/>
-                        <p:outputLabel value="#{bundle.CreateClienteLabel_sexo}" for="sexo" rendered="#{clienteController.esPersona}"/>
-                        <p:outputLabel id="sexo" value="#{clienteController.selected.sexo}" title="sexo" rendered="#{clienteController.esPersona}"/>
-                        <p:outputLabel value="#{bundle.CreateClienteLabel_direccion}" for="direccion" />
-                        <p:outputLabel id="direccion" value="#{clienteController.selected.direccion}" title="#{bundle.CreateClienteTitle_direccion}" />
-                        <p:outputLabel value="#{bundle.CreateClienteLabel_telefono}" for="telefono" />
-                        <p:outputLabel id="telefono" value="#{clienteController.selected.telefono}" title="#{bundle.CreateClienteTitle_telefono}" />
-                        <p:outputLabel value="#{bundle.CreateClienteLabel_nit}" for="nit" />
-                        <p:outputLabel id="nit" value="#{clienteController.selected.nit}" title="#{bundle.CreateClienteTitle_nit}" />
-                        <p:outputLabel value="Retención:" for="retencion" />
-                        <p:outputLabel id="retencion" value="#{clienteController.selected.retencion.nombre}" title="retención" />
-                        <p:outputLabel value="Descuento:" for="descuento" />
-                        <p:outputLabel id="descuento" value="#{clienteController.selected.descuento}" title="Descuento" />
-                        <p:outputLabel value="Negocio:" for="negocio" />
-                        <p:outputLabel id="negocio" value="#{clienteController.selected.tipocliente.nombre}" title="Negocio" />
-                        <p:outputLabel value="Departamento:" for="departamento" />
-                        <p:outputLabel id="departamento" value="#{clienteController.selected.departamento.nombre}" title="Departamento" />
-                    </p:panelGrid>
-                    <p:commandButton value="#{bundle.Close}" onclick="PersonaViewDialog.hide()"/>
-                </h:panelGroup>
-            </h:form>
-        </p:dialog>
+    <p:dialog id="PersonaViewDlg" widgetVar="PersonaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="Cliente">
+        <h:form id="PersonaViewForm">
+            <h:panelGroup id="display">
+                <p:panelGrid columns="2" rendered="#{clienteController.selected != null}">
+                    <p:outputLabel value="C.I.:" for="nroDoc"/>
+                    <p:outputLabel id="nroDoc" value="#{clienteController.selected.nroDoc}" title="Cedula de identidad" />
+                    <p:outputLabel value="Nombre:" for="nom" />
+                    <p:outputLabel id="nom" value="#{clienteController.selected.nombreCompleto}" title="Nombre/Razon Social"/>
+                    <p:outputLabel value="#{bundle.CreateClienteLabel_sexo}" for="sexo" rendered="#{clienteController.esPersona}"/>
+                    <p:outputLabel id="sexo" value="#{clienteController.selected.sexo}" title="sexo" rendered="#{clienteController.esPersona}"/>
+                    <p:outputLabel value="#{bundle.CreateClienteLabel_direccion}" for="direccion" />
+                    <p:outputLabel id="direccion" value="#{clienteController.selected.direccion}" title="#{bundle.CreateClienteTitle_direccion}" />
+                    <p:outputLabel value="#{bundle.CreateClienteLabel_telefono}" for="telefono" />
+                    <p:outputLabel id="telefono" value="#{clienteController.selected.telefono}" title="#{bundle.CreateClienteTitle_telefono}" />
+                    <p:outputLabel value="#{bundle.CreateClienteLabel_nit}" for="nit" />
+                    <p:outputLabel id="nit" value="#{clienteController.selected.nit}" title="#{bundle.CreateClienteTitle_nit}" />
+                    <p:outputLabel value="Retención:" for="retencion" />
+                    <p:outputLabel id="retencion" value="#{clienteController.selected.retencion.nombre}" title="retención" />
+                    <p:outputLabel value="Descuento:" for="descuento" />
+                    <p:outputLabel id="descuento" value="#{clienteController.selected.descuento}" title="Descuento" />
+                    <p:outputLabel value="Negocio:" for="negocio" />
+                    <p:outputLabel id="negocio" value="#{clienteController.selected.tipocliente.nombre}" title="Negocio" />
+                    <p:outputLabel value="Departamento:" for="departamento" />
+                    <p:outputLabel id="departamento" value="#{clienteController.selected.departamento.nombre}" title="Departamento" />
+                </p:panelGrid>
+                <p:commandButton value="#{bundle.Close}" onclick="PersonaViewDialog.hide()"/>
+            </h:panelGroup>
+        </h:form>
+    </p:dialog>
 
-    </ui:composition>
+</ui:composition>
 </html>

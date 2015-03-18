@@ -39,6 +39,12 @@
                             </f:facet>
                             <h:outputText value="#{item.nombre}"/>
                         </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTipoclienteTitle_clientes}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.clientes}"/>
+                        </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{tipoclienteController.prepareCreate}" update=":TipoclienteCreateForm" oncomplete="PF('TipoclienteCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":TipoclienteViewForm" oncomplete="PF('TipoclienteViewDialog').show()" disabled="#{empty tipoclienteController.selected}"/>
