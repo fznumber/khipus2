@@ -6,187 +6,90 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/template.xhtml">
+<ui:composition template="/template.xhtml">
 
 
-        <ui:define name="title">
-            <h:outputText value="#{bundle.ListDistribuidorTitle}"></h:outputText>
-        </ui:define>
+    <ui:define name="title">
+        <h:outputText value="Listado de distribuidor"></h:outputText>
+    </ui:define>
 
-        <ui:define name="body">
-            <h:form id="DistribuidorListForm">
-                <p:panel header="#{bundle.ListDistribuidorTitle}">
-                    <p:dataTable id="datalist" value="#{distribuidorController.items}" var="item"
-                                 selectionMode="single" selection="#{distribuidorController.selected}"
-                                 paginator="true"
-                                 rowKey="#{item.piId}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
-                                 >
+    <ui:define name="center">
+        <h:form id="ClienteListForm">
+            <p:growl id="growl" life="15000"/>
+            <p:panel header="Listado de distribuidor">
+                <p:dataTable id="datalist" value="#{distribuidorController.items}" var="item"
+                             selectionMode="single" selection="#{distribuidorController.selected}"
+                             paginator="true"
+                             rowKey="#{item.piId}"
+                             rows="10"
+                             rowsPerPageTemplate="10,20,30,40,50"
+                        >
 
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
-
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDistribuidorTitle_observacion}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.observacion}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDistribuidorTitle_piId}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.piId}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDistribuidorTitle_nroDoc}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.nroDoc}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDistribuidorTitle_ap}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.ap}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDistribuidorTitle_am}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.am}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDistribuidorTitle_nom}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.nom}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDistribuidorTitle_sexo}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.sexo}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDistribuidorTitle_estCivil}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.estCivil}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDistribuidorTitle_fechaNac}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.fechaNac}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
-                            </h:outputText>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDistribuidorTitle_cemCod}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.cemCod}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDistribuidorTitle_ocuCod}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.ocuCod}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDistribuidorTitle_tdoCod}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.tdoCod}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDistribuidorTitle_sisCod}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.sisCod}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDistribuidorTitle_tipoPersona}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.tipoPersona}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDistribuidorTitle_direccion}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.direccion}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDistribuidorTitle_telefono}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.telefono}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDistribuidorTitle_nit}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.nit}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDistribuidorTitle_razonsocial}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.razonsocial}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDistribuidorTitle_descuento}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.descuento}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDistribuidorTitle_codigo}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.codigo}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDistribuidorTitle_departamento}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.departamento}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDistribuidorTitle_retencion}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.retencion}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDistribuidorTitle_tipocliente}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.tipocliente}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDistribuidorTitle_nombreCompleto}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.nombreCompleto}"/>
-                        </p:column>
-                        <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{distribuidorController.prepareCreate}" update=":DistribuidorCreateForm" oncomplete="PF('DistribuidorCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":DistribuidorViewForm" oncomplete="PF('DistribuidorViewDialog').show()" disabled="#{empty distribuidorController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":DistribuidorEditForm" oncomplete="PF('DistribuidorEditDialog').show()" disabled="#{empty distribuidorController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{distribuidorController.destroy}" update=":growl,datalist" disabled="#{empty distribuidorController.selected}"/>
+                    <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                    <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Nombre"/>
                         </f:facet>
-                    </p:dataTable>
-                </p:panel>
-            </h:form>
+                        <h:outputText value="#{item.nombreCompleto}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListClienteTitle_direccion}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.direccion}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListClienteTitle_telefono}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.telefono}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListClienteTitle_nit}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.nit}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListClienteTitle_codigo}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.codigo}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="C.I."/>
+                        </f:facet>
+                        <h:outputText value="#{item.nroDoc}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListClienteTitle_sexo}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.sexo}"/>
+                    </p:column>
 
-            <ui:include src="Create.xhtml"/>
-            <ui:include src="Edit.xhtml"/>
-            <ui:include src="View.xhtml"/>
-        </ui:define>
-    </ui:composition>
+                    <f:facet name="footer">
+                        <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{distribuidorController.prepareCreate}" update=":ClienteCreateForm" oncomplete="PF('ClienteCreateDialog').show()"/>
+                        <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":ClienteViewForm" oncomplete="PF('ClienteViewDialog').show()" disabled="#{empty distribuidorController.selected}"/>
+                        <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":ClienteEditForm" oncomplete="PF('ClienteEditDialog').show()" disabled="#{empty distribuidorController.selected}"/>
+                        <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{distribuidorController.destroy}" update=":ClienteListForm:growl,datalist" disabled="#{empty distribuidorController.selected}">
+                            <p:confirm header="Confirmación" message="¿Está seguro de eliminar el distribuidor?" icon="ui-icon-alert" />
+                        </p:commandButton>
+                    </f:facet>
+                </p:dataTable>
+            </p:panel>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
+        </h:form>
+
+        <ui:include src="Create.xhtml"/>
+        <ui:include src="Edit.xhtml"/>
+        <ui:include src="View.xhtml"/>
+    </ui:define>
+</ui:composition>
 
 </html>
