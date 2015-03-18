@@ -10,13 +10,25 @@ import com.encens.khipus.model.*;
 import com.encens.khipus.util.BarcodeRenderer;
 import com.encens.khipus.util.GestorImpresion;
 import com.encens.khipus.util.MoneyUtil;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.*;
+import javax.faces.event.ActionEvent;
 
 /**
  *
@@ -29,7 +41,7 @@ public class PedidosReportController {
     /**
      * Creates a new instance of PedidosReportController
      */
-    @EJB
+    @Inject
     GestorImpresion gestorImpresion;
     @EJB
     DosificacionFacade dosificacionFacade;
@@ -38,9 +50,11 @@ public class PedidosReportController {
     private BarcodeRenderer barcodeRenderer;
     private Boolean imprimirCopia = false;
     private Dosificacion dosificacion;
+    private Pedidos pedido;
 
-    public void imprimir(Pedidos pedido){
+    public void imprimir(Pedidos pedido) throws IOException, JRException {
         String ruta = "/resources/reportes/pedidoFactura.jrxml";
+        this.pedido = pedido;
         HashMap parameters = new HashMap();
         moneyUtil = new MoneyUtil();
         barcodeRenderer = new BarcodeRenderer();
@@ -63,9 +77,25 @@ public class PedidosReportController {
                         ,controlCode.getCodigoControl()
                         ,controlCode.getKeyQR()
                         ,pedido));
+        exportarPDF(parameters);
 
-        gestorImpresion.imprimir(new ArrayList<>(pedido.getArticulosPedidos()), ruta, parameters);
 
+    }
+
+    public void exportarPDF(HashMap parametros) throws JRException, IOException {
+
+        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/pedidoFactura.jasper"));
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, new JRBeanCollectionDataSource(pedido.getArticulosPedidos()));
+
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.addHeader("Content-disposition","attachment; filename=jsfReporte.pdf");
+        ServletOutputStream stream = response.getOutputStream();
+
+        JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
+
+        stream.flush();
+        stream.close();
+        FacesContext.getCurrentInstance().responseComplete();
     }
 
     private ControlCode generateCodControl(Pedidos pedido,Integer numberInvoice,BigInteger numberAutorization,String key)
@@ -110,7 +140,7 @@ public class PedidosReportController {
         paramMap.put("llaveQR",keyQR);
         paramMap.put("totalLiteral",moneyUtil.Convertir(pedido.getTotalImporte().toString(), true));
         paramMap.put("total",pedido.getTotalImporte());
-        barcodeRenderer.generateQR(keyQR,filePath);
+        /*barcodeRenderer.generateQR(keyQR,filePath);*/
         return paramMap;
     }
 
