@@ -8,6 +8,7 @@ package com.encens.khipus.controller;
 import com.encens.khipus.ejb.DosificacionFacade;
 import com.encens.khipus.model.*;
 import com.encens.khipus.util.BarcodeRenderer;
+import com.encens.khipus.util.FileCacheLoader;
 import com.encens.khipus.util.GestorImpresion;
 import com.encens.khipus.util.MoneyUtil;
 import net.sf.jasperreports.engine.JRException;
@@ -18,11 +19,13 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
+import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -84,7 +87,7 @@ public class PedidosReportController {
 
     public void exportarPDF(HashMap parametros) throws JRException, IOException {
 
-        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/pedidoFactura.jasper"));
+        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/factura.jasper"));
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, new JRBeanCollectionDataSource(pedido.getArticulosPedidos()));
 
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
@@ -120,15 +123,15 @@ public class PedidosReportController {
 
     private Map<String, Object> getReportParams(String nameClient,long numfac,String etiqueta,String codControl, String keyQR,Pedidos pedido) {
 
-        String filePath = "qr_inv.png";
+        String filePath = FileCacheLoader.i.getPath("/resources/reportes/qr_inv.png");
         String nroDoc = pedido.getCliente().getNroDoc();
         if(pedido.getCliente().getTipocliente().equals("INSTITUCION"))
             nroDoc = pedido.getCliente().getNit();
-
+        //todo:completar los datos de la tabla
         Map<String, Object> paramMap = new HashMap<String, Object>();
         paramMap.put("nitEmpresa","123456022");
         paramMap.put("numFac",numfac);
-        paramMap.put("numAutorizacion",dosificacion.getNroautorizacion());
+        paramMap.put("numAutorizacion",dosificacion.getNroautorizacion().intValue());
         paramMap.put("nitCliente",nroDoc);
         paramMap.put("fecha",pedido.getFechaEntrega());
         paramMap.put("nombreCliente",nameClient);//verificar el nombre del cliente
@@ -140,7 +143,14 @@ public class PedidosReportController {
         paramMap.put("llaveQR",keyQR);
         paramMap.put("totalLiteral",moneyUtil.Convertir(pedido.getTotalImporte().toString(), true));
         paramMap.put("total",pedido.getTotalImporte());
-        /*barcodeRenderer.generateQR(keyQR,filePath);*/
+        barcodeRenderer.generateQR(keyQR,filePath);
+        try {
+            BufferedImage img = ImageIO.read(new File(filePath));
+            //BufferedImage image = ImageIO.read(getClass().getResource(filePath));
+            paramMap.put("imgQR",img);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return paramMap;
     }
 

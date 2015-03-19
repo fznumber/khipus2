@@ -17,10 +17,12 @@ import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.component.UISelectItem;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.model.SelectItem;
 import javax.inject.Named;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
 
@@ -203,6 +205,22 @@ public class JSFUtil {
 		java.util.Calendar ca = java.util.Calendar.getInstance();
 		java.sql.Date mydate = new java.sql.Date(ca.getTimeInMillis());
 		return ca.get(Calendar.DATE);
+	}
+
+	public static FacesContext getFacesContext() {
+		return FacesContext.getCurrentInstance();
+	}
+
+	public static ExternalContext getExternalContext() {
+		return getFacesContext().getExternalContext();
+	}
+
+	public static ServletContext getServletContext() {
+		return (ServletContext) getExternalContext().getContext();
+	}
+
+	public static String getRealPath(String url) {
+		return getServletContext().getRealPath(url);
 	}
 
 	public static boolean isValidationFailed() {
