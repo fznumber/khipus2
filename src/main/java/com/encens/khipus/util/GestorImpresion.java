@@ -5,6 +5,7 @@
  */
 package com.encens.khipus.util;
 
+import javax.faces.bean.SessionScoped;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import java.io.ByteArrayOutputStream; 
@@ -57,13 +58,13 @@ public class GestorImpresion {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
             JRPdfExporter exporter = new JRPdfExporter();
-            /*exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-            exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, baos);*/
+            exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+            exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, baos);
 
-            exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+           /* exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
             exporter.setExporterOutput((OutputStreamExporterOutput) baos);
             SimplePdfExporterConfiguration configuration = new SimplePdfExporterConfiguration();
-            exporter.setConfiguration(configuration);
+            exporter.setConfiguration(configuration);*/
 
             exporter.exportReport();
             byte[] bytes = baos.toByteArray();
