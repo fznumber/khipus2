@@ -23,10 +23,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "tipo_persona")
 @DiscriminatorValue(value = "persona")
-@TableGenerator(name = "Persona_Gen"
-                ,table="ID_GEN"
-                ,pkColumnName = "GEN_NAME"
-                ,valueColumnName = "GEN_VAL")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Personas.findAll", query = "SELECT p FROM Persona p"),
@@ -63,6 +59,12 @@ public class Persona implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @NotNull
+    @TableGenerator(name = "Persona_Gen"
+            ,table="ID_GEN"
+            ,pkColumnName = "GEN_NAME"
+            ,valueColumnName = "GEN_VAL"
+            ,initialValue = 1
+            ,allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "Persona_Gen")
     @Column(name = "IDPERSONA")
     private Long piId;
