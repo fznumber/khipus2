@@ -7,7 +7,6 @@ package com.encens.khipus.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.Collection;
 
 /**
  *
@@ -37,8 +36,6 @@ public class Cliente extends Persona {
     private String nit;
     @Column(name = "RAZONSOCIAL")
     private String razonsocial;
-    @Column(name = "DESCUENTO")
-    private Double descuento;
     @Size(max = 10)
     @Column(name = "CODIGOCLIENTE")
     private String codigo;
@@ -64,18 +61,8 @@ public class Cliente extends Persona {
     }
 
     @Override
-    public Double getDescuento() {
-        return super.getDescuento();
-    }
-
-    @Override
     public String getCodigo() {
         return super.getCodigo();
-    }
-
-    @Override
-    public Retencion getRetencion() {
-        return super.getRetencion();
     }
 
     @Override

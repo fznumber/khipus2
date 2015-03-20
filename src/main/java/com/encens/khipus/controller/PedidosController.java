@@ -146,7 +146,6 @@ public class PedidosController implements Serializable {
         LoginBean loginBean = (LoginBean) facesContext.getApplication().getELResolver().
                 getValue(facesContext.getELContext(), null, "loginBean");
         selected.setUsuario(loginBean.getUsuario());
-        selected.setDistribuidor(distribuidorElegido);
         selected.setCliente(personaElegida);
         selected.setEstado("CREADO");
         selected.setFechaPedido(new Date());

@@ -35,8 +35,8 @@ import javax.xml.bind.annotation.XmlRootElement;
         @NamedQuery(name = "Pedidos.findByObservacion", query = "SELECT p FROM Pedidos p WHERE p.observacion = :observacion"),
         @NamedQuery(name = "Pedidos.findByFactura", query = "SELECT p FROM Pedidos p WHERE p.factura = :factura"),
         @NamedQuery(name = "Pedidos.findBySupervisor", query = "SELECT p FROM Pedidos p WHERE p.supervisor = :supervisor"),
-        @NamedQuery(name = "Pedidos.findByPorcenDescuento", query = "SELECT p FROM Pedidos p WHERE p.porcenDescuento = :porcenDescuento"),
-        @NamedQuery(name = "Pedidos.findByPorcenRetencion", query = "SELECT p FROM Pedidos p WHERE p.porcenRetencion = :porcenRetencion")})
+        @NamedQuery(name = "Pedidos.findByPorcenDescuento", query = "SELECT p FROM Pedidos p WHERE p.porcentajeComision = :porcenDescuento"),
+        @NamedQuery(name = "Pedidos.findByPorcenRetencion", query = "SELECT p FROM Pedidos p WHERE p.porcentajeGarantia = :porcenRetencion")})
 @TableGenerator(name = "Pedidos_Gen"
         ,table="ID_GEN"
         ,pkColumnName = "GEN_NAME"
@@ -80,22 +80,19 @@ public class Pedidos implements Serializable {
     private String factura;
     @Column(name = "SUPERVISOR")
     private BigInteger supervisor;
-    @Column(name = "PORCEN_DESCUENTO")
-    private Double porcenDescuento = 0.0;
-    @Column(name = "PORCEN_RETENCION")
-    private Double porcenRetencion = 0.0;
-    @Column(name = "VALORDESCUENTO")
-    private Double valorDescuento = 0.0;
-    @Column(name = "VALORRETENCION")
-    private Double valorRetencion = 0.0;
+    @Column(name = "PORCENTAJECOMISION")
+    private Double porcentajeComision = 0.0;
+    @Column(name = "PORCENTAJEGARANTIA")
+    private Double porcentajeGarantia = 0.0;
+    @Column(name = "VALORCOMISION")
+    private Double valorComision = 0.0;
+    @Column(name = "VALORGARANTIA")
+    private Double valorGarantia = 0.0;
     @Column(name = "ESTADO")
     private String estado;
     @JoinColumn(name = "IDCLIENTE", referencedColumnName = "IDPERSONA")
     @ManyToOne(optional = false)
     private Persona cliente;
-    @JoinColumn(name = "IDDISTRIBUIDOR", referencedColumnName = "IDPERSONA")
-    @ManyToOne(optional = false)
-    private Distribuidor distribuidor;
     @JoinColumn(name = "ESTADO_PEDIDO", referencedColumnName = "IDESTADOPEDIDO")
     @ManyToOne(optional = false)
     private EstadoPedidos estadoPedido;
@@ -213,20 +210,20 @@ public class Pedidos implements Serializable {
         this.supervisor = supervisor;
     }
 
-    public Double getPorcenDescuento() {
-        return porcenDescuento;
+    public Double getPorcentajeComision() {
+        return porcentajeComision;
     }
 
-    public void setPorcenDescuento(Double porcenDescuento) {
-        this.porcenDescuento = porcenDescuento;
+    public void setPorcentajeComision(Double porcenDescuento) {
+        this.porcentajeComision = porcenDescuento;
     }
 
-    public Double getPorcenRetencion() {
-        return porcenRetencion;
+    public Double getPorcentajeGarantia() {
+        return porcentajeGarantia;
     }
 
-    public void setPorcenRetencion(Double porcenRetencion) {
-        this.porcenRetencion = porcenRetencion;
+    public void setPorcentajeGarantia(Double porcenRetencion) {
+        this.porcentajeGarantia = porcenRetencion;
     }
 
     public Persona getCliente() {
@@ -234,17 +231,9 @@ public class Pedidos implements Serializable {
     }
 
     public void setCliente(Persona cliente) {
-        this.porcenDescuento = cliente.getDescuento();
-        this.porcenRetencion = cliente.getRetencion().getPorcentage();
+        this.porcentajeComision = cliente.getPorcentajeComision();
+        this.porcentajeGarantia = cliente.getPorcentajeGarantia();
         this.cliente = cliente;
-    }
-
-    public Distribuidor getDistribuidor() {
-        return distribuidor;
-    }
-
-    public void setDistribuidor(Distribuidor iddistribuidor) {
-        this.distribuidor = iddistribuidor;
     }
 
     public EstadoPedidos getEstadoPedido() {
@@ -307,8 +296,8 @@ public class Pedidos implements Serializable {
                 totalImporte +=articulosPedido.getImporte();
             }
         //todo: implementar retención
-        this.valorDescuento = totalImporte * (porcenDescuento /100);
-        this.total = totalImporte - valorDescuento;
+        this.valorComision = totalImporte * (porcentajeComision /100);
+        this.total = totalImporte - valorComision;
         return totalImporte;
     }
 
@@ -333,20 +322,20 @@ public class Pedidos implements Serializable {
             this.usuario = usuario;
     }
 
-    public Double getValorDescuento() {
-        return valorDescuento;
+    public Double getValorComision() {
+        return valorComision;
     }
 
-    public void setValorDescuento(Double valorDescuento) {
-        this.valorDescuento = valorDescuento;
+    public void setValorComision(Double valorDescuento) {
+        this.valorComision = valorDescuento;
     }
 
-    public Double getValorRetencion() {
-        return valorRetencion;
+    public Double getValorGarantia() {
+        return valorGarantia;
     }
 
-    public void setValorRetencion(Double valorRetencion) {
-        this.valorRetencion = valorRetencion;
+    public void setValorGarantia(Double valorRetencion) {
+        this.valorGarantia = valorRetencion;
     }
 
     public Collection<Movimiento> getMovimientos() {

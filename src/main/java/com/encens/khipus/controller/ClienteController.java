@@ -83,8 +83,7 @@ public class ClienteController implements Serializable {
     }
 
     public void create() {
-        if(retencion != null)
-        selected.setRetencion(retencion);
+
         if(esPersona) {
             selected.setRazonsocial(null);
         }else{

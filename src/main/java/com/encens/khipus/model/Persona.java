@@ -92,19 +92,13 @@ public class Persona implements Serializable {
     private String nit;
     @Column(name = "RAZONSOCIAL")
     private String razonsocial;
-    @Column(name = "DESCUENTO")
-    private Double descuento;
+    @Column(name = "PORCENTAJECOMISION")
+    private Double porcentajeComision;
+    @Column(name = "PORCENTAJEGARANTIA")
+    private Double porcentajeGarantia;
     @Size(max = 10)
     @Column(name = "CODIGOCLIENTE")
     private String codigo;
-
-    @JoinColumn(name = "IDDEPARTAMENTO",referencedColumnName = "IDDEPARTAMENTO")
-    @ManyToOne(optional = true)
-    private Departamento departamento;
-
-    @JoinColumn(name = "IDRETENCION", referencedColumnName = "IDRETENCION")
-    @ManyToOne(optional = true)
-    private Retencion retencion;
 
     @JoinColumn(name = "IDTIPOCLIENTE", referencedColumnName = "IDTIPOCLIENTE")
     @ManyToOne(optional = true)
@@ -260,12 +254,12 @@ public class Persona implements Serializable {
         this.razonsocial = razonsocial;
     }
 
-    public Double getDescuento() {
-        return descuento;
+    public Double getPorcentajeComision() {
+        return porcentajeComision;
     }
 
-    public void setDescuento(Double descuento) {
-        this.descuento = descuento;
+    public void setPorcentajeComision(Double descuento) {
+        this.porcentajeComision = descuento;
     }
 
     public String getCodigo() {
@@ -276,21 +270,6 @@ public class Persona implements Serializable {
         this.codigo = codigo;
     }
 
-    public Departamento getDepartamento() {
-        return departamento;
-    }
-
-    public void setDepartamento(Departamento departamento) {
-        this.departamento = departamento;
-    }
-
-    public Retencion getRetencion() {
-        return retencion;
-    }
-
-    public void setRetencion(Retencion retencion) {
-        this.retencion = retencion;
-    }
 
     public Tipocliente getTipocliente() {
         return tipocliente;
@@ -331,5 +310,12 @@ public class Persona implements Serializable {
         else
             return razonsocial;
     }
-    
+
+    public Double getPorcentajeGarantia() {
+        return porcentajeGarantia;
+    }
+
+    public void setPorcentajeGarantia(Double porcentajeGarantia) {
+        this.porcentajeGarantia = porcentajeGarantia;
+    }
 }

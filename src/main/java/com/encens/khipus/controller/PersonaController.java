@@ -74,27 +74,23 @@ public class PersonaController implements Serializable {
             cliente.setAm(selected.getAm());
             cliente.setAp(selected.getAp());
             cliente.setNom(selected.getNom());
-            cliente.setDescuento(selected.getDescuento());
+            cliente.setPorcentajeComision(selected.getPorcentajeComision());
             cliente.setNroDoc(selected.getNroDoc());
             cliente.setDireccion(selected.getDireccion());
-            cliente.setDepartamento(selected.getDepartamento());
             cliente.setNit(selected.getNit());
             cliente.setSexo(selected.getSexo());
             cliente.setTelefono(selected.getTelefono());
             cliente.setTipocliente(selected.getTipocliente());
-            cliente.setRetencion(retencion);
             clienteFacade.create(cliente);
         }
         else {
             Institucion institucion = new Institucion();
             institucion.setRazonsocial(selected.getRazonsocial());
-            institucion.setDescuento(selected.getDescuento());
+            institucion.setPorcentajeComision(selected.getPorcentajeComision());
             institucion.setDireccion(selected.getDireccion());
-            institucion.setDepartamento(selected.getDepartamento());
             institucion.setNit(selected.getNit());
             institucion.setTelefono(selected.getTelefono());
             institucion.setTipocliente(selected.getTipocliente());
-            institucion.setRetencion(retencion);
             institucionFacade.create(institucion);
         }
         //persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PersonasCreated"));
@@ -104,14 +100,14 @@ public class PersonaController implements Serializable {
         }
     }
 
-    public void cambiarRetencion()
+/*    public void cambiarRetencion()
     {
         if(tieneRetencion)
             retencion = retencionFacade.findActivo();
         else
             retencion = null;
         selected.setRetencion(retencion);
-    }
+    }*/
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PersonasUpdated"));
