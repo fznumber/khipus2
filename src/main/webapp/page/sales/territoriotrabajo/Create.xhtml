@@ -16,9 +16,9 @@
                         <p:inputText id="nombre" value="#{territoriotrabajoController.selected.nombre}" title="Nombre" />
                         <p:outputLabel value="País" for="pais" />
                         <p:inputText id="pais" value="#{territoriotrabajoController.selected.pais}" title="país" />
-                        <p:outputLabel value="Descripción:" for="descripcion" />
+                        <p:outputLabel value="Distribuidor:" for="distribuidor" />
                         <p:autoComplete id="distribuidor" value="#{territoriotrabajoController.distribuidorElegido}" completeMethod="#{territoriotrabajoController.completarDistribuidor}"
-                                        var="distribuidor" itemLabel="#{distribuidor.nombreCompleto}" itemValue="#{distribuidor}" converter="convertirPersona" >
+                                        var="distribuidor" itemLabel="#{distribuidor.nombreCompleto}" itemValue="#{distribuidor}" converter="convertirPersona">
                             <f:facet name="itemtip">
                                 <h:panelGrid columns="2" cellpadding="5">
                                     <f:facet name="header">

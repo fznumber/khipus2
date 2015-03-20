@@ -83,12 +83,33 @@ public class TerritoriotrabajoController implements Serializable {
     }
 
     public void create() {
+        if(validarCampos())
+        {
+            return;
+        }
         selected.setDistribuidor(distribuidorElegido);
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("TerritoriotrabajoCreated"));
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
             prepareCreate();
         }
+    }
+
+    public Boolean validarCampos()
+    {
+        Boolean error = false;
+        if(distribuidorElegido == null)
+        {
+            JSFUtil.addErrorMessage( ResourceBundle.getBundle("/Bundle").getString("DistribuidorRequerido"));
+            error = true;
+        }
+        if(selected.getNombre().isEmpty())
+        {
+            JSFUtil.addErrorMessage( ResourceBundle.getBundle("/Bundle").getString("NombreRequerido"));
+            error = true;
+        }
+
+        return error;
     }
 
     public void update() {

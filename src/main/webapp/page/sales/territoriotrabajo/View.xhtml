@@ -7,7 +7,7 @@
 
     <ui:composition>
 
-        <p:dialog id="TerritoriotrabajoViewDlg" widgetVar="TerritoriotrabajoViewDialog" modal="true" resizable="false" appendTo="@(body)" header="Território">
+        <p:dialog id="TerritoriotrabajoViewDlg" widgetVar="TerritoriotrabajoViewDialog" modal="true" resizable="false" appendTo="@(body)" header="Territorio">
             <h:form id="TerritoriotrabajoViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{territoriotrabajoController.selected != null}">
@@ -19,8 +19,8 @@
                         <h:outputText value="#{territoriotrabajoController.selected.descripcion}" title="Descripción"/>
                         <h:outputText value="Distribuidor:"/>
                         <h:outputText value="#{territoriotrabajoController.selected.distribuidor.nombreCompleto}" title="Distribuidor"/>
-                        <h:outputText value="#{bundle.ViewTerritoriotrabajoLabel_departamento}"/>
-                        <h:outputText value="#{territoriotrabajoController.selected.departamento}" title="Departamento"/>
+                        <h:outputText value="Departamento:"/>
+                        <h:outputText value="#{territoriotrabajoController.selected.departamento.nombre}" title="Departamento"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="TerritoriotrabajoViewDialog.hide()"/>
                 </h:panelGroup>
