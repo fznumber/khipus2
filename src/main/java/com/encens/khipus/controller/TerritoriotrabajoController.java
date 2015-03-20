@@ -1,10 +1,15 @@
 package com.encens.khipus.controller;
 
 import com.encens.khipus.ejb.DistribuidorFacade;
+import com.encens.khipus.ejb.PersonasFacade;
 import com.encens.khipus.model.Distribuidor;
+import com.encens.khipus.model.Persona;
+import com.encens.khipus.model.Territoriotrabajo;
+import com.encens.khipus.ejb.TerritoriotrabajoFacade;
 import com.encens.khipus.util.JSFUtil;
 import com.encens.khipus.util.JSFUtil.PersistAction;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -18,23 +23,28 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@Named("distribuidorController")
+@Named("territoriotrabajoController")
 @SessionScoped
-public class DistribuidorController implements Serializable {
+public class TerritoriotrabajoController implements Serializable {
 
     @EJB
-    private DistribuidorFacade ejbFacade;
-    private List<Distribuidor> items = null;
-    private Distribuidor selected;
+    private com.encens.khipus.ejb.TerritoriotrabajoFacade ejbFacade;
+    @EJB
+    private PersonasFacade personasFacade;
 
-    public DistribuidorController() {
+    private List<Territoriotrabajo> items = null;
+    private Territoriotrabajo selected;
+    private Persona distribuidorElegido;
+    private List<Persona> distribuidores;
+
+    public TerritoriotrabajoController() {
     }
 
-    public Distribuidor getSelected() {
+    public Territoriotrabajo getSelected() {
         return selected;
     }
 
-    public void setSelected(Distribuidor selected) {
+    public void setSelected(Territoriotrabajo selected) {
         this.selected = selected;
     }
 
@@ -44,42 +54,56 @@ public class DistribuidorController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private DistribuidorFacade getFacade() {
+    public List<Persona> completarDistribuidor(String query) {
+        List<Persona> distribuidoresFiltrados = new ArrayList<>();
+        for(Persona persona: distribuidores) {
+
+            if(persona.getNombreCompleto().toLowerCase().contains(query)) {
+                distribuidoresFiltrados.add(persona);
+            }
+        }
+
+        return distribuidoresFiltrados;
+    }
+
+    private TerritoriotrabajoFacade getFacade() {
         return ejbFacade;
     }
 
-    public Distribuidor prepareCreate() {
-        selected = new Distribuidor();
+    public Territoriotrabajo prepareCreate() {
+        selected = new Territoriotrabajo();
+        distribuidorElegido = new Distribuidor();
+        distribuidores = personasFacade.findAlldistribuidores();
         initializeEmbeddableKey();
         return selected;
     }
 
+    public void cancel(){
+        selected = null;
+    }
+
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("DistribuidorCreated"));
+        selected.setDistribuidor(distribuidorElegido);
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("TerritoriotrabajoCreated"));
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
-            selected = new Distribuidor();
+            prepareCreate();
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("DistribuidorUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("TerritoriotrabajoUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("DistribuidorDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("TerritoriotrabajoDeleted"));
         if (!JSFUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public void cancel()
-    {
-        selected = null; // Remove selection
-    }
-
-    public List<Distribuidor> getItems() {
+    public List<Territoriotrabajo> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -114,29 +138,29 @@ public class DistribuidorController implements Serializable {
         }
     }
 
-    public Distribuidor getDistribuidor(java.lang.Long id) {
+    public Territoriotrabajo getTerritoriotrabajo(java.lang.Long id) {
         return getFacade().find(id);
     }
 
-    public List<Distribuidor> getItemsAvailableSelectMany() {
+    public List<Territoriotrabajo> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<Distribuidor> getItemsAvailableSelectOne() {
+    public List<Territoriotrabajo> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = Distribuidor.class)
-    public static class DistribuidorControllerConverter implements Converter {
+    @FacesConverter(forClass = Territoriotrabajo.class)
+    public static class TerritoriotrabajoControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            DistribuidorController controller = (DistribuidorController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "distribuidorController");
-            return controller.getDistribuidor(getKey(value));
+            TerritoriotrabajoController controller = (TerritoriotrabajoController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "territoriotrabajoController");
+            return controller.getTerritoriotrabajo(getKey(value));
         }
 
         java.lang.Long getKey(String value) {
@@ -156,15 +180,22 @@ public class DistribuidorController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Distribuidor) {
-                Distribuidor o = (Distribuidor) object;
-                return getStringKey(o.getPiId());
+            if (object instanceof Territoriotrabajo) {
+                Territoriotrabajo o = (Territoriotrabajo) object;
+                return getStringKey(o.getIdterritoriotrabajo());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Distribuidor.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Territoriotrabajo.class.getName()});
                 return null;
             }
         }
 
     }
 
+    public Persona getDistribuidorElegido() {
+        return distribuidorElegido;
+    }
+
+    public void setDistribuidorElegido(Persona distribuidorElegido) {
+        this.distribuidorElegido = distribuidorElegido;
+    }
 }

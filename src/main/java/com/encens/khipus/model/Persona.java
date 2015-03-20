@@ -46,14 +46,11 @@ public class Persona implements Serializable {
     @Size(max = 45)
     @Column(name = "TIPO_PERSONA")
     private String tipoPersona;
-    @Size(max = 15)
     @Column(name = "TELEFONO")
     private Integer telefono;
     @Size(max = 100)
     @Column(name = "OBSERVACION")
     private String observacion;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "PORCENTAJEGARANTIA")
     private double porcentajeGarantia;
     @JoinColumn(name = "IDTERRITORIOTRABAJO", referencedColumnName = "IDTERRITORIOTRABAJO")
@@ -78,7 +75,6 @@ public class Persona implements Serializable {
     @Size(max = 65)
     @Column(name = "AM")
     private String am;
-    @Basic(optional = false)
     @Size( max = 100)
     @Column(name = "NOM")
     private String nom;

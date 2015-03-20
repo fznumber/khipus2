@@ -83,6 +83,8 @@ public class Territoriotrabajo implements Serializable {
     }
 
     public String getPais() {
+        if(this.pais == null)
+            pais = "Bolivia";
         return pais;
     }
 

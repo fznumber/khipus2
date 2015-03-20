@@ -33,8 +33,6 @@ public class PedidosController implements Serializable {
     @EJB
     private PersonasFacade personasFacade;
     @EJB
-    private DistribuidorFacade distribuidorFacade;
-    @EJB
     private VentaarticuloFacade ventaarticuloFacade;
     @EJB
     private VentaclienteFacade ventaclienteFacade;
@@ -55,7 +53,6 @@ public class PedidosController implements Serializable {
     private Date fechaEntregaFiltro;
     private Date fechaPedidoFiltro;
     private Persona personaElegida;
-    private Distribuidor distribuidorElegido;
 
     public PedidosController() {
     }
@@ -133,7 +130,6 @@ public class PedidosController implements Serializable {
     public Pedidos prepareCreate() {
         selected = new Pedidos();
         personaElegida = new Persona();
-        distribuidorElegido = new Distribuidor();
         personas = personasFacade.findAllClientesPersonaInstitucion();
         articulos = invArticulosFacade.findAllInvArticulos();
         distribuidores = personasFacade.findAlldistribuidores();
@@ -154,7 +150,6 @@ public class PedidosController implements Serializable {
             items = null;    // Invalidate list of items to trigger re-query.
             selected = new Pedidos();
             personaElegida = new Persona();
-            distribuidorElegido = new Distribuidor();
             personas = personasFacade.findAllClientesPersonaInstitucion();
             articulos = invArticulosFacade.findAllInvArticulos();
             distribuidores = personasFacade.findAlldistribuidores();
@@ -364,11 +359,4 @@ public class PedidosController implements Serializable {
         this.personaElegida = personaElegida;
     }
 
-    public Distribuidor getDistribuidorElegido() {
-        return distribuidorElegido;
-    }
-
-    public void setDistribuidorElegido(Distribuidor distribuidorElegido) {
-        this.distribuidorElegido = distribuidorElegido;
-    }
 }
