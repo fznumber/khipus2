@@ -34,6 +34,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Ventaarticulo.findByPrecio", query = "SELECT v FROM Ventaarticulo v WHERE v.precio = :precio"),
     @NamedQuery(name = "Ventaarticulo.findByInvArticulo", query = "SELECT v FROM Ventaarticulo v WHERE v.invArticulos = :invArticulos")})
 public class Ventaarticulo implements Serializable {
+    @OneToMany(mappedBy = "idpaquete")
+    private Collection<Ventaarticulo> ventaarticuloCollection;
+    @JoinColumn(name = "IDPAQUETE", referencedColumnName = "IDVENTAARTICULO")
+    @ManyToOne
+    private Ventaarticulo idpaquete;
     @Id
     @Column(name = "IDVENTAARTICULO")
     private Long idventaarticulo;
@@ -112,6 +117,23 @@ public class Ventaarticulo implements Serializable {
 
     public void setVentaclientes(Collection<Ventacliente> ventaclienteCollection) {
         this.ventaclientes = ventaclienteCollection;
+    }
+
+    @XmlTransient
+    public Collection<Ventaarticulo> getVentaarticuloCollection() {
+        return ventaarticuloCollection;
+    }
+
+    public void setVentaarticuloCollection(Collection<Ventaarticulo> ventaarticuloCollection) {
+        this.ventaarticuloCollection = ventaarticuloCollection;
+    }
+
+    public Ventaarticulo getIdpaquete() {
+        return idpaquete;
+    }
+
+    public void setIdpaquete(Ventaarticulo idpaquete) {
+        this.idpaquete = idpaquete;
     }
     
 }

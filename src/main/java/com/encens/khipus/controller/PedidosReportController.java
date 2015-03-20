@@ -103,7 +103,7 @@ public class PedidosReportController {
 
     private ControlCode generateCodControl(Pedidos pedido,Integer numberInvoice,BigInteger numberAutorization,String key)
     {
-        Double importeBaseCreditFisical = pedido.getTotalImporte() * 0.13;
+        Double importeBaseCreditFisical = pedido.getTotalimporte() * 0.13;
         String nroDoc = pedido.getCliente().getNroDoc();
         if(pedido.getCliente().getTipocliente().equals("INSTITUCION"))
             nroDoc = pedido.getCliente().getNit();
@@ -112,7 +112,7 @@ public class PedidosReportController {
                 ,numberInvoice
                 ,numberAutorization.toString()
                 ,pedido.getFechaEntrega()
-                ,pedido.getTotalImporte()
+                ,pedido.getTotalimporte()
                 ,importeBaseCreditFisical
                 ,nroDoc
         );
@@ -141,8 +141,8 @@ public class PedidosReportController {
         //verificar por que no requiere el codigo de control
 
         paramMap.put("llaveQR",keyQR);
-        paramMap.put("totalLiteral",moneyUtil.Convertir(pedido.getTotalImporte().toString(), true));
-        paramMap.put("total",pedido.getTotalImporte());
+        paramMap.put("totalLiteral",moneyUtil.Convertir(pedido.getTotalimporte().toString(), true));
+        paramMap.put("total",pedido.getTotalimporte());
         barcodeRenderer.generateQR(keyQR,filePath);
         try {
             BufferedImage img = ImageIO.read(new File(filePath));

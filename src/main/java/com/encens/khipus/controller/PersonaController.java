@@ -23,9 +23,7 @@ import javax.faces.convert.FacesConverter;
 public class PersonaController implements Serializable {
 
     @EJB
-    private PersonasFacade ejbFacade;
-    @EJB
-    private RetencionFacade retencionFacade;
+    private PersonasFacade ejbFacade;    
     @EJB
     private ClienteFacade clienteFacade;
     @EJB
@@ -35,7 +33,6 @@ public class PersonaController implements Serializable {
     private Boolean esPersona;
     private Boolean tieneRetencion;
     private Boolean tieneDescuento;
-    private Retencion retencion;
 
     public PersonaController() {
     }
@@ -233,13 +230,5 @@ public class PersonaController implements Serializable {
 
     public void setTieneDescuento(Boolean tieneDescuento) {
         this.tieneDescuento = tieneDescuento;
-    }
-
-    public Retencion getRetencion() {
-        return retencion;
-    }
-
-    public void setRetencion(Retencion retencion) {
-        this.retencion = retencion;
-    }
+    }    
 }

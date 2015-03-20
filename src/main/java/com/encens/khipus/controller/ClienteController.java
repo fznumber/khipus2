@@ -3,11 +3,9 @@ package com.encens.khipus.controller;
 import com.encens.khipus.ejb.ClienteFacade;
 import com.encens.khipus.ejb.InstitucionFacade;
 import com.encens.khipus.ejb.PersonasFacade;
-import com.encens.khipus.ejb.RetencionFacade;
 import com.encens.khipus.model.Cliente;
 import com.encens.khipus.model.Institucion;
 import com.encens.khipus.model.Persona;
-import com.encens.khipus.model.Retencion;
 import com.encens.khipus.util.JSFUtil;
 import com.encens.khipus.util.JSFUtil.PersistAction;
 import java.io.Serializable;
@@ -29,9 +27,7 @@ import javax.faces.convert.FacesConverter;
 public class ClienteController implements Serializable {
 
     @EJB
-    private ClienteFacade ejbFacade;
-    @EJB
-    private RetencionFacade retencionFacade;
+    private ClienteFacade ejbFacade;    
     @EJB
     private PersonasFacade personasFacade;
     private List<Persona> items = null;
@@ -39,7 +35,6 @@ public class ClienteController implements Serializable {
     private Boolean esPersona;
     private Boolean tieneRetencion;
     private Boolean tieneDescuento;
-    private Retencion retencion;
 
     public ClienteController() {
     }
@@ -74,13 +69,6 @@ public class ClienteController implements Serializable {
         return selected;
     }
 
-    public void cambiarRetencion()
-    {
-        if(tieneRetencion)
-            retencion = retencionFacade.findActivo();
-        else
-            retencion = null;
-    }
 
     public void create() {
 
@@ -236,11 +224,4 @@ public class ClienteController implements Serializable {
         this.tieneDescuento = tieneDescuento;
     }
 
-    public Retencion getRetencion() {
-        return retencion;
-    }
-
-    public void setRetencion(Retencion retencion) {
-        this.retencion = retencion;
-    }
 }

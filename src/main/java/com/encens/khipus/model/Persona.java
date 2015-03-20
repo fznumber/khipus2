@@ -6,11 +6,13 @@
 package com.encens.khipus.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -41,6 +43,26 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Personas.findByTdoCod", query = "SELECT p FROM Persona p WHERE p.tdoCod = :tdoCod"),
     @NamedQuery(name = "Personas.findBySisCod", query = "SELECT p FROM Persona p WHERE p.sisCod = :sisCod")})
 public class Persona implements Serializable {
+    @Size(max = 45)
+    @Column(name = "TIPO_PERSONA")
+    private String tipoPersona;
+    @Size(max = 15)
+    @Column(name = "TELEFONO")
+    private Integer telefono;
+    @Size(max = 100)
+    @Column(name = "OBSERVACION")
+    private String observacion;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "PORCENTAJEGARANTIA")
+    private double porcentajeGarantia;
+    @JoinColumn(name = "IDTERRITORIOTRABAJO", referencedColumnName = "IDTERRITORIOTRABAJO")
+    @ManyToOne
+    private Territoriotrabajo territoriotrabajo;
+    @OneToMany(mappedBy = "cliente")
+    private Collection<Pedidos> pedidosCliente;
+    @OneToMany(mappedBy = "distribuidor")
+    private Collection<Territoriotrabajo> territorios;
     private static final long serialVersionUID = 1L;
     @Id
     @NotNull
@@ -80,13 +102,9 @@ public class Persona implements Serializable {
     @Size(max = 20)
     @Column(name = "SIS_COD")
     private String sisCod;
-    @Column(name="tipo_persona")
-    private String tipoPersona;
     @Size(max = 100)
     @Column(name = "DIRECCION")
     private String direccion;
-    @Column(name = "TELEFONO")
-    private Integer telefono;
     @Size(max = 40)
     @Column(name = "NIT")
     private String nit;
@@ -94,8 +112,6 @@ public class Persona implements Serializable {
     private String razonsocial;
     @Column(name = "PORCENTAJECOMISION")
     private Double porcentajeComision;
-    @Column(name = "PORCENTAJEGARANTIA")
-    private Double porcentajeGarantia;
     @Size(max = 10)
     @Column(name = "CODIGOCLIENTE")
     private String codigo;
@@ -230,13 +246,6 @@ public class Persona implements Serializable {
         this.direccion = direccion;
     }
 
-    public Integer getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(Integer telefono) {
-        this.telefono = telefono;
-    }
 
     public String getNit() {
         return nit;
@@ -311,11 +320,53 @@ public class Persona implements Serializable {
             return razonsocial;
     }
 
-    public Double getPorcentajeGarantia() {
+    public Integer getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(Integer telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
+    }
+
+    public double getPorcentajeGarantia() {
         return porcentajeGarantia;
     }
 
-    public void setPorcentajeGarantia(Double porcentajeGarantia) {
-        this.porcentajeGarantia = porcentajeGarantia;
+    public void setPorcentajeGarantia(double porcentajegarantia) {
+        this.porcentajeGarantia = porcentajegarantia;
+    }
+
+    public Territoriotrabajo getTerritoriotrabajo() {
+        return territoriotrabajo;
+    }
+
+    public void setTerritoriotrabajo(Territoriotrabajo idterritoriotrabajo) {
+        this.territoriotrabajo = idterritoriotrabajo;
+    }
+
+    @XmlTransient
+    public Collection<Pedidos> getPedidosCliente() {
+        return pedidosCliente;
+    }
+
+    public void setPedidosCliente(Collection<Pedidos> pedidosCollection1) {
+        this.pedidosCliente = pedidosCollection1;
+    }
+
+    @XmlTransient
+    public Collection<Territoriotrabajo> getTerritorios() {
+        return territorios;
+    }
+
+    public void setTerritorios(Collection<Territoriotrabajo> territoriotrabajoCollection) {
+        this.territorios = territoriotrabajoCollection;
     }
 }

@@ -42,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
         ,pkColumnName = "GEN_NAME"
         ,valueColumnName = "GEN_VAL")
 public class Pedidos implements Serializable {
+
     private static final long serialVersionUID = 1L;
     //todo:revisar por q el id no es correlativo
     @Id
@@ -64,9 +65,6 @@ public class Pedidos implements Serializable {
     @Column(name = "TOTAL")
     //total menos descuento y retencion
     private Double total = 0.0;
-    @Column(name = "TOTALIMPORTE")
-    //total a pagar sin descuentos ni retencion
-    private Double totalImporte = 0.0;
     @Column(name = "FECHA_ENTREGA")
     @Temporal(TemporalType.DATE)
     private Date fechaEntrega;
@@ -106,6 +104,9 @@ public class Pedidos implements Serializable {
     private Collection<ArticulosPedido> articulosPedidos = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedidos")
     private Collection<Movimiento> movimientos;
+    @Basic(optional = false)
+    @Column(name = "TOTALIMPORTE")
+    private Double totalimporte;
 
     public Pedidos() {
     }
@@ -288,22 +289,6 @@ public class Pedidos implements Serializable {
         return "com.encens.khipus.model.Pedidos[ idpedidos=" + idpedidos + " ]";
     }
 
-    public Double getTotalImporte() {
-        totalImporte = 0.0;
-        if(articulosPedidos != null)
-            for(ArticulosPedido articulosPedido:articulosPedidos)
-            {
-                totalImporte +=articulosPedido.getImporte();
-            }
-        //todo: implementar retención
-        this.valorComision = totalImporte * (porcentajeComision /100);
-        this.total = totalImporte - valorComision;
-        return totalImporte;
-    }
-
-    public void setTotalImporte(Double totalImporte) {
-        this.totalImporte = totalImporte;
-    }
 
     public Collection<ArticulosPedido> getArticulosPedidos() {
         return articulosPedidos;
@@ -345,4 +330,13 @@ public class Pedidos implements Serializable {
     public void setMovimientos(Collection<Movimiento> movimientos) {
         this.movimientos = movimientos;
     }
+
+    public Double getTotalimporte() {
+        return totalimporte;
+    }
+
+    public void setTotalimporte(Double totalimporte) {
+        this.totalimporte = totalimporte;
+    }
+
 }

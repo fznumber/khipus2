@@ -53,9 +53,6 @@
                     <p:column sortBy="#{item.cliente.nombreCompleto}" filterBy="#{item.cliente.nombreCompleto}" headerText="Cliente" filterMatchMode="contains">
                         <h:outputText value="#{item.cliente.nombreCompleto}"/>
                     </p:column>
-                    <p:column sortBy="#{item.distribuidor}" headerText="Distribuidor" filterBy="#{item.distribuidor.nombreCompleto}" filterMatchMode="contains">
-                        <h:outputText value="#{item.distribuidor.nombreCompleto}"/>
-                    </p:column>
                     <p:column filterMatchMode="in" filterBy="#{item.estado}">
                         <f:facet name="filter">
                             <p:selectCheckboxMenu label="Estado" onchange="PF('pedidosTabla').filter()" panelStyle="width:125px" scrollHeight="150">
