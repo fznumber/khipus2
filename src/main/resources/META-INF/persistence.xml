@@ -24,8 +24,8 @@
     <class>com.encens.khipus.model.Pedidos</class>
     <class>com.encens.khipus.model.Persona</class>
     <class>com.encens.khipus.model.Promocion</class>
-    <class>com.encens.khipus.model.Retencion</class>
     <class>com.encens.khipus.model.Rol</class>
+    <class>com.encens.khipus.model.Territoriotrabajo</class>
     <class>com.encens.khipus.model.Tipocliente</class>
     <class>com.encens.khipus.model.Tipopedido</class>
     <class>com.encens.khipus.model.Usuario</class>

@@ -16,7 +16,7 @@
                 <p:outputLabel value="Nit:" for="nit"/>
                 <p:outputLabel id="nit" value="#{pedidosController.selected.cliente.nit}"/>
                 <p:outputLabel value="% Descuento:" for="descuento"/>
-                <p:outputLabel id="descuento" value="#{pedidosController.selected.cliente.descuento}" />
+                <p:outputLabel id="descuento" value="#{pedidosController.selected.cliente.porcentajeComision}" />
                 <p:outputLabel value="Distribuidor:" for="distribuidor" />
                 <p:outputLabel id="distribuidor" value="#{pedidosController.selected.distribuidor.nombreCompleto}"/>
                 <p:outputLabel value="Tipo Cliente:" for="tipocliente"/>
@@ -64,7 +64,7 @@
                         <f:convertNumber type="currency" currencySymbol="Bs." />
                     </h:outputText>
                     <h:outputText value="Descuento: " />
-                    <h:outputText id="valorDescuento" value="#{pedidosController.selected.valorDescuento}">
+                    <h:outputText id="valorDescuento" value="#{pedidosController.selected.valorComision}">
                         <f:convertNumber type="currency" currencySymbol="Bs." />
                     </h:outputText>
                 </f:facet>

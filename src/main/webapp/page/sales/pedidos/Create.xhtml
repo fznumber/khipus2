@@ -36,28 +36,7 @@
                 <p:outputLabel value="Nit:" for="nit"/>
                 <p:outputLabel id="nit" value="#{pedidosController.personaElegida.nit}"/>
                 <p:outputLabel value="% Descuento:" for="descuento"/>
-                <p:outputLabel id="descuento" value="#{pedidosController.personaElegida.descuento}" />
-                <p:outputLabel value="Distribuidor:" for="distribuidor" />
-                <p:autoComplete id="distribuidor" value="#{pedidosController.distribuidorElegido}" completeMethod="#{pedidosController.completarDistribuidor}"
-                                var="distribuidor" itemLabel="#{distribuidor.nombreCompleto}" itemValue="#{distribuidor}" converter="convertirPersona" >
-                    <f:facet name="itemtip">
-                        <h:panelGrid columns="2" cellpadding="5">
-                            <f:facet name="header">
-                                <h:outputText styleClass="ui-theme ui-theme-#{distribuidor.nombreCompleto}" style="margin-left:50px" />
-                            </f:facet>
-                            <h:outputText value="Nombre:" />
-                            <h:outputText value="#{distribuidor.nombreCompleto}" />
-                            <h:outputText value="Nit:" />
-                            <h:outputText value="#{distribuidor.nit}" />
-                            <h:outputText value="C.I.:" />
-                            <h:outputText value="#{distribuidor.nroDoc}" />
-                            <h:outputText value="Telefono:" />
-                            <h:outputText value="#{distribuidor.telefono}" />
-                            <h:outputText value="Ciudad:" />
-                            <h:outputText value="#{distribuidor.departamento}" />
-                        </h:panelGrid>
-                    </f:facet>
-                </p:autoComplete>
+                <p:outputLabel id="descuento" value="#{pedidosController.personaElegida.porcentajeComision}" />
                 <p:outputLabel value="Tipo Cliente:" for="tipocliente"/>
                 <p:outputLabel id="tipocliente" value="#{pedidosController.personaElegida.tipocliente.nombre}"/>
                 <p:outputLabel value="% Retención:" for="retencion"/>
@@ -142,7 +121,7 @@
                         <f:convertNumber type="currency" currencySymbol="Bs." />
                     </h:outputText>
                     <h:outputText value="Descuento: " />
-                    <h:outputText id="valorDescuento" value="#{pedidosController.selected.valorDescuento}">
+                    <h:outputText id="valorDescuento" value="#{pedidosController.selected.valorComision}">
                         <f:convertNumber type="currency" currencySymbol="Bs." />
                     </h:outputText>
                 </f:facet>

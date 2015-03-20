@@ -49,7 +49,7 @@
                         <p:selectBooleanButton id="descuento" value="#{clienteController.tieneDescuento}" onLabel="Descuento" offLabel="Sin descuento" onIcon="ui-icon-check" offIcon="ui-icon-close">
                             <p:ajax update="descuentoCampo" />
                         </p:selectBooleanButton>
-                        <p:spinner id="descuentoCampo" value="#{clienteController.selected.descuento}" prefix="%" min="0" max="100" disabled="#{!clienteController.tieneDescuento}"/>
+                        <p:spinner id="descuentoCampo" value="#{clienteController.selected.porcentajeComision}" prefix="%" min="0" max="100" disabled="#{!clienteController.tieneDescuento}"/>
                         <p:outputLabel value="#{bundle.CreateClienteLabel_idtipocliente}" for="idtipocliente" />
                         <p:selectOneMenu id="idtipocliente" value="#{clienteController.selected.tipocliente}" required="true" requiredMessage="#{bundle.EditClienteRequiredMessage_idtipocliente}">
                             <f:selectItems value="#{tipoclienteController.itemsAvailableSelectOne}"

@@ -76,7 +76,7 @@ public class DistribuidorController implements Serializable {
 
     public void cancel()
     {
-        selected = new Distribuidor(); // Remove selection
+        selected = null; // Remove selection
     }
 
     public List<Distribuidor> getItems() {

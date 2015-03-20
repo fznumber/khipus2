@@ -5,10 +5,9 @@
  */
 package com.encens.khipus.ejb;
 
-import com.encens.khipus.model.Retencion;
+import com.encens.khipus.model.Territoriotrabajo;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -16,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author Diego
  */
 @Stateless
-public class RetencionFacade extends AbstractFacade<Retencion> {
+public class TerritoriotrabajoFacade extends AbstractFacade<Territoriotrabajo> {
     @PersistenceContext(unitName = "khipusPU")
     private EntityManager em;
 
@@ -25,19 +24,8 @@ public class RetencionFacade extends AbstractFacade<Retencion> {
         return em;
     }
 
-    public RetencionFacade() {
-        super(Retencion.class);
-    }
-
-    public Retencion findActivo(){
-        Retencion retencion;
-        try {
-            retencion = (Retencion)em.createNamedQuery("Retencion.findActive").getSingleResult();
-        }catch (NoResultException e){
-            return null;
-        }
-
-        return retencion;
+    public TerritoriotrabajoFacade() {
+        super(Territoriotrabajo.class);
     }
     
 }

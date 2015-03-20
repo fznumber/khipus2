@@ -23,6 +23,7 @@
                              rowKey="#{item.idpedidos}"
                              widgetVar="pedidosTabla"
                              sortMode="multiple"
+                             rows="10"
                              emptyMessage="No hay pedidos registrados"
                              filteredValue="#{pedidosController.pedidosFiltrado}"
                         >
@@ -53,9 +54,6 @@
                     <p:column sortBy="#{item.cliente.nombreCompleto}" filterBy="#{item.cliente.nombreCompleto}" headerText="Cliente" filterMatchMode="contains">
                         <h:outputText value="#{item.cliente.nombreCompleto}"/>
                     </p:column>
-                    <p:column sortBy="#{item.distribuidor}" headerText="Distribuidor" filterBy="#{item.distribuidor.nombreCompleto}" filterMatchMode="contains">
-                        <h:outputText value="#{item.distribuidor.nombreCompleto}"/>
-                    </p:column>
                     <p:column filterMatchMode="in" filterBy="#{item.estado}">
                         <f:facet name="filter">
                             <p:selectCheckboxMenu label="Estado" onchange="PF('pedidosTabla').filter()" panelStyle="width:125px" scrollHeight="150">
@@ -73,7 +71,7 @@
                         <h:outputText value="#{item.idtipopedido.nombre}"/>
                     </p:column>
                     <p:column headerText="Acción">
-                        <h:commandButton value="Factura" id="printButton" actionListener="#{pedidosReportController.imprimir(item)}"  icon="ui­icon­print"/>
+                        <h:commandButton value="Factura" id="printButton" actionListener="#{pedidosReportController.imprimir(item)}" />
                     </p:column>
                     <f:facet name="footer">
                         <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{pedidosController.prepareCreate}" update=":PedidosCreateForm" oncomplete="PF('PedidosCreateDialog').show()"/>

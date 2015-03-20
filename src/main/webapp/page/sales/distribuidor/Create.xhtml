@@ -8,7 +8,7 @@
 
 <ui:composition>
 
-    <p:dialog id="ClienteCreateDlg" widgetVar="ClienteCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Editar Distribuidor">
+    <p:dialog id="ClienteCreateDlg" widgetVar="ClienteCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Crear Distribuidor" closable="false">
         <h:form id="ClienteCreateForm">
             <h:panelGroup id="display">
                 <p:panelGrid columns="2" rendered="#{distribuidorController.selected != null}">
@@ -33,15 +33,9 @@
                     <p:inputText id="telefono" value="#{distribuidorController.selected.telefono}" title="#{bundle.CreateClienteTitle_telefono}" />
                     <p:outputLabel value="#{bundle.CreateClienteLabel_nit}" for="nit" />
                     <p:inputText id="nit" value="#{distribuidorController.selected.nit}" title="#{bundle.CreateClienteTitle_nit}" />
-                    <p:outputLabel value="Departamento:" for="departamento" />
-                    <p:selectOneMenu id="departamento" value="#{distribuidorController.selected.departamento}" required="true" requiredMessage="#{bundle.EditClienteRequiredMessage_idtipocliente}">
-                        <f:selectItems value="#{departamentoController.itemsAvailableSelectOne}"
-                                       var="departamento"
-                                       itemValue="#{departamento}"/>
-                    </p:selectOneMenu>
                 </p:panelGrid>
-                <p:commandButton actionListener="#{distribuidorController.create}" value="#{bundle.Save}" update="display,:ClienteListForm:datalist,:ClienteListForm:growl" oncomplete="handleSubmit(args,'ClienteCreateDialog');"/>
-                <p:commandButton value="#{bundle.Cancel}" actionListener="#{distribuidorController.cancel}" onclick="ClienteCreateDialog.hide()" update=":ClienteListForm:datalist,:ClienteListForm"/>
+                <p:commandButton actionListener="#{distribuidorController.create}" value="#{bundle.Save}" update="display,:ClienteListForm:datalist,:ClienteListForm:growl"/>
+                <p:commandButton actionListener="#{distribuidorController.cancel}" value="#{bundle.Cancel}"  onclick="ClienteCreateDialog.hide()" update=":ClienteListForm:datalist,:ClienteListForm"/>
             </h:panelGroup>
         </h:form>
 

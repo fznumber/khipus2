@@ -35,7 +35,7 @@ public class Departamento implements Serializable {
     @Column(name = "NOMBRE")
     private String nombre;
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "departamento")
-    private Collection<Cliente> clientes;
+    private Collection<Territoriotrabajo> territoriotrabajos;
 
     public Departamento() {
     }
@@ -58,14 +58,6 @@ public class Departamento implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public Collection<Cliente> getClientes() {
-        return clientes;
-    }
-
-    public void setClientes(Collection<Cliente> clientes) {
-        this.clientes = clientes;
     }
 
     @Override
@@ -93,4 +85,11 @@ public class Departamento implements Serializable {
         return nombre;
     }
 
+    public Collection<Territoriotrabajo> getTerritoriotrabajos() {
+        return territoriotrabajos;
+    }
+
+    public void setTerritoriotrabajos(Collection<Territoriotrabajo> territoriotrabajos) {
+        this.territoriotrabajos = territoriotrabajos;
+    }
 }

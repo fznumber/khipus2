@@ -23,9 +23,7 @@ import javax.faces.convert.FacesConverter;
 public class PersonaController implements Serializable {
 
     @EJB
-    private PersonasFacade ejbFacade;
-    @EJB
-    private RetencionFacade retencionFacade;
+    private PersonasFacade ejbFacade;    
     @EJB
     private ClienteFacade clienteFacade;
     @EJB
@@ -35,7 +33,6 @@ public class PersonaController implements Serializable {
     private Boolean esPersona;
     private Boolean tieneRetencion;
     private Boolean tieneDescuento;
-    private Retencion retencion;
 
     public PersonaController() {
     }
@@ -74,27 +71,23 @@ public class PersonaController implements Serializable {
             cliente.setAm(selected.getAm());
             cliente.setAp(selected.getAp());
             cliente.setNom(selected.getNom());
-            cliente.setDescuento(selected.getDescuento());
+            cliente.setPorcentajeComision(selected.getPorcentajeComision());
             cliente.setNroDoc(selected.getNroDoc());
             cliente.setDireccion(selected.getDireccion());
-            cliente.setDepartamento(selected.getDepartamento());
             cliente.setNit(selected.getNit());
             cliente.setSexo(selected.getSexo());
             cliente.setTelefono(selected.getTelefono());
             cliente.setTipocliente(selected.getTipocliente());
-            cliente.setRetencion(retencion);
             clienteFacade.create(cliente);
         }
         else {
             Institucion institucion = new Institucion();
             institucion.setRazonsocial(selected.getRazonsocial());
-            institucion.setDescuento(selected.getDescuento());
+            institucion.setPorcentajeComision(selected.getPorcentajeComision());
             institucion.setDireccion(selected.getDireccion());
-            institucion.setDepartamento(selected.getDepartamento());
             institucion.setNit(selected.getNit());
             institucion.setTelefono(selected.getTelefono());
             institucion.setTipocliente(selected.getTipocliente());
-            institucion.setRetencion(retencion);
             institucionFacade.create(institucion);
         }
         //persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PersonasCreated"));
@@ -104,14 +97,14 @@ public class PersonaController implements Serializable {
         }
     }
 
-    public void cambiarRetencion()
+/*    public void cambiarRetencion()
     {
         if(tieneRetencion)
             retencion = retencionFacade.findActivo();
         else
             retencion = null;
         selected.setRetencion(retencion);
-    }
+    }*/
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PersonasUpdated"));
@@ -237,13 +230,5 @@ public class PersonaController implements Serializable {
 
     public void setTieneDescuento(Boolean tieneDescuento) {
         this.tieneDescuento = tieneDescuento;
-    }
-
-    public Retencion getRetencion() {
-        return retencion;
-    }
-
-    public void setRetencion(Retencion retencion) {
-        this.retencion = retencion;
-    }
+    }    
 }
