@@ -137,7 +137,7 @@ public class Territoriotrabajo implements Serializable {
 
     @Override
     public String toString() {
-        return "com.encens.khipus.model.Territoriotrabajo[ idterritoriotrabajo=" + idterritoriotrabajo + " ]";
+        return nombre;
     }
 
     public Departamento getDepartamento() {

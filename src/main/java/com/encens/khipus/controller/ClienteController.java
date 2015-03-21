@@ -196,11 +196,6 @@ public class ClienteController implements Serializable {
     }
 
     public Boolean getEsPersona() {
-        /*if(selected.getRazonsocial() != null)
-            esPersona = false;
-        else
-            esPersona = true;*/
-
         return esPersona;
     }
 

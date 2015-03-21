@@ -8,61 +8,10 @@
 
 <ui:composition>
 
-    <p:dialog id="PersonaEditDlg" widgetVar="PersonaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditPersonaTitle}">
+    <p:dialog id="PersonaEditDlg" widgetVar="PersonaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="Editar cliente">
         <h:form id="PersonaEditForm">
             <h:panelGroup id="display">
-                <p:panelGrid columns="2" rendered="#{clienteController.selected != null}">
-                    <h:outputText value="Tipo Cliente: " />
-                    <p:selectBooleanButton id="tipoCliente" value="#{clienteController.esPersona}" onLabel="Persona" offLabel="Institución">
-                        <p:ajax update="display" />
-                    </p:selectBooleanButton>
-                    <p:outputLabel value="Nombre(s):" for="nom" rendered="#{clienteController.esPersona}">
-                    </p:outputLabel>
-                    <p:inputText id="nom" value="#{clienteController.selected.nom}" title="nombres" required="true" requiredMessage="campo requerido." rendered="#{clienteController.esPersona}"/>
-                    <p:outputLabel value="Ap. Paterno:" for="ap" rendered="#{clienteController.esPersona}">
-                    </p:outputLabel>
-                    <p:inputText id="ap" value="#{clienteController.selected.ap}" title="Ap. Paterno." required="true" requiredMessage="campo requerido." rendered="#{clienteController.esPersona}"/>
-                    <p:outputLabel value="Ap. Materno" for="am" rendered="#{clienteController.esPersona}"/>
-                    <p:inputText id="am" value="#{clienteController.selected.am}" title="Ap. Materno." required="true" requiredMessage="campo requerido." rendered="#{clienteController.esPersona}"/>
-                    <p:outputLabel value="Razon social:" for="razon" rendered="#{!clienteController.esPersona}"/>
-                    <p:inputText id="razon" value="#{clienteController.selected.razonsocial}" title="Razon social" required="true" requiredMessage="campo requerido." rendered="#{!clienteController.esPersona}">
-                    </p:inputText>
-                    <p:outputLabel value="C.I.:" for="nroDoc" rendered="#{clienteController.esPersona}"/>
-                    <p:inputText id="nroDoc" value="#{clienteController.selected.nroDoc}" title="Cedula de identidad" rendered="#{clienteController.esPersona}"/>
-                    <p:outputLabel value="#{bundle.CreateClienteLabel_sexo}" for="sexo" rendered="#{clienteController.esPersona}"/>
-                    <p:selectOneRadio id="sexo" value="#{clienteController.selected.sexo}" rendered="#{clienteController.esPersona}">
-                        <f:selectItem itemLabel="Masculino" itemValue="MASCULINO" />
-                        <f:selectItem itemLabel="Femenino" itemValue="FEMENINO" />
-                    </p:selectOneRadio>
-                    <p:outputLabel value="#{bundle.CreateClienteLabel_direccion}" for="direccion" />
-                    <p:inputText id="direccion" value="#{clienteController.selected.direccion}" title="#{bundle.CreateClienteTitle_direccion}" />
-                    <p:outputLabel value="#{bundle.CreateClienteLabel_telefono}" for="telefono" />
-                    <p:inputText id="telefono" value="#{clienteController.selected.telefono}" title="#{bundle.CreateClienteTitle_telefono}" />
-                    <p:outputLabel value="#{bundle.CreateClienteLabel_nit}" for="nit" />
-                    <p:inputText id="nit" value="#{clienteController.selected.nit}" title="#{bundle.CreateClienteTitle_nit}" />
-                    <p:selectBooleanButton id="retencion" value="#{clienteController.tieneRetencion}" onLabel="Retención" offLabel="Sin retención" onIcon="ui-icon-check" offIcon="ui-icon-close">
-                        <p:ajax listener="#{clienteController.cambiarRetencion}" update="retencionCampo"/>
-                    </p:selectBooleanButton>
-                    <p:outputLabel id="retencionCampo" value="#{clienteController.retencion}"/>
-                    <p:selectBooleanButton id="descuento" value="#{clienteController.tieneDescuento}" onLabel="Descuento" offLabel="Sin descuento" onIcon="ui-icon-check" offIcon="ui-icon-close">
-                        <p:ajax update="descuentoCampo" />
-                    </p:selectBooleanButton>
-                    <p:spinner id="descuentoCampo" value="#{clienteController.selected.porcentajeComision}" prefix="%" min="0" max="100" disabled="#{!clienteController.tieneDescuento}"/>
-                    <p:outputLabel value="#{bundle.CreateClienteLabel_idtipocliente}" for="idtipocliente" />
-                    <p:selectOneMenu id="idtipocliente" value="#{clienteController.selected.tipocliente}" required="true" requiredMessage="#{bundle.EditClienteRequiredMessage_idtipocliente}">
-                        <f:selectItems value="#{tipoclienteController.itemsAvailableSelectOne}"
-                                       var="idtipoclienteItem"
-                                       itemValue="#{idtipoclienteItem}"/>
-                    </p:selectOneMenu>
-                    <p:outputLabel value="Departamento:" for="departamento" />
-                    <p:selectOneMenu id="departamento" value="#{clienteController.selected.departamento}" required="true" requiredMessage="#{bundle.EditClienteRequiredMessage_idtipocliente}">
-                        <f:selectItems value="#{departamentoController.itemsAvailableSelectOne}"
-                                       var="departamento"
-                                       itemValue="#{departamento}"/>
-                    </p:selectOneMenu>
-                </p:panelGrid>
-                <p:commandButton actionListener="#{personaController.update}" value="#{bundle.Save}" update="display,:PersonaListForm:datalist,:PersonaListForm:growl" oncomplete="handleSubmit(args, 'PersonaEditDialog');"/>
-                <p:commandButton value="#{bundle.Cancel}" onclick="PersonaEditDialog.hide()"/>
+
             </h:panelGroup>
         </h:form>
     </p:dialog>
