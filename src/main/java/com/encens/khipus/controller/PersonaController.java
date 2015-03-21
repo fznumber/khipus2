@@ -104,6 +104,7 @@ public class PersonaController implements Serializable {
             institucion.setAm("");
             institucion.setAp("");
             institucion.setNom("");
+            institucion.setSexo("");
             institucion.setRazonsocial(selected.getRazonsocial());
             if(tieneComision)
                 institucion.setPorcentajeComision(selected.getPorcentajeComision());
@@ -257,8 +258,8 @@ public class PersonaController implements Serializable {
     }
 
     public Boolean getTieneComision() {
-        if(selected.getPorcentajeComision() != null)
-            tieneComision = true;
+       /* if(selected.getPorcentajeComision() != null)
+            tieneComision = true;*/
         return tieneComision;
     }
 
@@ -267,8 +268,8 @@ public class PersonaController implements Serializable {
     }
 
     public Boolean getTieneGarantia() {
-        if(selected.getPorcentajeGarantia() != null)
-            tieneGarantia = true;
+       /* if(selected.getPorcentajeGarantia() != null)
+            tieneGarantia = true;*/
         return tieneGarantia;
     }
 
