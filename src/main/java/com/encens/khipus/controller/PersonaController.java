@@ -82,7 +82,7 @@ public class PersonaController implements Serializable {
     }
 
     public void prepareEdit() {
-        esPersona = selected.getTipoPersona().equals("cliente");
+        esPersona = 
         tieneComision = selected.getPorcentajeComision() > 0.0;
         tieneGarantia = selected.getPorcentajeGarantia() >0.0;
     }

@@ -43,11 +43,11 @@
                     <p:selectBooleanButton id="comision" value="#{personaController.tieneComision}" onLabel="Comsión" offLabel="Sin comisión" onIcon="ui-icon-check" offIcon="ui-icon-close">
                         <p:ajax update="comisionCampo"/>
                     </p:selectBooleanButton>
-                    <p:spinner id="comisionCampo" value="#{personaController.selected.porcentajeComision}" prefix="%" min="0" max="100" disabled="#{!personaController.tieneComision}"/>
+                    <p:spinner id="comisionCampo" value="#{personaController.selected.porcentajeComision}" prefix="%" min="0" max="100" stepFactor="0.1" disabled="#{!personaController.tieneComision}"/>
                     <p:selectBooleanButton id="garantia" value="#{personaController.tieneGarantia}" onLabel="Garantia" offLabel="Sin garantia" onIcon="ui-icon-check" offIcon="ui-icon-close">
                         <p:ajax update="garantiaCampo" />
                     </p:selectBooleanButton>
-                    <p:spinner id="garantiaCampo" value="#{personaController.selected.porcentajeGarantia}" prefix="%" min="0" max="100" disabled="#{!personaController.tieneGarantia}"/>
+                    <p:spinner id="garantiaCampo" value="#{personaController.selected.porcentajeGarantia}" prefix="%" min="0" max="100" stepFactor="0.1" disabled="#{!personaController.tieneGarantia}"/>
                     <p:outputLabel value="#{bundle.CreateClienteLabel_idtipocliente}" for="idtipocliente" />
                     <p:selectOneMenu id="idtipocliente" value="#{personaController.selected.tipocliente}" required="true" requiredMessage="#{bundle.EditClienteRequiredMessage_idtipocliente}">
                         <f:selectItems value="#{tipoclienteController.itemsAvailableSelectOne}"
