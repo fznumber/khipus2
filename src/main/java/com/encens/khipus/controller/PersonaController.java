@@ -81,6 +81,13 @@ public class PersonaController implements Serializable {
         return selected;
     }
 
+    public void prepareEdit() {
+        esPersona = selected.getTipoPersona().equals("cliente");
+        tieneComision = selected.getPorcentajeComision() > 0.0;
+        tieneGarantia = selected.getPorcentajeGarantia() >0.0;
+    }
+
+
     public void create() {
 
         if(esPersona) {
