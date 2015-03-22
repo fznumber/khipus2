@@ -97,6 +97,7 @@ public class PersonaController implements Serializable {
             cliente.setSexo(selected.getSexo());
             cliente.setTelefono(selected.getTelefono());
             cliente.setTipocliente(selected.getTipocliente());
+            cliente.setTerritoriotrabajo(selected.getTerritoriotrabajo());
             clienteFacade.create(cliente);
         }
         else {
@@ -106,6 +107,7 @@ public class PersonaController implements Serializable {
             institucion.setNom("");
             institucion.setSexo("");
             institucion.setRazonsocial(selected.getRazonsocial());
+            institucion.setTerritoriotrabajo(selected.getTerritoriotrabajo());
             if(tieneComision)
                 institucion.setPorcentajeComision(selected.getPorcentajeComision());
             else

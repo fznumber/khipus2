@@ -316,7 +316,7 @@ public class Persona implements Serializable {
     }
 
     public String getNombreCompleto(){
-        if(nom!=null)
+        if(razonsocial.isEmpty())
             return nom+" "+ap+" "+am;
         else
             return razonsocial;
