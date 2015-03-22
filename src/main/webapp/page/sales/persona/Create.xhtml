@@ -40,29 +40,29 @@
                     <p:inputText id="telefono" value="#{personaController.selected.telefono}" title="#{bundle.CreateClienteTitle_telefono}" />
                     <p:outputLabel value="#{bundle.CreateClienteLabel_nit}" for="nit" />
                     <p:inputText id="nit" value="#{personaController.selected.nit}" title="#{bundle.CreateClienteTitle_nit}" />
-                    <p:selectBooleanButton id="retencion" value="#{personaController.tieneRetencion}" onLabel="Retención" offLabel="Sin retención" onIcon="ui-icon-check" offIcon="ui-icon-close">
-                        <p:ajax listener="#{personaController.cambiarRetencion}" update="retencionCampo"/>
+                    <p:selectBooleanButton id="comision" value="#{personaController.tieneComision}" onLabel="Comsión" offLabel="Sin comisión" onIcon="ui-icon-check" offIcon="ui-icon-close">
+                        <p:ajax update="comisionCampo"/>
                     </p:selectBooleanButton>
-                    <p:outputLabel id="retencionCampo" value="#{personaController.retencion.porcentageString}"/>
-                    <p:selectBooleanButton id="descuento" value="#{personaController.tieneDescuento}" onLabel="Descuento" offLabel="Sin descuento" onIcon="ui-icon-check" offIcon="ui-icon-close">
-                        <p:ajax update="descuentoCampo" />
+                    <p:spinner id="comisionCampo" value="#{personaController.selected.porcentajeComision}" prefix="%" min="0" max="100" stepFactor="0.1" disabled="#{!personaController.tieneComision}"/>
+                    <p:selectBooleanButton id="garantia" value="#{personaController.tieneGarantia}" onLabel="Garantia" offLabel="Sin garantia" onIcon="ui-icon-check" offIcon="ui-icon-close">
+                        <p:ajax update="garantiaCampo" />
                     </p:selectBooleanButton>
-                    <p:spinner id="descuentoCampo" value="#{personaController.selected.porcentajeComision}" prefix="%" min="0" max="100" disabled="#{!personaController.tieneDescuento}"/>
+                    <p:spinner id="garantiaCampo" value="#{personaController.selected.porcentajeGarantia}" prefix="%" min="0" max="100" stepFactor="0.1" disabled="#{!personaController.tieneGarantia}"/>
                     <p:outputLabel value="#{bundle.CreateClienteLabel_idtipocliente}" for="idtipocliente" />
                     <p:selectOneMenu id="idtipocliente" value="#{personaController.selected.tipocliente}" required="true" requiredMessage="#{bundle.EditClienteRequiredMessage_idtipocliente}">
                         <f:selectItems value="#{tipoclienteController.itemsAvailableSelectOne}"
                                        var="idtipoclienteItem"
                                        itemValue="#{idtipoclienteItem}"/>
                     </p:selectOneMenu>
-                    <p:outputLabel value="Departamento:" for="departamento" />
-                    <p:selectOneMenu id="departamento" value="#{personaController.selected.departamento}" required="true" requiredMessage="#{bundle.EditClienteRequiredMessage_idtipocliente}">
-                        <f:selectItems value="#{departamentoController.itemsAvailableSelectOne}"
-                                       var="departamento"
-                                       itemValue="#{departamento}"/>
+                    <p:outputLabel value="Territorio:" for="territorio" />
+                    <p:selectOneMenu id="territorio" value="#{personaController.selected.territoriotrabajo}">
+                        <f:selectItems value="#{territoriotrabajoController.itemsAvailableSelectOne}"
+                                       var="territoriotrabajo"
+                                       itemValue="#{territoriotrabajo}"/>
                     </p:selectOneMenu>
                 </p:panelGrid>
-                <p:commandButton actionListener="#{personaController.create}" value="#{bundle.Save}" update="display,:PersonaListForm:datalist,:PersonaListForm:growl" oncomplete="handleSubmit(args,'PersonaCreateDialog');"/>
-                <p:commandButton value="#{bundle.Cancel}" onclick="PersonaCreateDialog.hide()"/>
+                <p:commandButton actionListener="#{personaController.create}" value="#{bundle.Save}" update="display,:PersonaListForm:datalist,:PersonaListForm:growl" />
+                <p:commandButton actionListener="#{personaController.cancel}" value="#{bundle.Close}" onclick="PersonaCreateDialog.hide()"/>
             </h:panelGroup>
         </h:form>
     </p:dialog>

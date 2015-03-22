@@ -48,7 +48,7 @@ public class Persona implements Serializable {
     @Column(name = "OBSERVACION")
     private String observacion;
     @Column(name = "PORCENTAJEGARANTIA")
-    private double porcentajeGarantia;
+    private Double porcentajeGarantia = 0.0;
     @JoinColumn(name = "IDTERRITORIOTRABAJO", referencedColumnName = "IDTERRITORIOTRABAJO")
     @ManyToOne
     private Territoriotrabajo territoriotrabajo;
@@ -56,6 +56,10 @@ public class Persona implements Serializable {
     private Collection<Pedidos> pedidosCliente;
     @OneToMany(mappedBy = "distribuidor")
     private Collection<Territoriotrabajo> territorios;
+    @JoinColumn(name = "IDDEPARTAMENTO",referencedColumnName = "IDDEPARTAMENTO")
+    @ManyToOne(optional = true)
+    private Departamento departamento;
+
     private static final long serialVersionUID = 1L;
     @Id
     @NotNull
@@ -109,7 +113,7 @@ public class Persona implements Serializable {
     @Column(name = "RAZONSOCIAL")
     private String razonsocial;
     @Column(name = "PORCENTAJECOMISION")
-    private Double porcentajeComision;
+    private Double porcentajeComision = 0.0;
     @Size(max = 10)
     @Column(name = "CODIGOCLIENTE")
     private String codigo;
@@ -312,7 +316,7 @@ public class Persona implements Serializable {
     }
 
     public String getNombreCompleto(){
-        if(nom!=null)
+        if(razonsocial.isEmpty())
             return nom+" "+ap+" "+am;
         else
             return razonsocial;
@@ -334,11 +338,11 @@ public class Persona implements Serializable {
         this.observacion = observacion;
     }
 
-    public double getPorcentajeGarantia() {
+    public Double getPorcentajeGarantia() {
         return porcentajeGarantia;
     }
 
-    public void setPorcentajeGarantia(double porcentajegarantia) {
+    public void setPorcentajeGarantia(Double porcentajegarantia) {
         this.porcentajeGarantia = porcentajegarantia;
     }
 
@@ -366,5 +370,13 @@ public class Persona implements Serializable {
 
     public void setTerritorios(Collection<Territoriotrabajo> territoriotrabajoCollection) {
         this.territorios = territoriotrabajoCollection;
+    }
+
+    public Departamento getDepartamento() {
+        return departamento;
+    }
+
+    public void setDepartamento(Departamento departamento) {
+        this.departamento = departamento;
     }
 }

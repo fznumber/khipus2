@@ -31,14 +31,31 @@ public class PersonaController implements Serializable {
     private List<Persona> items = null;
     private Persona selected;
     private Boolean esPersona;
-    private Boolean tieneRetencion;
-    private Boolean tieneDescuento;
+    private Boolean tieneComision;
+    private Boolean tieneGarantia;
 
     public PersonaController() {
     }
 
     public Persona getSelected() {
+        /*if(selected == null)
+            selected = items.get(0);*/
+        //initEstados();
         return selected;
+    }
+
+    public void initEstados(){
+        esPersona = false;
+        if(selected.getRazonsocial() != null)
+            esPersona = true;
+        if(selected.getPorcentajeComision() > 0.0)
+            tieneComision = false;
+        else
+            tieneComision = true;
+        if(selected.getPorcentajeGarantia() > 0.0)
+            tieneGarantia = false;
+        else
+            tieneGarantia = true;
     }
 
     public void setSelected(Persona selected) {
@@ -59,10 +76,17 @@ public class PersonaController implements Serializable {
         selected = new Persona();
         initializeEmbeddableKey();
         esPersona = true;
-        tieneRetencion = false;
-        tieneDescuento = false;
+        tieneComision = false;
+        tieneGarantia = false;
         return selected;
     }
+
+    public void prepareEdit() {
+        esPersona = 
+        tieneComision = selected.getPorcentajeComision() > 0.0;
+        tieneGarantia = selected.getPorcentajeGarantia() >0.0;
+    }
+
 
     public void create() {
 
@@ -71,42 +95,68 @@ public class PersonaController implements Serializable {
             cliente.setAm(selected.getAm());
             cliente.setAp(selected.getAp());
             cliente.setNom(selected.getNom());
+            cliente.setRazonsocial("");
             cliente.setPorcentajeComision(selected.getPorcentajeComision());
+            cliente.setPorcentajeGarantia(selected.getPorcentajeGarantia());
             cliente.setNroDoc(selected.getNroDoc());
             cliente.setDireccion(selected.getDireccion());
             cliente.setNit(selected.getNit());
             cliente.setSexo(selected.getSexo());
             cliente.setTelefono(selected.getTelefono());
             cliente.setTipocliente(selected.getTipocliente());
+            cliente.setTerritoriotrabajo(selected.getTerritoriotrabajo());
             clienteFacade.create(cliente);
         }
         else {
             Institucion institucion = new Institucion();
+            institucion.setAm("");
+            institucion.setAp("");
+            institucion.setNom("");
+            institucion.setSexo("");
             institucion.setRazonsocial(selected.getRazonsocial());
-            institucion.setPorcentajeComision(selected.getPorcentajeComision());
+            institucion.setTerritoriotrabajo(selected.getTerritoriotrabajo());
+            if(tieneComision)
+                institucion.setPorcentajeComision(selected.getPorcentajeComision());
+            else
+                institucion.setPorcentajeComision(0.0);
+            if(tieneGarantia)
+                institucion.setPorcentajeGarantia(selected.getPorcentajeGarantia());
+            else
+                institucion.setPorcentajeGarantia(0.0);
             institucion.setDireccion(selected.getDireccion());
             institucion.setNit(selected.getNit());
             institucion.setTelefono(selected.getTelefono());
             institucion.setTipocliente(selected.getTipocliente());
             institucionFacade.create(institucion);
         }
-        //persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PersonasCreated"));
         JSFUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ClienteCreated"));
         if (!JSFUtil.isValidationFailed()) {
+            prepareCreate();
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-/*    public void cambiarRetencion()
-    {
-        if(tieneRetencion)
-            retencion = retencionFacade.findActivo();
-        else
-            retencion = null;
-        selected.setRetencion(retencion);
-    }*/
+    public void cancel(){
+        selected = null;
+    }
 
     public void update() {
+        if(!tieneComision)
+            selected.setPorcentajeComision(0.0);
+        if(!tieneGarantia)
+            selected.setPorcentajeGarantia(0.0);
+
+        if(esPersona) {
+            selected.setTipoPersona("cliente");
+            selected.setRazonsocial("");
+        }
+        else {
+            selected.setTipoPersona("institucion");
+            selected.setNom("");
+            selected.setAp("");
+            selected.setAm("");
+        }
+
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PersonasUpdated"));
     }
 
@@ -216,19 +266,23 @@ public class PersonaController implements Serializable {
         this.esPersona = esPersona;
     }
 
-    public Boolean getTieneRetencion() {
-        return tieneRetencion;
+    public Boolean getTieneComision() {
+       /* if(selected.getPorcentajeComision() != null)
+            tieneComision = true;*/
+        return tieneComision;
     }
 
-    public void setTieneRetencion(Boolean tieneRetencion) {
-        this.tieneRetencion = tieneRetencion;
+    public void setTieneComision(Boolean tieneComision) {
+        this.tieneComision = tieneComision;
     }
 
-    public Boolean getTieneDescuento() {
-        return tieneDescuento;
+    public Boolean getTieneGarantia() {
+       /* if(selected.getPorcentajeGarantia() != null)
+            tieneGarantia = true;*/
+        return tieneGarantia;
     }
 
-    public void setTieneDescuento(Boolean tieneDescuento) {
-        this.tieneDescuento = tieneDescuento;
+    public void setTieneGarantia(Boolean tieneGarantia) {
+        this.tieneGarantia = tieneGarantia;
     }    
 }
