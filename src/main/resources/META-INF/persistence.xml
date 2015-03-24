@@ -6,6 +6,7 @@
     <class>com.encens.khipus.model.ArticulosPaquete</class>
     <class>com.encens.khipus.model.ArticulosPedido</class>
     <class>com.encens.khipus.model.Cliente</class>
+    <class>com.encens.khipus.model.CodigoPedidoSecuencia</class>
     <class>com.encens.khipus.model.Compania</class>
     <class>com.encens.khipus.model.Departamento</class>
     <class>com.encens.khipus.model.Derechoacceso</class>

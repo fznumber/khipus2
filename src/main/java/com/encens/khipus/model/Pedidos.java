@@ -28,7 +28,6 @@ import javax.xml.bind.annotation.XmlRootElement;
         @NamedQuery(name = "Pedidos.findByDescripcion", query = "SELECT p FROM Pedidos p WHERE p.descripcion = :descripcion"),
         @NamedQuery(name = "Pedidos.findByFechaPedido", query = "SELECT p FROM Pedidos p WHERE p.fechaPedido = :fechaPedido"),
         @NamedQuery(name = "Pedidos.findByIddireccion", query = "SELECT p FROM Pedidos p WHERE p.iddireccion = :iddireccion"),
-        @NamedQuery(name = "Pedidos.findByIdzona", query = "SELECT p FROM Pedidos p WHERE p.idzona = :idzona"),
         @NamedQuery(name = "Pedidos.findByTotal", query = "SELECT p FROM Pedidos p WHERE p.total = :total"),
         @NamedQuery(name = "Pedidos.findByFechaEntrega", query = "SELECT p FROM Pedidos p WHERE p.fechaEntrega = :fechaEntrega"),
         @NamedQuery(name = "Pedidos.findByFechaAPagar", query = "SELECT p FROM Pedidos p WHERE p.fechaAPagar = :fechaAPagar"),
@@ -37,16 +36,18 @@ import javax.xml.bind.annotation.XmlRootElement;
         @NamedQuery(name = "Pedidos.findBySupervisor", query = "SELECT p FROM Pedidos p WHERE p.supervisor = :supervisor"),
         @NamedQuery(name = "Pedidos.findByPorcenDescuento", query = "SELECT p FROM Pedidos p WHERE p.porcentajeComision = :porcenDescuento"),
         @NamedQuery(name = "Pedidos.findByPorcenRetencion", query = "SELECT p FROM Pedidos p WHERE p.porcentajeGarantia = :porcenRetencion")})
-@TableGenerator(name = "Pedidos_Gen"
-        ,table="ID_GEN"
-        ,pkColumnName = "GEN_NAME"
-        ,valueColumnName = "GEN_VAL")
 public class Pedidos implements Serializable {
 
     private static final long serialVersionUID = 1L;
     //todo:revisar por q el id no es correlativo
     @Id
     @NotNull
+    @TableGenerator(name = "Pedidos_Gen"
+            ,table="ID_GEN"
+            ,pkColumnName = "GEN_NAME"
+            ,valueColumnName = "GEN_VAL"
+            ,initialValue = 1
+            ,allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "Pedidos_Gen")
     @Column(name = "IDPEDIDOS")
     private Long idpedidos;
@@ -59,12 +60,7 @@ public class Pedidos implements Serializable {
     private Date fechaPedido;
     @Column(name = "IDDIRECCION")
     private BigInteger iddireccion;
-    @Column(name = "IDZONA")
-    private BigInteger idzona;
     @Basic(optional = false)
-    @Column(name = "TOTAL")
-    //total menos descuento y retencion
-    private Double total = 0.0;
     @Column(name = "FECHA_ENTREGA")
     @Temporal(TemporalType.DATE)
     private Date fechaEntrega;
@@ -88,6 +84,9 @@ public class Pedidos implements Serializable {
     private Double valorGarantia = 0.0;
     @Column(name = "ESTADO")
     private String estado;
+    @OneToOne
+    @JoinColumn(name="codigo")
+    private CodigoPedidoSecuencia codigo;
     @JoinColumn(name = "IDCLIENTE", referencedColumnName = "IDPERSONA")
     @ManyToOne(optional = false)
     private Persona cliente;
@@ -104,9 +103,13 @@ public class Pedidos implements Serializable {
     private Collection<ArticulosPedido> articulosPedidos = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedidos")
     private Collection<Movimiento> movimientos;
+    @Column(name = "TOTAL")
+    //total menos descuentos o retenciones
+    private Double total = 0.0;
+    //cantidad * precio de venta
     @Basic(optional = false)
     @Column(name = "TOTALIMPORTE")
-    private Double totalimporte;
+    private Double totalimporte = 0.0;
 
     public Pedidos() {
     }
@@ -153,14 +156,6 @@ public class Pedidos implements Serializable {
 
     public void setIddireccion(BigInteger iddireccion) {
         this.iddireccion = iddireccion;
-    }
-
-    public BigInteger getIdzona() {
-        return idzona;
-    }
-
-    public void setIdzona(BigInteger idzona) {
-        this.idzona = idzona;
     }
 
     public Double getTotal() {
@@ -332,6 +327,12 @@ public class Pedidos implements Serializable {
     }
 
     public Double getTotalimporte() {
+        totalimporte = 0.0;
+        if(articulosPedidos != null)
+        for(ArticulosPedido articulosPedido:articulosPedidos)
+        {
+            totalimporte += articulosPedido.getImporte();
+        }
         return totalimporte;
     }
 
@@ -339,4 +340,11 @@ public class Pedidos implements Serializable {
         this.totalimporte = totalimporte;
     }
 
+    public CodigoPedidoSecuencia getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(CodigoPedidoSecuencia codigo) {
+        this.codigo = codigo;
+    }
 }

@@ -315,8 +315,10 @@ public class Persona implements Serializable {
         return "com.encens.khipus.model.Personas[ piId=" + piId + " ]";
     }
 
-    public String getNombreCompleto(){
-        if(razonsocial.isEmpty())
+    public String getNombreCompleto(){        
+        if(this.piId == null)
+            return "";
+        if(tipoPersona.equals("cliente"))
             return nom+" "+ap+" "+am;
         else
             return razonsocial;

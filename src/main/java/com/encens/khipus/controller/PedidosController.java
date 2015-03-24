@@ -41,6 +41,7 @@ public class PedidosController implements Serializable {
     private List<ArticulosPedido> articulosPedidos = new ArrayList<>();
     private List<ArticulosPedido> articulosPedidosElegidos = new ArrayList<>();
     private List<InvArticulos> articulos;
+    private List<ArticulosPedido> reposiciones = new ArrayList<>();
     private List<Pedidos> items = null;
     private Pedidos selected;
     private List<Persona> personas;
@@ -53,6 +54,8 @@ public class PedidosController implements Serializable {
     private Date fechaEntregaFiltro;
     private Date fechaPedidoFiltro;
     private Persona personaElegida;
+    private Boolean conReposicion;
+    private Boolean tieneReposicion;
 
     public PedidosController() {
     }
@@ -133,17 +136,23 @@ public class PedidosController implements Serializable {
         personas = personasFacade.findAllClientesPersonaInstitucion();
         articulos = invArticulosFacade.findAllInvArticulos();
         distribuidores = personasFacade.findAlldistribuidores();
+        conReposicion = false;
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
+        if(validarCampos())
+        {
+            return;
+        }
         FacesContext facesContext = FacesContext.getCurrentInstance();
         LoginBean loginBean = (LoginBean) facesContext.getApplication().getELResolver().
                 getValue(facesContext.getELContext(), null, "loginBean");
         selected.setUsuario(loginBean.getUsuario());
         selected.setCliente(personaElegida);
-        selected.setEstado("CREADO");
+        selected.setEstado("PENDIENTE");
+        selected.setCodigo(new CodigoPedidoSecuencia());
         selected.setFechaPedido(new Date());
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PedidosCreated"));
         if (!JSFUtil.isValidationFailed()) {
@@ -155,6 +164,37 @@ public class PedidosController implements Serializable {
             distribuidores = personasFacade.findAlldistribuidores();
         }
 
+    }
+
+    private boolean validarCampos() {
+        Boolean error = false;
+        if(personaElegida.getPiId() == null)
+        {
+            JSFUtil.addErrorMessage( ResourceBundle.getBundle("/Bundle").getString("ClienteRequerido"));
+            error = true;
+        }
+        if(selected.getFechaEntrega() == null)
+        {
+            JSFUtil.addErrorMessage( ResourceBundle.getBundle("/Bundle").getString("FechaEntregaRequerido"));
+            error = true;
+        }
+        if(selected.getArticulosPedidos().size() == 0)
+        {
+            JSFUtil.addErrorMessage( ResourceBundle.getBundle("/Bundle").getString("ArticulosRequerido"));
+            error = true;
+        }
+        if(selected.getArticulosPedidos().size() > 0)
+        {
+            for(ArticulosPedido articulosPedido:selected.getArticulosPedidos())
+            {
+                if(articulosPedido.getImporte() == 0.0){
+                    JSFUtil.addErrorMessage("Eror: El "+articulosPedido.getInvArticulos().getDescri()+" tiene el importe en cero.");
+                    error = true;
+                }
+
+            }
+        }
+        return error;
     }
 
     public void cancel(){
@@ -355,8 +395,47 @@ public class PedidosController implements Serializable {
         return personaElegida;
     }
 
-    public void setPersonaElegida(Persona personaElegida) {
+    public void setPersonaElegida(Persona personaElegida) {        
+        reposiciones = getFacade().findReposicionesPorPersona(personaElegida);
+        if(reposiciones.size() >0)
+        {
+            selected.getArticulosPedidos().addAll(reposiciones);
+            tieneReposicion = true;
+            conReposicion = true;
+        }
         this.personaElegida = personaElegida;
     }
 
+    public void quitarReposicion(){
+        for(ArticulosPedido articulosPedido: selected.getArticulosPedidos())
+        {
+            if(articulosPedido.getReposicion() >0){
+                articulosPedido.setReposicion(0);
+            }
+        }
+    }
+
+    public void agregarReposicion(){
+        selected.getArticulosPedidos().addAll(reposiciones);
+    }
+
+    public Boolean getConReposicion() {
+        return conReposicion;
+    }
+
+    public void setConReposicion(Boolean conReposicion) {
+        if(conReposicion)
+            agregarReposicion();
+        else
+            quitarReposicion();
+        this.conReposicion = conReposicion;
+    }
+
+    public Boolean getTieneReposicion() {
+        return tieneReposicion;
+    }
+
+    public void setTieneReposicion(Boolean tieneReposicion) {
+        this.tieneReposicion = tieneReposicion;
+    }
 }

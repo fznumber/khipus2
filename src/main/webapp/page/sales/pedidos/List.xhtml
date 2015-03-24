@@ -31,6 +31,10 @@
                     <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                     <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
+                    <p:column filterBy="#{item.codigo.secuencia}" headerText="Código"  filterMatchMode="contains">
+                        <h:outputText value="#{item.codigo.secuencia}" />
+                    </p:column>
+
                     <p:column sortBy="#{item.fechaPedido}" filterBy="#{item.fechaPedido}" headerText="Fecha pedido" filterMatchMode="equals">
                         <f:facet name="filter">
                             <p:calendar id="fechaPedido" value="#{pedidosController.fechaPedidoFiltro}" styleClass="customCalendar" pattern="dd/MM/yyyy" effect="fold">
