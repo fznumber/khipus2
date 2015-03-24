@@ -115,7 +115,8 @@
                     </h:outputText>
                 </f:facet>
             </p:dataTable>
-            <p:commandButton actionListener="#{pedidosController.create}" value="#{bundle.Save}" update="display,:PedidosListForm:datalist,:PedidosListForm:growl,PedidosCreateForm:articulosTable"/>
+            <p:commandButton actionListener="#{pedidosController.registrar}" value="#{bundle.Save}" update="display,:PedidosListForm:datalist,:PedidosListForm:growl,PedidosCreateForm:articulosTable"/>
+            <p:commandButton actionListener="#{pedidosController.entregarInmediatamente}" value="Entregar" update="display,:PedidosListForm:datalist,:PedidosListForm:growl,PedidosCreateForm:articulosTable"/>
             <p:commandButton actionListener="#{pedidosController.cancel}" value="#{bundle.Close}" update=":PedidosListForm:datalist" onclick="PedidosCreateDialog.close()" />
         </h:form>
     </p:dialog>

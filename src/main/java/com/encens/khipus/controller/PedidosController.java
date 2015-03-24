@@ -50,6 +50,7 @@ public class PedidosController implements Serializable {
     private Integer importeTotal = 0;
     private InvArticulos articuloElegido;
     private List<Pedidos> pedidosFiltrado;
+    private List<Pedidos> pedidosElegidos;
     private List<String> estados;
     private Date fechaEntregaFiltro;
     private Date fechaPedidoFiltro;
@@ -141,6 +142,15 @@ public class PedidosController implements Serializable {
         return selected;
     }
 
+    public void registrar(){
+        selected.setEstado("PENDIENTE");
+    }
+
+    public void entregarInmediatamente(){
+        selected.setEstado("PREPARAR");
+        create();
+    }
+
     public void create() {
         if(validarCampos())
         {
@@ -151,7 +161,6 @@ public class PedidosController implements Serializable {
                 getValue(facesContext.getELContext(), null, "loginBean");
         selected.setUsuario(loginBean.getUsuario());
         selected.setCliente(personaElegida);
-        selected.setEstado("PENDIENTE");
         selected.setCodigo(new CodigoPedidoSecuencia());
         selected.setFechaPedido(new Date());
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PedidosCreated"));
@@ -437,5 +446,18 @@ public class PedidosController implements Serializable {
 
     public void setTieneReposicion(Boolean tieneReposicion) {
         this.tieneReposicion = tieneReposicion;
+    }
+
+    public List<Pedidos> getPedidosElegidos() {
+        if(pedidosElegidos != null)
+        if(pedidosElegidos.size() == 1)
+            selected = pedidosElegidos.get(0);
+        else
+            selected = null;
+        return pedidosElegidos;
+    }
+
+    public void setPedidosElegidos(List<Pedidos> pedidosElegidos) {
+        this.pedidosElegidos = pedidosElegidos;
     }
 }
