@@ -34,11 +34,12 @@
 					<textElement textAlignment="Center"/>
 					<textFieldExpression><![CDATA["SON: "+$P{totalLiteral}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true">
+				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
 					<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="472" y="0" width="100" height="12" uuid="def65a7b-3e7d-40cf-a8fe-ed782c651c9d"/>
 					<box padding="1">
 						<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
+					<textElement textAlignment="Right"/>
 					<textFieldExpression><![CDATA[$P{totalImporte}]]></textFieldExpression>
 				</textField>
 			</band>
@@ -85,7 +86,7 @@
 			</textField>
 			<staticText>
 				<reportElement x="420" y="0" width="17" height="13" uuid="314f715c-95b1-43b3-bef4-18d7110b3975"/>
-				<text><![CDATA["Nit:"]]></text>
+				<text><![CDATA[Nit:]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="437" y="0" width="135" height="13" uuid="34d853cd-132d-4250-b639-44772b3acd98"/>
@@ -168,7 +169,7 @@
 				<box padding="1">
 					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
@@ -176,7 +177,7 @@
 				<box padding="1">
 					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left"/>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
@@ -184,7 +185,7 @@
 				<box padding="1">
 					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left"/>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{importe}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
@@ -192,7 +193,7 @@
 				<box padding="1">
 					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left"/>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{reposicion}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
@@ -200,7 +201,7 @@
 				<box padding="1">
 					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left"/>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
@@ -221,32 +222,32 @@
 			<staticText>
 				<reportElement x="34" y="50" width="129" height="15" uuid="cadee252-1f7c-49ae-95b2-b467c2cb789e"/>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA["ENTREGUE CONFORME"]]></text>
+				<text><![CDATA[ENTREGUE CONFORME]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="214" y="50" width="129" height="15" uuid="e3534bb7-0737-4173-8f0c-c978ea56e335"/>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA["RECIBI CONFORME"]]></text>
+				<text><![CDATA[RECIBI CONFORME]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="375" y="50" width="129" height="15" uuid="2f712c07-5494-45bb-b889-c3b7f77880af"/>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA["ENTREGUE CONFORME"]]></text>
+				<text><![CDATA[ENTREGUE CONFORME]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="34" y="64" width="129" height="15" uuid="4b442b1d-99e2-4447-b9ff-7f08b750b908"/>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA["ENC. ALMANEN"]]></text>
+				<text><![CDATA[ENC. ALMANEN]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="214" y="64" width="129" height="15" uuid="a536001d-f71c-485d-a6bd-8bf03ae9f522"/>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA["CLIENTE"]]></text>
+				<text><![CDATA[CLIENTE]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="375" y="64" width="129" height="15" uuid="338d12c8-ea60-4aa3-bb0d-99272a898870"/>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA["REPARTIDOR"]]></text>
+				<text><![CDATA[REPARTIDOR]]></text>
 			</staticText>
 		</band>
 	</pageFooter>

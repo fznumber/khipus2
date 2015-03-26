@@ -50,7 +50,7 @@
                 <p:outputLabel value="¿Con reposición?:" for="conReposicion"/>
                 <p:selectBooleanButton id="conReposicion" value="#{pedidosController.conReposicion}" onLabel="Si" offLabel="No" disabled="#{!pedidosController.tieneReposicion}"/>
             </p:panelGrid>
-            <p:inputTextarea id="observacion" rows="2" cols="60" value="#{pedidosController.selected.observacion}" />
+            <!--<p:inputTextarea id="observacion" rows="2" cols="60" value="#{pedidosController.selected.observacion}" />-->
             <p:panelGrid columns="3" rendered="#{pedidosController.selected != null}">
                 <p:outputLabel value="Articulo:" for="itemTip" />
                 <p:autoComplete id="itemTip" size="54" value="#{pedidosController.articuloElegido}" completeMethod="#{pedidosController.completarArticulo}"
