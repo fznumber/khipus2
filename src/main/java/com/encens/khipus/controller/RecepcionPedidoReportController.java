@@ -7,6 +7,7 @@ package com.encens.khipus.controller;
 
 import com.encens.khipus.ejb.PedidosFacade;
 import com.encens.khipus.model.Pedidos;
+import com.encens.khipus.model.Territoriotrabajo;
 import net.sf.dynamicreports.adhoc.configuration.*;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.base.expression.AbstractSimpleExpression;
@@ -35,6 +36,7 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -47,6 +49,8 @@ import java.util.List;
 public class RecepcionPedidoReportController {
     @EJB
     private PedidosFacade pedidosFacade;
+    private Date fechaEntrega;
+    private Territoriotrabajo territoriotrabajo;
 
     private List<Pedidos> pedidos = new ArrayList<>();
     /**
@@ -84,10 +88,6 @@ public class RecepcionPedidoReportController {
         }
     }
 
-    public void imprimir(List<Pedidos> pedidosList) throws IOException, JRException {
-        pedidos = pedidosList;
-        exportarPDF();
-    }
     public void imprimir() throws IOException, JRException {
         exportarPDF();
     }
@@ -113,5 +113,19 @@ public class RecepcionPedidoReportController {
         return dataSource;
     }
 
+    public Date getFechaEntrega() {
+        return fechaEntrega;
+    }
 
+    public void setFechaEntrega(Date fechaEntrega) {
+        this.fechaEntrega = fechaEntrega;
+    }
+
+    public Territoriotrabajo getTerritoriotrabajo() {
+        return territoriotrabajo;
+    }
+
+    public void setTerritoriotrabajo(Territoriotrabajo territoriotrabajo) {
+        this.territoriotrabajo = territoriotrabajo;
+    }
 }
