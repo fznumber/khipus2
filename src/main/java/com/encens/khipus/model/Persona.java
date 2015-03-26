@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.apache.commons.lang.StringUtils;
 
 /**
  *
@@ -77,13 +78,13 @@ public class Persona implements Serializable {
     private String nroDoc;
     @Size(max = 65)
     @Column(name = "AP")
-    private String ap;
+    private String ap = "";
     @Size(max = 65)
     @Column(name = "AM")
-    private String am;
+    private String am = "";
     @Size( max = 100)
     @Column(name = "NOM")
-    private String nom;
+    private String nom = "";
     @Column(name = "SEXO")
     private String sexo;
     @Size(max = 1)
@@ -111,7 +112,7 @@ public class Persona implements Serializable {
     @Column(name = "NIT")
     private String nit;
     @Column(name = "RAZONSOCIAL")
-    private String razonsocial;
+    private String razonsocial = "";
     @Column(name = "PORCENTAJECOMISION")
     private Double porcentajeComision = 0.0;
     @Size(max = 10)
@@ -317,8 +318,8 @@ public class Persona implements Serializable {
 
     public String getNombreCompleto(){        
         if(this.piId == null)
-            return "";
-        if(tipoPersona.equals("cliente"))
+            return "";        
+        if(StringUtils.isEmpty(razonsocial))
             return nom+" "+ap+" "+am;
         else
             return razonsocial;

@@ -144,6 +144,7 @@ public class PedidosController implements Serializable {
 
     public void registrar(){
         selected.setEstado("PENDIENTE");
+        create();
     }
 
     public void entregarInmediatamente(){
