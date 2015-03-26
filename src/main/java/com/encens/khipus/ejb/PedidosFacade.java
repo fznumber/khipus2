@@ -38,6 +38,8 @@ public class PedidosFacade extends AbstractFacade<Pedidos> {
         List<ArticulosPedido> articulosPedidos = new ArrayList<>();
         List<Pedidos> pedidosConReposicion;
         try{
+            //todo:cambiar yo no habra el estado rechazado
+            //listar por el campo "por_reponer" 
             pedidosConReposicion =(List<Pedidos>)em.createQuery("select pe from Pedidos pe " +
                                             " inner join pe.articulosPedidos ap" +
                                             " where pe.cliente =:cliente" +
@@ -56,5 +58,19 @@ public class PedidosFacade extends AbstractFacade<Pedidos> {
             }
         }
         return articulosPedidos;
+    }
+
+    public List<Object[]> recepcionDePedidos(){
+        List<Object[]> resultado = new ArrayList<>();
+        try {
+            resultado = (List<Object[]>)em.createQuery("select concat(pe.codigo.secuencia,'-',pe.cliente.nom,' ',pe.cliente.ap,' ',pe.cliente.am,pe.cliente.razonsocial) as CLIENTE\n" +
+                    "               ,articulos.invArticulos.descri as PRODUCTO\n" +
+                    "               ,articulos.cantidad + articulos.reposicion as CANTIDAD\n" +
+                    "               ,pe.cliente.territoriotrabajo.distribuidor.nom as DISTRIBUIDOR\n" +
+                    "        from Pedidos pe join pe.articulosPedidos articulos").getResultList();
+        }catch (NoResultException e){
+            return  resultado;
+        }
+        return  resultado;
     }
 }

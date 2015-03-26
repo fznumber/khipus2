@@ -130,7 +130,6 @@ public class Templates {
 	public static ComponentBuilder<?, ?> createTitleComponent(String label) {
 		return cmp.horizontalList()
 		        .add(
-		        	dynamicReportsComponent,
 		        	cmp.text(label).setStyle(bold18CenteredStyle).setHorizontalAlignment(HorizontalAlignment.RIGHT))
 		        .newRow()
 		        .add(cmp.line())
