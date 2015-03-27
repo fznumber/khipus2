@@ -6,11 +6,8 @@
 package com.encens.khipus.controller;
 
 import com.encens.khipus.ejb.PedidosFacade;
-import com.encens.khipus.model.Pedidos;
 import com.encens.khipus.model.Territoriotrabajo;
-import net.sf.dynamicreports.adhoc.configuration.*;
-import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
-import net.sf.dynamicreports.report.base.expression.AbstractSimpleExpression;
+import com.encens.khipus.util.Templates;
 import net.sf.dynamicreports.report.builder.crosstab.CrosstabBuilder;
 import net.sf.dynamicreports.report.builder.crosstab.CrosstabColumnGroupBuilder;
 import net.sf.dynamicreports.report.builder.crosstab.CrosstabMeasureBuilder;
@@ -18,27 +15,22 @@ import net.sf.dynamicreports.report.builder.crosstab.CrosstabRowGroupBuilder;
 import net.sf.dynamicreports.report.constant.Calculation;
 import net.sf.dynamicreports.report.constant.PageOrientation;
 import net.sf.dynamicreports.report.constant.PageType;
-import net.sf.dynamicreports.report.definition.ReportParameters;
-import net.sf.dynamicreports.report.exception.DRException;
-import net.sf.jasperreports.engine.*;
 import net.sf.dynamicreports.report.datasource.DRDataSource;
-import static net.sf.dynamicreports.report.builder.DynamicReports.*;
-import com.encens.khipus.util.Templates;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.dynamicreports.report.exception.DRException;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRException;
 
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
+
+import static net.sf.dynamicreports.report.builder.DynamicReports.*;
 
 /**
  *
@@ -52,7 +44,6 @@ public class RecepcionPedidoReportController {
     private Date fechaEntrega;
     private Territoriotrabajo territoriotrabajo;
 
-    private List<Pedidos> pedidos = new ArrayList<>();
     /**
      * Creates a new instance of RecepcionPedidoReportController
      */
@@ -105,10 +96,18 @@ public class RecepcionPedidoReportController {
     }
 
     private JRDataSource createDataSource() {
-        List<Object[]> resultado = pedidosFacade.recepcionDePedidos();
+        List<Object[]> resultado;
+        if(fechaEntrega == null && territoriotrabajo == null)
+        {
+            resultado = pedidosFacade.recepcionDePedidos();
+        }else{
+            resultado = pedidosFacade.recepcionDePedidos(fechaEntrega,territoriotrabajo);
+        }
+
+
         DRDataSource dataSource = new DRDataSource("cliente", "producto", "cantidad", "distribuidor");
         for (Object[] obj : resultado) {
-            dataSource.add((String) obj[0],(String) obj[1],(Integer) obj[2],(String) obj[3]);
+            dataSource.add(obj[0], obj[1], obj[2], obj[3]);
         }
         return dataSource;
     }

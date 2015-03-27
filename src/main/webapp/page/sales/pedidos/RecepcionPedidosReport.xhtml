@@ -7,21 +7,24 @@
       xmlns:p="http://primefaces.org/ui">
 
 <ui:composition>
-    <p:dialog id="RecepcionDlg" widgetVar="RecepcionViewDialog" modal="true" resizable="false" appendTo="@(body)" header="Recepción de pedidos">
-        <h:form id="RecepcionViewForm">
+
+    <p:dialog id="RecepcionDlg" widgetVar="RecepcionDialog" modal="true" resizable="false" appendTo="@(body)" header="Pedido">
+        <h:form id="RecepcionForm">
             <p:panelGrid id="display" columns="2" >
                 <p:outputLabel for="fechaEntrega" value="Fecha Entrega:" />
                 <p:calendar id="fechaEntrega" value="#{recepcionPedidoReportController.fechaEntrega}" />
                 <p:outputLabel value="Territorio:" for="territorio" />
                 <p:selectOneMenu id="territorio" value="#{recepcionPedidoReportController.territoriotrabajo}">
+                    <f:selectItem itemLabel="" itemValue="" noSelectionOption="true" />
                     <f:selectItems value="#{territoriotrabajoController.itemsAvailableSelectOne}"
                                    var="territoriotrabajo"
                                    itemValue="#{territoriotrabajo}"/>
                 </p:selectOneMenu>
             </p:panelGrid>
-            <h:commandButton id="recepcionPedidos"   value="Generar" actionListener="#{recepcionPedidoReportController.imprimir}"/>
-            <p:commandButton value="#{bundle.Close}" onclick="RecepcionViewDialog.hide()"/>
+            <p:commandButton value="Generar" actionListener="#{recepcionPedidoReportController.imprimir}" immediate="true" ajax="false"/>
+            <p:commandButton value="#{bundle.Close}" onclick="RecepcionDialog.hide()"/>
         </h:form>
     </p:dialog>
+
 </ui:composition>
 </html>
