@@ -12,52 +12,11 @@
         <h:form id="PedidosEditForm">
             <p:panelGrid id="display" rendered="#{pedidosController.selected != null}" columns="6" >
                 <p:outputLabel value="Cliente:" for="cliente" />
-                <p:autoComplete id="cliente" value="#{pedidosController.selected.cliente}" completeMethod="#{pedidosController.completarCliente}"
-                                var="cliente" itemLabel="#{cliente.nombreCompleto}" itemValue="#{cliente}" converter="convertirPersona" forceSelection="true">
-                    <f:facet name="itemtip">
-                        <h:panelGrid columns="2" cellpadding="5">
-                            <f:facet name="header">
-                                <h:outputText styleClass="ui-theme ui-theme-#{cliente.nombreCompleto}" style="margin-left:50px" />
-                            </f:facet>
-                            <h:outputText value="Nombre:" />
-                            <h:outputText value="#{cliente.nombreCompleto}" />
-                            <h:outputText value="Nit:" />
-                            <h:outputText value="#{cliente.nit}" />
-                            <h:outputText value="C.I.:" />
-                            <h:outputText value="#{cliente.nroDoc}" />
-                            <h:outputText value="Telefono:" />
-                            <h:outputText value="#{cliente.telefono}" />
-                            <h:outputText value="Ciudad:" />
-                            <h:outputText value="#{cliente.departamento}" />
-                        </h:panelGrid>
-                    </f:facet>
-                    <p:ajax event="itemSelect" update="nit,descuento,retencion,tipocliente"></p:ajax>
-                </p:autoComplete>
+                <p:outputLabel value="#{pedidosController.selected.cliente.nombreCompleto}"/>
                 <p:outputLabel value="Nit:" for="nit"/>
                 <p:outputLabel id="nit" value="#{pedidosController.selected.cliente.nit}"/>
                 <p:outputLabel value="% Descuento:" for="descuento"/>
                 <p:outputLabel id="descuento" value="#{pedidosController.selected.cliente.porcentajeComision}" />
-                <p:outputLabel value="Distribuidor:" for="distribuidor" />
-                <p:autoComplete id="distribuidor" value="#{pedidosController.selected.distribuidor}" completeMethod="#{pedidosController.completarDistribuidor}"
-                                var="distribuidor" itemLabel="#{distribuidor.nombreCompleto}" itemValue="#{distribuidor}" converter="convertirPersona" forceSelection="true">
-                    <f:facet name="itemtip">
-                        <h:panelGrid columns="2" cellpadding="5">
-                            <f:facet name="header">
-                                <h:outputText styleClass="ui-theme ui-theme-#{distribuidor.nombreCompleto}" style="margin-left:50px" />
-                            </f:facet>
-                            <h:outputText value="Nombre:" />
-                            <h:outputText value="#{distribuidor.nombreCompleto}" />
-                            <h:outputText value="Nit:" />
-                            <h:outputText value="#{distribuidor.nit}" />
-                            <h:outputText value="C.I.:" />
-                            <h:outputText value="#{distribuidor.nroDoc}" />
-                            <h:outputText value="Telefono:" />
-                            <h:outputText value="#{distribuidor.telefono}" />
-                            <h:outputText value="Ciudad:" />
-                            <h:outputText value="#{distribuidor.departamento}" />
-                        </h:panelGrid>
-                    </f:facet>
-                </p:autoComplete>
                 <p:outputLabel value="Tipo Cliente:" for="tipocliente"/>
                 <p:outputLabel id="tipocliente" value="#{pedidosController.selected.cliente.tipocliente.nombre}"/>
                 <p:outputLabel value="% Retención:" for="retencion"/>
@@ -92,7 +51,7 @@
                 </p:autoComplete>
                 <p:commandButton actionListener="#{pedidosController.agregarArticulo}" value="Agregar" update="articulosTable,itemTip"/>
             </p:panelGrid>
-            <p:remoteCommand name="refreshFooter" update="PedidosEditForm:articulosTable:totalImporte,PedidosEditForm:articulosTable:totalPago,PedidosEditForm:articulosTable:valorDescuento"/>
+            <p:remoteCommand name="refreshFooter" update="PedidosEditForm:articulosTable:totalImporte"/>
             <p:dataTable
                     id="articulosTable"
                     var="item"
@@ -132,15 +91,7 @@
                 </p:column>
                 <f:facet name="footer">
                     <h:outputText value="Total Importe: " />
-                    <h:outputText id="totalImporte" value="#{pedidosController.selected.totalImporte}">
-                        <f:convertNumber type="currency" currencySymbol="Bs." />
-                    </h:outputText>
-                    <h:outputText value="Total: " />
-                    <h:outputText id="totalPago" value="#{pedidosController.selected.total}">
-                        <f:convertNumber type="currency" currencySymbol="Bs." />
-                    </h:outputText>
-                    <h:outputText value="Descuento: " />
-                    <h:outputText id="valorDescuento" value="#{pedidosController.selected.valorComision}">
+                    <h:outputText id="totalImporte" value="#{pedidosController.selected.totalimporte}">
                         <f:convertNumber type="currency" currencySymbol="Bs." />
                     </h:outputText>
                 </f:facet>

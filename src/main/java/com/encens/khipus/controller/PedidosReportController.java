@@ -55,70 +55,28 @@ public class PedidosReportController {
     private Dosificacion dosificacion;
     private Pedidos pedido;
 
-    public void imprimir(Pedidos pedido) throws IOException, JRException {
-        String ruta = "/resources/reportes/pedidoFactura.jrxml";
+    public void imprimirNotaEntrega(Pedidos pedido) throws IOException, JRException {
         this.pedido = pedido;
         HashMap parameters = new HashMap();
         moneyUtil = new MoneyUtil();
-        barcodeRenderer = new BarcodeRenderer();
-        String etiqueta;
-        dosificacion = dosificacionFacade.findByPeriodo(new Date());
-        BigInteger numberAuthorization = dosificacion.getNroautorizacion();
-        String key = dosificacion.getLlave();
-
-        if(imprimirCopia)
-            etiqueta = "COPIA";
-        else
-            etiqueta = "ORIGINAL";
-
-        ControlCode controlCode = generateCodControl(pedido,dosificacion.getNumeroactual().intValue(),numberAuthorization,key);
-        parameters.putAll(
-                getReportParams(
-                        pedido.getCliente().getNombreCompleto()
-                        ,dosificacion.getNumeroactual().intValue()
-                        ,etiqueta
-                        ,controlCode.getCodigoControl()
-                        ,controlCode.getKeyQR()
-                        ,pedido));
-        exportarPDF(parameters);
-
-
+        parameters.putAll(getReportParams(pedido));
+        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/notaDeEntrega.jasper"));
+        exportarPDF(parameters,jasper);
     }
 
-    public void exportarPDF(HashMap parametros) throws JRException, IOException {
-
-        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/factura.jasper"));
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, new JRBeanCollectionDataSource(pedido.getArticulosPedidos()));
-
-        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-        response.addHeader("Content-disposition","attachment; filename=jsfReporte.pdf");
-        ServletOutputStream stream = response.getOutputStream();
-
-        JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
-
-        stream.flush();
-        stream.close();
-        FacesContext.getCurrentInstance().responseComplete();
-    }
-
-    private ControlCode generateCodControl(Pedidos pedido,Integer numberInvoice,BigInteger numberAutorization,String key)
-    {
-        Double importeBaseCreditFisical = pedido.getTotalimporte() * 0.13;
+    private Map<String, Object> getReportParams(Pedidos pedido) {
         String nroDoc = pedido.getCliente().getNroDoc();
         if(pedido.getCliente().getTipocliente().equals("INSTITUCION"))
             nroDoc = pedido.getCliente().getNit();
 
-        ControlCode controlCode = new ControlCode("123456789012"
-                ,numberInvoice
-                ,numberAutorization.toString()
-                ,pedido.getFechaEntrega()
-                ,pedido.getTotalimporte()
-                ,importeBaseCreditFisical
-                ,nroDoc
-        );
-        moneyUtil.getLlaveQR(controlCode,key);
-        controlCode.generarCodigoQR();
-        return controlCode;
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+        paramMap.put("nroPedido",pedido.getCodigo().getSecuencia().toString());
+        paramMap.put("nit",nroDoc);
+        paramMap.put("fechaEntrega",pedido.getFechaEntrega());
+        paramMap.put("nombreClienteyTerritorio",pedido.getCliente().getNombreCompleto()+"("+pedido.getCliente().getTerritoriotrabajo().getNombre()+")");
+        paramMap.put("totalLiteral",moneyUtil.Convertir(pedido.getTotalimporte().toString(), true));
+        paramMap.put("totalImporte",pedido.getTotalimporte());
+        return paramMap;
     }
 
     private Map<String, Object> getReportParams(String nameClient,long numfac,String etiqueta,String codControl, String keyQR,Pedidos pedido) {
@@ -152,6 +110,70 @@ public class PedidosReportController {
             e.printStackTrace();
         }
         return paramMap;
+    }
+
+    public void imprimirFactura(Pedidos pedido) throws IOException, JRException {
+        this.pedido = pedido;
+        HashMap parameters = new HashMap();
+        moneyUtil = new MoneyUtil();
+        barcodeRenderer = new BarcodeRenderer();
+        String etiqueta;
+        dosificacion = dosificacionFacade.findByPeriodo(new Date());
+        BigInteger numberAuthorization = dosificacion.getNroautorizacion();
+        String key = dosificacion.getLlave();
+        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/factura.jasper"));
+        if(imprimirCopia)
+            etiqueta = "COPIA";
+        else
+            etiqueta = "ORIGINAL";
+
+        ControlCode controlCode = generateCodControl(pedido,dosificacion.getNumeroactual().intValue(),numberAuthorization,key);
+        parameters.putAll(
+                getReportParams(
+                        pedido.getCliente().getNombreCompleto()
+                        ,dosificacion.getNumeroactual().intValue()
+                        ,etiqueta
+                        ,controlCode.getCodigoControl()
+                        ,controlCode.getKeyQR()
+                        ,pedido));
+        exportarPDF(parameters,jasper);
+
+
+    }
+
+    public void exportarPDF(HashMap parametros,File jasper) throws JRException, IOException {
+
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, new JRBeanCollectionDataSource(pedido.getArticulosPedidos()));
+
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.addHeader("Content-disposition","attachment; filename=jsfReporte.pdf");
+        ServletOutputStream stream = response.getOutputStream();
+
+        JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
+
+        stream.flush();
+        stream.close();
+        FacesContext.getCurrentInstance().responseComplete();
+    }
+
+    private ControlCode generateCodControl(Pedidos pedido,Integer numberInvoice,BigInteger numberAutorization,String key)
+    {
+        Double importeBaseCreditFisical = pedido.getTotalimporte() * 0.13;
+        String nroDoc = pedido.getCliente().getNroDoc();
+        if(pedido.getCliente().getTipocliente().equals("INSTITUCION"))
+            nroDoc = pedido.getCliente().getNit();
+
+        ControlCode controlCode = new ControlCode("123456789012"
+                ,numberInvoice
+                ,numberAutorization.toString()
+                ,pedido.getFechaEntrega()
+                ,pedido.getTotalimporte()
+                ,importeBaseCreditFisical
+                ,nroDoc
+        );
+        moneyUtil.getLlaveQR(controlCode,key);
+        controlCode.generarCodigoQR();
+        return controlCode;
     }
 
     private  void createImpresionFactura(Pedidos pedidos, Dosificacion dosificacion, long numeroFactura, Usuario currentUser,Movimiento movimiento) {

@@ -47,7 +47,7 @@
                             </f:facet>
                             <h:outputText value="#{item.descripcion}"/>
                         </p:column>
-                        <p:column sortBy="#{item.distribuidor}" headerText="Distribuidor" filterBy="#{item.distribuidor.nombreCompleto}" filterMatchMode="contains">
+                        <p:column headerText="Distribuidor" filterBy="#{item.distribuidor.nombreCompleto}" filterMatchMode="contains">
                             <h:outputText value="#{item.distribuidor.nombreCompleto}"/>
                         </p:column>
                         <p:column sortBy="#{item.departamento.nombre}">

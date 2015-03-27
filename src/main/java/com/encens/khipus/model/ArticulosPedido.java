@@ -201,8 +201,8 @@ public class ArticulosPedido implements Serializable {
     }
 
     public Double getImporte() {
-        if(cantidad != null && precio != null)
-            importe=cantidad.doubleValue() * precio;
+        if(total != null && precio != null)
+            importe=total.doubleValue() * precio;
         else
             importe = 0.0;
         return importe;

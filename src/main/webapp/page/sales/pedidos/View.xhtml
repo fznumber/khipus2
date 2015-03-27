@@ -17,8 +17,6 @@
                 <p:outputLabel id="nit" value="#{pedidosController.selected.cliente.nit}"/>
                 <p:outputLabel value="% Descuento:" for="descuento"/>
                 <p:outputLabel id="descuento" value="#{pedidosController.selected.cliente.porcentajeComision}" />
-                <p:outputLabel value="Distribuidor:" for="distribuidor" />
-                <p:outputLabel id="distribuidor" value="#{pedidosController.selected.distribuidor.nombreCompleto}"/>
                 <p:outputLabel value="Tipo Cliente:" for="tipocliente"/>
                 <p:outputLabel id="tipocliente" value="#{pedidosController.selected.cliente.tipocliente.nombre}"/>
                 <p:outputLabel value="% Retención:" for="retencion"/>
@@ -57,14 +55,6 @@
                 <f:facet name="footer">
                     <h:outputText value="Total Importe: " />
                     <h:outputText id="totalImporte" value="#{pedidosController.selected.totalImporte}">
-                        <f:convertNumber type="currency" currencySymbol="Bs." />
-                    </h:outputText>
-                    <h:outputText value="Total: " />
-                    <h:outputText id="totalPago" value="#{pedidosController.selected.total}">
-                        <f:convertNumber type="currency" currencySymbol="Bs." />
-                    </h:outputText>
-                    <h:outputText value="Descuento: " />
-                    <h:outputText id="valorDescuento" value="#{pedidosController.selected.valorComision}">
                         <f:convertNumber type="currency" currencySymbol="Bs." />
                     </h:outputText>
                 </f:facet>
