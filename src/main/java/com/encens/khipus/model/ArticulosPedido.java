@@ -58,6 +58,8 @@ public class ArticulosPedido implements Serializable {
     private Double importe = 0.0;
     @Column(name = "REPOSICION")
     private Integer reposicion = 0;
+    @Column(name= "POR_REPONER")
+    private Integer porReponer = 0;
     @Column(name = "TOTAL")
     private Integer total = 0;
     @Column(name = "PROMOCION")
@@ -117,8 +119,6 @@ public class ArticulosPedido implements Serializable {
     }
 
     public Integer getReposicion() {
-        if(reposicion == null)
-            reposicion = 0;
         return reposicion;
     }
 
@@ -226,5 +226,19 @@ public class ArticulosPedido implements Serializable {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public Integer getPorReponer() {
+        return porReponer;
+    }
+
+    public void setPorReponer(Integer porReponer) {
+        if(porReponer >0.0)
+        {
+            this.estado = "RECHAZADO";
+        }else{
+            this.estado = "";
+        }
+        this.porReponer = porReponer;
     }
 }
