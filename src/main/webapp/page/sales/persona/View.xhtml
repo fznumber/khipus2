@@ -23,6 +23,8 @@
                     <p:outputLabel value="#{bundle.CreateClienteLabel_telefono}" for="telefono" />
                     <p:outputLabel id="telefono" value="#{clienteController.selected.telefono}" title="#{bundle.CreateClienteTitle_telefono}" />
                     <p:outputLabel value="#{bundle.CreateClienteLabel_nit}" for="nit" />
+                    <h:outputText value="¿Con factura?: " />
+                    <p:outputLabel id="conFactura" value="#{clienteController.selected.confactura?'Si':'No'}"/>
                     <p:outputLabel id="nit" value="#{clienteController.selected.nit}" title="#{bundle.CreateClienteTitle_nit}" />
                     <p:outputLabel value="Comisión:" for="comision" />
                     <p:outputLabel id="comision" value="#{clienteController.selected.porcentajeGarantia}" title="comisión" />

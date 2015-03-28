@@ -84,6 +84,8 @@ public class Pedidos implements Serializable {
     private Double valorGarantia = 0.0;
     @Column(name = "ESTADO")
     private String estado;
+    @Column(name = "CON_REPOSICION")
+    private Boolean conReposicion = false;
     @OneToOne
     @JoinColumn(name="codigo")
     private CodigoPedidoSecuencia codigo;
@@ -104,7 +106,6 @@ public class Pedidos implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedidos")
     private Collection<Movimiento> movimientos;
     @Column(name = "TOTAL")
-    //total menos descuentos o retenciones
     private Double total = 0.0;
     //cantidad * precio de venta
     @Basic(optional = false)
@@ -346,5 +347,13 @@ public class Pedidos implements Serializable {
 
     public void setCodigo(CodigoPedidoSecuencia codigo) {
         this.codigo = codigo;
+    }
+
+    public Boolean getConReposicion() {
+        return conReposicion;
+    }
+
+    public void setConReposicion(Boolean conReposicion) {
+        this.conReposicion = conReposicion;
     }
 }

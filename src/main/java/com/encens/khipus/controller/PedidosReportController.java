@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -48,6 +49,8 @@ public class PedidosReportController {
     GestorImpresion gestorImpresion;
     @EJB
     DosificacionFacade dosificacionFacade;
+    @Inject
+    PedidosController pedidosController;
 
     private MoneyUtil moneyUtil;
     private BarcodeRenderer barcodeRenderer;
@@ -61,7 +64,7 @@ public class PedidosReportController {
         moneyUtil = new MoneyUtil();
         parameters.putAll(getReportParams(pedido));
         File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/notaDeEntrega.jasper"));
-        exportarPDF(parameters,jasper);
+        exportarPDF(parameters, jasper);
     }
 
     private Map<String, Object> getReportParams(Pedidos pedido) {
@@ -93,8 +96,8 @@ public class PedidosReportController {
         paramMap.put("nitCliente",nroDoc);
         paramMap.put("fecha",pedido.getFechaEntrega());
         paramMap.put("nombreCliente",nameClient);//verificar el nombre del cliente
-        paramMap.put("fechaLimite",dosificacion.getFechavencimiento());
-        paramMap.put("codigoControl",codControl);
+        paramMap.put("fechaLimite", dosificacion.getFechavencimiento());
+        paramMap.put("codigoControl", codControl);
         paramMap.put("tipoEtiqueta",etiqueta);
         //verificar por que no requiere el codigo de control
 
@@ -137,14 +140,122 @@ public class PedidosReportController {
                         ,controlCode.getKeyQR()
                         ,pedido));
         exportarPDF(parameters,jasper);
+    }
+
+    public void imprimirFactura(List<Pedidos> pedidosElegidos) throws IOException, JRException {
+        HashMap parameters = new HashMap();
+        moneyUtil = new MoneyUtil();
+        barcodeRenderer = new BarcodeRenderer();
+        dosificacion = dosificacionFacade.findByPeriodo(new Date());
+        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/factura.jasper"));
 
 
+        JasperPrint jasperPrint ;
+        parameters.putAll(fijarParmetrosFactura(pedidosElegidos.get(0), jasper));
+        try {
+            jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parameters, new JRBeanCollectionDataSource(pedidosElegidos.get(0).getArticulosPedidos()));
+        } catch (JRException e) {
+            e.printStackTrace();
+            //todo:mensaje de error
+            return;
+        }
+
+        for(int i= 1;i<pedidosElegidos.size();i++){
+            parameters.putAll(fijarParmetrosFactura(pedidosElegidos.get(i),jasper));
+            try {
+                jasperPrint.getPages().addAll(JasperFillManager.fillReport(jasper.getPath(), parameters, new JRBeanCollectionDataSource(pedidosElegidos.get(i).getArticulosPedidos())).getPages());
+            } catch (JRException e) {
+                e.printStackTrace();
+                //todo:mensaje de error
+                return;
+            }
+        }
+
+        for(Pedidos pedido:pedidosElegidos){
+            if(pedido.getEstado().equals("PENDIENTE"))
+            {
+                pedido.setEstado("PREPARAR");
+                pedidosController.setSelected(pedido);
+                pedidosController.update();
+            }
+        }
+
+        exportarPDF(jasperPrint);
+    }
+
+    public void imprimirNota(List<Pedidos> pedidosElegidos) throws IOException, JRException {
+        HashMap parameters = new HashMap();
+        moneyUtil = new MoneyUtil();
+        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/notaDeEntrega.jasper"));
+
+
+        JasperPrint jasperPrint ;
+        parameters.putAll(getReportParams(pedidosElegidos.get(0)));
+        try {
+            jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parameters, new JRBeanCollectionDataSource(pedidosElegidos.get(0).getArticulosPedidos()));
+        } catch (JRException e) {
+            e.printStackTrace();
+            //todo:mensaje de error
+            return;
+        }
+
+        for(int i= 1;i<pedidosElegidos.size();i++){
+            parameters.putAll(getReportParams(pedidosElegidos.get(i)));
+            try {
+                jasperPrint.getPages().addAll(JasperFillManager.fillReport(jasper.getPath(), parameters, new JRBeanCollectionDataSource(pedidosElegidos.get(i).getArticulosPedidos())).getPages());
+            } catch (JRException e) {
+                e.printStackTrace();
+                //todo:mensaje de error
+                return;
+            }
+        }
+
+        for(Pedidos pedido:pedidosElegidos){
+            if(pedido.getEstado().equals("PENDIENTE"))
+            {
+                pedido.setEstado("PREPARAR");
+                pedidosController.setSelected(pedido);
+                pedidosController.update();
+            }
+        }
+
+        exportarPDF(jasperPrint);
+    }
+
+    public Map<String, Object> fijarParmetrosFactura(Pedidos pedido,File jasper){
+        String etiqueta;
+        if(imprimirCopia)
+            etiqueta = "COPIA";
+        else
+            etiqueta = "ORIGINAL";
+        ControlCode controlCode = generateCodControl(pedido,dosificacion.getNumeroactual().intValue(),dosificacion.getNroautorizacion(),dosificacion.getLlave());
+
+        return getReportParams(
+                        pedido.getCliente().getNombreCompleto()
+                        ,dosificacion.getNumeroactual().intValue()
+                        ,etiqueta
+                        ,controlCode.getCodigoControl()
+                        ,controlCode.getKeyQR()
+                        ,pedido);
+    }
+
+    public void exportarPDF(JasperPrint jasperPrint) throws IOException, JRException {
+
+
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.addHeader("Content-disposition","attachment; filename=jsfReporte.pdf");
+        ServletOutputStream stream = response.getOutputStream();
+
+        JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
+
+        stream.flush();
+        stream.close();
+        FacesContext.getCurrentInstance().responseComplete();
     }
 
     public void exportarPDF(HashMap parametros,File jasper) throws JRException, IOException {
 
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, new JRBeanCollectionDataSource(pedido.getArticulosPedidos()));
-
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         response.addHeader("Content-disposition","attachment; filename=jsfReporte.pdf");
         ServletOutputStream stream = response.getOutputStream();

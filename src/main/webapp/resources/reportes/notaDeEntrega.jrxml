@@ -188,7 +188,7 @@
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{importe}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="true">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="393" y="0" width="44" height="12" uuid="55cff283-a4a7-4ea0-8f87-5974a1bc6068"/>
 				<box padding="1">
 					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
