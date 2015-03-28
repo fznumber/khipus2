@@ -118,7 +118,8 @@ public class Persona implements Serializable {
     @Size(max = 10)
     @Column(name = "CODIGOCLIENTE")
     private String codigo;
-
+    @Column(name = "con_factura")
+    private Boolean confactura = true;
     @JoinColumn(name = "IDTIPOCLIENTE", referencedColumnName = "IDTIPOCLIENTE")
     @ManyToOne(optional = true)
     private Tipocliente tipocliente;
@@ -381,5 +382,13 @@ public class Persona implements Serializable {
 
     public void setDepartamento(Departamento departamento) {
         this.departamento = departamento;
+    }
+
+    public Boolean getConfactura() {
+        return confactura;
+    }
+
+    public void setConfactura(Boolean confactura) {
+        this.confactura = confactura;
     }
 }

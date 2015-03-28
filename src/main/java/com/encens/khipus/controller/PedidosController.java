@@ -3,6 +3,7 @@ package com.encens.khipus.controller;
 import com.encens.khipus.ejb.*;
 import com.encens.khipus.model.*;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,8 +14,11 @@ import java.util.logging.Logger;
 
 import com.encens.khipus.util.JSFUtil;
 import com.encens.khipus.util.JSFUtil.PersistAction;
+import net.sf.jasperreports.engine.JRException;
+
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -36,7 +40,8 @@ public class PedidosController implements Serializable {
     private VentaarticuloFacade ventaarticuloFacade;
     @EJB
     private VentaclienteFacade ventaclienteFacade;
-
+    @Inject
+    private PedidosReportController pedidosReportController;
 
     private List<ArticulosPedido> articulosPedidos = new ArrayList<>();
     private List<ArticulosPedido> articulosPedidosElegidos = new ArrayList<>();
@@ -142,14 +147,16 @@ public class PedidosController implements Serializable {
         return selected;
     }
 
-    public void registrar(){
+    public void registrar() throws IOException, JRException {
         selected.setEstado("PENDIENTE");
         create();
     }
 
-    public void entregarInmediatamente(){
+    public void entregarInmediatamente() throws IOException, JRException {
         selected.setEstado("PREPARAR");
         create();
+        pedidosReportController.imprimirFactura(selected);
+        pedidosReportController.imprimirNotaEntrega(selected);
     }
 
     public void create() {
@@ -390,9 +397,8 @@ public class PedidosController implements Serializable {
     public List<String> getEstados() {
         if(estados == null) {
             estados = new ArrayList<>();
-            estados.add("CREADO");
-            estados.add("ANULADO");
-            estados.add("ENVIADO");
+            estados.add("PENDIENTE");
+            estados.add("PREPARAR");
         }
         return estados;
     }
@@ -414,6 +420,16 @@ public class PedidosController implements Serializable {
             conReposicion = true;
         }
         this.personaElegida = personaElegida;
+    }
+
+    public void imprimirFacturasElegidas(){
+        try {
+            pedidosReportController.imprimirFactura(pedidosElegidos);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
     }
 
     public void quitarReposicion(){

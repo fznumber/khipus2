@@ -38,6 +38,8 @@
                     <p:inputText id="direccion" value="#{personaController.selected.direccion}" title="#{bundle.CreateClienteTitle_direccion}" />
                     <p:outputLabel value="#{bundle.CreateClienteLabel_telefono}" for="telefono" />
                     <p:inputText id="telefono" value="#{personaController.selected.telefono}" title="#{bundle.CreateClienteTitle_telefono}" />
+                    <p:outputLabel value="¿Con factura?: " for="conFactura"/>
+                    <p:selectBooleanButton id="conFactura" value="#{personaController.selected.confactura}" onLabel="Si" offLabel="No"/>
                     <p:outputLabel value="#{bundle.CreateClienteLabel_nit}" for="nit" />
                     <p:inputText id="nit" value="#{personaController.selected.nit}" title="#{bundle.CreateClienteTitle_nit}" />
                     <p:selectBooleanButton id="comision" value="#{personaController.tieneComision}" onLabel="Comsión" offLabel="Sin comisión" onIcon="ui-icon-check" offIcon="ui-icon-close">
