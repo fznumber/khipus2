@@ -14,7 +14,7 @@
     </ui:define>
 
     <ui:define name="center">
-        <h:form id="ClienteListForm">
+        <h:form id="ClienteListForm" rendered="#{loginBean.logeado}">
             <p:growl id="growl" life="15000"/>
             <p:panel header="Listado de distribuidor">
                 <p:dataTable id="datalist" value="#{distribuidorController.items}" var="item"
@@ -79,7 +79,9 @@
                 <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
             </p:confirmDialog>
         </h:form>
-
+        <h:form rendered="#{!loginBean.logeado}">
+            <ui:include src="./../../../accesodenegado.xhtml"/>
+        </h:form>
         <ui:include src="Create.xhtml"/>
         <ui:include src="Edit.xhtml"/>
         <ui:include src="View.xhtml"/>

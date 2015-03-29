@@ -13,8 +13,8 @@
         <h:outputText value="#{bundle.ListPedidosTitle}"></h:outputText>
     </ui:define>
 
-    <ui:define name="center">
-        <h:form id="PedidosListForm">
+    <ui:define name="center" >
+        <h:form id="PedidosListForm" rendered="#{loginBean.logeado}">
             <p:growl id="growl" life="15000"/>
             <p:panel header="Listado Pedidos">
                 <p:dataTable id="datalist" value="#{pedidosController.items}" var="item"
@@ -87,6 +87,9 @@
                     </f:facet>
                 </p:dataTable>
             </p:panel>
+        </h:form>
+        <h:form rendered="#{!loginBean.logeado}">
+            <ui:include src="./../../../accesodenegado.xhtml"/>
         </h:form>
         <ui:include src="Create.xhtml"/>
         <ui:include src="ReponerEdit.xhtml"/>

@@ -24,5 +24,9 @@
     <context-param> 
         <param-name>primefaces.THEME</param-name>
         <param-value>#{managementThemes.tema}/</param-value>
-    </context-param>    
+    </context-param>
+    <error-page>
+        <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+        <location>/index.xhtml</location>
+    </error-page>
 </web-app>
