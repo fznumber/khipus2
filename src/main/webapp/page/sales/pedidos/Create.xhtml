@@ -48,7 +48,9 @@
                                    itemValue="#{tipoPedido}"/>
                 </p:selectOneMenu>
                 <p:outputLabel value="¿Con reposición?:" for="conReposicion"/>
-                <p:selectBooleanButton id="conReposicion" value="#{pedidosController.conReposicion}" onLabel="Si" offLabel="No" disabled="#{!pedidosController.tieneReposicion}"/>
+                <p:selectBooleanButton id="conReposicion" value="#{pedidosController.conReposicion}" onLabel="Si" offLabel="No" disabled="#{!pedidosController.tieneReposicion}">
+                    <p:ajax update="articulosTable"/>
+                </p:selectBooleanButton>
             </p:panelGrid>
             <!--<p:inputTextarea id="observacion" rows="2" cols="60" value="#{pedidosController.selected.observacion}" />-->
             <p:panelGrid columns="3" rendered="#{pedidosController.selected != null}">
@@ -103,11 +105,10 @@
                     <h:outputText id="importe" value="#{item.importe}" />
                 </p:column>
                 <p:column headerText="Acción">
-                    <p:commandLink value="Quitar" update="articulosTable,:PedidosListForm:growl" >
+                    <p:commandLink value="Quitar" actionListener="#{pedidosController.reponerArticulo(item)}" update="articulosTable,:PedidosListForm:growl" rendered="#{item.reposicion==0}">
                         <p:collector value="#{item}" removeFrom="#{pedidosController.selected.articulosPedidos}" unique="true"/>
                     </p:commandLink>
-
-            </p:column>
+                </p:column>
                 <f:facet name="footer">
                     <h:outputText value="Total Importe: " />
                     <h:outputText id="totalImporte" value="#{pedidosController.selected.totalimporte}">

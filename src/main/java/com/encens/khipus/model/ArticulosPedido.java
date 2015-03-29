@@ -180,11 +180,12 @@ public class ArticulosPedido implements Serializable {
         if (!(object instanceof ArticulosPedido)) {
             return false;
         }
-        ArticulosPedido other = (ArticulosPedido) object;
+        /*ArticulosPedido other = (ArticulosPedido) object;
         if ((this.idarticulospedido == null && other.idarticulospedido != null) || (this.idarticulospedido != null && !this.idarticulospedido.equals(other.idarticulospedido))) {
             return false;
-        }
-        return true;
+        }*/
+
+        return this.getInvArticulos().getInvArticulosPK().getCodArt().equals(((ArticulosPedido) object).getInvArticulos().getInvArticulosPK().getCodArt());
     }
 
     @Override
@@ -201,8 +202,8 @@ public class ArticulosPedido implements Serializable {
     }
 
     public Double getImporte() {
-        if(total != null && precio != null)
-            importe=total.doubleValue() * precio;
+        if(cantidad != null && precio != null)
+            importe=cantidad * precio;
         else
             importe = 0.0;
         return importe;

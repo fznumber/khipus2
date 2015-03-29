@@ -39,27 +39,16 @@ public class PedidosFacade extends AbstractFacade<Pedidos> {
 
     public List<ArticulosPedido> findReposicionesPorPersona(Persona personaElegida) {
         List<ArticulosPedido> articulosPedidos = new ArrayList<>();
-        List<Pedidos> pedidosConReposicion;
         try{
             //todo:cambiar yo no habra el estado rechazado
             //listar por el campo "por_reponer" 
-            pedidosConReposicion =(List<Pedidos>)em.createQuery("select pe from Pedidos pe " +
-                                            " inner join pe.articulosPedidos ap" +
-                                            " where pe.cliente =:cliente" +
-                                            " and ap.estado = 'RECHAZADO'")
+            articulosPedidos =(List<ArticulosPedido>)em.createQuery("select ap from ArticulosPedido ap "
+                                            + "where ap.pedidos.cliente =:cliente and ap.estado = 'RECHAZADO'")
                                             .setParameter("cliente",personaElegida)
                                             .getResultList();
         }catch (NoResultException e){
             return articulosPedidos;
-        }
-        for(Pedidos pedidos:pedidosConReposicion)
-        {
-            for(ArticulosPedido articulos:pedidos.getArticulosPedidos())
-            {
-                if(articulos.getEstado().equals("RECHAZADO"))
-                articulosPedidos.add(articulos);
-            }
-        }
+        }        
         return articulosPedidos;
     }
 

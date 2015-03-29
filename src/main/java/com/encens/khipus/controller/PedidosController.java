@@ -131,7 +131,12 @@ public class PedidosController implements Serializable {
         articulosPedido.setReposicion(0);
         articulosPedido.setPedidos(selected);
         selected.getArticulosPedidos().add(articulosPedido);
+        articulos.remove(articuloElegido);
         articuloElegido = null;
+    }
+
+    public void reponerArticulo(ArticulosPedido item){
+        articulos.add(item.getInvArticulos());
     }
 
     private PedidosFacade getFacade() {
@@ -209,7 +214,7 @@ public class PedidosController implements Serializable {
         {
             for(ArticulosPedido articulosPedido:selected.getArticulosPedidos())
             {
-                if(articulosPedido.getImporte() == 0.0){
+                if(articulosPedido.getImporte() == 0.0 && articulosPedido.getReposicion() == 0.0){
                     JSFUtil.addErrorMessage("Eror: El "+articulosPedido.getInvArticulos().getDescri()+" tiene el importe en cero.");
                     error = true;
                 }
@@ -428,53 +433,14 @@ public class PedidosController implements Serializable {
         return personaElegida;
     }
 
-    public void setPersonaElegida(Persona personaElegida) {        
+    public void setPersonaElegida(Persona personaElegida) {   
+        reposiciones.clear();
+        selected.getArticulosPedidos().clear();
         reposiciones = getFacade().findReposicionesPorPersona(personaElegida);
-        if(reposiciones.size() >0)
+        if(reposiciones.size() >0 && !conReposicion)
         {
-            for(ArticulosPedido articulosPedido:reposiciones)
+            for(ArticulosPedido repo:reposiciones)
             {
-                ArticulosPedido articulo = new ArticulosPedido();
-                articulo.setPrecio(articulosPedido.getPrecio());
-                articulosPedido.setEstado("REPUESTO");
-                articulo.setReposicion(articulosPedido.getPorReponer());
-                articulo.setPedidos(selected);
-                articulo.setInvArticulos(articulosPedido.getInvArticulos());
-                articulo.setCantidad(0);
-                selected.getArticulosPedidos().add(articulo);
-            }
-            tieneReposicion = true;
-            conReposicion = true;
-        }
-        this.personaElegida = personaElegida;
-    }
-
-    public void quitarReposicion(){
-        for(ArticulosPedido articulosPedido: selected.getArticulosPedidos())
-        {
-            if(articulosPedido.getReposicion() >0){
-                articulosPedido.setReposicion(0);
-            }
-        }
-        for(ArticulosPedido articulosPedido:reposiciones)
-        {
-            articulosPedido.setEstado("RECHAZADO");
-        }
-    }
-
-    public void agregarReposicion(){
-        for(ArticulosPedido repo:reposiciones)
-        { boolean encontrado = false;
-            for(ArticulosPedido articulo:selected.getArticulosPedidos())
-            {
-                if(repo.getInvArticulos().getInvArticulosPK().getCodArt().equals(articulo.getInvArticulos().getInvArticulosPK().getCodArt()))
-                {
-                    articulo.setReposicion(repo.getPorReponer());
-                    repo.setEstado("REPUESTO");
-                    encontrado = true;
-                }
-            }
-            if(!encontrado){
                 ArticulosPedido articulo = new ArticulosPedido();
                 articulo.setPrecio(repo.getPrecio());
                 repo.setEstado("REPUESTO");
@@ -483,7 +449,35 @@ public class PedidosController implements Serializable {
                 articulo.setInvArticulos(repo.getInvArticulos());
                 articulo.setCantidad(0);
                 selected.getArticulosPedidos().add(articulo);
+                articulos.remove(repo.getInvArticulos());
             }
+            tieneReposicion = true;
+            conReposicion = true;
+        }
+        this.personaElegida = personaElegida;
+    }
+
+    public void quitarReposicion(){
+
+        for(ArticulosPedido repo:reposiciones)
+        {
+            selected.getArticulosPedidos().remove(repo);
+            repo.setEstado("RECHAZADO");
+            articulos.add(repo.getInvArticulos());
+        }
+    }
+
+    public void agregarReposicion(){
+        for(ArticulosPedido repo:reposiciones)
+        {
+                ArticulosPedido articulo = new ArticulosPedido();
+                articulo.setPrecio(repo.getPrecio());
+                repo.setEstado("REPUESTO");
+                articulo.setReposicion(repo.getPorReponer());
+                articulo.setPedidos(selected);
+                articulo.setInvArticulos(repo.getInvArticulos());
+                articulo.setCantidad(0);
+                selected.getArticulosPedidos().add(articulo);
         }
     }
 
