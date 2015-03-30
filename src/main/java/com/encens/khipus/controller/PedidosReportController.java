@@ -51,12 +51,19 @@ public class PedidosReportController {
     DosificacionFacade dosificacionFacade;
     @Inject
     PedidosController pedidosController;
+    @Inject
+    MovimientoController movimientoController;
+    @Inject
+    DosificacionController dosificacionController;
+    @Inject
+    ImpresionfacturaController impresionfacturaController;
 
     private MoneyUtil moneyUtil;
     private BarcodeRenderer barcodeRenderer;
     private Boolean imprimirCopia = false;
     private Dosificacion dosificacion;
     private Pedidos pedido;
+    private String tipoEtiquetaFatura;
 
     public void imprimirNotaEntrega(Pedidos pedido) throws IOException, JRException {
         this.pedido = pedido;
@@ -140,6 +147,53 @@ public class PedidosReportController {
                         ,controlCode.getKeyQR()
                         ,pedido));
         exportarPDF(parameters,jasper);
+    }
+
+    public void guardarFactura(Pedidos pedido,String codControl){
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        LoginBean loginBean = (LoginBean) facesContext.getApplication().getELResolver().
+                getValue(facesContext.getELContext(), null, "loginBean");
+        if(pedido.getMovimiento() == null)
+        {
+           Movimiento movimiento = new Movimiento();
+            movimiento.setCodestruct(dosificacion.getEstCod());
+            movimiento.setEstado("PENDIENTE");
+            movimiento.setCodigocontrol(codControl);
+            movimiento.setFecharegistro(new Date());
+            //todo:virificar estos valores
+            movimiento.setGlosa("");
+            movimiento.setMoneda("BS");
+            movimiento.setTipocambio(6.69);
+            pedido.setMovimiento(movimiento);
+
+            Impresionfactura impresionfactura = new Impresionfactura();
+            impresionfactura.setUsuario(loginBean.getUsuario());
+            impresionfactura.setFechaimpresion(new Date());
+            impresionfactura.setMovimiento(movimiento);
+            impresionfactura.setDosificacion(dosificacion);
+            impresionfactura.setTipo("ORIGINAL");
+            impresionfactura.setNroFactura(dosificacion.getNumeroactual());
+            movimiento.getImpresionfacturaCollection().add(impresionfactura);
+            movimientoController.setSelected(movimiento);
+            movimientoController.create();
+            dosificacion.getNumeroactual().add(BigInteger.ONE);
+            dosificacionController.setSelected(dosificacion);
+            dosificacionController.update();
+        }else{
+            Impresionfactura impresionfactura = new Impresionfactura();
+            impresionfactura.setUsuario(loginBean.getUsuario());
+            impresionfactura.setFechaimpresion(new Date());
+            impresionfactura.setMovimiento(pedido.getMovimiento());
+            impresionfactura.setDosificacion(dosificacion);
+            impresionfactura.setTipo(tipoEtiquetaFatura);
+            impresionfactura.setNroFactura(dosificacion.getNumeroactual());
+            pedido.getMovimiento().getImpresionfacturaCollection().add(impresionfactura);
+            movimientoController.setSelected(pedido.getMovimiento());
+            movimientoController.update();
+            dosificacion.getNumeroactual().add(BigInteger.ONE);
+            dosificacionController.setSelected(dosificacion);
+            dosificacionController.update();
+        }
     }
 
     public void imprimirFactura(List<Pedidos> pedidosElegidos) throws IOException, JRException {
@@ -307,5 +361,13 @@ public class PedidosReportController {
 
     public void setImprimirCopia(Boolean imprimirCopia) {
         this.imprimirCopia = imprimirCopia;
+    }
+
+    public String getTipoEtiquetaFatura() {
+        return tipoEtiquetaFatura;
+    }
+
+    public void setTipoEtiquetaFatura(String tipoEtiquetaFatura) {
+        this.tipoEtiquetaFatura = tipoEtiquetaFatura;
     }
 }

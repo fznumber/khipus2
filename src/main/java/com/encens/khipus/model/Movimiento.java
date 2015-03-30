@@ -8,19 +8,7 @@ package com.encens.khipus.model;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -49,6 +37,13 @@ public class Movimiento implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @NotNull
+    @TableGenerator(name = "Movimiento_Gen"
+            ,table="ID_GEN"
+            ,pkColumnName = "GEN_NAME"
+            ,valueColumnName = "GEN_VAL"
+            ,initialValue = 1
+            ,allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "Movimiento_Gen")
     @Column(name = "IDMOVIMIENTO")
     private Long idmovimiento;
     @Size(max = 300)
@@ -82,9 +77,8 @@ public class Movimiento implements Serializable {
     private Date fecharegistro;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "movimiento")
     private Collection<Impresionfactura> impresionfacturaCollection;
-    @JoinColumn(name = "IDPEDIDOS", referencedColumnName = "IDPEDIDOS")
-    @ManyToOne(optional = false)
-    private Pedidos pedidos;
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "movimiento")
+    private Collection<Pedidos> pedidos;
 
     public Movimiento() {
     }
@@ -187,12 +181,12 @@ public class Movimiento implements Serializable {
         this.impresionfacturaCollection = impresionfacturaCollection;
     }
 
-    public Pedidos getPedidos() {
+    public Collection<Pedidos> getPedidos() {
         return pedidos;
     }
 
-    public void setPedidos(Pedidos idpedidos) {
-        this.pedidos = idpedidos;
+    public void setPedidos(Collection<Pedidos> pedidos) {
+        this.pedidos = pedidos;
     }
 
     @Override

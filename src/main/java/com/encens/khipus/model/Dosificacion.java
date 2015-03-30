@@ -62,6 +62,8 @@ public class Dosificacion implements Serializable {
     private BigInteger facturadel;
     @Column(name = "FACTURAAL")
     private BigInteger facturaal;
+    @Column(name = "EST_COD")
+    private String estCod;
     @Column(name = "NUMEROACTUAL")
     private BigInteger numeroactual;
     @OneToMany(mappedBy = "dosificacion")
@@ -171,5 +173,12 @@ public class Dosificacion implements Serializable {
     public void setImpresionfacturas(Collection<Impresionfactura> impresionfacturaCollection) {
         this.impresionfacturas = impresionfacturaCollection;
     }
-    
+
+    public String getEstCod() {
+        return estCod;
+    }
+
+    public void setEstCod(String estCod) {
+        this.estCod = estCod;
+    }
 }

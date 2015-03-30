@@ -6,6 +6,7 @@
 package com.encens.khipus.model;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -49,6 +50,8 @@ public class Impresionfactura implements Serializable {
     @Size(max = 10)
     @Column(name = "TIPO")
     private String tipo;
+    @Column(name = "NROFACTURA")
+    private BigInteger nroFactura;
     @JoinColumn(name = "IDMOVIMIENTO", referencedColumnName = "IDMOVIMIENTO")
     @ManyToOne(optional = false)
     private Movimiento movimiento;
@@ -143,5 +146,12 @@ public class Impresionfactura implements Serializable {
     public void setDosificacion(Dosificacion iddosificacion) {
         this.dosificacion = iddosificacion;
     }
-    
+
+    public BigInteger getNroFactura() {
+        return nroFactura;
+    }
+
+    public void setNroFactura(BigInteger nroFactura) {
+        this.nroFactura = nroFactura;
+    }
 }
