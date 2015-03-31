@@ -6,6 +6,7 @@
 package com.encens.khipus.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.*;
@@ -76,9 +77,9 @@ public class Movimiento implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecharegistro;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "movimiento")
-    private Collection<Impresionfactura> impresionfacturaCollection;
+    private Collection<Impresionfactura> impresionfacturaCollection = new ArrayList<>();
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "movimiento")
-    private Collection<Pedidos> pedidos;
+    private Collection<Pedidos> pedidos = new ArrayList<>();
 
     public Movimiento() {
     }

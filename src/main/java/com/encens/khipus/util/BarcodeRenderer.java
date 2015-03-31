@@ -188,8 +188,8 @@ public class BarcodeRenderer {
             data = new String(b, "UTF-8");
             // get a byte matrix for the data
             BitMatrix matrix = null;
-            int h = 100;
-            int w = 100;
+            int h = 1000;
+            int w = 1000;
             com.google.zxing.Writer writer = new QRCodeWriter();
             try {
                 Hashtable<EncodeHintType, String> hints = new Hashtable<EncodeHintType, String>(2);

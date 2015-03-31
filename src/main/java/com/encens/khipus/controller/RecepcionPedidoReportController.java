@@ -15,6 +15,7 @@ import net.sf.dynamicreports.report.builder.crosstab.CrosstabRowGroupBuilder;
 import net.sf.dynamicreports.report.constant.Calculation;
 import net.sf.dynamicreports.report.constant.PageOrientation;
 import net.sf.dynamicreports.report.constant.PageType;
+import net.sf.dynamicreports.report.constant.VerticalAlignment;
 import net.sf.dynamicreports.report.datasource.DRDataSource;
 import net.sf.dynamicreports.report.exception.DRException;
 import net.sf.jasperreports.engine.JRDataSource;
@@ -43,6 +44,7 @@ public class RecepcionPedidoReportController {
     private PedidosFacade pedidosFacade;
     private Date fechaEntrega;
     private Territoriotrabajo territoriotrabajo;
+    private Integer cantidadPedidos;
 
     /**
      * Creates a new instance of RecepcionPedidoReportController
@@ -51,11 +53,18 @@ public class RecepcionPedidoReportController {
     }
 
     private void build(ServletOutputStream stream) {
+        String fecha;
+        JRDataSource dataSource = createDataSource();
+        if(fechaEntrega == null)
+            fecha = "(TODOS)";
+        else
+            fecha = fechaEntrega.toString();
+        String titulo = "PEDIDOS CORRESPONDIENTES AL:"+fecha+"     "+"CANTIDAD: "+cantidadPedidos.toString();
 
         CrosstabRowGroupBuilder<String> rowGroup = ctab.rowGroup("cliente", String.class)
                 .setTotalHeader("Total:");
 
-        CrosstabColumnGroupBuilder<String> columnGroup = ctab.columnGroup("producto", String.class).setShowTotal(false);
+        CrosstabColumnGroupBuilder<String> columnGroup = ctab.columnGroup("producto", String.class).setShowTotal(false).setHeaderStyle(Templates.bold12CenteredStyle).setHeaderHeight(100);
         CrosstabRowGroupBuilder<String> rowItemGroup = ctab.rowGroup("distribuidor", String.class).setHeaderWidth(10);
         CrosstabMeasureBuilder<String> cantidad = ctab.measure("cantidad", Integer.class, Calculation.COUNT);
 
@@ -63,16 +72,16 @@ public class RecepcionPedidoReportController {
                 .headerCell(cmp.text("Cliente / Producto").setStyle(Templates.boldCenteredStyle))
                 .rowGroups(rowItemGroup, rowGroup)
                 .columnGroups(columnGroup)
-                .addMeasure(cantidad);
+                .addMeasure(cantidad).setGroupStyle(Templates.bold18CenteredStyle).setCellStyle(Templates.bold18CenteredStyle);
 
         try {
             report()
                     .setPageFormat(PageType.A4, PageOrientation.LANDSCAPE)
                     .setTemplate(Templates.reportTemplate)
-                    .title(Templates.createTitleComponent("Titulo"))
+                    .title(Templates.createTitleComponent(titulo))
                     .summary(crosstab)
                     .pageFooter(Templates.footerComponent)
-                    .setDataSource(createDataSource())
+                    .setDataSource(dataSource)
                     .toPdf(stream);
         } catch (DRException e) {
             e.printStackTrace();
@@ -103,7 +112,7 @@ public class RecepcionPedidoReportController {
         }else{
             resultado = pedidosFacade.recepcionDePedidos(fechaEntrega,territoriotrabajo);
         }
-
+        cantidadPedidos = resultado.size();
 
         DRDataSource dataSource = new DRDataSource("cliente", "producto", "cantidad", "distribuidor");
         for (Object[] obj : resultado) {

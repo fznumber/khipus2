@@ -8,17 +8,7 @@ package com.encens.khipus.model;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -40,6 +30,13 @@ public class Impresionfactura implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @NotNull
+    @TableGenerator(name = "Impresionfactura_Gen"
+            ,table="ID_GEN"
+            ,pkColumnName = "GEN_NAME"
+            ,valueColumnName = "GEN_VAL"
+            ,initialValue = 1
+            ,allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "Impresionfactura_Gen")
     @Column(name = "IDIMPRECIONFACTURA")
     private Long idimprecionfactura;
     @Basic(optional = false)
@@ -51,7 +48,7 @@ public class Impresionfactura implements Serializable {
     @Column(name = "TIPO")
     private String tipo;
     @Column(name = "NROFACTURA")
-    private BigInteger nroFactura;
+    private Integer nroFactura;
     @JoinColumn(name = "IDMOVIMIENTO", referencedColumnName = "IDMOVIMIENTO")
     @ManyToOne(optional = false)
     private Movimiento movimiento;
@@ -147,11 +144,11 @@ public class Impresionfactura implements Serializable {
         this.dosificacion = iddosificacion;
     }
 
-    public BigInteger getNroFactura() {
+    public Integer getNroFactura() {
         return nroFactura;
     }
 
-    public void setNroFactura(BigInteger nroFactura) {
+    public void setNroFactura(Integer nroFactura) {
         this.nroFactura = nroFactura;
     }
 }
