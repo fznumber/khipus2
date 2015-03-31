@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 
 import com.encens.khipus.util.JSFUtil;
 import com.encens.khipus.util.JSFUtil.PersistAction;
+import java.util.AbstractList;
 import net.sf.jasperreports.engine.JRException;
 
 import javax.ejb.EJB;
@@ -42,8 +43,7 @@ public class PedidosController implements Serializable {
     private VentaclienteFacade ventaclienteFacade;
     @Inject
     private ArticulosPedidoController articulosPedidoController;
-    @Inject
-    private PedidosReportController pedidosReportController;
+
 
     private List<ArticulosPedido> articulosPedidos = new ArrayList<>();
     private List<ArticulosPedido> articulosPedidosElegidos = new ArrayList<>();
@@ -57,7 +57,7 @@ public class PedidosController implements Serializable {
     private Integer importeTotal = 0;
     private InvArticulos articuloElegido;
     private List<Pedidos> pedidosFiltrado;
-    private List<Pedidos> pedidosElegidos;
+    private List<Pedidos> pedidosElegidos = new ArrayList<>();
     private List<String> estados;
     private Date fechaEntregaFiltro;
     private Date fechaPedidoFiltro;
@@ -159,13 +159,6 @@ public class PedidosController implements Serializable {
         create();
     }
 
-    public void entregarInmediatamente() throws IOException, JRException {
-        selected.setEstado("PREPARAR");
-        create();
-        pedidosReportController.imprimirFactura(selected);
-        pedidosReportController.imprimirNotaEntrega(selected);
-    }
-
     public void create() {
         if(validarCampos())
         {
@@ -188,7 +181,7 @@ public class PedidosController implements Serializable {
             personas = personasFacade.findAllClientesPersonaInstitucion();
             articulos = invArticulosFacade.findAllInvArticulos();
             distribuidores = personasFacade.findAlldistribuidores();
-            reposiciones = null;
+            reposiciones = new ArrayList<>();
         }
 
     }
@@ -432,10 +425,9 @@ public class PedidosController implements Serializable {
     public Persona getPersonaElegida() {
         return personaElegida;
     }
-
+//todo: muy importante cada vez q se actualiza el cliente tiene q limpiarse el la lista de articulos elegidos
     public void setPersonaElegida(Persona personaElegida) {   
         reposiciones.clear();
-        selected.getArticulosPedidos().clear();
         reposiciones = getFacade().findReposicionesPorPersona(personaElegida);
         if(reposiciones.size() >0 && !conReposicion)
         {

@@ -35,6 +35,7 @@ import net.sf.dynamicreports.report.builder.datatype.BigDecimalType;
 import net.sf.dynamicreports.report.builder.style.StyleBuilder;
 import net.sf.dynamicreports.report.builder.tableofcontents.TableOfContentsCustomizerBuilder;
 import net.sf.dynamicreports.report.constant.HorizontalAlignment;
+import net.sf.dynamicreports.report.constant.Rotation;
 import net.sf.dynamicreports.report.constant.VerticalAlignment;
 import net.sf.dynamicreports.report.definition.ReportParameters;
 
@@ -66,11 +67,11 @@ public class Templates {
 		boldCenteredStyle   = stl.style(boldStyle)
 		                         .setAlignment(HorizontalAlignment.CENTER, VerticalAlignment.MIDDLE);
 		bold12CenteredStyle = stl.style(boldCenteredStyle)
-		                         .setFontSize(12);
+		                         .setFontSize(8).setVerticalAlignment(VerticalAlignment.TOP).setHorizontalAlignment(HorizontalAlignment.LEFT).setRotation(Rotation.LEFT);
 		bold18CenteredStyle = stl.style(boldCenteredStyle)
-		                         .setFontSize(18);
+		                         .setFontSize(10);
 		bold22CenteredStyle = stl.style(boldCenteredStyle)
-                             .setFontSize(22);
+                             .setFontSize(14);
 		columnStyle         = stl.style(rootStyle).setVerticalAlignment(VerticalAlignment.MIDDLE);
 		columnTitleStyle    = stl.style(columnStyle)
 		                         .setBorder(stl.pen1Point())

@@ -25,28 +25,35 @@
 	<field name="importe" class="java.lang.Double"/>
 	<group name="total">
 		<groupFooter>
-			<band height="12">
+			<band height="9">
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="403" y="0" width="69" height="12" uuid="72a6a84d-d052-4d02-9220-cdd3c3dc9137"/>
+					<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="403" y="0" width="69" height="9" uuid="72a6a84d-d052-4d02-9220-cdd3c3dc9137"/>
 					<box padding="1">
 						<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Center"/>
+					<textElement textAlignment="Center">
+						<font size="9"/>
+					</textElement>
 					<textFieldExpression><![CDATA["TOTAL Bs."]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="4" y="0" width="399" height="12" uuid="31004d46-9195-4647-8388-6a2694b3c0dd"/>
+					<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="403" height="9" uuid="31004d46-9195-4647-8388-6a2694b3c0dd"/>
 					<box padding="1">
 						<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Center"/>
+					<textElement>
+						<font size="9"/>
+					</textElement>
 					<textFieldExpression><![CDATA["SON: "+$P{totalLiteral}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true">
-					<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="472" y="0" width="100" height="12" uuid="def65a7b-3e7d-40cf-a8fe-ed782c651c9d"/>
+					<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="472" y="0" width="100" height="9" uuid="def65a7b-3e7d-40cf-a8fe-ed782c651c9d"/>
 					<box padding="1">
 						<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
+					<textElement>
+						<font size="9"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$P{total}]]></textFieldExpression>
 				</textField>
 			</band>
@@ -56,113 +63,15 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="84" splitType="Stretch">
-			<staticText>
-				<reportElement x="0" y="0" width="200" height="11" uuid="5ef57ba0-fbf1-4366-bd8b-a3d6688bd3c7"/>
-				<textElement>
-					<font size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[COOPERATIVA INTEGRAL DE SERVICIOS]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="10" width="200" height="11" uuid="8ea69fd8-8e23-4a4f-a94a-410cf030326d"/>
-				<textElement>
-					<font size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[COCHABAMBA LTDA.]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="20" width="200" height="11" uuid="5138c7c8-ec2f-4fb8-a311-e71cfc1fdc5a"/>
-				<textElement>
-					<font size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[CASA MATRIZ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="31" width="200" height="11" uuid="a8e01822-bb38-46b1-8bff-7e510b2a6edc"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[Av. Costanera s/n Zona Central]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="41" width="200" height="11" uuid="58487386-1613-4b47-a90e-b40ce866d24a"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[Telfs. 4577009 - 4577003 Punata]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="51" width="200" height="11" uuid="27277185-d5c8-4c68-910a-97bab3ad01a7"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[SUCURSAL 2]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="62" width="200" height="11" uuid="3538e2d1-ebbe-4ebd-a990-c43156c4b6c1"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[Av. Libertadores 454 Zona: Mirabel]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="72" width="200" height="11" uuid="3f5330db-5188-4203-a913-1afccee0ec0b"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[Punata - Cochabamba - Bolivia]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="200" y="31" width="134" height="42" uuid="6e982065-d1f3-4308-9239-14d199895a63"/>
-				<textElement>
-					<font fontName="Impact" size="24" isBold="true"/>
-				</textElement>
-				<text><![CDATA[FACTURA]]></text>
-			</staticText>
-			<rectangle radius="10">
-				<reportElement x="354" y="10" width="218" height="52" uuid="4d1718a4-c2dd-4dfa-8759-6e1e67810985"/>
-			</rectangle>
-			<staticText>
-				<reportElement x="356" y="19" width="94" height="14" uuid="a2e0bf82-8024-46b5-b8dc-3a29fe5d277c"/>
-				<text><![CDATA[NIT:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="356" y="32" width="94" height="14" uuid="21a62c6b-2dca-4fd4-8291-64f4e26f11fb"/>
-				<text><![CDATA[Nº FACTURA:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="356" y="45" width="94" height="14" uuid="f1f30416-672c-43c1-b27b-e60fa5409bdc"/>
-				<text><![CDATA[Nº AUTORIZACIÓN:]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="450" y="19" width="100" height="14" uuid="2285bf58-2a30-4eda-b89c-26d7a9535890"/>
-				<textFieldExpression><![CDATA[$P{nitEmpresa}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="450" y="32" width="100" height="14" uuid="00b0efa3-b4a4-4b96-b9ba-865fb5d7db73"/>
-				<textFieldExpression><![CDATA[$P{numFac}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="450" y="46" width="100" height="14" uuid="c912c01b-7aa9-4237-8398-b262a8b13089"/>
-				<textFieldExpression><![CDATA[$P{numAutorizacion}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="403" y="64" width="100" height="20" uuid="41eadb7d-efc4-4bc7-878c-7a7d1cf6c83d"/>
-				<textElement textAlignment="Center">
-					<font isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{tipoEtiqueta}]]></textFieldExpression>
-			</textField>
-		</band>
+		<band height="2" splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="7" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="43" splitType="Stretch">
+		<band height="129" splitType="Stretch">
 			<frame>
-				<reportElement positionType="Float" x="0" y="0" width="572" height="12" uuid="b939f28f-9532-4b9a-8656-a6c25a2a3e30"/>
+				<reportElement positionType="Float" x="0" y="92" width="572" height="12" uuid="b939f28f-9532-4b9a-8656-a6c25a2a3e30"/>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 					<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="96" height="12" uuid="5394a010-2a04-486d-a0b3-fa65a7a3a552"/>
 					<box padding="1" topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
@@ -225,7 +134,7 @@
 				</textField>
 			</frame>
 			<frame>
-				<reportElement positionType="Float" x="0" y="12" width="572" height="12" uuid="68521c45-6914-423f-8f27-f6a30772138f"/>
+				<reportElement positionType="Float" x="0" y="104" width="572" height="12" uuid="68521c45-6914-423f-8f27-f6a30772138f"/>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 					<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="96" height="12" uuid="96aee5b2-2610-4127-8712-bab9b9856290"/>
 					<box padding="1" topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
@@ -252,71 +161,184 @@
 				</textField>
 			</frame>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="4" y="31" width="74" height="12" uuid="d288378c-4638-465b-885a-cf6342734590"/>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="120" width="74" height="9" uuid="d288378c-4638-465b-885a-cf6342734590"/>
 				<box padding="1">
 					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression><![CDATA["CANTIDAD"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="403" y="31" width="69" height="12" uuid="33a0991b-2b93-40d5-b352-fb203af0c331"/>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="403" y="120" width="69" height="9" uuid="33a0991b-2b93-40d5-b352-fb203af0c331"/>
 				<box padding="1">
 					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA["PRECIO UNIT."]]></textFieldExpression>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["P/U."]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="472" y="31" width="100" height="12" uuid="c2e4bdb8-09e0-4df9-82ea-e10ebf9dd2e9"/>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="472" y="120" width="100" height="9" uuid="c2e4bdb8-09e0-4df9-82ea-e10ebf9dd2e9"/>
 				<box padding="1">
 					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression><![CDATA["SUBTOTAL"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="78" y="31" width="325" height="12" uuid="8fdd7380-b5fe-4081-bcf0-918367c7c064"/>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="74" y="120" width="329" height="9" uuid="8fdd7380-b5fe-4081-bcf0-918367c7c064"/>
 				<box padding="1">
 					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression><![CDATA["CONCEPTO"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="1" width="200" height="11" uuid="5ef57ba0-fbf1-4366-bd8b-a3d6688bd3c7"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COOPERATIVA INTEGRAL DE SERVICIOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="11" width="200" height="11" uuid="8ea69fd8-8e23-4a4f-a94a-410cf030326d"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COCHABAMBA LTDA.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="21" width="200" height="11" uuid="5138c7c8-ec2f-4fb8-a311-e71cfc1fdc5a"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CASA MATRIZ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="32" width="200" height="11" uuid="a8e01822-bb38-46b1-8bff-7e510b2a6edc"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Av. Costanera s/n Zona Central]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="42" width="200" height="11" uuid="58487386-1613-4b47-a90e-b40ce866d24a"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Telfs. 4577009 - 4577003 Punata]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="52" width="200" height="11" uuid="27277185-d5c8-4c68-910a-97bab3ad01a7"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[SUCURSAL 2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="63" width="200" height="11" uuid="3538e2d1-ebbe-4ebd-a990-c43156c4b6c1"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Av. Libertadores 454 Zona: Mirabel]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="73" width="200" height="11" uuid="3f5330db-5188-4203-a913-1afccee0ec0b"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Punata - Cochabamba - Bolivia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="32" width="134" height="42" uuid="6e982065-d1f3-4308-9239-14d199895a63"/>
+				<textElement>
+					<font fontName="Impact" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FACTURA]]></text>
+			</staticText>
+			<rectangle radius="10">
+				<reportElement x="354" y="11" width="218" height="52" uuid="4d1718a4-c2dd-4dfa-8759-6e1e67810985"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="356" y="20" width="94" height="14" uuid="a2e0bf82-8024-46b5-b8dc-3a29fe5d277c"/>
+				<text><![CDATA[NIT:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="356" y="33" width="94" height="14" uuid="21a62c6b-2dca-4fd4-8291-64f4e26f11fb"/>
+				<text><![CDATA[Nº FACTURA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="356" y="46" width="94" height="14" uuid="f1f30416-672c-43c1-b27b-e60fa5409bdc"/>
+				<text><![CDATA[Nº AUTORIZACIÓN:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="450" y="20" width="100" height="14" uuid="2285bf58-2a30-4eda-b89c-26d7a9535890"/>
+				<textFieldExpression><![CDATA[$P{nitEmpresa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="450" y="33" width="100" height="14" uuid="00b0efa3-b4a4-4b96-b9ba-865fb5d7db73"/>
+				<textFieldExpression><![CDATA[$P{numFac}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="450" y="47" width="100" height="14" uuid="c912c01b-7aa9-4237-8398-b262a8b13089"/>
+				<textFieldExpression><![CDATA[$P{numAutorizacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="403" y="65" width="100" height="20" uuid="41eadb7d-efc4-4bc7-878c-7a7d1cf6c83d"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{tipoEtiqueta}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="12" splitType="Stretch">
+		<band height="9" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="78" y="0" width="325" height="12" uuid="d60f83d8-8f11-43ba-8d9c-7be3aa43f81e"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="74" y="0" width="329" height="9" uuid="d60f83d8-8f11-43ba-8d9c-7be3aa43f81e"/>
 				<box padding="1">
 					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left"/>
+				<textElement textAlignment="Left">
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{invArticulos.descri}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="4" y="0" width="74" height="12" uuid="2accf871-0d14-482b-98c7-b3ed67d7994b"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="74" height="9" uuid="2accf871-0d14-482b-98c7-b3ed67d7994b"/>
 				<box padding="1">
 					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="403" y="0" width="70" height="12" uuid="d1783a2c-96be-435f-9032-e40191399ceb"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="403" y="0" width="70" height="9" uuid="d1783a2c-96be-435f-9032-e40191399ceb"/>
 				<box padding="1">
 					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left"/>
+				<textElement textAlignment="Left">
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="472" y="0" width="100" height="12" uuid="c6daf568-1a06-45e2-a319-e2150f5fbac2"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="472" y="0" width="100" height="9" uuid="c6daf568-1a06-45e2-a319-e2150f5fbac2"/>
 				<box padding="1">
 					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left"/>
+				<textElement textAlignment="Left">
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{importe}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -401,7 +423,7 @@
 				<textFieldExpression><![CDATA["ESTA FACTURA CONTRIBUYE AL DESARROLLO DEL PAÍS.EL USO ILÍCITO DE ÉSTA SERÁ SANCIONADO DE ACUERDO A LEY"]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="403" y="5" width="131" height="80" uuid="16d3b0bc-d4f9-4e5a-90fd-93bdfcfd5bb2"/>
+				<reportElement x="472" y="0" width="100" height="85" uuid="16d3b0bc-d4f9-4e5a-90fd-93bdfcfd5bb2"/>
 				<imageExpression><![CDATA[$P{imgQR}]]></imageExpression>
 			</image>
 		</band>

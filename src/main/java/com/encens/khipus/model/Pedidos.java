@@ -103,8 +103,9 @@ public class Pedidos implements Serializable {
     private Usuario usuario;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "pedidos")
     private Collection<ArticulosPedido> articulosPedidos = new ArrayList<>();
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedidos")
-    private Collection<Movimiento> movimientos;
+    @JoinColumn(name = "IDMOVIMIENTO",referencedColumnName = "IDMOVIMIENTO")
+    @ManyToOne(optional = true)
+    private Movimiento movimiento;
     @Column(name = "TOTAL")
     private Double total = 0.0;
     //cantidad * precio de venta
@@ -319,12 +320,12 @@ public class Pedidos implements Serializable {
         this.valorGarantia = valorRetencion;
     }
 
-    public Collection<Movimiento> getMovimientos() {
-        return movimientos;
+    public Movimiento getMovimiento() {
+        return movimiento;
     }
 
-    public void setMovimientos(Collection<Movimiento> movimientos) {
-        this.movimientos = movimientos;
+    public void setMovimiento(Movimiento movimiento) {
+        this.movimiento = movimiento;
     }
 
     public Double getTotalimporte() {
