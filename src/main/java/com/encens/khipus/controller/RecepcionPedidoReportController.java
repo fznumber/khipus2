@@ -15,7 +15,6 @@ import net.sf.dynamicreports.report.builder.crosstab.CrosstabRowGroupBuilder;
 import net.sf.dynamicreports.report.constant.Calculation;
 import net.sf.dynamicreports.report.constant.PageOrientation;
 import net.sf.dynamicreports.report.constant.PageType;
-import net.sf.dynamicreports.report.constant.VerticalAlignment;
 import net.sf.dynamicreports.report.datasource.DRDataSource;
 import net.sf.dynamicreports.report.exception.DRException;
 import net.sf.jasperreports.engine.JRDataSource;
@@ -64,15 +63,16 @@ public class RecepcionPedidoReportController {
         CrosstabRowGroupBuilder<String> rowGroup = ctab.rowGroup("cliente", String.class)
                 .setTotalHeader("Total:");
 
-        CrosstabColumnGroupBuilder<String> columnGroup = ctab.columnGroup("producto", String.class).setShowTotal(false).setHeaderStyle(Templates.bold12CenteredStyle).setHeaderHeight(100);
-        CrosstabRowGroupBuilder<String> rowItemGroup = ctab.rowGroup("distribuidor", String.class).setHeaderWidth(10);
+        CrosstabColumnGroupBuilder<String> columnGroup = ctab.columnGroup("producto", String.class).setShowTotal(false);
+        CrosstabRowGroupBuilder<String> rowItemGroup = ctab.rowGroup("distribuidor", String.class);
         CrosstabMeasureBuilder<String> cantidad = ctab.measure("cantidad", Integer.class, Calculation.COUNT);
 
         CrosstabBuilder crosstab = ctab.crosstab()
                 .headerCell(cmp.text("Cliente / Producto").setStyle(Templates.boldCenteredStyle))
+                .setCellWidth(10)
                 .rowGroups(rowItemGroup, rowGroup)
                 .columnGroups(columnGroup)
-                .addMeasure(cantidad).setGroupStyle(Templates.bold18CenteredStyle).setCellStyle(Templates.bold18CenteredStyle);
+                .addMeasure(cantidad);
 
         try {
             report()
@@ -96,7 +96,7 @@ public class RecepcionPedidoReportController {
 
 
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-        response.addHeader("Content-disposition","attachment; filename=jsfReporte.pdf");
+        response.addHeader("Content-disposition","attachment; filename=RecepcionPedios.pdf");
         ServletOutputStream stream = response.getOutputStream();
         build(stream);
         stream.flush();

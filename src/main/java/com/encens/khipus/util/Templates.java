@@ -67,7 +67,8 @@ public class Templates {
 		boldCenteredStyle   = stl.style(boldStyle)
 		                         .setAlignment(HorizontalAlignment.CENTER, VerticalAlignment.MIDDLE);
 		bold12CenteredStyle = stl.style(boldCenteredStyle)
-		                         .setFontSize(8).setVerticalAlignment(VerticalAlignment.TOP).setHorizontalAlignment(HorizontalAlignment.LEFT).setRotation(Rotation.LEFT);
+		                         .setFontSize(8).setVerticalAlignment(VerticalAlignment.TOP)
+								 .setHorizontalAlignment(HorizontalAlignment.LEFT);
 		bold18CenteredStyle = stl.style(boldCenteredStyle)
 		                         .setFontSize(10);
 		bold22CenteredStyle = stl.style(boldCenteredStyle)
@@ -83,13 +84,14 @@ public class Templates {
 		subtotalStyle       = stl.style(boldStyle)
 		                         .setTopBorder(stl.pen1Point());
 
-		StyleBuilder crosstabGroupStyle      = stl.style(columnTitleStyle);
+		StyleBuilder crosstabGroupStyle      = stl.style(columnTitleStyle).setFontSize(10);
 		StyleBuilder crosstabGroupTotalStyle = stl.style(columnTitleStyle)
 		                                          .setBackgroundColor(new Color(170, 170, 170));
 		StyleBuilder crosstabGrandTotalStyle = stl.style(columnTitleStyle)
 		                                          .setBackgroundColor(new Color(140, 140, 140));
 		StyleBuilder crosstabCellStyle       = stl.style(columnStyle)
-		                                          .setBorder(stl.pen1Point());
+				.setFontSize(8)
+				.setBorder(stl.pen1Point());
 
 		TableOfContentsCustomizerBuilder tableOfContentsCustomizer = tableOfContentsCustomizer()
 			.setHeadingStyle(0, stl.style(rootStyle).bold());

@@ -11,8 +11,6 @@
     <p:dialog id="RecepcionDlg" widgetVar="RecepcionDialog" modal="true" resizable="false" appendTo="@(body)" header="Pedido">
         <h:form id="RecepcionForm">
             <p:panelGrid id="display" columns="2" >
-                <p:outputLabel for="fechaEntrega" value="Fecha Entrega:" />
-                <p:calendar id="fechaEntrega" value="#{recepcionPedidoReportController.fechaEntrega}" />
                 <p:outputLabel value="Territorio:" for="territorio" />
                 <p:selectOneMenu id="territorio" value="#{recepcionPedidoReportController.territoriotrabajo}">
                     <f:selectItem itemLabel="" itemValue="" noSelectionOption="true" />
@@ -20,8 +18,10 @@
                                    var="territoriotrabajo"
                                    itemValue="#{territoriotrabajo}"/>
                 </p:selectOneMenu>
+                <p:outputLabel for="fechaEntrega" value="Fecha Entrega:" />
+                <p:calendar id="fechaEntrega" value="#{recepcionPedidoReportController.fechaEntrega}" />
             </p:panelGrid>
-            <p:commandButton value="Generar" actionListener="#{recepcionPedidoReportController.imprimir}" immediate="true" ajax="false"/>
+            <p:commandButton value="Generar" actionListener="#{recepcionReportController.imprimirReporte}" immediate="true" ajax="false"/>
             <p:commandButton value="#{bundle.Close}" onclick="RecepcionDialog.hide()"/>
         </h:form>
     </p:dialog>

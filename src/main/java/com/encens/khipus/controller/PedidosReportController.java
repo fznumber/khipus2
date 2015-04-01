@@ -284,7 +284,7 @@ public class PedidosReportController implements Serializable {
     public void exportarPDF(JasperPrint jasperPrint) throws IOException, JRException {
 
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-        response.addHeader("Content-disposition", "attachment; filename=jsfReporte.pdf");
+        response.addHeader("Content-disposition", "attachment; filename=DOCUMENTO_ILVA.pdf");
         ServletOutputStream stream = response.getOutputStream();
 
         JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
