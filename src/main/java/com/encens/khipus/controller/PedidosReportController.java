@@ -28,6 +28,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -174,8 +176,11 @@ public class PedidosReportController implements Serializable {
             /*movimientoController.setSelected(movimiento);
              movimientoController.create();*/
             pedido.setMovimiento(movimiento);
+            if(pedido.getEstado().equals("PENDIENTE"))
+            pedido.setEstado("PREPARAR");
+            pedidosController.setItems(null);
             pedidosController.setSelected(pedido);
-            pedidosController.update();
+            pedidosController.generalUpdate();
             dosificacion.setNumeroactual(dosificacion.getNumeroactual().intValue() + 1);
             dosificacionController.setSelected(dosificacion);
             dosificacionController.update();
@@ -188,8 +193,13 @@ public class PedidosReportController implements Serializable {
             impresionfactura.setTipo(tipoEtiquetaFactura);
             impresionfactura.setNroFactura(dosificacion.getNumeroactual());
             pedido.getMovimiento().getImpresionfacturaCollection().add(impresionfactura);
-            movimientoController.setSelected(pedido.getMovimiento());
-            movimientoController.update();
+            /*movimientoController.setSelected(pedido.getMovimiento());
+            movimientoController.update();*/
+            if(pedido.getEstado().equals("PENDIENTE"))
+                pedido.setEstado("PREPARAR");
+            pedidosController.setSelected(pedido);
+            pedidosController.setItems(null);
+            pedidosController.generalUpdate();
             dosificacion.setNumeroactual(dosificacion.getNumeroactual().intValue() + 1);
             dosificacionController.setSelected(dosificacion);
             dosificacionController.update();
@@ -205,9 +215,10 @@ public class PedidosReportController implements Serializable {
         HashMap parameters = new HashMap();
         moneyUtil = new MoneyUtil();
         barcodeRenderer = new BarcodeRenderer();
+        //todo: lanzar un exception en caso que no encuentre una dosificacion valida
         dosificacion = dosificacionFacade.findByPeriodo(new Date());
         File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/factura.jasper"));
-
+        quitarSinFactura();
         JasperPrint jasperPrint;
         parameters.putAll(fijarParmetrosFactura(pedidosElegidos.get(0)));
         try {
@@ -231,6 +242,10 @@ public class PedidosReportController implements Serializable {
             }
         }
         exportarPDF(jasperPrint);
+    }
+
+    private void quitarSinFactura() {
+        pedidosElegidos = pedidosElegidos.stream().filter(p->p.getCliente().getConfactura() == true).collect(Collectors.toList());
     }
 
     public void imprimirNota(List<Pedidos> pedidosElegidos) throws IOException, JRException {
@@ -269,7 +284,7 @@ public class PedidosReportController implements Serializable {
 
         exportarPDF(jasperPrint);
     }
-
+    
     public Map<String, Object> fijarParmetrosFactura(Pedidos pedido) {
         int numeroActual = dosificacion.getNumeroactual().intValue();
         ControlCode controlCode = generateCodControl(pedido, numeroActual, dosificacion.getNroautorizacion(), dosificacion.getLlave());

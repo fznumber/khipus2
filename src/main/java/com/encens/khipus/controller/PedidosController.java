@@ -232,6 +232,10 @@ public class PedidosController implements Serializable {
         actualizarReposiciones();
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PedidosUpdated"));
     }
+    
+    public void generalUpdate() {      
+        getFacade().edit(selected);
+    }
 
     private boolean validarReposicion() {
         Boolean error = false;
@@ -242,13 +246,7 @@ public class PedidosController implements Serializable {
                 if( articulosPedido.getPorReponer() > articulosPedido.getCantidad()){
                     JSFUtil.addErrorMessage("Eror: El "+articulosPedido.getInvArticulos().getDescri()+" tiene mayor a la reposición que la cantidad.");
                     error = true;
-                }
-
-                if( articulosPedido.getCantidad() == 0){
-                    JSFUtil.addErrorMessage("Eror: El "+articulosPedido.getInvArticulos().getDescri()+" reposición cero.");
-                    error = true;
-                }
-
+                } 
             }
         }
         return error;
@@ -269,6 +267,10 @@ public class PedidosController implements Serializable {
             articulosPedidoController.setSelected(articulosPedido);
             articulosPedidoController.update();
         }
+    }
+
+    public void setItems(List<Pedidos> items) {
+        this.items = items;
     }
 
     public List<Pedidos> getItems() {

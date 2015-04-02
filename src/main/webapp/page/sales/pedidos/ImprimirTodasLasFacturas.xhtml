@@ -7,7 +7,7 @@
 
     <ui:composition>
 
-        <p:dialog id="ImprimirFacturasDlg" widgetVar="ImprimirFacturasDialog" modal="true" resizable="true" appendTo="@(body)" header="Imprimir Factura">
+        <p:dialog id="ImprimirFacturasDlg" widgetVar="ImprimirFacturasDialog" modal="true" closable="false" resizable="true" appendTo="@(body)" header="Imprimir Factura">
             <h:form id="ImprimirFacturasForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2">                        
@@ -17,7 +17,7 @@
                         </p:selectOneListbox>
                     </p:panelGrid>
                     <p:commandButton value="Generar" id="printFactura" actionListener="#{pedidosReportController.imprimirFacturas}" ajax="false"/>
-                    <p:commandButton value="#{bundle.Close}" onclick="ImprimirFacturaDialog.hide()"/>
+                    <p:commandButton value="#{bundle.Close}" update=":PedidosListForm:datalist" onclick="ImprimirFacturaDialog.close()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>
