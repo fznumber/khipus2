@@ -64,6 +64,7 @@ public class PedidosController implements Serializable {
     private Persona personaElegida;
     private Boolean conReposicion;
     private Boolean tieneReposicion;
+    private Boolean reposicionesYaAgregadas = false;
 
     public PedidosController() {
     }
@@ -218,14 +219,39 @@ public class PedidosController implements Serializable {
     }
 
     public void cancel(){
-        reposiciones = null;
+        reposiciones = new ArrayList<>();
         selected = null;
+        tieneReposicion = false;
     }
 
     public void update() {
+        if(validarReposicion())
+            return;
+
         selected.setConReposicion(conReposicion);
         actualizarReposiciones();
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PedidosUpdated"));
+    }
+
+    private boolean validarReposicion() {
+        Boolean error = false;
+        if(selected.getArticulosPedidos().size() > 0)
+        {
+            for(ArticulosPedido articulosPedido:selected.getArticulosPedidos())
+            {
+                if( articulosPedido.getPorReponer() > articulosPedido.getCantidad()){
+                    JSFUtil.addErrorMessage("Eror: El "+articulosPedido.getInvArticulos().getDescri()+" tiene mayor a la reposición que la cantidad.");
+                    error = true;
+                }
+
+                if( articulosPedido.getCantidad() == 0){
+                    JSFUtil.addErrorMessage("Eror: El "+articulosPedido.getInvArticulos().getDescri()+" reposición cero.");
+                    error = true;
+                }
+
+            }
+        }
+        return error;
     }
 
     public void destroy() {
@@ -414,6 +440,7 @@ public class PedidosController implements Serializable {
             estados = new ArrayList<>();
             estados.add("PENDIENTE");
             estados.add("PREPARAR");
+            estados.add("ENTREGADO");
         }
         return estados;
     }
@@ -425,8 +452,21 @@ public class PedidosController implements Serializable {
     public Persona getPersonaElegida() {
         return personaElegida;
     }
-//todo: muy importante cada vez q se actualiza el cliente tiene q limpiarse el la lista de articulos elegidos
+
     public void setPersonaElegida(Persona personaElegida) {   
+        if(personaElegida == null)
+            return;
+        
+        if(this.personaElegida.getPiId() != personaElegida.getPiId())
+        {
+            selected.getArticulosPedidos().clear();
+            tieneReposicion = false;                
+            conReposicion = false;
+            reposicionesYaAgregadas= false;
+        }else{
+            return;
+        }
+        
         reposiciones.clear();
         reposiciones = getFacade().findReposicionesPorPersona(personaElegida);
         if(reposiciones.size() >0 && !conReposicion)
@@ -445,6 +485,7 @@ public class PedidosController implements Serializable {
             }
             tieneReposicion = true;
             conReposicion = true;
+            reposicionesYaAgregadas = true;
         }
         this.personaElegida = personaElegida;
     }
@@ -456,6 +497,7 @@ public class PedidosController implements Serializable {
             selected.getArticulosPedidos().remove(repo);
             repo.setEstado("RECHAZADO");
             articulos.add(repo.getInvArticulos());
+            reposicionesYaAgregadas = false;
         }
     }
 
@@ -470,6 +512,7 @@ public class PedidosController implements Serializable {
                 articulo.setInvArticulos(repo.getInvArticulos());
                 articulo.setCantidad(0);
                 selected.getArticulosPedidos().add(articulo);
+                reposicionesYaAgregadas = true;
         }
     }
 
@@ -479,7 +522,9 @@ public class PedidosController implements Serializable {
 
     public void setConReposicion(Boolean conReposicion) {
         if(conReposicion)
+        {   if(!reposicionesYaAgregadas)
             agregarReposicion();
+        }
         else
             quitarReposicion();
         this.conReposicion = conReposicion;

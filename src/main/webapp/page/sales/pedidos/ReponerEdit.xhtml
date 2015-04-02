@@ -51,7 +51,8 @@
                     <p:outputLabel value="#{item.reposicion}"/>
                 </p:column>
                 <p:column headerText="Por Reponer" rendered="#{pedidosController.selected.estado.equals('ENTREGADO')}">
-                    <p:inputText value="#{item.porReponer}" rendered="#{pedidosController.selected.estado.equals('ENTREGADO')}" size="4"/>
+                    <p:inputText value="#{item.porReponer}" rendered="#{pedidosController.selected.estado.equals('ENTREGADO')}" size="4">
+                    </p:inputText>
                 </p:column>
                 <p:column headerText="Cant. T.">
                     <p:outputLabel id="total" value="#{item.total}" />
