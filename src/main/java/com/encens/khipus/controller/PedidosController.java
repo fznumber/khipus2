@@ -155,6 +155,21 @@ public class PedidosController implements Serializable {
         return selected;
     }
 
+    public void prepareEdit(Pedidos ped) {
+        selected = ped;
+        personas = personasFacade.findAllClientesPersonaInstitucion();
+        articulos = invArticulosFacade.findAllInvArticulos();
+        distribuidores = personasFacade.findAlldistribuidores();
+        conReposicion = ped.getConReposicion();
+        tieneReposicion = ped.getConReposicion();
+        reposicionesYaAgregadas = ped.getConReposicion();
+        personaElegida = ped.getCliente();
+        for(ArticulosPedido articulosPedido:ped.getArticulosPedidos())
+        {
+            articulos.remove(articulosPedido);
+        }
+    }
+
     public void registrar() throws IOException, JRException {
         selected.setEstado("PENDIENTE");
         create();
@@ -231,6 +246,7 @@ public class PedidosController implements Serializable {
         selected.setConReposicion(conReposicion);
         actualizarReposiciones();
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PedidosUpdated"));
+        items = null;
     }
     
     public void generalUpdate() {      

@@ -8,8 +8,8 @@
 
 <ui:composition>
 
-    <p:dialog id="PedidosEditDlg" widgetVar="PedidosEditDialog" modal="true" resizable="false" appendTo="@(body)" width="820px" header="Editar Pedido">
-        <h:form id="PedidosEditForm">
+    <p:dialog id="PedidosReponerDlg" widgetVar="PedidosReponerDialog" modal="true" resizable="false" appendTo="@(body)" width="820px" header="Editar Pedido">
+        <h:form id="PedidosReponerForm">
             <p:panelGrid id="display" rendered="#{pedidosController.selected != null}" columns="4" >
                 <p:outputLabel value="Cliente:" for="cliente" />
                 <p:outputLabel value="#{pedidosController.selected.cliente.nombreCompleto}" id="cliente"/>
@@ -68,7 +68,7 @@
                 </f:facet>
             </p:dataTable>
             <p:commandButton actionListener="#{pedidosController.update}" value="#{bundle.Save}" update="display,:PedidosListForm:datalist,:PedidosListForm:growl"/>
-            <p:commandButton actionListener="#{pedidosController.cancel}" value="#{bundle.Cancel}" update=":PedidosListForm:datalist" onclick="PedidosEditDialog.close()"/>
+            <p:commandButton actionListener="#{pedidosController.cancel}" value="#{bundle.Cancel}" update=":PedidosListForm:datalist" onclick="PedidosReponerDialog.close()"/>
         </h:form>
     </p:dialog>
 

@@ -278,7 +278,8 @@ public class PedidosReportController implements Serializable {
             if (pedido.getEstado().equals("PENDIENTE")) {
                 pedido.setEstado("PREPARAR");
                 pedidosController.setSelected(pedido);
-                pedidosController.update();
+                pedidosController.setItems(null);
+                pedidosController.generalUpdate();
             }
         }
 

@@ -26,6 +26,8 @@
                              rows="15"
                              emptyMessage="No hay pedidos registrados"
                              filteredValue="#{pedidosController.pedidosFiltrado}"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="15,20,30"
                         >
 
                     <p:ajax event="rowSelect" update="createButton recepcionButton generarFacturas generarNotas"/>
@@ -65,6 +67,14 @@
                         </f:facet>
                         <h:outputText value="#{item.estado}"/>
                     </p:column>
+                    <p:column filterMatchMode="in" filterBy="#{item.cliente.territoriotrabajo.nombre}">
+                        <f:facet name="filter">
+                            <p:selectCheckboxMenu label="Territoio" onchange="PF('pedidosTabla').filter()" panelStyle="width:125px" scrollHeight="150">
+                                <f:selectItems value="#{territoriotrabajoController.itemsAvailableSelectMany}" />
+                            </p:selectCheckboxMenu>
+                        </f:facet>
+                        <h:outputText value="#{item.cliente.territoriotrabajo.nombre}"/>
+                    </p:column>
                     <p:column filterBy="#{item.idtipopedido.nombre}" filterMatchMode="in">
                         <f:facet name="filter">
                             <p:selectCheckboxMenu label="Tipo" onchange="PF('pedidosTabla').filter()" panelStyle="width:125px" scrollHeight="150">
@@ -74,15 +84,16 @@
                         <h:outputText value="#{item.idtipopedido.nombre}"/>
                     </p:column>
                     <p:column headerText="Acción">
-                        <p:commandButton value="Nota" id="printNotaDeVenta" actionListener="#{pedidosReportController.imprimirNotaEntrega(item)}" ajax="false"/>
-                        <p:commandButton value="Factura" id="printFacturaButton" oncomplete="PF('ImprimirFacturaDialog').show()">
+                        <p:commandButton title="Nota" id="printNotaDeVenta" actionListener="#{pedidosReportController.imprimirNotaEntrega(item)}" ajax="false" icon="ui-icon-disk"/>
+                        <p:commandButton title="Factura" id="printFacturaButton" oncomplete="PF('ImprimirFacturaDialog').show()" icon="ui-icon-search">
                             <f:setPropertyActionListener value="#{item}" target="#{pedidosReportController.pedido}" />
                         </p:commandButton>
-                        <p:commandButton id="editButton" actionListener="#{pedidosController.setSelected(item)}"  icon="ui-icon-pencil" value="Reponer" update=":PedidosEditForm" oncomplete="PF('PedidosEditDialog').show()" rendered="#{item.estado.equals('ENTREGADO')}"/>
+                        <p:commandButton id="editButton" actionListener="#{pedidosController.setSelected(item)}"  icon="ui-icon-plus" title="Reponer" update=":PedidosReponerForm" oncomplete="PF('PedidosReponerDialog').show()" rendered="#{item.estado.equals('ENTREGADO')}"/>
+                        <p:commandButton id="editPedido" actionListener="#{pedidosController.prepareEdit(item)}"  icon="ui-icon-plus" title="Editar" update=":PedidosEditForm" oncomplete="PF('PedidosEditDialog').show()" rendered="#{item.estado.equals('PENDIENTE')}"/>
+                        <p:commandButton id="viewButton" actionListener="#{pedidosController.setSelected(item)}"  icon="ui-icon-search" title="#{bundle.View}" update=":PedidosViewForm" oncomplete="PF('PedidosViewDialog').show()"/>
                     </p:column>
                     <f:facet name="footer">
                         <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{pedidosController.prepareCreate}" update=":PedidosCreateForm" oncomplete="PF('PedidosCreateDialog').show()"/>
-                        <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":PedidosViewForm" oncomplete="PF('PedidosViewDialog').show()" disabled="#{empty pedidosController.selected}"/>
                         <p:commandButton id="recepcionButton"   icon="ui-icon-search" value="Recepción Pedidos" update=":RecepcionForm" oncomplete="PF('RecepcionDialog').show()" />
                         <p:commandButton id="generarFacturas" value="Generar Facturas" oncomplete="PF('ImprimirFacturasDialog').show()">
                             <f:setPropertyActionListener value="#{pedidosController.pedidosElegidos}" target="#{pedidosReportController.pedidosElegidos}" />
@@ -99,6 +110,7 @@
         <ui:include src="ReponerEdit.xhtml"/>
         <ui:include src="RecepcionPedidosReport.xhtml"/>
         <ui:include src="View.xhtml"/>
+        <ui:include src="Edit.xhtml"/>
         <ui:include src="ImprimirFactura.xhtml"/>
         <ui:include src="ImprimirTodasLasFacturas.xhtml"/>
     </ui:define>

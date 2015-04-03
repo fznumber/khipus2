@@ -90,7 +90,7 @@ public class ArticulosPedidoController implements Serializable {
                 } else {
                     getFacade().remove(selected);
                 }
-                JSFUtil.addSuccessMessage(successMessage);
+                //JSFUtil.addSuccessMessage(successMessage);
             } catch (EJBException ex) {
                 String msg = "";
                 Throwable cause = ex.getCause();
