@@ -64,12 +64,20 @@ public class PedidosReportController implements Serializable {
     private Boolean esCopia = false;
 
     public void imprimirNotaEntrega(Pedidos pedido) throws IOException, JRException {
+        if(pedido.getEstado().equals("ANULADO"))
+        {
+            return;
+        }
         this.pedido = pedido;
         HashMap parameters = new HashMap();
         moneyUtil = new MoneyUtil();
         parameters.putAll(getReportParams(pedido));
         File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/notaDeEntrega.jasper"));
         exportarPDF(parameters, jasper);
+        pedido.setEstado("PREPARAR");
+        pedidosController.setSelected(pedido);
+        pedidosController.generalUpdate();
+        pedidosController.setItems(null);
     }
 
     private Map<String, Object> getReportParams(Pedidos pedido) {
@@ -129,6 +137,12 @@ public class PedidosReportController implements Serializable {
             return;
         }
 
+        if(pedido.getEstado().equals("ANULADO"))
+        {
+            JSFUtil.addWarningMessage("El pedido fué anulado.");
+            return;
+        }
+
         HashMap parameters = new HashMap();
         moneyUtil = new MoneyUtil();
         barcodeRenderer = new BarcodeRenderer();
@@ -143,10 +157,6 @@ public class PedidosReportController implements Serializable {
                         pedido.getCliente().getNombreCompleto(), dosificacion.getNumeroactual().intValue(), tipoEtiquetaFactura, controlCode.getCodigoControl(), controlCode.getKeyQR(), pedido));
         guardarFactura(pedido, controlCode.getCodigoControl());
         exportarPDF(parameters, jasper);
-    }
-
-    public void cerrar() {
-        pedido = null;
     }
 
     public void guardarFactura(Pedidos pedido, String codControl) {
@@ -212,6 +222,7 @@ public class PedidosReportController implements Serializable {
             JSFUtil.addWarningMessage("No hay ningun pedido pedido elegido.");
             return;
         }
+        quitarAnulados();
         HashMap parameters = new HashMap();
         moneyUtil = new MoneyUtil();
         barcodeRenderer = new BarcodeRenderer();
@@ -248,11 +259,16 @@ public class PedidosReportController implements Serializable {
         pedidosElegidos = pedidosElegidos.stream().filter(p->p.getCliente().getConfactura() == true).collect(Collectors.toList());
     }
 
+    private void quitarAnulados() {
+        pedidosElegidos = pedidosElegidos.stream().filter(p->p.getEstado().equals("ANULADO") != true).collect(Collectors.toList());
+    }
+
     public void imprimirNota(List<Pedidos> pedidosElegidos) throws IOException, JRException {
         HashMap parameters = new HashMap();
         moneyUtil = new MoneyUtil();
         File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/notaDeEntrega.jasper"));
-
+        this.pedidosElegidos = pedidosElegidos;
+        quitarAnulados();
         JasperPrint jasperPrint;
         parameters.putAll(getReportParams(pedidosElegidos.get(0)));
         try {
@@ -284,8 +300,9 @@ public class PedidosReportController implements Serializable {
         }
 
         exportarPDF(jasperPrint);
+        this.pedidosElegidos.clear();
     }
-    
+
     public Map<String, Object> fijarParmetrosFactura(Pedidos pedido) {
         int numeroActual = dosificacion.getNumeroactual().intValue();
         ControlCode controlCode = generateCodControl(pedido, numeroActual, dosificacion.getNroautorizacion(), dosificacion.getLlave());
@@ -314,7 +331,7 @@ public class PedidosReportController implements Serializable {
 
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, new JRBeanCollectionDataSource(pedido.getArticulosPedidos()));
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-        response.addHeader("Content-disposition", "attachment; filename=jsfReporte.pdf");
+        response.addHeader("Content-disposition", "attachment; filename=DOCUMENTO_ILVA.pdf");
         ServletOutputStream stream = response.getOutputStream();
 
         JasperExportManager.exportReportToPdfStream(jasperPrint, stream);

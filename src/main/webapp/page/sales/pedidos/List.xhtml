@@ -84,13 +84,14 @@
                         <h:outputText value="#{item.idtipopedido.nombre}"/>
                     </p:column>
                     <p:column headerText="Acción">
-                        <p:commandButton title="Nota" id="printNotaDeVenta" actionListener="#{pedidosReportController.imprimirNotaEntrega(item)}" ajax="false" icon="ui-icon-disk"/>
-                        <p:commandButton title="Factura" id="printFacturaButton" oncomplete="PF('ImprimirFacturaDialog').show()" icon="ui-icon-search">
+                        <p:commandButton title="NOTA DE ENTREGA" id="printNotaDeVenta" actionListener="#{pedidosReportController.imprimirNotaEntrega(item)}" ajax="false" icon="ui-icon-disk" rendered="#{!item.estado.equals('ANULADO')}"/>
+                        <p:commandButton title="GENERAR FACTURA" id="printFacturaButton" oncomplete="PF('ImprimirFacturaDialog').show()" icon="ui-icon-search" rendered="#{!item.estado.equals('ANULADO')}">
                             <f:setPropertyActionListener value="#{item}" target="#{pedidosReportController.pedido}" />
                         </p:commandButton>
-                        <p:commandButton id="editButton" actionListener="#{pedidosController.setSelected(item)}"  icon="ui-icon-plus" title="Reponer" update=":PedidosReponerForm" oncomplete="PF('PedidosReponerDialog').show()" rendered="#{item.estado.equals('ENTREGADO')}"/>
-                        <p:commandButton id="editPedido" actionListener="#{pedidosController.prepareEdit(item)}"  icon="ui-icon-plus" title="Editar" update=":PedidosEditForm" oncomplete="PF('PedidosEditDialog').show()" rendered="#{item.estado.equals('PENDIENTE')}"/>
-                        <p:commandButton id="viewButton" actionListener="#{pedidosController.setSelected(item)}"  icon="ui-icon-search" title="#{bundle.View}" update=":PedidosViewForm" oncomplete="PF('PedidosViewDialog').show()"/>
+                        <p:commandButton id="editButton" actionListener="#{pedidosController.setSelected(item)}"  icon="ui-icon-plus" title="REPONER" update=":PedidosReponerForm" oncomplete="PF('PedidosReponerDialog').show()" rendered="#{item.estado.equals('ENTREGADO') and !item.estado.equals('ANULADO')}"/>
+                        <p:commandButton id="editPedido" actionListener="#{pedidosController.prepareEdit(item)}"  icon="ui-icon-plus" title="EDITAR" update=":PedidosEditForm" oncomplete="PF('PedidosEditDialog').show()" rendered="#{item.estado.equals('PENDIENTE') and !item.estado.equals('ANULADO')}"/>
+                        <p:commandButton id="anularPedido" actionListener="#{pedidosController.prepareEdit(item)}"  icon="ui-icon-plus" title="ANULAR PEDIDO" update=":PedidosAnularForm" oncomplete="PF('PedidosAnularDialog').show()" rendered="#{!item.estado.equals('ANULADO')}"/>
+                        <p:commandButton id="viewButton" actionListener="#{pedidosController.setSelected(item)}"  icon="ui-icon-search" title="VER" update=":PedidosViewForm" oncomplete="PF('PedidosViewDialog').show()"/>
                     </p:column>
                     <f:facet name="footer">
                         <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{pedidosController.prepareCreate}" update=":PedidosCreateForm" oncomplete="PF('PedidosCreateDialog').show()"/>
@@ -113,6 +114,7 @@
         <ui:include src="Edit.xhtml"/>
         <ui:include src="ImprimirFactura.xhtml"/>
         <ui:include src="ImprimirTodasLasFacturas.xhtml"/>
+        <ui:include src="AnularPedido.xhtml"/>
     </ui:define>
 </ui:composition>
 

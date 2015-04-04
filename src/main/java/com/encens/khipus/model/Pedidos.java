@@ -112,6 +112,11 @@ public class Pedidos implements Serializable {
     @Basic(optional = false)
     @Column(name = "TOTALIMPORTE")
     private Double totalimporte = 0.0;
+    @JoinColumn(name = "PEDIDOSREPOSICION", referencedColumnName = "IDPEDIDOS")
+    @ManyToOne(optional = false)
+    private Pedidos reposicion;
+    @OneToMany(cascade = CascadeType.PERSIST,mappedBy = "reposicion")
+    private Collection<Pedidos> pedidosConReposicion;
 
     public Pedidos() {
     }
@@ -356,5 +361,21 @@ public class Pedidos implements Serializable {
 
     public void setConReposicion(Boolean conReposicion) {
         this.conReposicion = conReposicion;
+    }
+
+    public Pedidos getReposicion() {
+        return reposicion;
+    }
+
+    public void setReposicion(Pedidos reposicion) {
+        this.reposicion = reposicion;
+    }
+
+    public Collection<Pedidos> getPedidosConReposicion() {
+        return pedidosConReposicion;
+    }
+
+    public void setPedidosConReposicion(Collection<Pedidos> pedidosConReposicion) {
+        this.pedidosConReposicion = pedidosConReposicion;
     }
 }

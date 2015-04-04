@@ -47,7 +47,7 @@
                                    var="tipoPedido"
                                    itemValue="#{tipoPedido}"/>
                 </p:selectOneMenu>
-                <p:outputLabel value="¿Con reposición?:" for="conReposicion"/>
+                <p:outputLabel value="Reposición:" for="conReposicion"/>
                 <p:selectBooleanButton id="conReposicion" value="#{pedidosController.conReposicion}" onLabel="Quitar" offLabel="Agregar" disabled="#{!pedidosController.tieneReposicion}">
                     <p:ajax update="articulosTable"/>
                 </p:selectBooleanButton>
