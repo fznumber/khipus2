@@ -16,6 +16,7 @@ import com.encens.khipus.util.JSFUtil;
 import com.encens.khipus.util.JSFUtil.PersistAction;
 import java.util.AbstractList;
 import net.sf.jasperreports.engine.JRException;
+import org.apache.commons.lang.StringUtils;
 
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
@@ -48,11 +49,10 @@ public class PedidosController implements Serializable {
     private List<ArticulosPedido> articulosPedidos = new ArrayList<>();
     private List<ArticulosPedido> articulosPedidosElegidos = new ArrayList<>();
     private List<InvArticulos> articulos;
-    private List<ArticulosPedido> reposiciones = new ArrayList<>();
+    private List<Pedidos> reposiciones = new ArrayList<>();
     private List<Pedidos> items = null;
     private Pedidos selected;
     private List<Persona> personas;
-    private List<Persona> distribuidores;
     private Tipopedido tipopedido;
     private Integer importeTotal = 0;
     private InvArticulos articuloElegido;
@@ -64,6 +64,7 @@ public class PedidosController implements Serializable {
     private Persona personaElegida;
     private Boolean conReposicion;
     private Boolean tieneReposicion;
+    private Boolean reposicionesYaAgregadas = false;
 
     public PedidosController() {
     }
@@ -106,18 +107,6 @@ public class PedidosController implements Serializable {
         return clientesFiltrados;
     }
 
-    public List<Persona> completarDistribuidor(String query) {
-        List<Persona> distribuidoresFiltrados = new ArrayList<>();
-        for(Persona persona: distribuidores) {
-
-            if(persona.getNombreCompleto().toLowerCase().contains(query)) {
-                distribuidoresFiltrados.add(persona);
-            }
-        }
-
-        return distribuidoresFiltrados;
-    }
-
     public void agregarArticulo()
     {
         if(articuloElegido == null)
@@ -148,10 +137,27 @@ public class PedidosController implements Serializable {
         personaElegida = new Persona();
         personas = personasFacade.findAllClientesPersonaInstitucion();
         articulos = invArticulosFacade.findAllInvArticulos();
-        distribuidores = personasFacade.findAlldistribuidores();
         conReposicion = false;
         initializeEmbeddableKey();
         return selected;
+    }
+
+    public void prepareEdit(Pedidos ped) {
+        selected = ped;
+        personas = personasFacade.findAllClientesPersonaInstitucion();
+        articulos = invArticulosFacade.findAllInvArticulos();
+        conReposicion = ped.getConReposicion();
+        tieneReposicion = ped.getConReposicion();
+        reposicionesYaAgregadas = ped.getConReposicion();
+        personaElegida = ped.getCliente();
+        if(ped.getConReposicion())
+        {
+            reposiciones.addAll(selected.getPedidosConReposicion());
+        }
+        for(ArticulosPedido articulosPedido:ped.getArticulosPedidos())
+        {
+            articulos.remove(articulosPedido.getInvArticulos());
+        }
     }
 
     public void registrar() throws IOException, JRException {
@@ -171,7 +177,11 @@ public class PedidosController implements Serializable {
         selected.setCliente(personaElegida);
         selected.setCodigo(new CodigoPedidoSecuencia());
         selected.setFechaPedido(new Date());
-        selected.setConReposicion(false);
+        selected.setConReposicion(conReposicion);
+        if(conReposicion) {
+            selected.setPedidosConReposicion(reposiciones);
+            selected.setReposicion(selected);
+        }
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PedidosCreated"));
         actualizarReposiciones();
         if (!JSFUtil.isValidationFailed()) {
@@ -180,7 +190,6 @@ public class PedidosController implements Serializable {
             personaElegida = new Persona();
             personas = personasFacade.findAllClientesPersonaInstitucion();
             articulos = invArticulosFacade.findAllInvArticulos();
-            distribuidores = personasFacade.findAlldistribuidores();
             reposiciones = new ArrayList<>();
         }
 
@@ -218,14 +227,46 @@ public class PedidosController implements Serializable {
     }
 
     public void cancel(){
-        reposiciones = null;
+        reposiciones = new ArrayList<>();
         selected = null;
+        tieneReposicion = false;
     }
 
     public void update() {
+        if(validarReposicion())
+            return;
+
         selected.setConReposicion(conReposicion);
         actualizarReposiciones();
+        if(conReposicion) {
+            selected.setPedidosConReposicion(reposiciones);
+            selected.setReposicion(selected);
+        }
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PedidosUpdated"));
+        items = null;
+    }
+    
+    public void generalUpdate() {      
+        getFacade().edit(selected);
+    }
+
+    public void generalUpdate(Pedidos pedido) {
+        getFacade().edit(pedido);
+    }
+
+    private boolean validarReposicion() {
+        Boolean error = false;
+        if(selected.getArticulosPedidos().size() > 0)
+        {
+            for(ArticulosPedido articulosPedido:selected.getArticulosPedidos())
+            {
+                if( articulosPedido.getPorReponer() > articulosPedido.getCantidad()){
+                    JSFUtil.addErrorMessage("Eror: El "+articulosPedido.getInvArticulos().getDescri()+" tiene mayor a la reposición que la cantidad.");
+                    error = true;
+                } 
+            }
+        }
+        return error;
     }
 
     public void destroy() {
@@ -238,11 +279,16 @@ public class PedidosController implements Serializable {
 
     public void actualizarReposiciones()
     {
-        for(ArticulosPedido articulosPedido:reposiciones)
+        for(Pedidos pedido:reposiciones)
+        for(ArticulosPedido articulosPedido:pedido.getArticulosPedidos())
         {
             articulosPedidoController.setSelected(articulosPedido);
             articulosPedidoController.update();
         }
+    }
+
+    public void setItems(List<Pedidos> items) {
+        this.items = items;
     }
 
     public List<Pedidos> getItems() {
@@ -254,6 +300,34 @@ public class PedidosController implements Serializable {
     public String reinit() {
         articuloElegido = new InvArticulos();
         return null;
+    }
+    //TODO: en caso de anular un pedio con estado entregado de reponerse los articulos al almacen
+    //analizar en los demas casos
+    public void anularPedido(){
+        if(validarAnulacion())
+        {
+            return;
+        }
+        if(selected.getConReposicion())
+        {
+            selected.setPedidosConReposicion(null);
+            selected.setReposicion(null);
+            quitarReposicion();
+        }
+        actualizarReposiciones();
+        selected.setEstado("ANULADO");
+        selected.setConReposicion(conReposicion);
+        persist(PersistAction.UPDATE, "El pedido fue anulado con exito.");
+        items = null;
+    }
+
+    private boolean validarAnulacion() {
+        Boolean error = false;
+        if(StringUtils.isEmpty(selected.getObservacion())){
+            JSFUtil.addErrorMessage( "Es necesario agregar una descripción.");
+            error = true;
+        }
+        return error;
     }
 
     private void persist(PersistAction persistAction, String successMessage) {
@@ -414,6 +488,8 @@ public class PedidosController implements Serializable {
             estados = new ArrayList<>();
             estados.add("PENDIENTE");
             estados.add("PREPARAR");
+            estados.add("ENTREGADO");
+            estados.add("ANULADO");
         }
         return estados;
     }
@@ -425,52 +501,77 @@ public class PedidosController implements Serializable {
     public Persona getPersonaElegida() {
         return personaElegida;
     }
-//todo: muy importante cada vez q se actualiza el cliente tiene q limpiarse el la lista de articulos elegidos
+
     public void setPersonaElegida(Persona personaElegida) {   
+        if(personaElegida == null)
+            return;
+        
+        if(this.personaElegida.getPiId() != personaElegida.getPiId())
+        {
+            selected.getArticulosPedidos().clear();
+            tieneReposicion = false;                
+            conReposicion = false;
+            reposicionesYaAgregadas= false;
+        }else{
+            return;
+        }
+        
         reposiciones.clear();
         reposiciones = getFacade().findReposicionesPorPersona(personaElegida);
         if(reposiciones.size() >0 && !conReposicion)
         {
-            for(ArticulosPedido repo:reposiciones)
+            for(Pedidos pedidosConRepo:reposiciones)
+            for(ArticulosPedido repo:pedidosConRepo.getArticulosPedidos())
             {
-                ArticulosPedido articulo = new ArticulosPedido();
-                articulo.setPrecio(repo.getPrecio());
-                repo.setEstado("REPUESTO");
-                articulo.setReposicion(repo.getPorReponer());
-                articulo.setPedidos(selected);
-                articulo.setInvArticulos(repo.getInvArticulos());
-                articulo.setCantidad(0);
-                selected.getArticulosPedidos().add(articulo);
-                articulos.remove(repo.getInvArticulos());
+                if(repo.getEstado().equals("RECHAZADO")) {
+                    ArticulosPedido articulo = new ArticulosPedido();
+                    articulo.setPrecio(repo.getPrecio());
+                    repo.setEstado("REPUESTO");
+                    articulo.setReposicion(repo.getPorReponer());
+                    articulo.setPedidos(selected);
+                    articulo.setInvArticulos(repo.getInvArticulos());
+                    articulo.setCantidad(0);
+                    selected.getArticulosPedidos().add(articulo);
+                    articulos.remove(repo.getInvArticulos());
+                }
             }
             tieneReposicion = true;
             conReposicion = true;
+            reposicionesYaAgregadas = true;
         }
         this.personaElegida = personaElegida;
     }
 
     public void quitarReposicion(){
-
-        for(ArticulosPedido repo:reposiciones)
-        {
-            selected.getArticulosPedidos().remove(repo);
-            repo.setEstado("RECHAZADO");
-            articulos.add(repo.getInvArticulos());
+        for(Pedidos pedido:reposiciones){
+            for(ArticulosPedido repo:pedido.getArticulosPedidos()){
+                //selected.getArticulosPedidos().remove(repo);
+                if(repo.getEstado().equals("REPUESTO"))
+                repo.setEstado("RECHAZADO");
+                articulos.add(repo.getInvArticulos());
+                conReposicion = false;
+                reposicionesYaAgregadas = false;
+            }
         }
     }
 
     public void agregarReposicion(){
-        for(ArticulosPedido repo:reposiciones)
+
+        for(Pedidos pedido:reposiciones)
+        for(ArticulosPedido repo:pedido.getArticulosPedidos())
         {
                 ArticulosPedido articulo = new ArticulosPedido();
                 articulo.setPrecio(repo.getPrecio());
+                if(repo.getEstado().equals("RECHAZADO"))
                 repo.setEstado("REPUESTO");
                 articulo.setReposicion(repo.getPorReponer());
                 articulo.setPedidos(selected);
                 articulo.setInvArticulos(repo.getInvArticulos());
                 articulo.setCantidad(0);
                 selected.getArticulosPedidos().add(articulo);
+                reposicionesYaAgregadas = true;
         }
+        conReposicion = true;
     }
 
     public Boolean getConReposicion() {
@@ -479,7 +580,9 @@ public class PedidosController implements Serializable {
 
     public void setConReposicion(Boolean conReposicion) {
         if(conReposicion)
+        {   if(!reposicionesYaAgregadas)
             agregarReposicion();
+        }
         else
             quitarReposicion();
         this.conReposicion = conReposicion;

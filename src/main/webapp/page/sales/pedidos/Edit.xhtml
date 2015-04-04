@@ -8,29 +8,11 @@
 
 <ui:composition>
 
-    <p:dialog id="PedidosCreateDlg" widgetVar="PedidosCreateDialog" modal="true" width="820px" appendTo="@(body)" header="Crear pedido" closable="false" dynamic="true">
-        <h:form id="PedidosCreateForm">
+    <p:dialog id="PedidosEditDlg" widgetVar="PedidosEditDialog" modal="true" width="820px" appendTo="@(body)" header="Crear pedido" closable="false" dynamic="true">
+        <h:form id="PedidosEditForm">
             <p:panelGrid id="display" rendered="#{pedidosController.selected != null}" columns="4" >
                 <p:outputLabel value="Cliente:" for="cliente" />
-                <p:autoComplete id="cliente" value="#{pedidosController.personaElegida}" completeMethod="#{pedidosController.completarCliente}"
-                                var="cliente" itemLabel="#{cliente.nombreCompleto}" itemValue="#{cliente}" converter="convertirPersona" forceSelection="true">
-                    <f:facet name="itemtip">
-                        <h:panelGrid columns="2" cellpadding="5">
-                            <f:facet name="header">
-                                <h:outputText styleClass="ui-theme ui-theme-#{cliente.nombreCompleto}" style="margin-left:50px" />
-                            </f:facet>
-                            <h:outputText value="Nombre:" />
-                            <h:outputText value="#{cliente.nombreCompleto}" />
-                            <h:outputText value="Nit:" />
-                            <h:outputText value="#{cliente.nit}" />
-                            <h:outputText value="C.I.:" />
-                            <h:outputText value="#{cliente.nroDoc}" />
-                            <h:outputText value="Telefono:" />
-                            <h:outputText value="#{cliente.telefono}" />
-                        </h:panelGrid>
-                    </f:facet>
-                    <p:ajax event="itemSelect" update="nit,garantia,comision,tipocliente,conReposicion,articulosTable"></p:ajax>
-                </p:autoComplete>
+                <p:outputLabel id="cliente" value="#{pedidosController.selected.cliente.nombreCompleto}"/>
                 <p:outputLabel for="fechaEntrega" value="Fecha Entrega:" />
                 <p:calendar id="fechaEntrega" value="#{pedidosController.selected.fechaEntrega}" />
                 <p:outputLabel value="% Garantia:" for="garantia"/>
@@ -47,7 +29,7 @@
                                    var="tipoPedido"
                                    itemValue="#{tipoPedido}"/>
                 </p:selectOneMenu>
-                <p:outputLabel value="Reposición:" for="conReposicion"/>
+                <p:outputLabel value="¿Con reposición?:" for="conReposicion"/>
                 <p:selectBooleanButton id="conReposicion" value="#{pedidosController.conReposicion}" onLabel="Quitar" offLabel="Agregar" disabled="#{!pedidosController.tieneReposicion}">
                     <p:ajax update="articulosTable"/>
                 </p:selectBooleanButton>
@@ -70,9 +52,9 @@
                         </h:panelGrid>
                     </f:facet>
                 </p:autoComplete>
-                <p:commandButton actionListener="#{pedidosController.agregarArticulo}" value="Agregar" update=":PedidosCreateForm:articulosTable,:PedidosCreateForm:itemTip"/>
+                <p:commandButton actionListener="#{pedidosController.agregarArticulo}" value="Agregar" update=":PedidosEditForm:articulosTable,:PedidosEditForm:itemTip"/>
             </p:panelGrid>
-            <p:remoteCommand name="refreshFooter" update="PedidosCreateForm:articulosTable:totalImporte"/>
+            <p:remoteCommand name="refreshFooter" update="PedidosEditForm:articulosTable:totalImporte"/>
             <p:dataTable
                     id="articulosTable"
                     var="item"
@@ -116,8 +98,8 @@
                     </h:outputText>
                 </f:facet>
             </p:dataTable>
-            <p:commandButton actionListener="#{pedidosController.registrar}" value="#{bundle.Save}" update="display,:PedidosListForm:datalist,:PedidosListForm:growl,PedidosCreateForm:articulosTable"/>
-            <p:commandButton actionListener="#{pedidosController.cancel}" value="#{bundle.Close}" update=":PedidosListForm:datalist" onclick="PedidosCreateDialog.close()" />
+            <p:commandButton actionListener="#{pedidosController.update}" value="#{bundle.Save}" update="display,:PedidosListForm:datalist,:PedidosListForm:growl,PedidosEditForm:articulosTable"/>
+            <p:commandButton actionListener="#{pedidosController.cancel}" value="#{bundle.Close}" update=":PedidosListForm:datalist" onclick="PedidosEditDialog.close()" />
         </h:form>
     </p:dialog>
 
