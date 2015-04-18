@@ -35,8 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ArticulosPaquete.findByCantidad", query = "SELECT a FROM ArticulosPaquete a WHERE a.cantidad = :cantidad"),
     @NamedQuery(name = "ArticulosPaquete.findByCodAlm", query = "SELECT a FROM ArticulosPaquete a WHERE a.codAlm = :codAlm"),
     @NamedQuery(name = "ArticulosPaquete.findByPrecio", query = "SELECT a FROM ArticulosPaquete a WHERE a.precio = :precio"),
-    @NamedQuery(name = "ArticulosPaquete.findByTotal", query = "SELECT a FROM ArticulosPaquete a WHERE a.total = :total"),
-    @NamedQuery(name = "ArticulosPaquete.findByIdcliente", query = "SELECT a FROM ArticulosPaquete a WHERE a.idcliente = :idcliente")})
+    @NamedQuery(name = "ArticulosPaquete.findByTotal", query = "SELECT a FROM ArticulosPaquete a WHERE a.total = :total")})
 public class ArticulosPaquete implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -62,21 +61,12 @@ public class ArticulosPaquete implements Serializable {
     private Double precio;
     @Column(name = "TOTAL")
     private Double total;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "IDCLIENTE")
-    private long idcliente;
 
     public ArticulosPaquete() {
     }
 
     public ArticulosPaquete(Long idarticulospaquete) {
         this.idarticulospaquete = idarticulospaquete;
-    }
-
-    public ArticulosPaquete(Long idarticulospaquete, long idcliente) {
-        this.idarticulospaquete = idarticulospaquete;
-        this.idcliente = idcliente;
     }
 
     public Long getIdarticulospaquete() {
@@ -149,14 +139,6 @@ public class ArticulosPaquete implements Serializable {
 
     public void setTotal(Double total) {
         this.total = total;
-    }
-
-    public long getIdcliente() {
-        return idcliente;
-    }
-
-    public void setIdcliente(long idcliente) {
-        this.idcliente = idcliente;
     }
 
     @Override

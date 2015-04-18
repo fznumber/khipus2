@@ -12,7 +12,6 @@
     <class>com.encens.khipus.model.Derechoacceso</class>
     <class>com.encens.khipus.model.Distribuidor</class>
     <class>com.encens.khipus.model.Dosificacion</class>
-    <class>com.encens.khipus.model.EstadoPedidos</class>
     <class>com.encens.khipus.model.Funcionalidad</class>
     <class>com.encens.khipus.model.Impresionfactura</class>
     <class>com.encens.khipus.model.Institucion</class>

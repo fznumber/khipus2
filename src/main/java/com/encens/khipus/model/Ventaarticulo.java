@@ -34,17 +34,14 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Ventaarticulo.findByPrecio", query = "SELECT v FROM Ventaarticulo v WHERE v.precio = :precio"),
     @NamedQuery(name = "Ventaarticulo.findByInvArticulo", query = "SELECT v FROM Ventaarticulo v WHERE v.invArticulos = :invArticulos")})
 public class Ventaarticulo implements Serializable {
-    @OneToMany(mappedBy = "idpaquete")
-    private Collection<Ventaarticulo> ventaarticuloCollection;
-    @JoinColumn(name = "IDPAQUETE", referencedColumnName = "IDVENTAARTICULO")
-    @ManyToOne
-    private Ventaarticulo idpaquete;
     @Id
     @Column(name = "IDVENTAARTICULO")
     private Long idventaarticulo;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "PRECIO")
     private Double precio;
+    @Column(name = "TIPO")
+    private String tipo;
     @JoinColumns({
         @JoinColumn(name = "NO_CIA", referencedColumnName = "NO_CIA"),
         @JoinColumn(name = "COD_ART", referencedColumnName = "COD_ART")})
@@ -52,6 +49,9 @@ public class Ventaarticulo implements Serializable {
     private InvArticulos invArticulos;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ventaarticulo")
     private Collection<Ventacliente> ventaclientes;
+    @JoinColumn(name="IDPROMOCION",referencedColumnName = "IDPROMOCION")
+    @ManyToOne
+    private Promocion promocion;
     private static final long serialVersionUID = 1L;
 
     public Ventaarticulo() {
@@ -119,21 +119,19 @@ public class Ventaarticulo implements Serializable {
         this.ventaclientes = ventaclienteCollection;
     }
 
-    @XmlTransient
-    public Collection<Ventaarticulo> getVentaarticuloCollection() {
-        return ventaarticuloCollection;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setVentaarticuloCollection(Collection<Ventaarticulo> ventaarticuloCollection) {
-        this.ventaarticuloCollection = ventaarticuloCollection;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
-    public Ventaarticulo getIdpaquete() {
-        return idpaquete;
+    public Promocion getPromocion() {
+        return promocion;
     }
 
-    public void setIdpaquete(Ventaarticulo idpaquete) {
-        this.idpaquete = idpaquete;
+    public void setPromocion(Promocion promocion) {
+        this.promocion = promocion;
     }
-    
 }

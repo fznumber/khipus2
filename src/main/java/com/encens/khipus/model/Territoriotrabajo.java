@@ -50,7 +50,7 @@ public class Territoriotrabajo implements Serializable {
     private String descripcion;
     @OneToMany(mappedBy = "territoriotrabajo")
     private Collection<Persona> clientes;
-    @JoinColumn(name = "IDDISTRIBUIDOR", referencedColumnName = "IDPERSONA")
+    @JoinColumn(name = "IDDISTRIBUIDOR", referencedColumnName = "IDPERSONACLIENTE")
     @ManyToOne
     private Persona distribuidor;
     @JoinColumn(name = "IDDEPARTAMENTO", referencedColumnName = "IDDEPARTAMENTO")

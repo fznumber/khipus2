@@ -20,7 +20,7 @@ import org.apache.commons.lang.StringUtils;
  * @author Diego
  */
 @Entity
-@Table(name = "persona")
+@Table(name = "personacliente")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "tipo_persona")
 @DiscriminatorValue(value = "persona")
@@ -71,7 +71,7 @@ public class Persona implements Serializable {
             ,initialValue = 1
             ,allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "Persona_Gen")
-    @Column(name = "IDPERSONA")
+    @Column(name = "IDPERSONACLIENTE")
     private Long piId;
     @Size(max = 20)
     @Column(name = "NRO_DOC")

@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 
 import com.encens.khipus.util.JSFUtil;
 import com.encens.khipus.util.JSFUtil.PersistAction;
-import java.util.AbstractList;
 import net.sf.jasperreports.engine.JRException;
 import org.apache.commons.lang.StringUtils;
 
@@ -119,6 +118,7 @@ public class PedidosController implements Serializable {
         articulosPedido.setPrecio(ventaarticulo.getPrecio());
         articulosPedido.setReposicion(0);
         articulosPedido.setPedidos(selected);
+        articulosPedido.setTipo(ventaarticulo.getTipo());
         selected.getArticulosPedidos().add(articulosPedido);
         articulos.remove(articuloElegido);
         articuloElegido = null;

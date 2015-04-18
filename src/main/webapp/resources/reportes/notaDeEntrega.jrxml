@@ -78,7 +78,7 @@
 				<textFieldExpression><![CDATA[$P{nit}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="" positionType="Float" x="0" y="0" width="572" height="20" uuid="fa9bdcf0-5cc1-45a5-8a16-7ab4a450239c"/>
+				<reportElement key="" positionType="Float" x="285" y="0" width="287" height="20" uuid="fa9bdcf0-5cc1-45a5-8a16-7ab4a450239c"/>
 				<box padding="1" topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<pen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<topPen lineWidth="0.0"/>
@@ -90,6 +90,35 @@
 					<font fontName="Aharoni"/>
 				</textElement>
 				<textFieldExpression><![CDATA["NOTA DE ENTREGA Nº: "+$P{nroPedido}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="" positionType="Float" x="0" y="0" width="285" height="10" uuid="300391a0-a676-4e00-8f86-2cb4bcae7e4a"/>
+				<box padding="1" topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Aharoni" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Cooperativa Integral de Servicios Cbba. ltda."
+]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="" positionType="Float" x="0" y="10" width="285" height="10" uuid="c6fc8528-6bc8-440a-862d-1aa684f51672"/>
+				<box padding="1" topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Aharoni" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Industrias del Valle Alto"]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
@@ -154,7 +183,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="13" splitType="Stretch">
+		<band height="12" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="241" height="12" uuid="d60f83d8-8f11-43ba-8d9c-7be3aa43f81e"/>
 				<box padding="1">

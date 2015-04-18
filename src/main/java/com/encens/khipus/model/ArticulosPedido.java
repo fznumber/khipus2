@@ -72,6 +72,8 @@ public class ArticulosPedido implements Serializable {
     private Integer totalInv = 0;
     @Column(name ="ESTADO")
     private String estado;
+    @Column(name="TIPO")
+    private String tipo;
     @JoinColumn(name = "IDPEDIDOS",referencedColumnName = "IDPEDIDOS")
     @ManyToOne(optional = false)
     private Pedidos pedidos;
@@ -241,5 +243,13 @@ public class ArticulosPedido implements Serializable {
             this.estado = "";
         }
         this.porReponer = porReponer;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 }

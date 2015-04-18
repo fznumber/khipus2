@@ -38,7 +38,7 @@ public class Ventacliente implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "PRECIOESPECIAL")
     private Double precioespecial;
-    @JoinColumn(name = "IDPERSONA", referencedColumnName = "IDPERSONA")
+    @JoinColumn(name = "IDCLIENTE", referencedColumnName = "IDPERSONACLIENTE")
     @ManyToOne(optional = false)
     private Persona persona;
     @JoinColumn(name = "IDVENTAARTICULO", referencedColumnName = "IDVENTAARTICULO")

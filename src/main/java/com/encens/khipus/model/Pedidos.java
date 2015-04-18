@@ -89,12 +89,9 @@ public class Pedidos implements Serializable {
     @OneToOne
     @JoinColumn(name="codigo")
     private CodigoPedidoSecuencia codigo;
-    @JoinColumn(name = "IDCLIENTE", referencedColumnName = "IDPERSONA")
+    @JoinColumn(name = "IDCLIENTE", referencedColumnName = "IDPERSONACLIENTE")
     @ManyToOne(optional = false)
     private Persona cliente;
-    @JoinColumn(name = "ESTADO_PEDIDO", referencedColumnName = "IDESTADOPEDIDO")
-    @ManyToOne(optional = false)
-    private EstadoPedidos estadoPedido;
     @JoinColumn(name = "IDTIPOPEDIDO", referencedColumnName = "IDTIPOPEDIDO")
     @ManyToOne(optional = false)
     private Tipopedido idtipopedido;
@@ -237,14 +234,6 @@ public class Pedidos implements Serializable {
         this.porcentajeComision = cliente.getPorcentajeComision();
         this.porcentajeGarantia = cliente.getPorcentajeGarantia();
         this.cliente = cliente;
-    }
-
-    public EstadoPedidos getEstadoPedido() {
-        return estadoPedido;
-    }
-
-    public void setEstadoPedido(EstadoPedidos estadoPedido) {
-        this.estadoPedido = estadoPedido;
     }
 
     public Tipopedido getIdtipopedido() {
