@@ -49,8 +49,8 @@ public class Promocion implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "TOTAL")
     private Double total;
-    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "promocion")
-    private Collection<Ventaarticulo> ventaarticulos;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "promocion")
+    private Collection<ArticulosPromocion> articulosPromocions;
     @JoinColumns({
             @JoinColumn(name = "NO_CIA", referencedColumnName = "NO_CIA"),
             @JoinColumn(name = "COD_ART", referencedColumnName = "COD_ART")})
@@ -137,12 +137,12 @@ public class Promocion implements Serializable {
         return "com.encens.khipus.model.Promocion[ idpromocion=" + idpromocion + " ]";
     }
 
-    public Collection<Ventaarticulo> getVentaarticulos() {
-        return ventaarticulos;
+    public Collection<ArticulosPromocion> getArticulosPromocions() {
+        return articulosPromocions;
     }
 
-    public void setVentaarticulos(Collection<Ventaarticulo> ventaarticulos) {
-        this.ventaarticulos = ventaarticulos;
+    public void setArticulosPromocions(Collection<ArticulosPromocion> articulosPromocions) {
+        this.articulosPromocions = articulosPromocions;
     }
 
     public InvArticulos getInvArticulos() {

@@ -47,8 +47,8 @@ public class Ventaarticulo implements Serializable {
         @JoinColumn(name = "COD_ART", referencedColumnName = "COD_ART")})
     @ManyToOne(optional = false)
     private InvArticulos invArticulos;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ventaarticulo")
-    private Collection<Ventacliente> ventaclientes;
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "ventaarticulo")
+    private Collection<ArticulosPromocion> articulosPromocions;
     @JoinColumn(name="IDPROMOCION",referencedColumnName = "IDPROMOCION")
     @ManyToOne
     private Promocion promocion;
@@ -110,13 +110,12 @@ public class Ventaarticulo implements Serializable {
         return "com.encens.khipus.model.Ventaarticulo[ idventaarticulo=" + idventaarticulo + " ]";
     }
 
-    @XmlTransient
-    public Collection<Ventacliente> getVentaclientes() {
-        return ventaclientes;
+    public Collection<ArticulosPromocion> getArticulosPromocions() {
+        return articulosPromocions;
     }
 
-    public void setVentaclientes(Collection<Ventacliente> ventaclienteCollection) {
-        this.ventaclientes = ventaclienteCollection;
+    public void setArticulosPromocions(Collection<ArticulosPromocion> articulosPromocions) {
+        this.articulosPromocions = articulosPromocions;
     }
 
     public String getTipo() {
