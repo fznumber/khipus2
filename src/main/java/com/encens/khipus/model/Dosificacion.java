@@ -66,6 +66,8 @@ public class Dosificacion implements Serializable {
     private String estCod;
     @Column(name = "NUMEROACTUAL")
     private Integer numeroactual;
+    @Column(name = "NITEMPRESA")
+    private String nitEmpresa;
     @OneToMany(mappedBy = "dosificacion")
     private Collection<Impresionfactura> impresionfacturas;
 
@@ -180,5 +182,13 @@ public class Dosificacion implements Serializable {
 
     public void setEstCod(String estCod) {
         this.estCod = estCod;
+    }
+
+    public String getNitEmpresa() {
+        return nitEmpresa;
+    }
+
+    public void setNitEmpresa(String nitEmpresa) {
+        this.nitEmpresa = nitEmpresa;
     }
 }

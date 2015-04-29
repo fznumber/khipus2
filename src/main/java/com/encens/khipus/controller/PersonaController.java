@@ -4,6 +4,8 @@ import com.encens.khipus.ejb.*;
 import com.encens.khipus.model.*;
 import com.encens.khipus.util.JSFUtil;
 import com.encens.khipus.util.JSFUtil.PersistAction;
+import com.mysql.jdbc.StringUtils;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -87,8 +89,51 @@ public class PersonaController implements Serializable {
         tieneGarantia = selected.getPorcentajeGarantia() >0.0;
     }
 
+    private boolean validarCampos() {
+        Boolean error = false;
+      if(selected.getTipoPersona().equals("institucion"))
+      {
+          if(StringUtils.isNullOrEmpty(selected.getRazonsocial()))
+          {
+              JSFUtil.addErrorMessage("La razon social es requerida");
+              error = true;
+          }
+          if(StringUtils.isNullOrEmpty(selected.getNit()))
+          {
+              JSFUtil.addErrorMessage("El nit de la institución es requerida");
+              error = true;
+          }
+      }else{
+          if(StringUtils.isNullOrEmpty(selected.getNom()))
+          {
+              JSFUtil.addErrorMessage("El nombre es requerido");
+              error = true;
+          }
+          if(StringUtils.isNullOrEmpty(selected.getAp()))
+          {
+              JSFUtil.addErrorMessage("El apellido paterno es requerido");
+              error = true;
+          }
+          if(StringUtils.isNullOrEmpty(selected.getAm()))
+          {
+              JSFUtil.addErrorMessage("El apellido materno es requerido");
+              error = true;
+          }
+          if(StringUtils.isNullOrEmpty(selected.getNroDoc()))
+          {
+              JSFUtil.addErrorMessage("El C.I. es requerido");
+              error = true;
+          }
+      }
+        return error;
+    }
 
     public void create() {
+
+        if(validarCampos())
+        {
+            return;
+        }
 
         if(esPersona) {
             Cliente cliente = new Cliente();

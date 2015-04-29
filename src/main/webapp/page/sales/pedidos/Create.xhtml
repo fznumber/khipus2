@@ -78,7 +78,8 @@
                     var="item"
                     value="#{pedidosController.selected.articulosPedidos}"
                     rowKey="#{articulo.idarticulospedido}"
-                    rendered="#{pedidosController.selected != null}">
+                    rendered="#{pedidosController.selected != null}"
+                    tableStyle="width:auto">
                 <f:facet name="header">
                     Articulos Elegidos
                 </f:facet>

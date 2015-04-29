@@ -61,7 +61,7 @@ public class Movimiento implements Serializable {
     private String moneda;
     @Size(max = 30)
     @Column(name = "NROFACTURA")
-    private String nrofactura;
+    private Integer nrofactura;
     @Size(max = 30)
     @Column(name = "CODIGOCONTROL")
     private String codigocontrol;
@@ -133,11 +133,11 @@ public class Movimiento implements Serializable {
         this.moneda = moneda;
     }
 
-    public String getNrofactura() {
+    public Integer getNrofactura() {
         return nrofactura;
     }
 
-    public void setNrofactura(String nrofactura) {
+    public void setNrofactura(Integer nrofactura) {
         this.nrofactura = nrofactura;
     }
 

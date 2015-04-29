@@ -105,7 +105,7 @@ public class PedidosReportController implements Serializable {
         }
         //todo:completar los datos de la tabla
         Map<String, Object> paramMap = new HashMap<String, Object>();
-        paramMap.put("nitEmpresa", "123456022");
+        paramMap.put("nitEmpresa", dosificacion.getNitEmpresa());
         paramMap.put("numFac", numfac);
         paramMap.put("numAutorizacion", dosificacion.getNroautorizacion().intValue());
         paramMap.put("nitCliente", nroDoc);
@@ -173,6 +173,7 @@ public class PedidosReportController implements Serializable {
             movimiento.setGlosa("");
             movimiento.setMoneda("BS");
             movimiento.setTipocambio(6.69);
+            movimiento.setNrofactura(dosificacion.getNumeroactual());
             pedido.setMovimiento(movimiento);
 
             Impresionfactura impresionfactura = new Impresionfactura();
@@ -201,7 +202,7 @@ public class PedidosReportController implements Serializable {
             impresionfactura.setMovimiento(pedido.getMovimiento());
             impresionfactura.setDosificacion(dosificacion);
             impresionfactura.setTipo(tipoEtiquetaFactura);
-            impresionfactura.setNroFactura(dosificacion.getNumeroactual());
+            impresionfactura.setNroFactura(pedido.getMovimiento().getNrofactura());
             pedido.getMovimiento().getImpresionfacturaCollection().add(impresionfactura);
             /*movimientoController.setSelected(pedido.getMovimiento());
             movimientoController.update();*/
@@ -210,9 +211,6 @@ public class PedidosReportController implements Serializable {
             pedidosController.setSelected(pedido);
             pedidosController.setItems(null);
             pedidosController.generalUpdate();
-            dosificacion.setNumeroactual(dosificacion.getNumeroactual().intValue() + 1);
-            dosificacionController.setSelected(dosificacion);
-            dosificacionController.update();
         }
     }
 

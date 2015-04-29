@@ -18,14 +18,14 @@
                     </p:selectBooleanButton>
                     <p:outputLabel value="Nombre(s):" for="nom" rendered="#{personaController.esPersona}">
                     </p:outputLabel>
-                    <p:inputText id="nom" value="#{personaController.selected.nom}" title="nombres" required="true" requiredMessage="campo requerido." rendered="#{personaController.esPersona}"/>
+                    <p:inputText id="nom" value="#{personaController.selected.nom}" title="nombres"  rendered="#{personaController.esPersona}"/>
                     <p:outputLabel value="Ap. Paterno:" for="ap" rendered="#{personaController.esPersona}">
                     </p:outputLabel>
-                    <p:inputText id="ap" value="#{personaController.selected.ap}" title="Ap. Paterno." required="true" requiredMessage="campo requerido." rendered="#{personaController.esPersona}"/>
+                    <p:inputText id="ap" value="#{personaController.selected.ap}" title="Ap. Paterno."  rendered="#{personaController.esPersona}"/>
                     <p:outputLabel value="Ap. Materno" for="am" rendered="#{personaController.esPersona}"/>
-                    <p:inputText id="am" value="#{personaController.selected.am}" title="Ap. Materno." required="true" requiredMessage="campo requerido." rendered="#{personaController.esPersona}"/>
+                    <p:inputText id="am" value="#{personaController.selected.am}" title="Ap. Materno."  rendered="#{personaController.esPersona}"/>
                     <p:outputLabel value="Razon social:" for="razon" rendered="#{!personaController.esPersona}"/>
-                    <p:inputText id="razon" value="#{personaController.selected.razonsocial}" title="Razon social" required="true" requiredMessage="campo requerido." rendered="#{!personaController.esPersona}">
+                    <p:inputText id="razon" value="#{personaController.selected.razonsocial}" title="Razon social" rendered="#{!personaController.esPersona}">
                     </p:inputText>
                     <p:outputLabel value="C.I.:" for="nroDoc" rendered="#{personaController.esPersona}"/>
                     <p:inputText id="nroDoc" value="#{personaController.selected.nroDoc}" title="Cedula de identidad" rendered="#{personaController.esPersona}"/>
@@ -51,7 +51,7 @@
                     </p:selectBooleanButton>
                     <p:spinner id="garantiaCampo" value="#{personaController.selected.porcentajeGarantia}" prefix="%" min="0" max="100" stepFactor="0.1" disabled="#{!personaController.tieneGarantia}"/>
                     <p:outputLabel value="#{bundle.CreateClienteLabel_idtipocliente}" for="idtipocliente" />
-                    <p:selectOneMenu id="idtipocliente" value="#{personaController.selected.tipocliente}" required="true" requiredMessage="#{bundle.EditClienteRequiredMessage_idtipocliente}">
+                    <p:selectOneMenu id="idtipocliente" value="#{personaController.selected.tipocliente}">
                         <f:selectItems value="#{tipoclienteController.itemsAvailableSelectOne}"
                                        var="idtipoclienteItem"
                                        itemValue="#{idtipoclienteItem}"/>

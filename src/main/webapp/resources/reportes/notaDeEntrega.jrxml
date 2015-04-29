@@ -66,12 +66,12 @@
 				<textFieldExpression><![CDATA["Cliente:"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="159" y="20" width="261" height="13" uuid="d6304926-385e-4644-a12b-9ac1187b3108"/>
+				<reportElement x="159" y="20" width="244" height="13" uuid="d6304926-385e-4644-a12b-9ac1187b3108"/>
 				<textFieldExpression><![CDATA[$P{nombreClienteyTerritorio}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="420" y="20" width="17" height="13" uuid="314f715c-95b1-43b3-bef4-18d7110b3975"/>
-				<text><![CDATA[Nit:]]></text>
+				<reportElement x="414" y="20" width="23" height="13" uuid="314f715c-95b1-43b3-bef4-18d7110b3975"/>
+				<text><![CDATA[C.I.:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement x="437" y="20" width="135" height="13" uuid="34d853cd-132d-4250-b639-44772b3acd98"/>
@@ -103,8 +103,7 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="Aharoni" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Cooperativa Integral de Servicios Cbba. ltda."
-]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Cooperativa Integral de Servicios Cbba. ltda."]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="" positionType="Float" x="0" y="10" width="285" height="10" uuid="c6fc8528-6bc8-440a-862d-1aa684f51672"/>

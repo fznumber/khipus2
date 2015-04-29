@@ -233,6 +233,10 @@ public class PedidosController implements Serializable {
     }
 
     public void update() {
+        if(validarCampos())
+        {
+            return;
+        }
         if(validarReposicion())
             return;
 

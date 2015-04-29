@@ -1,9 +1,12 @@
 package com.encens.khipus.controller;
 
 import com.encens.khipus.ejb.DistribuidorFacade;
+import com.encens.khipus.model.ArticulosPedido;
 import com.encens.khipus.model.Distribuidor;
 import com.encens.khipus.util.JSFUtil;
 import com.encens.khipus.util.JSFUtil.PersistAction;
+import com.mysql.jdbc.StringUtils;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -55,6 +58,10 @@ public class DistribuidorController implements Serializable {
     }
 
     public void create() {
+        if(validarCampos())
+        {
+            return;
+        }
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("DistribuidorCreated"));
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
@@ -63,7 +70,38 @@ public class DistribuidorController implements Serializable {
     }
 
     public void update() {
+        if(validarCampos())
+        {
+            return;
+        }
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("DistribuidorUpdated"));
+    }
+
+    private boolean validarCampos() {
+        Boolean error = false;
+
+            if(StringUtils.isNullOrEmpty(selected.getNom()))
+            {
+                JSFUtil.addErrorMessage("El nombre es requerido");
+                error = true;
+            }
+            if(StringUtils.isNullOrEmpty(selected.getAp()))
+            {
+                JSFUtil.addErrorMessage("El apellido paterno es requerido");
+                error = true;
+            }
+            if(StringUtils.isNullOrEmpty(selected.getAm()))
+            {
+                JSFUtil.addErrorMessage("El apellido materno es requerido");
+                error = true;
+            }
+            if(StringUtils.isNullOrEmpty(selected.getNroDoc()))
+            {
+                JSFUtil.addErrorMessage("El C.I. es requerido");
+                error = true;
+            }
+
+        return error;
     }
 
     public void destroy() {
