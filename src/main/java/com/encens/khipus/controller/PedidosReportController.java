@@ -233,7 +233,7 @@ public class PedidosReportController implements Serializable {
     public void imprimirFacturas() throws IOException, JRException {
         if(pedidosElegidos.size() == 0)
         {
-            JSFUtil.addWarningMessage("No hay ningun pedido pedido elegido.");
+            JSFUtil.addWarningMessage("No hay ningun pedido elegido.");
             return;
         }
         quitarAnulados();

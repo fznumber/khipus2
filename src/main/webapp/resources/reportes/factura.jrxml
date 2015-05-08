@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="factura" pageWidth="612" pageHeight="503" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="74ea503c-4583-4174-a4e7-795a86208337">
-	<property name="ireport.zoom" value="2.5937424601000028"/>
-	<property name="ireport.x" value="329"/>
-	<property name="ireport.y" value="144"/>
+	<property name="ireport.zoom" value="2.1435888100000025"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="504"/>
 	<parameter name="nitEmpresa" class="java.lang.String"/>
 	<parameter name="numFac" class="java.lang.Long"/>
 	<parameter name="numAutorizacion" class="java.lang.Integer"/>
@@ -24,53 +24,30 @@
 	<field name="invArticulos.descri" class="java.lang.String"/>
 	<field name="precio" class="java.lang.Double"/>
 	<field name="importe" class="java.lang.Double"/>
-	<group name="total">
-		<groupFooter>
-			<band height="9">
-				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="403" y="0" width="69" height="9" uuid="72a6a84d-d052-4d02-9220-cdd3c3dc9137"/>
-					<box padding="1">
-						<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Center">
-						<font size="9"/>
-					</textElement>
-					<textFieldExpression><![CDATA["TOTAL Bs."]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="403" height="9" uuid="31004d46-9195-4647-8388-6a2694b3c0dd"/>
-					<box padding="1">
-						<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement>
-						<font size="9"/>
-					</textElement>
-					<textFieldExpression><![CDATA["SON: "+$P{totalLiteral}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-					<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="472" y="0" width="100" height="9" uuid="def65a7b-3e7d-40cf-a8fe-ed782c651c9d"/>
-					<box padding="1">
-						<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="9"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$P{total}]]></textFieldExpression>
-				</textField>
-			</band>
-		</groupFooter>
-	</group>
 	<background>
-		<band splitType="Stretch"/>
+		<band height="463" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="128" width="74" height="228" uuid="8161637a-753e-4eff-a81e-360a80686172"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="74" y="128" width="329" height="228" uuid="985b4c14-d90e-4fca-810b-1c6f5c565143"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="403" y="128" width="69" height="228" uuid="d0c73c95-beb8-49b4-a564-444fe98f1343"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="472" y="128" width="100" height="228" uuid="50c02491-e54b-4051-98ec-059a6f40189c"/>
+			</rectangle>
+		</band>
 	</background>
 	<title>
-		<band height="2" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</title>
 	<pageHeader>
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="129" splitType="Stretch">
+		<band height="130" splitType="Stretch">
 			<frame>
 				<reportElement positionType="Float" x="0" y="92" width="572" height="12" uuid="b939f28f-9532-4b9a-8656-a6c25a2a3e30"/>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
@@ -298,40 +275,28 @@
 	<detail>
 		<band height="9" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="74" y="0" width="329" height="9" uuid="d60f83d8-8f11-43ba-8d9c-7be3aa43f81e"/>
-				<box padding="1">
-					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="76" y="0" width="323" height="9" uuid="d60f83d8-8f11-43ba-8d9c-7be3aa43f81e"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{invArticulos.descri}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="74" height="9" uuid="2accf871-0d14-482b-98c7-b3ed67d7994b"/>
-				<box padding="1">
-					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="2" y="0" width="70" height="9" forecolor="#000000" uuid="2accf871-0d14-482b-98c7-b3ed67d7994b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="403" y="0" width="70" height="9" uuid="d1783a2c-96be-435f-9032-e40191399ceb"/>
-				<box padding="1">
-					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="406" y="0" width="63" height="9" uuid="d1783a2c-96be-435f-9032-e40191399ceb"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="472" y="0" width="100" height="9" uuid="c6daf568-1a06-45e2-a319-e2150f5fbac2"/>
-				<box padding="1">
-					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="475" y="0" width="94" height="9" uuid="c6daf568-1a06-45e2-a319-e2150f5fbac2"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
@@ -339,9 +304,6 @@
 			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="2" splitType="Stretch"/>
-	</columnFooter>
 	<pageFooter>
 		<band height="111" splitType="Stretch">
 			<frame>
@@ -408,6 +370,36 @@
 					<textFieldExpression><![CDATA[$P{codigoControl}]]></textFieldExpression>
 				</textField>
 			</frame>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="403" y="0" width="69" height="9" uuid="72a6a84d-d052-4d02-9220-cdd3c3dc9137"/>
+				<box padding="1">
+					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["TOTAL Bs."]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="403" height="9" uuid="31004d46-9195-4647-8388-6a2694b3c0dd"/>
+				<box padding="1">
+					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["SON: "+$P{totalLiteral}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="472" y="0" width="100" height="9" uuid="def65a7b-3e7d-40cf-a8fe-ed782c651c9d"/>
+				<box padding="1">
+					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{total}]]></textFieldExpression>
+			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="85" width="572" height="12" uuid="bcb9bddb-7c7c-49d2-a078-07bb8d50391d"/>
 				<box padding="1">
@@ -419,7 +411,7 @@
 				<textFieldExpression><![CDATA["ESTA FACTURA CONTRIBUYE AL DESARROLLO DEL PAÍS.EL USO ILÍCITO DE ÉSTA SERÁ SANCIONADO DE ACUERDO A LEY"]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="472" y="0" width="100" height="85" uuid="16d3b0bc-d4f9-4e5a-90fd-93bdfcfd5bb2"/>
+				<reportElement x="494" y="23" width="78" height="74" uuid="16d3b0bc-d4f9-4e5a-90fd-93bdfcfd5bb2"/>
 				<imageExpression><![CDATA[$P{imgQR}]]></imageExpression>
 			</image>
 		</band>
