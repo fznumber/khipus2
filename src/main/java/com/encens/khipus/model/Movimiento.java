@@ -59,7 +59,6 @@ public class Movimiento implements Serializable {
     @Size(max = 10)
     @Column(name = "MONEDA")
     private String moneda;
-    @Size(max = 30)
     @Column(name = "NROFACTURA")
     private Integer nrofactura;
     @Size(max = 30)

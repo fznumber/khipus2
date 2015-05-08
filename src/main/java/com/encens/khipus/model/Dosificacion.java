@@ -64,6 +64,8 @@ public class Dosificacion implements Serializable {
     private BigInteger facturaal;
     @Column(name = "EST_COD")
     private String estCod;
+    @Column(name= "ETIQUETAEMPRESA")
+    private String etiquetaEmpresa;
     @Column(name = "NUMEROACTUAL")
     private Integer numeroactual;
     @Column(name = "NITEMPRESA")
@@ -190,5 +192,13 @@ public class Dosificacion implements Serializable {
 
     public void setNitEmpresa(String nitEmpresa) {
         this.nitEmpresa = nitEmpresa;
+    }
+
+    public String getEtiquetaEmpresa() {
+        return etiquetaEmpresa;
+    }
+
+    public void setEtiquetaEmpresa(String etiquetaEmpresa) {
+        this.etiquetaEmpresa = etiquetaEmpresa;
     }
 }

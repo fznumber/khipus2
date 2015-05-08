@@ -144,7 +144,7 @@ public class ControlCode {
     {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
         String date = sdf.format(fechaEmision);
-        DecimalFormat format = new DecimalFormat("#.00");
+        DecimalFormat format = new DecimalFormat("###,###.00");
         //todo:arreglar
         this.keyQR =  nitEmpresa +"|"+
                 numberInvoice +"|"+
@@ -152,7 +152,7 @@ public class ControlCode {
                 date +"|"+
                 format.format(total) +"|"+
                 format.format(importeBaseCreditFisical) +"|"+
-                "eweqeee" +"|"+
+                codigoControl +"|"+
                 nitCliente +"|"+
                 importeICE +"|"+
                 importeVentasGrabadas +"|"+

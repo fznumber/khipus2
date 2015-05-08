@@ -27,6 +27,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -100,25 +103,38 @@ public class PedidosReportController implements Serializable {
 
         String filePath = FileCacheLoader.i.getPath("/resources/reportes/qr_inv.png");
         String nroDoc = pedido.getCliente().getNroDoc();
+        DateUtil dateUtil = new DateUtil();
         if (pedido.getCliente().getTipocliente().equals("INSTITUCION")) {
             nroDoc = pedido.getCliente().getNit();
         }
         //todo:completar los datos de la tabla
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(pedido.getFechaEntrega());
+        int anio = cal.get(Calendar.YEAR);
+        int mes = cal.get(Calendar.MONTH);
+        int dia = cal.get(Calendar.DAY_OF_MONTH);
+        String fecha = "Cochambamba, "+dia+" de "+dateUtil.getMes(mes)+" de "+anio;
         Map<String, Object> paramMap = new HashMap<String, Object>();
         paramMap.put("nitEmpresa", dosificacion.getNitEmpresa());
         paramMap.put("numFac", numfac);
         paramMap.put("numAutorizacion", dosificacion.getNroautorizacion().intValue());
         paramMap.put("nitCliente", nroDoc);
-        paramMap.put("fecha", pedido.getFechaEntrega());
+        paramMap.put("fecha", fecha);
         paramMap.put("nombreCliente", nameClient);//verificar el nombre del cliente
         paramMap.put("fechaLimite", dosificacion.getFechavencimiento());
         paramMap.put("codigoControl", codControl);
         paramMap.put("tipoEtiqueta", etiqueta);
+        paramMap.put("etiquetaEmpresa",dosificacion.getEtiquetaEmpresa());
         //verificar por que no requiere el codigo de control
+        DecimalFormat df = new DecimalFormat("###,###.00");
 
+        DecimalFormatSymbols custom=new DecimalFormatSymbols();
+        custom.setDecimalSeparator('.');
+        custom.setGroupingSeparator(',');
+        df.setDecimalFormatSymbols(custom);
         paramMap.put("llaveQR", keyQR);
         paramMap.put("totalLiteral", moneyUtil.Convertir(pedido.getTotalimporte().toString(), true));
-        paramMap.put("total", pedido.getTotalimporte());
+        paramMap.put("total", df.format(pedido.getTotalimporte()));
         barcodeRenderer.generateQR(keyQR, filePath);
         try {
             BufferedImage img = ImageIO.read(new File(filePath));
@@ -151,7 +167,7 @@ public class PedidosReportController implements Serializable {
         String key = dosificacion.getLlave();
         File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/factura.jasper"));        
 
-        ControlCode controlCode = generateCodControl(pedido, dosificacion.getNumeroactual().intValue(), numberAuthorization, key);
+        ControlCode controlCode = generateCodControl(pedido, dosificacion.getNumeroactual().intValue(), numberAuthorization, key,dosificacion.getNitEmpresa());
         parameters.putAll(
                 getReportParams(
                         pedido.getCliente().getNombreCompleto(), dosificacion.getNumeroactual().intValue(), tipoEtiquetaFactura, controlCode.getCodigoControl(), controlCode.getKeyQR(), pedido));
@@ -303,7 +319,7 @@ public class PedidosReportController implements Serializable {
 
     public Map<String, Object> fijarParmetrosFactura(Pedidos pedido) {
         int numeroActual = dosificacion.getNumeroactual().intValue();
-        ControlCode controlCode = generateCodControl(pedido, numeroActual, dosificacion.getNroautorizacion(), dosificacion.getLlave());
+        ControlCode controlCode = generateCodControl(pedido, numeroActual, dosificacion.getNroautorizacion(), dosificacion.getLlave(),dosificacion.getNitEmpresa());
         if (pedido.getEstado().equals("PENDIENTE")) {
             pedido.setEstado("PREPARAR");
         }
@@ -339,14 +355,14 @@ public class PedidosReportController implements Serializable {
         FacesContext.getCurrentInstance().responseComplete();
     }
 
-    private ControlCode generateCodControl(Pedidos pedido, Integer numberInvoice, BigInteger numberAutorization, String key) {
+    private ControlCode generateCodControl(Pedidos pedido, Integer numberInvoice, BigInteger numberAutorization, String key,String nitEmpresa) {
         Double importeBaseCreditFisical = pedido.getTotalimporte() * 0.13;
         String nroDoc = pedido.getCliente().getNroDoc();
         if (pedido.getCliente().getTipocliente().equals("INSTITUCION")) {
             nroDoc = pedido.getCliente().getNit();
         }
 
-        ControlCode controlCode = new ControlCode("123456789012", numberInvoice, numberAutorization.toString(), pedido.getFechaEntrega(), pedido.getTotalimporte(), importeBaseCreditFisical, nroDoc
+        ControlCode controlCode = new ControlCode(nitEmpresa, numberInvoice, numberAutorization.toString(), pedido.getFechaEntrega(), pedido.getTotalimporte(), importeBaseCreditFisical, nroDoc
         );
         moneyUtil.getLlaveQR(controlCode, key);
         controlCode.generarCodigoQR();

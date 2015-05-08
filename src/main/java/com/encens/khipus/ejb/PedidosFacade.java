@@ -59,8 +59,9 @@ public class PedidosFacade extends AbstractFacade<Pedidos> {
             resultado = (List<Object[]>)em.createQuery("select concat(pe.codigo.secuencia,'-',pe.cliente.nom,' ',pe.cliente.ap,' ',pe.cliente.am,pe.cliente.razonsocial) as CLIENTE\n" +
                     "               ,articulos.invArticulos.descri as PRODUCTO\n" +
                     "               ,articulos.cantidad + articulos.reposicion as CANTIDAD\n" +
-                    "               ,pe.cliente.territoriotrabajo.distribuidor.nom as DISTRIBUIDOR\n" +
-                    "        from Pedidos pe join pe.articulosPedidos articulos")
+                    "               ,concat(pe.cliente.territoriotrabajo.distribuidor.nom,' ',pe.cliente.territoriotrabajo.distribuidor.ap,' ',pe.cliente.territoriotrabajo.distribuidor.am) as DISTRIBUIDOR\n" +
+                    "        from Pedidos pe join pe.articulosPedidos articulos" +
+                    "        where pe.estado = 'PENDIENTE'")
                     .getResultList();
 
         }catch (NoResultException e){
@@ -69,16 +70,36 @@ public class PedidosFacade extends AbstractFacade<Pedidos> {
         return  resultado;
     }
 
+    public Integer getTotalPedidos(Date fechaEntrega,Territoriotrabajo territoriotrabajo){
+        Integer cantidad=0;
+        try{
+            if(fechaEntrega == null && territoriotrabajo == null) {
+                cantidad = ((List<Pedidos>)em.createQuery("select  pe from Pedidos pe where pe.estado = 'PENDIENTE' ").getResultList()).size();
+            }
+            else{
+                cantidad = ((List<Pedidos>)em.createQuery("select  pe from Pedidos pe "
+                        + "where pe.estado = 'PENDIENTE' and (pe.cliente.territoriotrabajo =:territoriotrabajo or pe.fechaEntrega =:fechaEntrega ) ")
+                        .setParameter("fechaEntrega", fechaEntrega)
+                        .setParameter("territoriotrabajo",territoriotrabajo)
+                        .getResultList()).size();
+            }
+        }catch (NoResultException e){
+            return cantidad;
+        }
+        return cantidad;
+    }
+
     public List<Object[]> recepcionDePedidos(Date fechaEntrega,Territoriotrabajo territoriotrabajo){
         List<Object[]> resultado = new ArrayList<>();
         try {
             resultado = (List<Object[]>)em.createQuery("select concat(pe.codigo.secuencia,'-',pe.cliente.nom,' ',pe.cliente.ap,' ',pe.cliente.am,pe.cliente.razonsocial) as CLIENTE\n" +
-                    "               ,articulos.invArticulos.descri as PRODUCTO\n" +
+                    "               ,articulos.invArticulos.nombrecorto as PRODUCTO\n" +
                     "               ,articulos.cantidad + articulos.reposicion as CANTIDAD\n" +
-                    "               ,pe.cliente.territoriotrabajo.distribuidor.nom as DISTRIBUIDOR\n" +
+                    "               ,concat(pe.cliente.territoriotrabajo.distribuidor.nom,' ',pe.cliente.territoriotrabajo.distribuidor.ap,' ',pe.cliente.territoriotrabajo.distribuidor.am) as DISTRIBUIDOR\n" +
                     "        from Pedidos pe join pe.articulosPedidos articulos" +
                     "        where pe.fechaEntrega =:fechaEntrega" +
-                    "        or pe.cliente.territoriotrabajo =:territoriotrabajo")
+                    "        or pe.cliente.territoriotrabajo =:territoriotrabajo" +
+                    "        and pe.estado = 'PENDIENTE'")
                     .setParameter("fechaEntrega", fechaEntrega, TemporalType.DATE)
                     .setParameter("territoriotrabajo",territoriotrabajo)
                     .getResultList();
@@ -94,7 +115,7 @@ public class PedidosFacade extends AbstractFacade<Pedidos> {
         List<RecepcionPedido> recepcionPedidos = new ArrayList<>();
         try {
             datas = (List<Object[]>)em.createQuery("select concat(pe.codigo.secuencia,'-',pe.cliente.nom,' ',pe.cliente.ap,' ',pe.cliente.am,pe.cliente.razonsocial) as CLIENTE\n" +
-                    "               ,articulos.invArticulos.descri as PRODUCTO\n" +
+                    "               ,articulos.invArticulos.nombrecorto as PRODUCTO\n" +
                     "               ,articulos.cantidad + articulos.reposicion as CANTIDAD\n" +
                     "               ,pe.cliente.territoriotrabajo.distribuidor.nom as DISTRIBUIDOR\n" +
                     "        from Pedidos pe join pe.articulosPedidos articulos")

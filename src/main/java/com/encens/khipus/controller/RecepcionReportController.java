@@ -68,12 +68,12 @@ public class RecepcionReportController implements Serializable {
         Map<String, Object> paramMap = new HashMap<String, Object>();
         String fecha;
         if(fechaEntrega == null)
-            fecha = "(TODOS)";
+            fecha = "(TODOS LOS PENDIENTES)";
         else
             fecha = fechaEntrega.toString();
 
         paramMap.put("fecha",fecha);
-        paramMap.put("cantidad",3);
+        paramMap.put("cantidad",cantidadPedidos);
 
         return paramMap;
     }
@@ -100,12 +100,28 @@ public class RecepcionReportController implements Serializable {
         }else{
             resultado = pedidosFacade.recepcionDePedidos(fechaEntrega,territoriotrabajo);
         }
-        cantidadPedidos = resultado.size();
+        cantidadPedidos = pedidosFacade.getTotalPedidos(fechaEntrega,territoriotrabajo);
 
         DRDataSource dataSource = new DRDataSource("cliente", "producto", "cantidad", "distribuidor");
         for (Object[] obj : resultado) {
             dataSource.add((String)obj[0],(String)obj[1],(Integer)obj[2],(String)obj[3]);
         }
         return dataSource;
+    }
+
+    public Date getFechaEntrega() {
+        return fechaEntrega;
+    }
+
+    public void setFechaEntrega(Date fechaEntrega) {
+        this.fechaEntrega = fechaEntrega;
+    }
+
+    public Territoriotrabajo getTerritoriotrabajo() {
+        return territoriotrabajo;
+    }
+
+    public void setTerritoriotrabajo(Territoriotrabajo territoriotrabajo) {
+        this.territoriotrabajo = territoriotrabajo;
     }
 }

@@ -112,7 +112,7 @@ public class RecepcionPedidoReportController {
         }else{
             resultado = pedidosFacade.recepcionDePedidos(fechaEntrega,territoriotrabajo);
         }
-        cantidadPedidos = resultado.size();
+        cantidadPedidos = pedidosFacade.getTotalPedidos(fechaEntrega,territoriotrabajo);
 
         DRDataSource dataSource = new DRDataSource("cliente", "producto", "cantidad", "distribuidor");
         for (Object[] obj : resultado) {
