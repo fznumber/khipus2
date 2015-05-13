@@ -166,11 +166,19 @@ public class PedidosReportController implements Serializable {
         BigInteger numberAuthorization = dosificacion.getNroautorizacion();
         String key = dosificacion.getLlave();
         File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/factura.jasper"));        
+        Integer numeroFactura;
+        if (pedido.getMovimiento() == null) {
+            numeroFactura = Integer.parseInt(dosificacionFacade.getSiguienteNumeroFactura());
+            dosificacion.setNumeroactual(numeroFactura);
+        }else{
+            numeroFactura = pedido.getMovimiento().getNrofactura();
+        }
 
-        ControlCode controlCode = generateCodControl(pedido, dosificacion.getNumeroactual().intValue(), numberAuthorization, key,dosificacion.getNitEmpresa());
+        
+        ControlCode controlCode = generateCodControl(pedido, numeroFactura, numberAuthorization, key,dosificacion.getNitEmpresa());
         parameters.putAll(
                 getReportParams(
-                        pedido.getCliente().getNombreCompleto(), dosificacion.getNumeroactual().intValue(), tipoEtiquetaFactura, controlCode.getCodigoControl(), controlCode.getKeyQR(), pedido));
+                        pedido.getCliente().getNombreCompleto(), numeroFactura, tipoEtiquetaFactura, controlCode.getCodigoControl(), controlCode.getKeyQR(), pedido));
         guardarFactura(pedido, controlCode.getCodigoControl());
         exportarPDF(parameters, jasper);
     }
@@ -208,7 +216,7 @@ public class PedidosReportController implements Serializable {
             pedidosController.setItems(null);
             pedidosController.setSelected(pedido);
             pedidosController.generalUpdate();
-            dosificacion.setNumeroactual(dosificacion.getNumeroactual().intValue() + 1);
+            // dosificacion.setNumeroactual(dosificacion.getNumeroactual().intValue() + 1);
             dosificacionController.setSelected(dosificacion);
             dosificacionController.update();
         } else {
@@ -318,14 +326,20 @@ public class PedidosReportController implements Serializable {
     }
 
     public Map<String, Object> fijarParmetrosFactura(Pedidos pedido) {
-        int numeroActual = dosificacion.getNumeroactual().intValue();
-        ControlCode controlCode = generateCodControl(pedido, numeroActual, dosificacion.getNroautorizacion(), dosificacion.getLlave(),dosificacion.getNitEmpresa());
+        Integer numeroFactura;
+        if (pedido.getMovimiento() == null) {
+            numeroFactura = Integer.parseInt(dosificacionFacade.getSiguienteNumeroFactura());
+            dosificacion.setNumeroactual(numeroFactura);
+        }else{
+            numeroFactura = pedido.getMovimiento().getNrofactura();
+        }
+        ControlCode controlCode = generateCodControl(pedido, numeroFactura, dosificacion.getNroautorizacion(), dosificacion.getLlave(),dosificacion.getNitEmpresa());
         if (pedido.getEstado().equals("PENDIENTE")) {
             pedido.setEstado("PREPARAR");
         }
         guardarFactura(pedido, controlCode.getCodigoControl());
         return getReportParams(
-                pedido.getCliente().getNombreCompleto(), numeroActual, tipoEtiquetaFactura, controlCode.getCodigoControl(), controlCode.getKeyQR(), pedido);
+                pedido.getCliente().getNombreCompleto(), numeroFactura, tipoEtiquetaFactura, controlCode.getCodigoControl(), controlCode.getKeyQR(), pedido);
     }
 
     public void exportarPDF(JasperPrint jasperPrint) throws IOException, JRException {
