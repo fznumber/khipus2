@@ -96,6 +96,7 @@ public class PedidosReportController implements Serializable {
         paramMap.put("nombreClienteyTerritorio", pedido.getCliente().getNombreCompleto() + "(" + pedido.getCliente().getTerritoriotrabajo().getNombre() + ")");
         paramMap.put("totalLiteral", moneyUtil.Convertir(pedido.getTotalimporte().toString(), true));
         paramMap.put("totalImporte", pedido.getTotalimporte());
+        paramMap.put("REPORT_LOCALE", new java.util.Locale("en", "US"));
         return paramMap;
     }
 
@@ -126,15 +127,10 @@ public class PedidosReportController implements Serializable {
         paramMap.put("tipoEtiqueta", etiqueta);
         paramMap.put("etiquetaEmpresa",dosificacion.getEtiquetaEmpresa());
         //verificar por que no requiere el codigo de control
-        DecimalFormat df = new DecimalFormat("###,###.00");
-
-        DecimalFormatSymbols custom=new DecimalFormatSymbols();
-        custom.setDecimalSeparator('.');
-        custom.setGroupingSeparator(',');
-        df.setDecimalFormatSymbols(custom);
         paramMap.put("llaveQR", keyQR);
         paramMap.put("totalLiteral", moneyUtil.Convertir(pedido.getTotalimporte().toString(), true));
-        paramMap.put("total", df.format(pedido.getTotalimporte()));
+        paramMap.put("total", pedido.getTotalimporte());
+        paramMap.put("REPORT_LOCALE", new java.util.Locale("en", "US"));
         barcodeRenderer.generateQR(keyQR, filePath);
         try {
             BufferedImage img = ImageIO.read(new File(filePath));
