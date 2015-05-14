@@ -320,7 +320,7 @@ public class Persona implements Serializable {
     public String getNombreCompleto(){        
         if(this.piId == null)
             return "";        
-        if(StringUtils.isEmpty(razonsocial))
+        if(!StringUtils.isEmpty(nom))
             return nom+" "+ap+" "+am;
         else
             return razonsocial;

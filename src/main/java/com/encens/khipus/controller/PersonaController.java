@@ -84,14 +84,14 @@ public class PersonaController implements Serializable {
     }
 
     public void prepareEdit() {
-        esPersona = 
+        esPersona = selected.getTipoPersona().equals("cliente");
         tieneComision = selected.getPorcentajeComision() > 0.0;
         tieneGarantia = selected.getPorcentajeGarantia() >0.0;
     }
 
     private boolean validarCampos() {
         Boolean error = false;
-      if(selected.getTipoPersona().equals("institucion"))
+      if(!esPersona)
       {
           if(StringUtils.isNullOrEmpty(selected.getRazonsocial()))
           {

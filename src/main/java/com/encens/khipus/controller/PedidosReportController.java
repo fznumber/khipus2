@@ -13,6 +13,7 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.apache.commons.lang.StringUtils;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -105,7 +106,8 @@ public class PedidosReportController implements Serializable {
         String filePath = FileCacheLoader.i.getPath("/resources/reportes/qr_inv.png");
         String nroDoc = pedido.getCliente().getNroDoc();
         DateUtil dateUtil = new DateUtil();
-        if (pedido.getCliente().getTipocliente().equals("INSTITUCION")) {
+        if(StringUtils.isNotEmpty(pedido.getCliente().getNit()))
+        {
             nroDoc = pedido.getCliente().getNit();
         }
         //todo:completar los datos de la tabla
@@ -114,6 +116,9 @@ public class PedidosReportController implements Serializable {
         int anio = cal.get(Calendar.YEAR);
         int mes = cal.get(Calendar.MONTH);
         int dia = cal.get(Calendar.DAY_OF_MONTH);
+        if(pedido.getMovimiento() == null)
+        etiqueta = "ORIGINAL";
+
         String fecha = "Cochambamba, "+dia+" de "+dateUtil.getMes(mes)+" de "+anio;
         Map<String, Object> paramMap = new HashMap<String, Object>();
         paramMap.put("nitEmpresa", dosificacion.getNitEmpresa());
@@ -121,7 +126,7 @@ public class PedidosReportController implements Serializable {
         paramMap.put("numAutorizacion", dosificacion.getNroautorizacion().intValue());
         paramMap.put("nitCliente", nroDoc);
         paramMap.put("fecha", fecha);
-        paramMap.put("nombreCliente", nameClient);//verificar el nombre del cliente
+        paramMap.put("nombreCliente", nameClient);
         paramMap.put("fechaLimite", dosificacion.getFechavencimiento());
         paramMap.put("codigoControl", codControl);
         paramMap.put("tipoEtiqueta", etiqueta);
@@ -134,7 +139,6 @@ public class PedidosReportController implements Serializable {
         barcodeRenderer.generateQR(keyQR, filePath);
         try {
             BufferedImage img = ImageIO.read(new File(filePath));
-            //BufferedImage image = ImageIO.read(getClass().getResource(filePath));
             paramMap.put("imgQR", img);
         } catch (IOException e) {
             e.printStackTrace();
@@ -282,6 +286,11 @@ public class PedidosReportController implements Serializable {
     }
 
     public void imprimirNota(List<Pedidos> pedidosElegidos) throws IOException, JRException {
+        if(pedidosElegidos.size() == 0)
+        {
+            JSFUtil.addWarningMessage("No hay ningun pedido elegido.");
+            return;
+        }
         HashMap parameters = new HashMap();
         moneyUtil = new MoneyUtil();
         File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/notaDeEntrega.jasper"));

@@ -122,121 +122,149 @@
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="12" splitType="Stretch">
+		<band height="11" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="241" y="0" width="44" height="12" uuid="d288378c-4638-465b-885a-cf6342734590"/>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="241" y="0" width="44" height="10" uuid="d288378c-4638-465b-885a-cf6342734590"/>
 				<box padding="1">
 					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Narrow" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA["CANT."]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="285" y="0" width="27" height="12" uuid="33a0991b-2b93-40d5-b352-fb203af0c331"/>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="285" y="0" width="37" height="10" uuid="33a0991b-2b93-40d5-b352-fb203af0c331"/>
 				<box padding="1">
 					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA["P/U"]]></textFieldExpression>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Narrow" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["P.U."]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="312" y="0" width="81" height="12" uuid="c2e4bdb8-09e0-4df9-82ea-e10ebf9dd2e9"/>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="322" y="0" width="71" height="10" uuid="c2e4bdb8-09e0-4df9-82ea-e10ebf9dd2e9"/>
 				<box padding="1">
 					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Narrow" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA["IMPORTE"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="241" height="12" uuid="8fdd7380-b5fe-4081-bcf0-918367c7c064"/>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="241" height="10" uuid="8fdd7380-b5fe-4081-bcf0-918367c7c064"/>
 				<box padding="1">
 					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Narrow" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA["PRODUCTO"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="393" y="0" width="44" height="12" uuid="74788131-52ed-426b-8b52-f5458247f3fc"/>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="393" y="0" width="44" height="10" uuid="74788131-52ed-426b-8b52-f5458247f3fc"/>
 				<box padding="1">
 					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Narrow" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA["REPOS."]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="437" y="0" width="50" height="12" uuid="4704a25c-5f99-4808-bbee-0db516442ad8"/>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="437" y="0" width="50" height="10" uuid="4704a25c-5f99-4808-bbee-0db516442ad8"/>
 				<box padding="1">
 					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Narrow" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA["TOTAL"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="487" y="0" width="85" height="12" uuid="6ce46e32-d337-4889-889e-ec0a5535ab25"/>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="487" y="0" width="85" height="10" uuid="6ce46e32-d337-4889-889e-ec0a5535ab25"/>
 				<box padding="1">
 					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Narrow" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA["REPONER"]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="12" splitType="Stretch">
+		<band height="10" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="241" height="12" uuid="d60f83d8-8f11-43ba-8d9c-7be3aa43f81e"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="-1" width="241" height="10" uuid="d60f83d8-8f11-43ba-8d9c-7be3aa43f81e"/>
 				<box padding="1">
 					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Narrow" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{invArticulos.descri}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="241" y="0" width="44" height="12" uuid="2accf871-0d14-482b-98c7-b3ed67d7994b"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="241" y="-1" width="44" height="10" uuid="2accf871-0d14-482b-98c7-b3ed67d7994b"/>
 				<box padding="1">
 					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Narrow" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="285" y="0" width="27" height="12" uuid="d1783a2c-96be-435f-9032-e40191399ceb"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="285" y="-1" width="37" height="10" uuid="d1783a2c-96be-435f-9032-e40191399ceb"/>
 				<box padding="1">
 					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Narrow" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="312" y="0" width="81" height="12" uuid="c6daf568-1a06-45e2-a319-e2150f5fbac2"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="322" y="-1" width="71" height="10" uuid="c6daf568-1a06-45e2-a319-e2150f5fbac2"/>
 				<box padding="1">
 					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Narrow" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{importe}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="393" y="0" width="44" height="12" uuid="55cff283-a4a7-4ea0-8f87-5974a1bc6068"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="393" y="-1" width="44" height="10" uuid="55cff283-a4a7-4ea0-8f87-5974a1bc6068"/>
 				<box padding="1">
 					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Narrow" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{reposicion}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="437" y="0" width="50" height="12" uuid="e1d8a788-55a6-4abb-b9ad-f461439e0838"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="437" y="-1" width="50" height="10" uuid="e1d8a788-55a6-4abb-b9ad-f461439e0838"/>
 				<box padding="1">
 					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Narrow" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="487" y="0" width="85" height="12" uuid="edad2a58-6992-41b0-bc7e-db7a225be908"/>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="487" y="-1" width="85" height="10" uuid="edad2a58-6992-41b0-bc7e-db7a225be908"/>
 				<box padding="1">
 					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Narrow" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[]]></textFieldExpression>
 			</textField>
 		</band>

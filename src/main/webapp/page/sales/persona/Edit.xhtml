@@ -12,10 +12,6 @@
         <h:form id="PersonaEditForm">
             <h:panelGroup id="display">
                 <p:panelGrid columns="2" rendered="#{personaController.selected != null}">
-                    <h:outputText value="Tipo Cliente: " />
-                    <p:selectBooleanButton id="tipoCliente" value="#{personaController.esPersona}" onLabel="Persona" offLabel="Institución">
-                        <p:ajax update="display" />
-                    </p:selectBooleanButton>
                     <p:outputLabel value="Nombre(s):" for="nom" rendered="#{personaController.esPersona}">
                     </p:outputLabel>
                     <p:inputText id="nom" value="#{personaController.selected.nom}" title="nombres" required="true" requiredMessage="campo requerido." rendered="#{personaController.esPersona}"/>

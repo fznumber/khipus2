@@ -52,6 +52,9 @@ public class Dosificacion implements Serializable {
     @Column(name = "FECHAVENCIMIENTO")
     @Temporal(TemporalType.DATE)
     private Date fechavencimiento;
+    @Column(name = "FECHAINICIO")
+    @Temporal(TemporalType.DATE)
+    private Date fechainicio;
     @Size(max = 100)
     @Column(name = "LLAVE")
     private String llave;
@@ -200,5 +203,13 @@ public class Dosificacion implements Serializable {
 
     public void setEtiquetaEmpresa(String etiquetaEmpresa) {
         this.etiquetaEmpresa = etiquetaEmpresa;
+    }
+
+    public Date getFechainicio() {
+        return fechainicio;
+    }
+
+    public void setFechainicio(Date fechainicio) {
+        this.fechainicio = fechainicio;
     }
 }

@@ -42,6 +42,8 @@
                     <p:selectBooleanButton id="conFactura" value="#{personaController.selected.confactura}" onLabel="Si" offLabel="No"/>
                     <p:outputLabel value="#{bundle.CreateClienteLabel_nit}" for="nit" />
                     <p:inputText id="nit" value="#{personaController.selected.nit}" title="#{bundle.CreateClienteTitle_nit}" />
+                    <p:outputLabel value="Razon social:" for="razonSocial" rendered="#{personaController.esPersona}"/>
+                    <p:inputText id="razonSocial" value="#{personaController.selected.razonsocial}" title="Razon social" rendered="#{personaController.esPersona}"/>
                     <p:selectBooleanButton id="comision" value="#{personaController.tieneComision}" onLabel="Comsión" offLabel="Sin comisión" onIcon="ui-icon-check" offIcon="ui-icon-close">
                         <p:ajax update="comisionCampo"/>
                     </p:selectBooleanButton>
