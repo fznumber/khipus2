@@ -57,7 +57,7 @@ public class PedidosFacade extends AbstractFacade<Pedidos> {
         List<Object[]> resultado = new ArrayList<>();
         try {
             resultado = (List<Object[]>)em.createQuery("select concat(pe.codigo.secuencia,'-',pe.cliente.nom,' ',pe.cliente.ap,' ',pe.cliente.am,pe.cliente.razonsocial) as CLIENTE\n" +
-                    "               ,articulos.invArticulos.descri as PRODUCTO\n" +
+                    "               ,articulos.invArticulos.nombrecorto as PRODUCTO\n" +
                     "               ,articulos.cantidad + articulos.reposicion as CANTIDAD\n" +
                     "               ,concat(pe.cliente.territoriotrabajo.distribuidor.nom,' ',pe.cliente.territoriotrabajo.distribuidor.ap,' ',pe.cliente.territoriotrabajo.distribuidor.am) as DISTRIBUIDOR\n" +
                     "        from Pedidos pe join pe.articulosPedidos articulos" +
