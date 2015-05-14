@@ -377,7 +377,8 @@ public class PedidosReportController implements Serializable {
     private ControlCode generateCodControl(Pedidos pedido, Integer numberInvoice, BigInteger numberAutorization, String key,String nitEmpresa) {
         Double importeBaseCreditFisical = pedido.getTotalimporte() * 0.13;
         String nroDoc = pedido.getCliente().getNroDoc();
-        if (pedido.getCliente().getTipocliente().equals("INSTITUCION")) {
+        if(StringUtils.isNotEmpty(pedido.getCliente().getNit()))
+        {
             nroDoc = pedido.getCliente().getNit();
         }
 

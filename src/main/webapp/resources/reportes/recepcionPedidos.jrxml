@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="recepcionPedidos" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="aa3dc29f-0c06-429b-920f-2dde9c621ea4">
 	<property name="ireport.zoom" value="2.357947691000002"/>
-	<property name="ireport.x" value="699"/>
+	<property name="ireport.x" value="55"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
 	<parameter name="fecha" class="java.lang.String"/>
@@ -93,21 +93,6 @@
 					</box>
 					<textElement textAlignment="Left"/>
 					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="463" y="0" width="40" height="12" uuid="5dc5fa9b-76f9-474c-a956-8d9026469397"/>
-					<textElement textAlignment="Right"/>
-					<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="503" y="0" width="10" height="12" uuid="32466e47-b0ab-426d-9082-72b99d74acd5"/>
-					<textElement textAlignment="Center"/>
-					<textFieldExpression><![CDATA["/"]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="513" y="0" width="40" height="12" uuid="229b4b0c-7f4a-42db-b59d-502269de3e6c"/>
-					<textElement textAlignment="Left"/>
-					<textFieldExpression><![CDATA[$V{PAGE_COUNT}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>
