@@ -84,18 +84,18 @@
                         <h:outputText value="#{item.idtipopedido.nombre}"/>
                     </p:column>
                     <p:column headerText="Acción">
-                        <p:commandButton title="NOTA DE ENTREGA" id="printNotaDeVenta" actionListener="#{pedidosReportController.imprimirNotaEntrega(item)}" ajax="false" icon="ui-icon-disk" rendered="#{!item.estado.equals('ANULADO')}"/>
-                        <p:commandButton title="GENERAR FACTURA" id="printFacturaButton" oncomplete="PF('ImprimirFacturaDialog').show()" icon="ui-icon-search" rendered="#{!item.estado.equals('ANULADO')}">
+                        <p:commandButton title="NOTA DE ENTREGA" id="printNotaDeVenta" actionListener="#{pedidosReportController.imprimirNotaEntrega(item)}" ajax="false" icon="#{item.estado.equals('PREPARAR')? 'ui-icon-circle-check':'ui-icon-note'}" rendered="#{!item.estado.equals('ANULADO')}"/>
+                        <p:commandButton title="GENERAR FACTURA" id="printFacturaButton" oncomplete="PF('ImprimirFacturaDialog').show()" icon="#{item.estado.equals('PREPARAR')? 'ui-icon-check':'ui-icon-script'}" rendered="#{!item.estado.equals('ANULADO')}">
                             <f:setPropertyActionListener value="#{item}" target="#{pedidosReportController.pedido}" />
                         </p:commandButton>
-                        <p:commandButton id="editButton" actionListener="#{pedidosController.prepareEdit(item)}"  icon="ui-icon-plus" title="REPONER" update=":PedidosReponerForm" oncomplete="PF('PedidosReponerDialog').show()" rendered="#{item.estado.equals('ENTREGADO') and !item.estado.equals('ANULADO')}"/>
-                        <p:commandButton id="editPedido" actionListener="#{pedidosController.prepareEdit(item)}"  icon="ui-icon-plus" title="EDITAR" update=":PedidosEditForm" oncomplete="PF('PedidosEditDialog').show()" rendered="#{item.estado.equals('PENDIENTE') and !item.estado.equals('ANULADO')}"/>
-                        <p:commandButton id="anularPedido" actionListener="#{pedidosController.prepareEdit(item)}"  icon="ui-icon-plus" title="ANULAR PEDIDO" update=":PedidosAnularForm" oncomplete="PF('PedidosAnularDialog').show()" rendered="#{!item.estado.equals('ANULADO')}"/>
+                        <p:commandButton id="editButton" actionListener="#{pedidosController.prepareEdit(item)}"  icon="ui-icon-arrowreturnthick-1-e" title="REPONER" update=":PedidosReponerForm" oncomplete="PF('PedidosReponerDialog').show()" rendered="#{item.estado.equals('ENTREGADO') and !item.estado.equals('ANULADO')}"/>
+                        <p:commandButton id="editPedido" actionListener="#{pedidosController.prepareEdit(item)}"  icon="ui-icon-wrench" title="EDITAR" update=":PedidosEditForm" oncomplete="PF('PedidosEditDialog').show()" rendered="#{item.estado.equals('PENDIENTE') and !item.estado.equals('ANULADO')}"/>
+                        <p:commandButton id="anularPedido" actionListener="#{pedidosController.prepareEdit(item)}"  icon="ui-icon-alert" title="ANULAR PEDIDO" update=":PedidosAnularForm" oncomplete="PF('PedidosAnularDialog').show()" rendered="#{!item.estado.equals('ANULADO')}"/>
                         <p:commandButton id="viewButton" actionListener="#{pedidosController.setSelected(item)}"  icon="ui-icon-search" title="VER" update=":PedidosViewForm" oncomplete="PF('PedidosViewDialog').show()"/>
                     </p:column>
                     <f:facet name="footer">
-                        <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{pedidosController.prepareCreate}" update=":PedidosCreateForm" oncomplete="PF('PedidosCreateDialog').show()"/>
-                        <p:commandButton id="recepcionButton"   icon="ui-icon-search" value="Recepción Pedidos" update=":RecepcionForm" oncomplete="PF('RecepcionDialog').show()" />
+                        <p:commandButton id="createButton" value="#{bundle.Create}" actionListener="#{pedidosController.prepareCreate}" update=":PedidosCreateForm" oncomplete="PF('PedidosCreateDialog').show()"/>
+                        <p:commandButton id="recepcionButton" value="Recepción Pedidos" update=":RecepcionForm" oncomplete="PF('RecepcionDialog').show()" />
                         <p:commandButton id="generarFacturas" value="Generar Facturas" oncomplete="PF('ImprimirFacturasDialog').show()">
                             <f:setPropertyActionListener value="#{pedidosController.pedidosElegidos}" target="#{pedidosReportController.pedidosElegidos}" />
                         </p:commandButton>
