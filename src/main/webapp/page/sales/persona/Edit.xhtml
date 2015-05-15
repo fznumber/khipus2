@@ -47,7 +47,7 @@
                     </p:selectBooleanButton>
                     <p:spinner id="garantiaCampo" value="#{personaController.selected.porcentajeGarantia}" prefix="%" min="0" max="100" stepFactor="0.1" disabled="#{!personaController.tieneGarantia}"/>
                     <p:outputLabel value="#{bundle.CreateClienteLabel_idtipocliente}" for="idtipocliente" />
-                    <p:selectOneMenu id="idtipocliente" value="#{personaController.selected.tipocliente}" required="true" requiredMessage="#{bundle.EditClienteRequiredMessage_idtipocliente}">
+                    <p:selectOneMenu id="idtipocliente" value="#{personaController.selected.tipocliente}">
                         <f:selectItems value="#{tipoclienteController.itemsAvailableSelectOne}"
                                        var="idtipoclienteItem"
                                        itemValue="#{idtipoclienteItem}"/>

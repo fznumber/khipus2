@@ -297,7 +297,11 @@ public class PedidosController implements Serializable {
 
     public List<Pedidos> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            if(pedidosFiltrado != null)
+            pedidosFiltrado.clear();
+            if(pedidosElegidos != null)
+            pedidosElegidos.clear();
+            items = getFacade().findPedidosOrdDecs();
         }
         return items;
     }

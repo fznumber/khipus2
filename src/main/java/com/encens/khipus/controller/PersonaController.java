@@ -35,6 +35,7 @@ public class PersonaController implements Serializable {
     private Boolean esPersona;
     private Boolean tieneComision;
     private Boolean tieneGarantia;
+    private Boolean confacura;
 
     public PersonaController() {
     }
@@ -80,10 +81,12 @@ public class PersonaController implements Serializable {
         esPersona = true;
         tieneComision = false;
         tieneGarantia = false;
+        confacura = true;
         return selected;
     }
 
-    public void prepareEdit() {
+    public void prepareEdit(Persona persona) {
+        selected = persona;
         esPersona = selected.getTipoPersona().equals("cliente");
         tieneComision = selected.getPorcentajeComision() > 0.0;
         tieneGarantia = selected.getPorcentajeGarantia() >0.0;
@@ -150,6 +153,7 @@ public class PersonaController implements Serializable {
             cliente.setTelefono(selected.getTelefono());
             cliente.setTipocliente(selected.getTipocliente());
             cliente.setTerritoriotrabajo(selected.getTerritoriotrabajo());
+            cliente.setConfactura(confacura);
             clienteFacade.create(cliente);
         }
         else {
@@ -172,6 +176,7 @@ public class PersonaController implements Serializable {
             institucion.setNit(selected.getNit());
             institucion.setTelefono(selected.getTelefono());
             institucion.setTipocliente(selected.getTipocliente());
+            institucion.setConfactura(confacura);
             institucionFacade.create(institucion);
         }
         JSFUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ClienteCreated"));
@@ -205,7 +210,8 @@ public class PersonaController implements Serializable {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PersonasUpdated"));
     }
 
-    public void destroy() {
+    public void destroy(Persona persona) {
+        selected = persona;
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("PersonasDeleted"));
         if (!JSFUtil.isValidationFailed()) {
             selected = null; // Remove selection
@@ -329,5 +335,13 @@ public class PersonaController implements Serializable {
 
     public void setTieneGarantia(Boolean tieneGarantia) {
         this.tieneGarantia = tieneGarantia;
-    }    
+    }
+
+    public Boolean getConfacura() {
+        return confacura;
+    }
+
+    public void setConfacura(Boolean confacura) {
+        this.confacura = confacura;
+    }
 }

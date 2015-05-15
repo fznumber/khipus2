@@ -121,7 +121,7 @@ public class Persona implements Serializable {
     @Column(name = "con_factura")
     private Boolean confactura = true;
     @JoinColumn(name = "IDTIPOCLIENTE", referencedColumnName = "IDTIPOCLIENTE")
-    @ManyToOne(optional = true)
+    @ManyToOne
     private Tipocliente tipocliente;
 
     public Persona() {

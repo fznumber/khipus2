@@ -8,7 +8,7 @@
 
 <ui:composition>
 
-    <p:dialog id="PersonaCreateDlg" widgetVar="PersonaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Registrar Cliente">
+    <p:dialog id="PersonaCreateDlg" widgetVar="PersonaCreateDialog" modal="true" resizable="false" closable="false" appendTo="@(body)" header="Registrar Cliente">
         <h:form id="PersonaCreateForm">
             <h:panelGroup id="display">
                 <p:panelGrid columns="2" rendered="#{personaController.selected != null}">
@@ -39,7 +39,7 @@
                     <p:outputLabel value="#{bundle.CreateClienteLabel_telefono}" for="telefono" />
                     <p:inputText id="telefono" value="#{personaController.selected.telefono}" title="#{bundle.CreateClienteTitle_telefono}" />
                     <p:outputLabel value="¿Con factura?: " for="conFactura"/>
-                    <p:selectBooleanButton id="conFactura" value="#{personaController.selected.confactura}" onLabel="Si" offLabel="No"/>
+                    <p:selectBooleanButton id="conFactura" value="#{personaController.confacura}" onLabel="Si" offLabel="No"/>
                     <p:outputLabel value="#{bundle.CreateClienteLabel_nit}" for="nit" />
                     <p:inputText id="nit" value="#{personaController.selected.nit}" title="#{bundle.CreateClienteTitle_nit}" />
                     <p:outputLabel value="Razon social:" for="razonSocial" rendered="#{personaController.esPersona}"/>
@@ -65,8 +65,8 @@
                                        itemValue="#{territoriotrabajo}"/>
                     </p:selectOneMenu>
                 </p:panelGrid>
-                <p:commandButton actionListener="#{personaController.create}" value="#{bundle.Save}" update="display,:PersonaListForm:datalist,:PersonaListForm:growl" />
-                <p:commandButton actionListener="#{personaController.cancel}" value="#{bundle.Close}" onclick="PersonaCreateDialog.hide()"/>
+                <p:commandButton actionListener="#{personaController.create}" value="#{bundle.Save}" update="display,:PersonaListForm:growl" />
+                <p:commandButton actionListener="#{personaController.cancel}" value="#{bundle.Close}" update=":PersonaListForm:datalist" onclick="PersonaCreateDialog.close()"/>
             </h:panelGroup>
         </h:form>
     </p:dialog>
