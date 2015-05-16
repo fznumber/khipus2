@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="recepcionPedidos" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="aa3dc29f-0c06-429b-920f-2dde9c621ea4">
 	<property name="ireport.zoom" value="2.357947691000002"/>
-	<property name="ireport.x" value="55"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
 	<parameter name="fecha" class="java.lang.String"/>
@@ -100,36 +100,31 @@
 	<summary>
 		<band height="107" splitType="Stretch">
 			<crosstab>
-				<reportElement x="14" y="0" width="788" height="107" uuid="bb123698-2f62-4f4a-9364-39c048b91cc0"/>
-				<rowGroup name="distribuidor" width="41" totalPosition="End">
+				<reportElement x="0" y="0" width="802" height="107" uuid="4d24fd31-8dae-4e16-b48e-e28daedb76b9"/>
+				<rowGroup name="distribuidor" width="70" totalPosition="End">
 					<bucket class="java.lang.String">
 						<bucketExpression><![CDATA[$F{distribuidor}]]></bucketExpression>
 					</bucket>
 					<crosstabRowHeader>
-						<cellContents backcolor="#CCCCCC" mode="Opaque">
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
 							<box>
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textField>
-								<reportElement style="Crosstab Data Text" x="0" y="0" width="40" height="18" uuid="bcb1d613-3db9-4722-87b2-ff8406027df5"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
-									<font size="7"/>
-								</textElement>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="25" uuid="4fd14f97-2010-4724-9ce6-47faa214a4d0"/>
 								<textFieldExpression><![CDATA[$V{distribuidor}]]></textFieldExpression>
 							</textField>
 						</cellContents>
 					</crosstabRowHeader>
 					<crosstabTotalRowHeader>
-						<cellContents backcolor="#CCCCCC" mode="Opaque">
+						<cellContents backcolor="#005FB3" mode="Opaque">
 							<box>
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<staticText>
-								<reportElement x="0" y="0" width="111" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="eb2737c2-a777-4c78-b685-a533022727ae"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font size="7"/>
-								</textElement>
-								<text><![CDATA[Total]]></text>
+								<reportElement x="0" y="0" width="140" height="25" forecolor="#FFFFFF" uuid="dcdd26b0-56fa-4f08-a9a6-a55f2711d266"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Total distribuidor]]></text>
 							</staticText>
 						</cellContents>
 					</crosstabTotalRowHeader>
@@ -139,48 +134,40 @@
 						<bucketExpression><![CDATA[$F{cliente}]]></bucketExpression>
 					</bucket>
 					<crosstabRowHeader>
-						<cellContents backcolor="#999999" mode="Opaque">
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
 							<box>
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textField>
-								<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="9" uuid="0754b58f-adbe-4342-a4c4-ea908706c1a8"/>
-								<textElement>
-									<font size="7"/>
-								</textElement>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="25" uuid="16ff1b23-8055-4fbc-89bd-a99ae1efd2c7"/>
 								<textFieldExpression><![CDATA[$V{cliente}]]></textFieldExpression>
 							</textField>
 						</cellContents>
 					</crosstabRowHeader>
 					<crosstabTotalRowHeader>
-						<cellContents backcolor="#999999" mode="Opaque">
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
 							<box>
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<staticText>
-								<reportElement x="0" y="0" width="70" height="9" uuid="f175bb21-d223-46b4-a2b8-7a976967834b"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font size="7"/>
-								</textElement>
-								<text><![CDATA[Total distribuidor]]></text>
+								<reportElement x="0" y="0" width="70" height="25" uuid="c02cf2cb-9808-4534-8f5f-1b51495a2210"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Total cliente]]></text>
 							</staticText>
 						</cellContents>
 					</crosstabTotalRowHeader>
 				</rowGroup>
-				<columnGroup name="producto" height="24">
+				<columnGroup name="producto" height="30">
 					<bucket class="java.lang.String">
 						<bucketExpression><![CDATA[$F{producto}]]></bucketExpression>
 					</bucket>
 					<crosstabColumnHeader>
-						<cellContents backcolor="#CCCCCC" mode="Opaque">
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
 							<box>
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textField>
-								<reportElement style="Crosstab Data Text" x="0" y="0" width="21" height="24" uuid="bf3d65c3-cc0d-4bbc-a87a-a6dfaf8decc7"/>
-								<textElement rotation="None">
-									<font size="5" isBold="true"/>
-								</textElement>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="30" uuid="aadb63ea-206e-4c04-ae90-339e762096e9"/>
 								<textFieldExpression><![CDATA[$V{producto}]]></textFieldExpression>
 							</textField>
 						</cellContents>
@@ -189,33 +176,27 @@
 						<cellContents/>
 					</crosstabTotalColumnHeader>
 				</columnGroup>
-				<measure name="cantidadMeasure" class="java.lang.Integer" calculation="Count">
+				<measure name="cantidadMeasure" class="java.lang.Integer" calculation="Sum">
 					<measureExpression><![CDATA[$F{cantidad}]]></measureExpression>
 				</measure>
-				<crosstabCell width="21" height="9">
+				<crosstabCell width="50" height="25">
 					<cellContents>
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textField>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="21" height="9" uuid="78e09eeb-7fee-40dc-bfe4-12a1bd921dcc"/>
-							<textElement>
-								<font size="7"/>
-							</textElement>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="f62d8973-d6c7-4f34-ba07-49cfbc3251db"/>
 							<textFieldExpression><![CDATA[$V{cantidadMeasure}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell width="21" height="13" rowTotalGroup="distribuidor">
-					<cellContents backcolor="#CCCCCC" mode="Opaque">
+				<crosstabCell height="25" rowTotalGroup="distribuidor">
+					<cellContents backcolor="#005FB3" mode="Opaque">
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textField>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="21" height="13" forecolor="#000000" uuid="5c29b88d-97af-4cd9-bf63-9884b18bc700"/>
-							<textElement>
-								<font size="7"/>
-							</textElement>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" forecolor="#FFFFFF" uuid="e5df65e8-638e-436d-817f-0eed35b9be88"/>
 							<textFieldExpression><![CDATA[$V{cantidadMeasure}]]></textFieldExpression>
 						</textField>
 					</cellContents>
@@ -226,7 +207,7 @@
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textField>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="10f956f0-0e9c-44be-8b27-0bb5619ed97b"/>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="2ec628e0-454c-4d2b-8326-793774327515"/>
 							<textFieldExpression><![CDATA[$V{cantidadMeasure}]]></textFieldExpression>
 						</textField>
 					</cellContents>
@@ -237,21 +218,18 @@
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textField>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" forecolor="#FFFFFF" uuid="3b02a93b-4606-4034-8c9a-43ce8d3e04cc"/>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" forecolor="#FFFFFF" uuid="a8a64a2f-9a9c-4e9b-a63e-5f66695cac83"/>
 							<textFieldExpression><![CDATA[$V{cantidadMeasure}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell width="21" height="9" rowTotalGroup="cliente">
-					<cellContents backcolor="#999999" mode="Opaque">
+				<crosstabCell height="25" rowTotalGroup="cliente">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textField>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="21" height="9" uuid="04c58354-8911-4a77-9b64-e058ba10f544"/>
-							<textElement>
-								<font size="7"/>
-							</textElement>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="d82a0f83-45e7-4876-adc1-cbd3cfa9bf50"/>
 							<textFieldExpression><![CDATA[$V{cantidadMeasure}]]></textFieldExpression>
 						</textField>
 					</cellContents>
@@ -262,7 +240,7 @@
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textField>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="cf8611ca-de8c-42f0-9af3-8a01ef7768fd"/>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="e740eaa6-23e0-4d67-a585-a0bddc2adb4f"/>
 							<textFieldExpression><![CDATA[$V{cantidadMeasure}]]></textFieldExpression>
 						</textField>
 					</cellContents>

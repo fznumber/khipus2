@@ -73,7 +73,7 @@ public class RecepcionReportController implements Serializable {
             fecha = fechaEntrega.toString();
 
         paramMap.put("fecha",fecha);
-        paramMap.put("cantidad",cantidadPedidos);
+        paramMap.put("cantidadPedidos",cantidadPedidos);
 
         return paramMap;
     }
