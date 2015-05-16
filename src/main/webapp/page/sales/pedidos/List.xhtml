@@ -84,8 +84,8 @@
                         <h:outputText value="#{item.idtipopedido.nombre}"/>
                     </p:column>
                     <p:column headerText="Acción">
-                        <p:commandButton title="NOTA DE ENTREGA" id="printNotaDeVenta" actionListener="#{pedidosReportController.imprimirNotaEntrega(item)}" ajax="false" icon="#{item.estado.equals('PREPARAR')? 'ui-icon-circle-check':'ui-icon-note'}" rendered="#{!item.estado.equals('ANULADO')}"/>
-                        <p:commandButton title="GENERAR FACTURA" id="printFacturaButton" oncomplete="PF('ImprimirFacturaDialog').show()" icon="#{item.estado.equals('PREPARAR')? 'ui-icon-check':'ui-icon-script'}" rendered="#{!item.estado.equals('ANULADO')}">
+                        <p:commandButton title="NOTA DE ENTREGA" id="printNotaDeVenta" actionListener="#{pedidosReportController.imprimirNotaEntrega(item)}" ajax="false" icon="#{item.estado.equals('PENDIENTE')? 'ui-icon-note':'ui-icon-circle-check'}" rendered="#{!item.estado.equals('ANULADO')}"/>
+                        <p:commandButton title="GENERAR FACTURA" id="printFacturaButton" oncomplete="PF('ImprimirFacturaDialog').show()" icon="#{item.estado.equals('PENDIENTE')? 'ui-icon-script':'ui-icon-check'}" rendered="#{!item.estado.equals('ANULADO')}">
                             <f:setPropertyActionListener value="#{item}" target="#{pedidosReportController.pedido}" />
                         </p:commandButton>
                         <p:commandButton id="editButton" actionListener="#{pedidosController.prepareEdit(item)}"  icon="ui-icon-arrowreturnthick-1-e" title="REPONER" update=":PedidosReponerForm" oncomplete="PF('PedidosReponerDialog').show()" rendered="#{item.estado.equals('ENTREGADO') and !item.estado.equals('ANULADO')}"/>

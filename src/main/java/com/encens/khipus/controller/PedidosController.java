@@ -301,7 +301,7 @@ public class PedidosController implements Serializable {
             pedidosFiltrado.clear();
             if(pedidosElegidos != null)
             pedidosElegidos.clear();
-            items = getFacade().findPedidosOrdDecs();
+            items = getFacade().findAll();//findPedidosOrdDecs();
         }
         return items;
     }
