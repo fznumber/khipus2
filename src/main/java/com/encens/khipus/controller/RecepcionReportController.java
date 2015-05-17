@@ -65,15 +65,20 @@ public class RecepcionReportController implements Serializable {
     }
 
     private Map<String, Object> getReportParams() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        LoginBean loginBean = (LoginBean) facesContext.getApplication().getELResolver().
+                getValue(facesContext.getELContext(), null, "loginBean");
         Map<String, Object> paramMap = new HashMap<String, Object>();
         String fecha;
         if(fechaEntrega == null)
             fecha = "(TODOS LOS PENDIENTES)";
         else
             fecha = fechaEntrega.toString();
-
+        
+        cantidadPedidos = pedidosFacade.getTotalPedidos(fechaEntrega,territoriotrabajo);
         paramMap.put("fecha",fecha);
-        paramMap.put("cantidadPedidos",cantidadPedidos);
+        paramMap.put("cantidadPedidos",cantidadPedidos.toString());
+        paramMap.put("nomUsr",loginBean.getUsuario().getUsuario());
 
         return paramMap;
     }
@@ -99,8 +104,7 @@ public class RecepcionReportController implements Serializable {
             resultado = pedidosFacade.recepcionDePedidos();
         }else{
             resultado = pedidosFacade.recepcionDePedidos(fechaEntrega,territoriotrabajo);
-        }
-        cantidadPedidos = pedidosFacade.getTotalPedidos(fechaEntrega,territoriotrabajo);
+        }        
 
         DRDataSource dataSource = new DRDataSource("cliente", "producto", "cantidad", "distribuidor");
         for (Object[] obj : resultado) {
