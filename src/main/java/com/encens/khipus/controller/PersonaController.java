@@ -208,6 +208,7 @@ public class PersonaController implements Serializable {
         }
 
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PersonasUpdated"));
+        items = null;
     }
 
     public void destroy(Persona persona) {

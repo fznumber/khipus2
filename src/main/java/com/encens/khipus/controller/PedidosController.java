@@ -5,6 +5,8 @@ import com.encens.khipus.model.*;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -610,5 +612,15 @@ public class PedidosController implements Serializable {
 
     public void setPedidosElegidos(List<Pedidos> pedidosElegidos) {
         this.pedidosElegidos = pedidosElegidos;
+    }
+
+    public String formatoMoneda(Double valor){
+        DecimalFormat df = new DecimalFormat("###,###.00");
+
+        DecimalFormatSymbols custom=new DecimalFormatSymbols();
+        custom.setDecimalSeparator('.');
+        custom.setGroupingSeparator(',');
+        df.setDecimalFormatSymbols(custom);
+        return df.format(valor);
     }
 }

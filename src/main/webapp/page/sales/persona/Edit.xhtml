@@ -8,7 +8,7 @@
 
 <ui:composition>
 
-    <p:dialog id="PersonaEditDlg" widgetVar="PersonaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="Editar cliente">
+    <p:dialog id="PersonaEditDlg" widgetVar="PersonaEditDialog" modal="true" closable="false" resizable="false" appendTo="@(body)" header="Editar cliente">
         <h:form id="PersonaEditForm">
             <h:panelGroup id="display">
                 <p:panelGrid columns="2" rendered="#{personaController.selected != null}">
@@ -60,7 +60,7 @@
                     </p:selectOneMenu>
                 </p:panelGrid>
                 <p:commandButton actionListener="#{personaController.update}" value="#{bundle.Save}" update="display,:PersonaListForm:datalist,:PersonaListForm:growl" />
-                <p:commandButton actionListener="#{personaController.cancel}" value="#{bundle.Close}" onclick="PersonaEditDialog.hide()"/>
+                <p:commandButton actionListener="#{personaController.cancel}" value="#{bundle.Close}" update=":PersonaListForm:datalist" onclick="PersonaEditDialog.close()"/>
             </h:panelGroup>
         </h:form>
     </p:dialog>

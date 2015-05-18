@@ -103,7 +103,9 @@
                     <h:outputText id="total" value="#{item.total}" />
                 </p:column>
                 <p:column headerText="Importe">
-                    <h:outputText id="importe" value="#{item.importe}" />
+                    <h:outputText id="importe" value="#{item.importe}">
+                        <f:convertNumber type="currency" currencySymbol="Bs." locale="en_US" />
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="Acción">
                     <p:commandLink value="Quitar" actionListener="#{pedidosController.reponerArticulo(item)}" update="articulosTable,:PedidosListForm:growl" rendered="#{item.reposicion==0}">
@@ -113,7 +115,7 @@
                 <f:facet name="footer">
                     <h:outputText value="Total Importe: " />
                     <h:outputText id="totalImporte" value="#{pedidosController.selected.totalimporte}">
-                        <f:convertNumber type="currency" currencySymbol="Bs." />
+                        <f:convertNumber type="currency" currencySymbol="Bs." locale="en_US" />
                     </h:outputText>
                 </f:facet>
             </p:dataTable>
