@@ -97,9 +97,8 @@ public class PedidosFacade extends AbstractFacade<Pedidos> {
                     "               ,articulos.cantidad + articulos.reposicion as CANTIDAD\n" +
                     "               ,concat(pe.cliente.territoriotrabajo.distribuidor.nom,' ',pe.cliente.territoriotrabajo.distribuidor.ap,' ',pe.cliente.territoriotrabajo.distribuidor.am) as DISTRIBUIDOR\n" +
                     "        from Pedidos pe join pe.articulosPedidos articulos" +
-                    "        where pe.fechaEntrega =:fechaEntrega" +
-                    "        or pe.cliente.territoriotrabajo =:territoriotrabajo" +
-                    "        and pe.estado = 'PENDIENTE'")
+                    "        where pe.estado = 'PENDIENTE'" +
+                    "        AND ( pe.cliente.territoriotrabajo =:territoriotrabajo AND  pe.fechaEntrega =:fechaEntrega)")
                     .setParameter("fechaEntrega", fechaEntrega, TemporalType.DATE)
                     .setParameter("territoriotrabajo",territoriotrabajo)
                     .getResultList();

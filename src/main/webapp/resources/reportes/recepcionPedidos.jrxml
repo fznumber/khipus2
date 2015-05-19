@@ -132,7 +132,7 @@
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<staticText>
-								<reportElement x="0" y="0" width="70" height="10" forecolor="#000000" uuid="dcdd26b0-56fa-4f08-a9a6-a55f2711d266"/>
+								<reportElement x="0" y="0" width="78" height="10" forecolor="#000000" uuid="dcdd26b0-56fa-4f08-a9a6-a55f2711d266"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Arial Narrow" size="7"/>
 								</textElement>
@@ -141,7 +141,7 @@
 						</cellContents>
 					</crosstabTotalRowHeader>
 				</rowGroup>
-				<rowGroup name="cliente" width="70" totalPosition="End">
+				<rowGroup name="cliente" width="78" totalPosition="End">
 					<bucket class="java.lang.String">
 						<bucketExpression><![CDATA[$F{cliente}]]></bucketExpression>
 					</bucket>
@@ -151,7 +151,7 @@
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textField>
-								<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="17" uuid="16ff1b23-8055-4fbc-89bd-a99ae1efd2c7"/>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="78" height="17" uuid="16ff1b23-8055-4fbc-89bd-a99ae1efd2c7"/>
 								<textElement>
 									<font fontName="Arial Narrow" size="6"/>
 								</textElement>
@@ -165,7 +165,7 @@
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<staticText>
-								<reportElement x="0" y="0" width="70" height="17" uuid="c02cf2cb-9808-4534-8f5f-1b51495a2210"/>
+								<reportElement x="0" y="0" width="78" height="17" uuid="c02cf2cb-9808-4534-8f5f-1b51495a2210"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Arial Narrow" size="6"/>
 								</textElement>

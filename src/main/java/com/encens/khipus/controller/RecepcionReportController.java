@@ -26,6 +26,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -71,11 +73,14 @@ public class RecepcionReportController implements Serializable {
         Map<String, Object> paramMap = new HashMap<String, Object>();
         String fecha;
         String nombreTerritorio;
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         if(fechaEntrega == null)
             fecha = "(TODOS LOS PENDIENTES)";
-        else
-            fecha = fechaEntrega.toString();
-        if(territoriotrabajo == null)
+        else{                        
+            String reportDate = df.format(fechaEntrega);
+            fecha = reportDate;
+        }
+        if(territoriotrabajo != null)
             nombreTerritorio = territoriotrabajo.getNombre();
         else
             nombreTerritorio = "Todos";
@@ -119,6 +124,8 @@ public class RecepcionReportController implements Serializable {
     }
 
     public Date getFechaEntrega() {
+        if(fechaEntrega == null)
+            fechaEntrega = new Date();
         return fechaEntrega;
     }
 
