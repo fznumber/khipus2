@@ -62,6 +62,7 @@ public class PersonaController implements Serializable {
     }
 
     public void setSelected(Persona selected) {
+       // prepareEdit(selected);
         this.selected = selected;
     }
 
@@ -87,9 +88,14 @@ public class PersonaController implements Serializable {
 
     public void prepareEdit(Persona persona) {
         selected = persona;
-        esPersona = selected.getTipoPersona().equals("cliente");
-        tieneComision = selected.getPorcentajeComision() > 0.0;
-        tieneGarantia = selected.getPorcentajeGarantia() >0.0;
+        if(selected != null  ) {
+            if(selected.getTipoPersona() != null)
+                esPersona = selected.getTipoPersona().equals("cliente");
+            if(selected.getPorcentajeComision() != null)
+                tieneComision = selected.getPorcentajeComision() > 0.0;
+            if(selected.getPorcentajeGarantia() != null)
+                tieneGarantia = selected.getPorcentajeGarantia() > 0.0;
+        }
     }
 
     private boolean validarCampos() {

@@ -70,15 +70,20 @@ public class RecepcionReportController implements Serializable {
                 getValue(facesContext.getELContext(), null, "loginBean");
         Map<String, Object> paramMap = new HashMap<String, Object>();
         String fecha;
+        String nombreTerritorio;
         if(fechaEntrega == null)
             fecha = "(TODOS LOS PENDIENTES)";
         else
             fecha = fechaEntrega.toString();
-        
+        if(territoriotrabajo == null)
+            nombreTerritorio = territoriotrabajo.getNombre();
+        else
+            nombreTerritorio = "Todos";
         cantidadPedidos = pedidosFacade.getTotalPedidos(fechaEntrega,territoriotrabajo);
         paramMap.put("fecha",fecha);
         paramMap.put("cantidadPedidos",cantidadPedidos.toString());
         paramMap.put("nomUsr",loginBean.getUsuario().getUsuario());
+        paramMap.put("nombreTerritorio",nombreTerritorio);
 
         return paramMap;
     }

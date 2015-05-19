@@ -14,14 +14,14 @@
                 <p:panelGrid columns="2" rendered="#{personaController.selected != null}">
                     <p:outputLabel value="Nombre(s):" for="nom" rendered="#{personaController.esPersona}">
                     </p:outputLabel>
-                    <p:inputText id="nom" value="#{personaController.selected.nom}" title="nombres" required="true" requiredMessage="campo requerido." rendered="#{personaController.esPersona}"/>
+                    <p:inputText id="nom" value="#{personaController.selected.nom}" title="nombres" rendered="#{personaController.esPersona}"/>
                     <p:outputLabel value="Ap. Paterno:" for="ap" rendered="#{personaController.esPersona}">
                     </p:outputLabel>
-                    <p:inputText id="ap" value="#{personaController.selected.ap}" title="Ap. Paterno." required="true" requiredMessage="campo requerido." rendered="#{personaController.esPersona}"/>
+                    <p:inputText id="ap" value="#{personaController.selected.ap}" title="Ap. Paterno." rendered="#{personaController.esPersona}"/>
                     <p:outputLabel value="Ap. Materno" for="am" rendered="#{personaController.esPersona}"/>
-                    <p:inputText id="am" value="#{personaController.selected.am}" title="Ap. Materno." required="true" requiredMessage="campo requerido." rendered="#{personaController.esPersona}"/>
+                    <p:inputText id="am" value="#{personaController.selected.am}" title="Ap. Materno." rendered="#{personaController.esPersona}"/>
                     <p:outputLabel value="Razon social:" for="razon" rendered="#{!personaController.esPersona}"/>
-                    <p:inputText id="razon" value="#{personaController.selected.razonsocial}" title="Razon social" required="true" requiredMessage="campo requerido." rendered="#{!personaController.esPersona}">
+                    <p:inputText id="razon" value="#{personaController.selected.razonsocial}" title="Razon social" rendered="#{!personaController.esPersona}">
                     </p:inputText>
                     <p:outputLabel value="C.I.:" for="nroDoc" rendered="#{personaController.esPersona}"/>
                     <p:inputText id="nroDoc" value="#{personaController.selected.nroDoc}" title="Cedula de identidad" rendered="#{personaController.esPersona}"/>
@@ -59,8 +59,8 @@
                                        itemValue="#{territoriotrabajo}"/>
                     </p:selectOneMenu>
                 </p:panelGrid>
-                <p:commandButton actionListener="#{personaController.update}" value="#{bundle.Save}" update="display,:PersonaListForm:datalist,:PersonaListForm:growl" />
-                <p:commandButton actionListener="#{personaController.cancel}" value="#{bundle.Close}" update=":PersonaListForm:datalist" onclick="PersonaEditDialog.close()"/>
+                <p:commandButton actionListener="#{personaController.update}" value="#{bundle.Save}" rendered="#{personaController.selected !=null}" update="display,:PersonaListForm:datalist,:PersonaListForm:growl" />
+                <p:commandButton actionListener="#{personaController.cancel}" value="#{bundle.Close}" onclick="PersonaEditDialog.hide()"/>
             </h:panelGroup>
         </h:form>
     </p:dialog>

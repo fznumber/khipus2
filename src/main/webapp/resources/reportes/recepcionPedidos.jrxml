@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="recepcionPedidos" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="aa3dc29f-0c06-429b-920f-2dde9c621ea4">
 	<property name="ireport.zoom" value="2.357947691000002"/>
-	<property name="ireport.x" value="231"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
 	<parameter name="fecha" class="java.lang.String"/>
 	<parameter name="cantidadPedidos" class="java.lang.String"/>
 	<parameter name="nomUsr" class="java.lang.String"/>
+	<parameter name="nombreTerritorio" class="java.lang.String"/>
 	<field name="cliente" class="java.lang.String"/>
 	<field name="producto" class="java.lang.String"/>
 	<field name="cantidad" class="java.lang.Integer"/>
@@ -88,7 +89,7 @@
 		</band>
 	</pageHeader>
 	<pageFooter>
-		<band height="34">
+		<band height="24">
 			<frame>
 				<reportElement positionType="Float" mode="Opaque" x="0" y="0" width="802" height="15" uuid="065da068-619a-4901-a212-434d6f75ae14"/>
 				<box padding="0">
@@ -111,10 +112,10 @@
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="107" splitType="Stretch">
+		<band height="132" splitType="Stretch">
 			<crosstab>
-				<reportElement x="10" y="0" width="792" height="107" uuid="4d24fd31-8dae-4e16-b48e-e28daedb76b9"/>
-				<rowGroup name="distribuidor" width="45" totalPosition="End">
+				<reportElement x="10" y="25" width="792" height="107" uuid="4d24fd31-8dae-4e16-b48e-e28daedb76b9"/>
+				<rowGroup name="distribuidor" width="0" totalPosition="End">
 					<bucket class="java.lang.String">
 						<bucketExpression><![CDATA[$F{distribuidor}]]></bucketExpression>
 					</bucket>
@@ -123,13 +124,6 @@
 							<box>
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
-							<textField>
-								<reportElement style="Crosstab Data Text" x="0" y="0" width="45" height="34" uuid="4fd14f97-2010-4724-9ce6-47faa214a4d0"/>
-								<textElement verticalAlignment="Middle">
-									<font fontName="Arial Narrow" size="6"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$V{distribuidor}]]></textFieldExpression>
-							</textField>
 						</cellContents>
 					</crosstabRowHeader>
 					<crosstabTotalRowHeader>
@@ -138,7 +132,7 @@
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<staticText>
-								<reportElement x="0" y="0" width="115" height="10" forecolor="#000000" uuid="dcdd26b0-56fa-4f08-a9a6-a55f2711d266"/>
+								<reportElement x="0" y="0" width="70" height="10" forecolor="#000000" uuid="dcdd26b0-56fa-4f08-a9a6-a55f2711d266"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Arial Narrow" size="7"/>
 								</textElement>
@@ -175,7 +169,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Arial Narrow" size="6"/>
 								</textElement>
-								<text><![CDATA[Total distribuido]]></text>
+								<text><![CDATA[Total distribuidor]]></text>
 							</staticText>
 						</cellContents>
 					</crosstabTotalRowHeader>
@@ -281,6 +275,10 @@
 					</cellContents>
 				</crosstabCell>
 			</crosstab>
+			<textField>
+				<reportElement x="11" y="0" width="100" height="14" uuid="a7f80c0b-c099-46b6-8121-71cd426e2394"/>
+				<textFieldExpression><![CDATA[$P{nombreTerritorio}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>
