@@ -134,7 +134,7 @@
 							<staticText>
 								<reportElement x="0" y="0" width="78" height="10" forecolor="#000000" uuid="dcdd26b0-56fa-4f08-a9a6-a55f2711d266"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Arial Narrow" size="7"/>
+									<font fontName="Arial Narrow" size="5"/>
 								</textElement>
 								<text><![CDATA[Total :]]></text>
 							</staticText>
@@ -151,9 +151,9 @@
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textField>
-								<reportElement style="Crosstab Data Text" x="0" y="0" width="78" height="17" uuid="16ff1b23-8055-4fbc-89bd-a99ae1efd2c7"/>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="78" height="13" uuid="16ff1b23-8055-4fbc-89bd-a99ae1efd2c7"/>
 								<textElement>
-									<font fontName="Arial Narrow" size="6"/>
+									<font fontName="Arial Narrow" size="5"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$V{cliente}]]></textFieldExpression>
 							</textField>
@@ -164,13 +164,13 @@
 							<box>
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
-							<staticText>
-								<reportElement x="0" y="0" width="78" height="17" uuid="c02cf2cb-9808-4534-8f5f-1b51495a2210"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Arial Narrow" size="6"/>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="78" height="13" uuid="326c99a1-eb33-4a30-9c4f-f53ea9db2db4"/>
+								<textElement>
+									<font size="5"/>
 								</textElement>
-								<text><![CDATA[Total distribuidor]]></text>
-							</staticText>
+								<textFieldExpression><![CDATA[$V{distribuidor}]]></textFieldExpression>
+							</textField>
 						</cellContents>
 					</crosstabTotalRowHeader>
 				</rowGroup>
@@ -199,13 +199,13 @@
 				<measure name="cantidadMeasure" class="java.lang.Integer" calculation="Sum">
 					<measureExpression><![CDATA[$F{cantidad}]]></measureExpression>
 				</measure>
-				<crosstabCell width="29" height="17">
+				<crosstabCell width="29" height="13">
 					<cellContents>
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textField>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="29" height="17" uuid="f62d8973-d6c7-4f34-ba07-49cfbc3251db"/>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="29" height="13" uuid="f62d8973-d6c7-4f34-ba07-49cfbc3251db"/>
 							<textElement verticalAlignment="Middle">
 								<font fontName="Arial Narrow" size="5"/>
 							</textElement>
@@ -249,13 +249,13 @@
 						</textField>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell width="29" height="17" rowTotalGroup="cliente">
+				<crosstabCell width="29" height="13" rowTotalGroup="cliente">
 					<cellContents backcolor="#FFFFFF" mode="Opaque">
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textField>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="29" height="17" uuid="d82a0f83-45e7-4876-adc1-cbd3cfa9bf50"/>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="29" height="13" uuid="d82a0f83-45e7-4876-adc1-cbd3cfa9bf50"/>
 							<textElement verticalAlignment="Middle">
 								<font fontName="Arial Narrow" size="5"/>
 							</textElement>

@@ -19,7 +19,7 @@
                                    itemValue="#{territoriotrabajo}"/>
                 </p:selectOneMenu>
                 <p:outputLabel for="fechaEntrega" value="Fecha Entrega:" />
-                <p:calendar id="fechaEntrega" value="#{recepcionReportController.fechaEntrega}" />
+                <p:calendar id="fechaEntrega" value="#{recepcionReportController.fechaEntrega}" required="true" requiredMessage="La fecha de entrega es necesario."/>
             </p:panelGrid>
             <p:commandButton value="Generar" actionListener="#{recepcionReportController.imprimirReporte}" ajax="false"/>
             <p:commandButton value="#{bundle.Close}" onclick="RecepcionDialog.hide()"/>

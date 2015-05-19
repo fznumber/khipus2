@@ -69,7 +69,7 @@
                     </p:column>
                     <p:column filterMatchMode="in" filterBy="#{item.cliente.territoriotrabajo.nombre}">
                         <f:facet name="filter">
-                            <p:selectCheckboxMenu label="Territoio" onchange="PF('pedidosTabla').filter()" panelStyle="width:125px" scrollHeight="150">
+                            <p:selectCheckboxMenu label="Territorio" onchange="PF('pedidosTabla').filter()" panelStyle="width:125px" scrollHeight="150">
                                 <f:selectItems value="#{territoriotrabajoController.itemsAvailableSelectMany}" />
                             </p:selectCheckboxMenu>
                         </f:facet>
