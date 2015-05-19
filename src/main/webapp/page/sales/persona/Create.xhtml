@@ -65,8 +65,8 @@
                                        itemValue="#{territoriotrabajo}"/>
                     </p:selectOneMenu>
                 </p:panelGrid>
-                <p:commandButton actionListener="#{personaController.create}" value="#{bundle.Save}" update="display,:PersonaListForm:datalist,:PersonaListForm:growl" />
-                <p:commandButton actionListener="#{personaController.cancel}" value="#{bundle.Close}" update=":PersonaListForm:datalist" onclick="PersonaCreateDialog.close()"/>
+                <p:commandButton actionListener="#{personaController.create}" rendered="#{personaController.selected != null}" value="#{bundle.Save}" update="display,:PersonaListForm:growl" />
+                <p:commandButton actionListener="#{personaController.cancel}" value="#{bundle.Close}" onclick="PersonaCreateDialog.hide()"/>
             </h:panelGroup>
         </h:form>
     </p:dialog>
