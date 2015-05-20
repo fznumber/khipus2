@@ -5,6 +5,8 @@
  */
 package com.encens.khipus.model;
 
+import com.encens.khipus.util.MoneyUtil;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -205,14 +207,18 @@ public class ArticulosPedido implements Serializable {
 
     public Double getImporte() {
         if(cantidad != null && precio != null)
-            importe=cantidad * precio;
+        {
+            MoneyUtil moneyUtil = new MoneyUtil();
+            importe= moneyUtil.redondear(cantidad * precio,2);
+        }
         else
             importe = 0.0;
         return importe;
     }
 
-    public void setImporte(Double importe) {
-        this.importe = importe;
+    public void setImporte(Double impor) {
+        MoneyUtil moneyUtil = new MoneyUtil();
+        this.importe =moneyUtil.redondear(impor,2);
     }
 
     public Pedidos getPedidos() {

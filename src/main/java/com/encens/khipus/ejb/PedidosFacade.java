@@ -59,9 +59,9 @@ public class PedidosFacade extends AbstractFacade<Pedidos> {
             resultado = (List<Object[]>)em.createQuery("select concat(pe.codigo.secuencia,'-',pe.cliente.nom,' ',pe.cliente.ap,' ',pe.cliente.am,pe.cliente.razonsocial) as CLIENTE\n" +
                     "               ,articulos.invArticulos.nombrecorto as PRODUCTO\n" +
                     "               ,articulos.cantidad + articulos.reposicion as CANTIDAD\n" +
-                    "               ,concat(pe.cliente.territoriotrabajo.distribuidor.nom,' ',pe.cliente.territoriotrabajo.distribuidor.ap,' ',pe.cliente.territoriotrabajo.distribuidor.am) as DISTRIBUIDOR\n" +
+                    "               ,pe.cliente.territoriotrabajo.nombre \n" +
                     "        from Pedidos pe join pe.articulosPedidos articulos" +
-                    "        where pe.estado = 'PENDIENTE'")
+                    "        where pe.estado = 'PENDIENTE' and pe.estado = 'PREPARAR'")
                     .getResultList();
 
         }catch (NoResultException e){
@@ -74,18 +74,18 @@ public class PedidosFacade extends AbstractFacade<Pedidos> {
         Integer cantidad=0;
         try{
             if(fechaEntrega == null && territoriotrabajo == null) {
-                cantidad = ((List<Pedidos>)em.createQuery("select  pe from Pedidos pe where pe.estado = 'PENDIENTE' ").getResultList()).size();
+                cantidad = ((List<Pedidos>)em.createQuery("select  pe from Pedidos pe where pe.estado = 'PENDIENTE' and pe.estado = 'PREPARAR' ").getResultList()).size();
             }
             else{
                 if(territoriotrabajo != null)
                     cantidad = ((List<Pedidos>)em.createQuery("select  pe from Pedidos pe "
-                        + "where pe.estado = 'PENDIENTE' and (pe.cliente.territoriotrabajo =:territoriotrabajo and pe.fechaEntrega =:fechaEntrega ) ")
+                        + "where pe.fechaEntrega =:fechaEntrega and pe.cliente.territoriotrabajo =:territoriotrabajo or (pe.estado = 'PENDIENTE' and pe.estado = 'PREPARAR')")
                         .setParameter("fechaEntrega", fechaEntrega)
                         .setParameter("territoriotrabajo",territoriotrabajo)
                         .getResultList()).size();
                 else
                     cantidad = ((List<Pedidos>)em.createQuery("select  pe from Pedidos pe "
-                            + "where pe.estado = 'PENDIENTE' and pe.fechaEntrega =:fechaEntrega ")
+                            + "where pe.fechaEntrega =:fechaEntrega or(pe.estado =  'PENDIENTE' and pe.estado = 'PREPARAR') ")
                             .setParameter("fechaEntrega", fechaEntrega)
                             .getResultList()).size();
             }
@@ -104,8 +104,8 @@ public class PedidosFacade extends AbstractFacade<Pedidos> {
                     "               ,articulos.cantidad + articulos.reposicion as CANTIDAD\n" +
                     "               ,pe.cliente.territoriotrabajo.nombre as DISTRIBUIDOR\n" +
                     "        from Pedidos pe join pe.articulosPedidos articulos" +
-                    "        where pe.estado = 'PENDIENTE'" +
-                    "        AND ( pe.cliente.territoriotrabajo =:territoriotrabajo AND  pe.fechaEntrega =:fechaEntrega)")
+                    "        where pe.fechaEntrega =:fechaEntrega and pe.cliente.territoriotrabajo =:territoriotrabajo " +
+                    "              or( pe.estado = 'PENDIENTE' and pe.estado = 'PREPARAR' )")
                     .setParameter("fechaEntrega", fechaEntrega, TemporalType.DATE)
                     .setParameter("territoriotrabajo",territoriotrabajo)
                     .getResultList();
@@ -115,8 +115,7 @@ public class PedidosFacade extends AbstractFacade<Pedidos> {
                         "               ,articulos.cantidad + articulos.reposicion as CANTIDAD\n" +
                         "               ,pe.cliente.territoriotrabajo.nombre as DISTRIBUIDOR\n" +
                         "        from Pedidos pe join pe.articulosPedidos articulos" +
-                        "        where pe.estado = 'PENDIENTE'" +
-                        "        AND   pe.fechaEntrega =:fechaEntrega")
+                        "        where pe.fechaEntrega =:fechaEntrega or( pe.estado = 'PENDIENTE' and pe.estado = 'PREPARAR' )")
                         .setParameter("fechaEntrega", fechaEntrega, TemporalType.DATE)
                         .getResultList();
 
