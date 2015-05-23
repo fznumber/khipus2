@@ -8,17 +8,7 @@ package com.encens.khipus.model;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -44,8 +34,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Ventadirecta implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
     @NotNull
+    @TableGenerator(name = "Ventadirecta_Gen"
+            ,table="ID_GEN"
+            ,pkColumnName = "GEN_NAME"
+            ,valueColumnName = "GEN_VAL"
+            ,initialValue = 1
+            ,allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "Ventadirecta_Gen")
     @Column(name = "IDVENTADIRECTA")
     private Long idventadirecta;
     @Size(max = 255)
@@ -75,7 +71,7 @@ public class Ventadirecta implements Serializable {
     private BigInteger codigo;
     @JoinColumn(name = "IDCLIENTE", referencedColumnName = "IDPERSONACLIENTE")
     @ManyToOne
-    private Cliente idcliente;
+    private Persona idcliente;
     @JoinColumn(name = "IDMOVIMIENTO", referencedColumnName = "IDMOVIMIENTO")
     @ManyToOne
     private Movimiento idmovimiento;
@@ -168,11 +164,11 @@ public class Ventadirecta implements Serializable {
         this.codigo = codigo;
     }
 
-    public Cliente getIdcliente() {
+    public Persona getIdcliente() {
         return idcliente;
     }
 
-    public void setIdcliente(Cliente idcliente) {
+    public void setIdcliente(Persona idcliente) {
         this.idcliente = idcliente;
     }
 

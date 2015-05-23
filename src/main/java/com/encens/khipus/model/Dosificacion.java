@@ -71,6 +71,9 @@ public class Dosificacion implements Serializable {
     private String etiquetaEmpresa;
     @Column(name = "NUMEROACTUAL")
     private Integer numeroactual;
+    @Column(name = "FECHACONTROL")
+    @Temporal(TemporalType.DATE)
+    private Date fechaControl;
     @Column(name = "NITEMPRESA")
     private String nitEmpresa;
     @OneToMany(mappedBy = "dosificacion")
@@ -211,5 +214,13 @@ public class Dosificacion implements Serializable {
 
     public void setFechainicio(Date fechainicio) {
         this.fechainicio = fechainicio;
+    }
+
+    public Date getFechaControl() {
+        return fechaControl;
+    }
+
+    public void setFechaControl(Date fechaControl) {
+        this.fechaControl = fechaControl;
     }
 }

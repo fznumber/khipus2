@@ -92,9 +92,7 @@
                     </h:inputText>
                 </p:column>
                 <p:column headerText="P.U.">
-                    <h:inputText value="#{item.precio}" size="4">
-                        <p:ajax event="blur"  process="@this" oncomplete="refreshFooter();" update="importe"/>
-                    </h:inputText>
+                    <h:outputText value="#{item.precio}"/>
                 </p:column>
                 <p:column headerText="Repos.">
                     <h:outputText value="#{item.reposicion}"/>

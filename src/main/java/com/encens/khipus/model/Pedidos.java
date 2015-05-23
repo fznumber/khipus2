@@ -109,6 +109,8 @@ public class Pedidos implements Serializable {
     @Basic(optional = false)
     @Column(name = "TOTALIMPORTE")
     private Double totalimporte = 0.0;
+    @Column(name = "IMPUESTO")
+    private Double impuesto = 0.0;
     @JoinColumn(name = "PEDIDOSREPOSICION", referencedColumnName = "IDPEDIDOS")
     @ManyToOne(optional = false)
     private Pedidos reposicion;
@@ -366,5 +368,13 @@ public class Pedidos implements Serializable {
 
     public void setPedidosConReposicion(Collection<Pedidos> pedidosConReposicion) {
         this.pedidosConReposicion = pedidosConReposicion;
+    }
+
+    public Double getImpuesto() {
+        return impuesto;
+    }
+
+    public void setImpuesto(Double impuesto) {
+        this.impuesto = impuesto;
     }
 }

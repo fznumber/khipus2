@@ -28,9 +28,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
+import java.text.*;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -147,6 +145,13 @@ public class PedidosReportController implements Serializable {
     }
 
     public void imprimirFactura() throws IOException, JRException {
+        dosificacion = dosificacionFacade.findByPeriodo(new Date());
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        if(dosificacion.getFechaControl().compareTo(pedido.getFechaEntrega()) != 0)
+        {
+            JSFUtil.addWarningMessage("No se puede generar la factura, por que la fecha de entrega " + df.format(pedido.getFechaEntrega()) + "es diferente a " + df.format(dosificacion.getFechaControl()));
+            return;
+        }
         if(pedido == null)
         {
             JSFUtil.addWarningMessage("No hay ningun pedido elegido.");
@@ -373,7 +378,7 @@ public class PedidosReportController implements Serializable {
         stream.close();
         FacesContext.getCurrentInstance().responseComplete();
     }
-
+    //todo: dar formato al total importe y al importeBaseCreditFisical
     private ControlCode generateCodControl(Pedidos pedido, Integer numberInvoice, BigInteger numberAutorization, String key,String nitEmpresa) {
         Double importeBaseCreditFisical = pedido.getTotalimporte() * 0.13;
         String nroDoc = pedido.getCliente().getNroDoc();
@@ -381,7 +386,7 @@ public class PedidosReportController implements Serializable {
         {
             nroDoc = pedido.getCliente().getNit();
         }
-
+        pedido.setImpuesto(importeBaseCreditFisical);
         ControlCode controlCode = new ControlCode(nitEmpresa, numberInvoice, numberAutorization.toString(), pedido.getFechaEntrega(), pedido.getTotalimporte(), importeBaseCreditFisical, nroDoc
         );
         moneyUtil.getLlaveQR(controlCode, key);

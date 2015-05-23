@@ -12,24 +12,20 @@
             <h:form id="DosificacionEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{dosificacionController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditDosificacionLabel_iddosificacion}" for="iddosificacion" />
-                        <p:inputText id="iddosificacion" value="#{dosificacionController.selected.iddosificacion}" title="#{bundle.EditDosificacionTitle_iddosificacion}" required="true" requiredMessage="#{bundle.EditDosificacionRequiredMessage_iddosificacion}"/>
-                        <p:outputLabel value="#{bundle.EditDosificacionLabel_nroautorizacion}" for="nroautorizacion" />
-                        <p:inputText id="nroautorizacion" value="#{dosificacionController.selected.nroautorizacion}" title="#{bundle.EditDosificacionTitle_nroautorizacion}" />
-                        <p:outputLabel value="#{bundle.EditDosificacionLabel_fechavencimiento}" for="fechavencimiento" />
-                        <p:calendar id="fechavencimiento" pattern="MM/dd/yyyy" value="#{dosificacionController.selected.fechavencimiento}" title="#{bundle.EditDosificacionTitle_fechavencimiento}"  showOn="button"/>
-                        <p:outputLabel value="#{bundle.EditDosificacionLabel_llave}" for="llave" />
-                        <p:inputText id="llave" value="#{dosificacionController.selected.llave}" title="#{bundle.EditDosificacionTitle_llave}" />
-                        <p:outputLabel value="#{bundle.EditDosificacionLabel_estado}" for="estado" />
-                        <p:inputText id="estado" value="#{dosificacionController.selected.estado}" title="#{bundle.EditDosificacionTitle_estado}" />
-                        <p:outputLabel value="#{bundle.EditDosificacionLabel_facturadel}" for="facturadel" />
-                        <p:inputText id="facturadel" value="#{dosificacionController.selected.facturadel}" title="#{bundle.EditDosificacionTitle_facturadel}" />
-                        <p:outputLabel value="#{bundle.EditDosificacionLabel_facturaal}" for="facturaal" />
-                        <p:inputText id="facturaal" value="#{dosificacionController.selected.facturaal}" title="#{bundle.EditDosificacionTitle_facturaal}" />
-                        <p:outputLabel value="#{bundle.EditDosificacionLabel_numeroactual}" for="numeroactual" />
-                        <p:inputText id="numeroactual" value="#{dosificacionController.selected.numeroactual}" title="#{bundle.EditDosificacionTitle_numeroactual}" />
+                        <p:outputLabel value="Número de autorización:" for="nroautorizacion" />
+                        <p:inputText id="nroautorizacion" value="#{dosificacionController.selected.nroautorizacion}" title="#{bundle.CreateDosificacionTitle_nroautorizacion}" />
+                        <p:outputLabel value="Fecha de vencimiento:" for="fechavencimiento" />
+                        <p:calendar id="fechavencimiento" pattern="MM/dd/yyyy" value="#{dosificacionController.selected.fechavencimiento}" title="Fecha de vencimiento"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateDosificacionLabel_llave}" for="llave" />
+                        <p:inputText id="llave" value="#{dosificacionController.selected.llave}" title="#{bundle.CreateDosificacionTitle_llave}" />
+                        <p:outputLabel value="#{bundle.CreateDosificacionLabel_estado}" for="estado" />
+                        <p:inputText id="estado" value="#{dosificacionController.selected.estado}" title="#{bundle.CreateDosificacionTitle_estado}" />
+                        <p:outputLabel value="#{bundle.CreateDosificacionLabel_numeroactual}" for="numeroactual" />
+                        <p:outputLabel id="numeroactual" value="#{dosificacionController.selected.numeroactual}"/>
+                        <p:outputLabel value="Fecha de Control:" for="fechaControl" />
+                        <p:calendar id="fechaControl" pattern="MM/dd/yyyy" value="#{dosificacionController.selected.fechaControl}" title="Fecha de control"  showOn="button"/>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{dosificacionController.update}" value="#{bundle.Save}" update="display,:DosificacionListForm:datalist,:growl" oncomplete="handleSubmit(args, 'DosificacionEditDialog');"/>
+                    <p:commandButton actionListener="#{dosificacionController.update}" value="#{bundle.Save}" update="display,:DosificacionListForm:datalist,:DosificacionListForm:growl" oncomplete="handleSubmit(args, 'DosificacionEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="DosificacionEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

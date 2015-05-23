@@ -12,24 +12,20 @@
             <h:form id="DosificacionCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{dosificacionController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateDosificacionLabel_iddosificacion}" for="iddosificacion" />
-                        <p:inputText id="iddosificacion" value="#{dosificacionController.selected.iddosificacion}" title="#{bundle.CreateDosificacionTitle_iddosificacion}" required="true" requiredMessage="#{bundle.CreateDosificacionRequiredMessage_iddosificacion}"/>
-                        <p:outputLabel value="#{bundle.CreateDosificacionLabel_nroautorizacion}" for="nroautorizacion" />
+                        <p:outputLabel value="Número de autorización:" for="nroautorizacion" />
                         <p:inputText id="nroautorizacion" value="#{dosificacionController.selected.nroautorizacion}" title="#{bundle.CreateDosificacionTitle_nroautorizacion}" />
-                        <p:outputLabel value="#{bundle.CreateDosificacionLabel_fechavencimiento}" for="fechavencimiento" />
-                        <p:calendar id="fechavencimiento" pattern="MM/dd/yyyy" value="#{dosificacionController.selected.fechavencimiento}" title="#{bundle.EditDosificacionTitle_fechavencimiento}"  showOn="button"/>
+                        <p:outputLabel value="Fecha de vencimiento:" for="fechavencimiento" />
+                        <p:calendar id="fechavencimiento" pattern="MM/dd/yyyy" value="#{dosificacionController.selected.fechavencimiento}" title="Fecha de vencimiento"  showOn="button"/>
                         <p:outputLabel value="#{bundle.CreateDosificacionLabel_llave}" for="llave" />
                         <p:inputText id="llave" value="#{dosificacionController.selected.llave}" title="#{bundle.CreateDosificacionTitle_llave}" />
                         <p:outputLabel value="#{bundle.CreateDosificacionLabel_estado}" for="estado" />
                         <p:inputText id="estado" value="#{dosificacionController.selected.estado}" title="#{bundle.CreateDosificacionTitle_estado}" />
-                        <p:outputLabel value="#{bundle.CreateDosificacionLabel_facturadel}" for="facturadel" />
-                        <p:inputText id="facturadel" value="#{dosificacionController.selected.facturadel}" title="#{bundle.CreateDosificacionTitle_facturadel}" />
-                        <p:outputLabel value="#{bundle.CreateDosificacionLabel_facturaal}" for="facturaal" />
-                        <p:inputText id="facturaal" value="#{dosificacionController.selected.facturaal}" title="#{bundle.CreateDosificacionTitle_facturaal}" />
                         <p:outputLabel value="#{bundle.CreateDosificacionLabel_numeroactual}" for="numeroactual" />
-                        <p:inputText id="numeroactual" value="#{dosificacionController.selected.numeroactual}" title="#{bundle.CreateDosificacionTitle_numeroactual}" />
+                        <p:outputLabel id="numeroactual" value="#{dosificacionController.selected.numeroactual}"/>
+                        <p:outputLabel value="Fecha de Control:" for="fechaControl" />
+                        <p:calendar id="fechaControl" pattern="MM/dd/yyyy" value="#{dosificacionController.selected.fechaControl}" title="Fecha de control"  showOn="button"/>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{dosificacionController.create}" value="#{bundle.Save}" update="display,:DosificacionListForm:datalist,:growl" oncomplete="handleSubmit(args,'DosificacionCreateDialog');"/>
+                    <p:commandButton actionListener="#{dosificacionController.create}" value="#{bundle.Save}" update="display,:DosificacionListForm:datalist,:DosificacionListForm:growl" oncomplete="handleSubmit(args,'DosificacionCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="DosificacionCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

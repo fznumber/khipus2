@@ -67,6 +67,8 @@ public class Usuario implements Serializable {
     private BigInteger version;
     @OneToMany(mappedBy = "usuario")
     private Collection<Pedidos> pedidos;
+    @OneToMany(mappedBy = "idusuario")
+    private Collection<Ventadirecta> ventadirectas;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private Collection<Impresionfactura> facturas;
 
@@ -205,5 +207,12 @@ public class Usuario implements Serializable {
     public void setFacturas(Collection<Impresionfactura> impresionfacturaCollection) {
         this.facturas = impresionfacturaCollection;
     }
-    
+
+    public Collection<Ventadirecta> getVentadirectas() {
+        return ventadirectas;
+    }
+
+    public void setVentadirectas(Collection<Ventadirecta> ventadirectas) {
+        this.ventadirectas = ventadirectas;
+    }
 }
