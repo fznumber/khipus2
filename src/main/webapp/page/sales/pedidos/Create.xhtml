@@ -27,6 +27,7 @@
                             <h:outputText value="#{cliente.nroDoc}" />
                             <h:outputText value="Telefono:" />
                             <h:outputText value="#{cliente.telefono}" />
+                            <h:outputText value="#{cliente.confactura?'SI':'NO'}" />
                         </h:panelGrid>
                     </f:facet>
                     <p:ajax event="itemSelect" update="nit,garantia,comision,tipocliente,conReposicion,articulosTable"></p:ajax>

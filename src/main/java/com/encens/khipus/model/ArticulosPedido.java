@@ -79,6 +79,9 @@ public class ArticulosPedido implements Serializable {
     @JoinColumn(name = "IDPEDIDOS",referencedColumnName = "IDPEDIDOS")
     @ManyToOne(optional = false)
     private Pedidos pedidos;
+    @JoinColumn(name = "IDVENTADIRECTA",referencedColumnName = "IDVENTADIRECTA")
+    @ManyToOne(optional = false)
+    private Ventadirecta ventadirecta;
 
     public ArticulosPedido() {
     }
@@ -257,5 +260,13 @@ public class ArticulosPedido implements Serializable {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public Ventadirecta getVentadirecta() {
+        return ventadirecta;
+    }
+
+    public void setVentadirecta(Ventadirecta ventadirecta) {
+        this.ventadirecta = ventadirecta;
     }
 }

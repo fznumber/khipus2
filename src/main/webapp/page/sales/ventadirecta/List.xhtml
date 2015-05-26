@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template.xhtml">
+
+
+    <ui:define name="title">
+        <h:outputText value="#{bundle.ListPedidosTitle}"></h:outputText>
+    </ui:define>
+
+    <ui:define name="center" >
+        <h:form id="VentaDirectaListForm" rendered="#{loginBean.logeado}">
+            <p:growl id="growl" life="15000"/>
+            <p:panel header="Listado Pedidos">
+                <p:dataTable id="datalist" value="#{ventadirectaController.items}" var="item"
+                             selection="#{ventadirectaController.ventaDirectaElegidos}"
+                             paginator="true"
+                             rowKey="#{item.idpedidos}"
+                             widgetVar="ventaTabla"
+                             sortMode="multiple"
+                             rows="15"
+                             emptyMessage="No hay pedidos registrados"
+                             filteredValue="#{ventadirectaController.ventaDirectaFiltrado}"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="15,20,30,40,50"
+                        >
+
+                    <p:ajax event="rowSelect" update="createButton generarFacturas generarNotas"/>
+                    <p:ajax event="rowUnselect" update="createButton generarFacturas generarNotas"/>
+                    <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                    <p:column filterBy="#{item.codigo.secuencia}" headerText="Código"  filterMatchMode="contains">
+                        <h:outputText value="#{item.codigo.secuencia}" />
+                    </p:column>
+                    <p:column sortBy="#{item.fechaPedido}" filterBy="#{item.fechaPedido}" headerText="Fecha pedido" filterMatchMode="equals">
+                        <f:facet name="filter">
+                            <p:calendar id="fechaPedido" value="#{ventadirectaController.fechaVentaFiltro}" styleClass="customCalendar" pattern="dd/MM/yyyy" effect="fold">
+                                <p:ajax event="dateSelect" oncomplete="PF('ventaTabla').filter()" />
+                            </p:calendar>
+                        </f:facet>
+                        <h:outputText value="#{item.fechaPedido}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column sortBy="#{item.cliente.nombreCompleto}" filterBy="#{item.cliente.nombreCompleto}" headerText="Cliente" filterMatchMode="contains">
+                        <h:outputText value="#{item.cliente.nombreCompleto}"/>
+                    </p:column>
+                    <p:column filterMatchMode="in" filterBy="#{item.estado}">
+                        <f:facet name="filter">
+                            <p:selectCheckboxMenu label="Estado" onchange="PF('ventaTabla').filter()" panelStyle="width:125px" scrollHeight="150">
+                                <f:selectItems value="#{ventadirectaController.estados}" />
+                            </p:selectCheckboxMenu>
+                        </f:facet>
+                        <h:outputText value="#{item.estado}"/>
+                    </p:column>
+                    <p:column filterMatchMode="in" filterBy="#{item.cliente.territoriotrabajo.nombre}">
+                        <f:facet name="filter">
+                            <p:selectCheckboxMenu label="Territorio" onchange="PF('ventaTabla').filter()" panelStyle="width:125px" scrollHeight="150">
+                                <f:selectItems value="#{territoriotrabajoController.itemsAvailableSelectMany}" />
+                            </p:selectCheckboxMenu>
+                        </f:facet>
+                        <h:outputText value="#{item.cliente.territoriotrabajo.nombre}"/>
+                    </p:column>
+                    <p:column headerText="Acción">
+                        <p:commandButton title="NOTA DE ENTREGA" id="printNotaDeVenta" actionListener="#{pedidosReportController.imprimirNotaEntrega(item)}" ajax="false" icon="#{item.estado.equals('PENDIENTE')? 'ui-icon-note':'ui-icon-circle-check'}" rendered="#{!item.estado.equals('ANULADO')}"/>
+                        <p:commandButton title="GENERAR FACTURA" id="printFacturaButton" oncomplete="PF('ImprimirFacturaDialog').show()" icon="#{item.estado.equals('PENDIENTE')? 'ui-icon-script':'ui-icon-check'}" rendered="#{!item.estado.equals('ANULADO')}">
+                            <f:setPropertyActionListener value="#{item}" target="#{pedidosReportController.ventadirecta}" />
+                        </p:commandButton>
+                        <p:commandButton id="anularPedido" actionListener="#{ventadirectaController.prepareEdit(item)}"  icon="ui-icon-alert" title="ANULAR PEDIDO" update=":VentaAnularForm" oncomplete="PF('VentaAnularDialog').show()" rendered="#{!item.estado.equals('ANULADO')}"/>
+                        <p:commandButton id="viewButton" actionListener="#{ventadirectaController.setSelected(item)}"  icon="ui-icon-search" title="VER" update=":VentaViewForm" oncomplete="PF('VentaViewDialog').show()"/>
+                    </p:column>
+                    <f:facet name="footer">
+                        <p:commandButton id="createButton" value="#{bundle.Create}" actionListener="#{ventadirectaController.prepareCreate}" update=":VentaCreateForm" oncomplete="PF('VentaCreateDialog').show()"/>
+                        <p:commandButton id="generarFacturas" value="Generar Facturas" oncomplete="PF('ImprimirFacturasDialog').show()">
+                            <f:setPropertyActionListener value="#{ventadirectaController.ventaDirectaElegidos}" target="#{pedidosReportController.ventaDirectaElegidos}" />
+                        </p:commandButton>
+                        <p:commandButton id="generarNotas" value="Generar Notas" actionListener="#{pedidosReportController.imprimirNota(ventadirectaController.ventaDirectaElegidos)}" ajax="false" update="VentaDirectaListForm"/>
+                    </f:facet>
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+        <h:form rendered="#{!loginBean.logeado}">
+            <ui:include src="./../../../accesodenegado.xhtml"/>
+        </h:form>
+        <ui:include src="Create.xhtml"/>
+        <ui:include src="View.xhtml"/>
+        <ui:include src="Edit.xhtml"/>
+        <ui:include src="ImprimirFactura.xhtml"/>
+        <ui:include src="ImprimirTodasLasFacturas.xhtml"/>
+        <ui:include src="AnularVenta.xhtml"/>
+    </ui:define>
+</ui:composition>
+
+</html>

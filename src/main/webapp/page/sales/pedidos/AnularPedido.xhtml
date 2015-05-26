@@ -61,7 +61,7 @@
                 <f:facet name="footer">
                     <p:outputLabel value="Total Importe: " />
                     <p:outputLabel id="totalImporte" value="#{pedidosController.selected.totalimporte}">
-                        <f:convertNumber type="currency" currencySymbol="Bs." />
+                        <f:convertNumber type="currency" currencySymbol="Bs." locale="en_US" />
                     </p:outputLabel>
                 </f:facet>
             </p:dataTable>

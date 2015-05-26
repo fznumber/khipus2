@@ -35,8 +35,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Movimiento.findByTipocambio", query = "SELECT m FROM Movimiento m WHERE m.tipocambio = :tipocambio"),
     @NamedQuery(name = "Movimiento.findByFecharegistro", query = "SELECT m FROM Movimiento m WHERE m.fecharegistro = :fecharegistro")})
 public class Movimiento implements Serializable {
-    @OneToMany(mappedBy = "idmovimiento")
-    private Collection<Ventadirecta> ventadirectaCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @NotNull
@@ -81,7 +79,7 @@ public class Movimiento implements Serializable {
     private Collection<Impresionfactura> impresionfacturaCollection = new ArrayList<>();
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "movimiento")
     private Collection<Pedidos> pedidos = new ArrayList<>();
-    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "idmovimiento")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "movimiento")
     private Collection<Ventadirecta> ventadirectas = new ArrayList<>();
 
     public Movimiento() {
@@ -216,15 +214,6 @@ public class Movimiento implements Serializable {
     @Override
     public String toString() {
         return "com.encens.khipus.model.Movimiento[ idmovimiento=" + idmovimiento + " ]";
-    }
-
-    @XmlTransient
-    public Collection<Ventadirecta> getVentadirectaCollection() {
-        return ventadirectaCollection;
-    }
-
-    public void setVentadirectaCollection(Collection<Ventadirecta> ventadirectaCollection) {
-        this.ventadirectaCollection = ventadirectaCollection;
     }
 
     public Collection<Ventadirecta> getVentadirectas() {

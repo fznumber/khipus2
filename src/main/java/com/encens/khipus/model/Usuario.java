@@ -67,7 +67,7 @@ public class Usuario implements Serializable {
     private BigInteger version;
     @OneToMany(mappedBy = "usuario")
     private Collection<Pedidos> pedidos;
-    @OneToMany(mappedBy = "idusuario")
+    @OneToMany(mappedBy = "usuario")
     private Collection<Ventadirecta> ventadirectas;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private Collection<Impresionfactura> facturas;

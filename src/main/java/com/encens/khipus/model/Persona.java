@@ -55,6 +55,8 @@ public class Persona implements Serializable {
     private Territoriotrabajo territoriotrabajo;
     @OneToMany(mappedBy = "cliente")
     private Collection<Pedidos> pedidosCliente;
+    @OneToMany(mappedBy = "cliente")
+    private Collection<Ventadirecta> pedidosVentadirecta;
     @OneToMany(mappedBy = "distribuidor")
     private Collection<Territoriotrabajo> territorios;
     @JoinColumn(name = "IDDEPARTAMENTO",referencedColumnName = "IDDEPARTAMENTO")
@@ -390,5 +392,13 @@ public class Persona implements Serializable {
 
     public void setConfactura(Boolean confactura) {
         this.confactura = confactura;
+    }
+
+    public Collection<Ventadirecta> getPedidosVentadirecta() {
+        return pedidosVentadirecta;
+    }
+
+    public void setPedidosVentadirecta(Collection<Ventadirecta> pedidosVentadirecta) {
+        this.pedidosVentadirecta = pedidosVentadirecta;
     }
 }

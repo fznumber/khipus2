@@ -7,6 +7,8 @@ package com.encens.khipus.model;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -62,22 +64,25 @@ public class Ventadirecta implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "TOTALIMPORTE")
-    private double totalimporte;
+    private Double totalimporte;
     @Basic(optional = false)
     @NotNull
     @Column(name = "IMPUESTO")
     private double impuesto;
-    @Column(name = "CODIGO")
-    private BigInteger codigo;
-    @JoinColumn(name = "IDCLIENTE", referencedColumnName = "IDPERSONACLIENTE")
-    @ManyToOne
-    private Persona idcliente;
-    @JoinColumn(name = "IDMOVIMIENTO", referencedColumnName = "IDMOVIMIENTO")
-    @ManyToOne
-    private Movimiento idmovimiento;
+    @OneToOne
+    @JoinColumn(name="codigo")
+    private CodigoPedidoSecuencia codigo;
     @JoinColumn(name = "IDUSUARIO", referencedColumnName = "idusuario")
     @ManyToOne
-    private Usuario idusuario;
+    private Usuario usuario;
+    @JoinColumn(name = "IDCLIENTE", referencedColumnName = "IDPERSONACLIENTE")
+    @ManyToOne(optional = false)
+    private Persona cliente;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "ventadirecta")
+    private Collection<ArticulosPedido> articulosPedidos = new ArrayList<>();
+    @JoinColumn(name = "IDMOVIMIENTO",referencedColumnName = "IDMOVIMIENTO")
+    @ManyToOne(optional = true)
+    private Movimiento movimiento;
 
     public Ventadirecta() {
     }
@@ -109,6 +114,8 @@ public class Ventadirecta implements Serializable {
     }
 
     public Date getFechaPedido() {
+        if(fechaPedido == null)
+            fechaPedido = new Date();
         return fechaPedido;
     }
 
@@ -140,11 +147,17 @@ public class Ventadirecta implements Serializable {
         this.estado = estado;
     }
 
-    public double getTotalimporte() {
+    public Double getTotalimporte() {
+        totalimporte = 0.0;
+        if(articulosPedidos != null)
+            for(ArticulosPedido articulosPedido:articulosPedidos)
+            {
+                totalimporte += articulosPedido.getImporte();
+            }
         return totalimporte;
     }
 
-    public void setTotalimporte(double totalimporte) {
+    public void setTotalimporte(Double totalimporte) {
         this.totalimporte = totalimporte;
     }
 
@@ -156,36 +169,28 @@ public class Ventadirecta implements Serializable {
         this.impuesto = impuesto;
     }
 
-    public BigInteger getCodigo() {
+    public CodigoPedidoSecuencia getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(BigInteger codigo) {
+    public void setCodigo(CodigoPedidoSecuencia codigo) {
         this.codigo = codigo;
     }
 
-    public Persona getIdcliente() {
-        return idcliente;
+    public Movimiento getMovimiento() {
+        return movimiento;
     }
 
-    public void setIdcliente(Persona idcliente) {
-        this.idcliente = idcliente;
+    public void setMovimiento(Movimiento movimiento) {
+        this.movimiento = movimiento;
     }
 
-    public Movimiento getIdmovimiento() {
-        return idmovimiento;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setIdmovimiento(Movimiento idmovimiento) {
-        this.idmovimiento = idmovimiento;
-    }
-
-    public Usuario getIdusuario() {
-        return idusuario;
-    }
-
-    public void setIdusuario(Usuario idusuario) {
-        this.idusuario = idusuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     @Override
@@ -212,5 +217,21 @@ public class Ventadirecta implements Serializable {
     public String toString() {
         return "com.encens.khipus.model.Ventadirecta[ idventadirecta=" + idventadirecta + " ]";
     }
-    
+
+    public Persona getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Persona cliente) {
+        this.cliente = cliente;
+    }
+
+    public Collection<ArticulosPedido> getArticulosPedidos() {
+
+        return articulosPedidos;
+    }
+
+    public void setArticulosPedidos(Collection<ArticulosPedido> articulosPedidos) {
+        this.articulosPedidos = articulosPedidos;
+    }
 }
