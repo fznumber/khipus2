@@ -241,12 +241,12 @@ public class VentadirectaController implements Serializable {
         sfTmpdetController.createGeneral();
         SfTmpdet sfTmpdet1 = new SfTmpdet();
         SfTmpdetPK sfTmpdetPK1 = new SfTmpdetPK();
-        sfTmpdetPK.setNoCia("01");
-        sfTmpdetPK.setCuenta("1110110100");
-        sfTmpdetPK.setNoTrans(nroTrans);
-        sfTmpdet.setSfTmpdetPK(sfTmpdetPK1);
-        sfTmpdet.setDebe(new BigDecimal(totalimporte));
-        sfTmpdet.setTc(new BigDecimal(1.0));
+        sfTmpdetPK1.setNoCia("01");
+        sfTmpdetPK1.setCuenta("1110110100");
+        sfTmpdetPK1.setNoTrans(nroTrans);
+        sfTmpdet1.setSfTmpdetPK(sfTmpdetPK1);
+        sfTmpdet1.setDebe(new BigDecimal(totalimporte));
+        sfTmpdet1.setTc(new BigDecimal(1.0));
         sfTmpdetController.setSelected(sfTmpdet1);
         sfTmpdetController.createGeneral();
     }
@@ -285,34 +285,34 @@ public class VentadirectaController implements Serializable {
 
         SfTmpdet sfTmpdet1 = new SfTmpdet();
         SfTmpdetPK sfTmpdetPK1 = new SfTmpdetPK();
-        sfTmpdetPK.setNoCia("01");
-        sfTmpdetPK.setCuenta("5420110201");
-        sfTmpdetPK.setNoTrans(nroTrans);
-        sfTmpdet.setSfTmpdetPK(sfTmpdetPK1);
-        sfTmpdet.setHaber(new BigDecimal(importe));
-        sfTmpdet.setTc(new BigDecimal(1.0));
+        sfTmpdetPK1.setNoCia("01");
+        sfTmpdetPK1.setCuenta("5420110201");
+        sfTmpdetPK1.setNoTrans(nroTrans);
+        sfTmpdet1.setSfTmpdetPK(sfTmpdetPK1);
+        sfTmpdet1.setHaber(new BigDecimal(importe));
+        sfTmpdet1.setTc(new BigDecimal(1.0));
         sfTmpdetController.setSelected(sfTmpdet1);
         sfTmpdetController.createGeneral();
 
         SfTmpdet sfTmpdet2 = new SfTmpdet();
         SfTmpdetPK sfTmpdetPK2 = new SfTmpdetPK();
-        sfTmpdetPK.setNoCia("01");
-        sfTmpdetPK.setCuenta("2420410200");
-        sfTmpdetPK.setNoTrans(nroTrans);
-        sfTmpdet.setSfTmpdetPK(sfTmpdetPK2);
-        sfTmpdet.setHaber(new BigDecimal(iva));
-        sfTmpdet.setTc(new BigDecimal(1.0));
+        sfTmpdetPK2.setNoCia("01");
+        sfTmpdetPK2.setCuenta("2420410200");
+        sfTmpdetPK2.setNoTrans(nroTrans);
+        sfTmpdet2.setSfTmpdetPK(sfTmpdetPK2);
+        sfTmpdet2.setHaber(new BigDecimal(iva));
+        sfTmpdet2.setTc(new BigDecimal(1.0));
         sfTmpdetController.setSelected(sfTmpdet2);
         sfTmpdetController.createGeneral();
 
         SfTmpdet sfTmpdet3 = new SfTmpdet();
         SfTmpdetPK sfTmpdetPK3 = new SfTmpdetPK();
-        sfTmpdetPK.setNoCia("01");
-        sfTmpdetPK.setCuenta("2420410100");
-        sfTmpdetPK.setNoTrans(nroTrans);
-        sfTmpdet.setSfTmpdetPK(sfTmpdetPK3);
-        sfTmpdet.setHaber(new BigDecimal(it));
-        sfTmpdet.setTc(new BigDecimal(1.0));
+        sfTmpdetPK3.setNoCia("01");
+        sfTmpdetPK3.setCuenta("2420410100");
+        sfTmpdetPK3.setNoTrans(nroTrans);
+        sfTmpdet3.setSfTmpdetPK(sfTmpdetPK3);
+        sfTmpdet3.setHaber(new BigDecimal(it));
+        sfTmpdet3.setTc(new BigDecimal(1.0));
         sfTmpdetController.setSelected(sfTmpdet3);
         sfTmpdetController.createGeneral();
     }
