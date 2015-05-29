@@ -26,10 +26,13 @@
     <class>com.encens.khipus.model.Persona</class>
     <class>com.encens.khipus.model.Promocion</class>
     <class>com.encens.khipus.model.Rol</class>
+    <class>com.encens.khipus.model.SfTmpdet</class>
+    <class>com.encens.khipus.model.SfTmpenc</class>
     <class>com.encens.khipus.model.Territoriotrabajo</class>
     <class>com.encens.khipus.model.Tipocliente</class>
     <class>com.encens.khipus.model.Tipopedido</class>
     <class>com.encens.khipus.model.Usuario</class>
+    <class>com.encens.khipus.model.VentaDirectaSecuencia</class>
     <class>com.encens.khipus.model.Ventaarticulo</class>
     <class>com.encens.khipus.model.Ventacliente</class>
     <class>com.encens.khipus.model.Ventadirecta</class>

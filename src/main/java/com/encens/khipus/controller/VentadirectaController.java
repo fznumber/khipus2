@@ -2,10 +2,7 @@ package com.encens.khipus.controller;
 
 
 
-import com.encens.khipus.ejb.InvArticulosFacade;
-import com.encens.khipus.ejb.PersonasFacade;
-import com.encens.khipus.ejb.VentaarticuloFacade;
-import com.encens.khipus.ejb.VentadirectaFacade;
+import com.encens.khipus.ejb.*;
 import com.encens.khipus.model.*;
 import com.encens.khipus.util.JSFUtil;
 import com.encens.khipus.util.JSFUtil.PersistAction;
@@ -19,6 +16,7 @@ import org.primefaces.model.StreamedContent;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -54,6 +52,12 @@ public class VentadirectaController implements Serializable {
     private VentaarticuloFacade ventaarticuloFacade;
     @Inject
     private PedidosReportController pedidosReportController;
+    @Inject
+    private SfTmpdetController sfTmpdetController;
+    @EJB
+    private SfTmpencFacade sfTmpencFacade;
+    @Inject
+    private SfTmpencController sfTmpencController;
 
     private List<Ventadirecta> items = null;
     private List<Ventadirecta> ventasElegidas = new ArrayList<>();
@@ -191,11 +195,126 @@ public class VentadirectaController implements Serializable {
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
             nota = selected.getDocumento();
+            String nomcliente = "";
+            if(!StringUtils.isEmpty(selected.getCliente().getRazonsocial()))
+                nomcliente = selected.getCliente().getRazonsocial();
+            else
+                nomcliente = selected.getCliente().getNombreCompleto();
+
+            crearAsientoNota(selected.getTotalimporte(), nomcliente, selected.getCodigo());
             selected = new Ventadirecta();
             personaElegida = new Persona();
             personas = personasFacade.findAllClientesPersonaInstitucion();
             articulos = invArticulosFacade.findAllInvArticulos();
         }
+    }
+
+    private void crearAsientoNota(Double totalimporte, String nomcliente, Integer codigo) {
+        Double iva = totalimporte * 0.13;
+        Double it = totalimporte * 0.03;
+        String glosa = "Venta al contado con ("+codigo.toString()+") "+nomcliente;
+        SfTmpenc sfTmpenc = new SfTmpenc();
+        sfTmpenc.setAgregarCtaProv("SI");
+        sfTmpenc.setNoCia("01");
+        sfTmpenc.setFecha(new Date());
+        sfTmpenc.setDescri(glosa);
+        sfTmpenc.setTipoDoc("CI");
+        sfTmpenc.setFormulario("CI");
+        sfTmpenc.setGlosa(glosa);
+        sfTmpenc.setEstado("PEN");
+        sfTmpenc.setNoUsr("ADM");
+        sfTmpenc.setCuenta("111");
+        String nroTrans = sfTmpencFacade.getSiguienteNumeroTransacccion();
+        sfTmpenc.setNoTrans(nroTrans);
+        sfTmpencController.setSelected(sfTmpenc);
+        sfTmpencController.createGeneral();
+        ///
+        SfTmpdet sfTmpdet = new SfTmpdet();
+        SfTmpdetPK sfTmpdetPK = new SfTmpdetPK();
+        sfTmpdetPK.setNoCia("01");
+        sfTmpdetPK.setCuenta("5420110201");
+        sfTmpdetPK.setNoTrans(nroTrans);
+        sfTmpdet.setSfTmpdetPK(sfTmpdetPK);
+        sfTmpdet.setHaber(new BigDecimal(totalimporte));
+        sfTmpdet.setTc(new BigDecimal(1.0));
+        sfTmpdetController.setSelected(sfTmpdet);
+        sfTmpdetController.createGeneral();
+        SfTmpdet sfTmpdet1 = new SfTmpdet();
+        SfTmpdetPK sfTmpdetPK1 = new SfTmpdetPK();
+        sfTmpdetPK.setNoCia("01");
+        sfTmpdetPK.setCuenta("1110110100");
+        sfTmpdetPK.setNoTrans(nroTrans);
+        sfTmpdet.setSfTmpdetPK(sfTmpdetPK1);
+        sfTmpdet.setDebe(new BigDecimal(totalimporte));
+        sfTmpdet.setTc(new BigDecimal(1.0));
+        sfTmpdetController.setSelected(sfTmpdet1);
+        sfTmpdetController.createGeneral();
+    }
+
+    private void crearAsientoFactura(Double totalimporte, String nomcliente, Integer codigo) {
+        Double iva = totalimporte * 0.13;
+        Double it = totalimporte * 0.03;
+        Double importe = totalimporte - iva -it;
+        String glosa = "Venta al contado con factura ("+codigo.toString()+") "+nomcliente;
+        SfTmpenc sfTmpenc = new SfTmpenc();
+        sfTmpenc.setAgregarCtaProv("SI");
+        sfTmpenc.setNoCia("01");
+        sfTmpenc.setFecha(new Date());
+        sfTmpenc.setDescri(glosa);
+        sfTmpenc.setTipoDoc("CI");
+        sfTmpenc.setFormulario("CI");
+        sfTmpenc.setGlosa(glosa);
+        sfTmpenc.setEstado("PEN");
+        sfTmpenc.setNoUsr("ADM");
+        sfTmpenc.setCuenta("111");
+        String nroTrans = sfTmpencFacade.getSiguienteNumeroTransacccion();
+        sfTmpenc.setNoTrans(nroTrans);
+        sfTmpencController.setSelected(sfTmpenc);
+        sfTmpencController.createGeneral();
+        ///
+        SfTmpdet sfTmpdet = new SfTmpdet();
+        SfTmpdetPK sfTmpdetPK = new SfTmpdetPK();
+        sfTmpdetPK.setNoCia("01");
+        sfTmpdetPK.setCuenta("1110110100");
+        sfTmpdetPK.setNoTrans(nroTrans);
+        sfTmpdet.setSfTmpdetPK(sfTmpdetPK);
+        sfTmpdet.setDebe(new BigDecimal(totalimporte));
+        sfTmpdet.setTc(new BigDecimal(1.0));
+        sfTmpdetController.setSelected(sfTmpdet);
+        sfTmpdetController.createGeneral();
+
+        SfTmpdet sfTmpdet1 = new SfTmpdet();
+        SfTmpdetPK sfTmpdetPK1 = new SfTmpdetPK();
+        sfTmpdetPK.setNoCia("01");
+        sfTmpdetPK.setCuenta("5420110201");
+        sfTmpdetPK.setNoTrans(nroTrans);
+        sfTmpdet.setSfTmpdetPK(sfTmpdetPK1);
+        sfTmpdet.setHaber(new BigDecimal(importe));
+        sfTmpdet.setTc(new BigDecimal(1.0));
+        sfTmpdetController.setSelected(sfTmpdet1);
+        sfTmpdetController.createGeneral();
+
+        SfTmpdet sfTmpdet2 = new SfTmpdet();
+        SfTmpdetPK sfTmpdetPK2 = new SfTmpdetPK();
+        sfTmpdetPK.setNoCia("01");
+        sfTmpdetPK.setCuenta("2420410200");
+        sfTmpdetPK.setNoTrans(nroTrans);
+        sfTmpdet.setSfTmpdetPK(sfTmpdetPK2);
+        sfTmpdet.setHaber(new BigDecimal(iva));
+        sfTmpdet.setTc(new BigDecimal(1.0));
+        sfTmpdetController.setSelected(sfTmpdet2);
+        sfTmpdetController.createGeneral();
+
+        SfTmpdet sfTmpdet3 = new SfTmpdet();
+        SfTmpdetPK sfTmpdetPK3 = new SfTmpdetPK();
+        sfTmpdetPK.setNoCia("01");
+        sfTmpdetPK.setCuenta("2420410100");
+        sfTmpdetPK.setNoTrans(nroTrans);
+        sfTmpdet.setSfTmpdetPK(sfTmpdetPK3);
+        sfTmpdet.setHaber(new BigDecimal(it));
+        sfTmpdet.setTc(new BigDecimal(1.0));
+        sfTmpdetController.setSelected(sfTmpdet3);
+        sfTmpdetController.createGeneral();
     }
 
     public void registrarImprimirNotaFactura() throws IOException, JRException {
@@ -216,6 +335,13 @@ public class VentadirectaController implements Serializable {
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
             nota = selected.getDocumento();
+            String nomcliente = "";
+            if(!StringUtils.isEmpty(selected.getCliente().getRazonsocial()))
+                nomcliente = selected.getCliente().getRazonsocial();
+            else
+                nomcliente = selected.getCliente().getNombreCompleto();
+
+            crearAsientoFactura(selected.getTotalimporte(), nomcliente, selected.getCodigo());
             selected = new Ventadirecta();
             personaElegida = new Persona();
             personas = personasFacade.findAllClientesPersonaInstitucion();

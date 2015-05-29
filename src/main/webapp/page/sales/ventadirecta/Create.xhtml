@@ -8,7 +8,7 @@
 
 <ui:composition>
 
-    <p:dialog id="VentaCreateDlg" widgetVar="VentaCreateDialog" modal="true" width="820px" appendTo="@(body)" header="Crear pedido" closable="false" dynamic="true">
+    <p:dialog id="VentaCreateDlg" widgetVar="VentaCreateDialog" modal="true" width="820px" appendTo="@(body)" header="Registrar Venta" closable="false" dynamic="true">
         <h:form id="VentaCreateForm">
             <p:panelGrid id="display" rendered="#{ventadirectaController.selected != null}" columns="4" >
                 <p:outputLabel value="Cliente:" for="cliente" />
