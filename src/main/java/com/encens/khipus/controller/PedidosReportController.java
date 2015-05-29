@@ -8,10 +8,7 @@ package com.encens.khipus.controller;
 import com.encens.khipus.ejb.DosificacionFacade;
 import com.encens.khipus.model.*;
 import com.encens.khipus.util.*;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.apache.commons.lang.StringUtils;
 
@@ -86,21 +83,22 @@ public class PedidosReportController implements Serializable {
         pedidosController.setItems(null);
     }
 
-    public void imprimirNotaEntrega(Ventadirecta pedido) throws IOException, JRException {
-        if(pedido.getEstado().equals("ANULADO"))
-        {
-            return;
-        }
-        this.ventadirecta = pedido;
+    public void imprimirNotaEntrega(Ventadirecta venta) throws IOException, JRException {
+        this.ventadirecta = venta;
         HashMap parameters = new HashMap();
         moneyUtil = new MoneyUtil();
         parameters.putAll(getReportParams(ventadirecta));
         File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/notaDeEntrega.jasper"));
-        exportarPDF(parameters, jasper);
-        pedido.setEstado("PREPARAR");
-        ventadirectaController.setSelected(ventadirecta);
-        ventadirectaController.update();
-        ventadirectaController.setItems(null);
+        exportarPDF(parameters, jasper,venta);
+    }
+
+    public byte[] generarNotaEntrega(Ventadirecta venta) throws IOException, JRException {
+        this.ventadirecta = venta;
+        HashMap parameters = new HashMap();
+        moneyUtil = new MoneyUtil();
+        parameters.putAll(getReportParams(ventadirecta));
+        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/notaDeEntrega.jasper"));
+        return exportarPDFToString(parameters, jasper,venta);
     }
 
     private Map<String, Object> getReportParams(Pedidos pedido) {
@@ -127,7 +125,7 @@ public class PedidosReportController implements Serializable {
         }
 
         Map<String, Object> paramMap = new HashMap<String, Object>();
-        paramMap.put("nroPedido", ventadirecta.getCodigo().getSecuencia().toString());
+        paramMap.put("nroPedido", ventadirecta.getCodigo().toString());
         paramMap.put("nit", nroDoc);
         paramMap.put("fechaEntrega", ventadirecta.getFechaPedido());
         paramMap.put("nombreClienteyTerritorio", ventadirecta.getCliente().getNombreCompleto() + "(" + ventadirecta.getCliente().getTerritoriotrabajo().getNombre() + ")");
@@ -312,7 +310,65 @@ public class PedidosReportController implements Serializable {
                 getReportParams(
                         ventadirecta.getCliente().getNombreCompleto(), numeroFactura, tipoEtiquetaFactura, controlCode.getCodigoControl(), controlCode.getKeyQR(), ventadirecta));
         guardarFactura(ventadirecta, controlCode.getCodigoControl());
-        exportarPDF(parameters, jasper);
+        exportarPDF(parameters, jasper,ventadirecta);
+    }
+
+    public byte[] generarFacturaNotaVentaDirecta(Ventadirecta venta) throws IOException, JRException {
+        barcodeRenderer = new BarcodeRenderer();
+        dosificacion = dosificacionFacade.findByPeriodo(new Date());
+        Integer numeroFactura;
+        moneyUtil = new MoneyUtil();
+        BigInteger numberAuthorization = dosificacion.getNroautorizacion();
+        String key = dosificacion.getLlave();
+        if (venta.getMovimiento() == null) {
+            numeroFactura = Integer.parseInt(dosificacionFacade.getSiguienteNumeroFactura());
+            dosificacion.setNumeroactual(numeroFactura);
+        }else{
+            numeroFactura = venta.getMovimiento().getNrofactura();
+        }
+        ControlCode controlCode = generateCodControl(venta, numeroFactura, numberAuthorization, key,dosificacion.getNitEmpresa());
+        JasperPrint nota = generarNota(venta);
+        JasperPrint factura = generarFacturaOriginalCopia(venta,controlCode,numeroFactura);
+        nota.getPages().addAll(factura.getPages());
+        byte[] pdf = JasperExportManager.exportReportToPdf(nota);
+        //guardarFacturaGenerada(venta, controlCode.getCodigoControl());
+        return pdf;
+    }
+
+    public JasperPrint generarNota(Ventadirecta ventadirecta){
+        HashMap parameters = new HashMap();
+        moneyUtil = new MoneyUtil();
+        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/notaDeEntrega.jasper"));
+        JasperPrint jasperPrint = new JasperPrint();
+        parameters.putAll(getReportParams(ventadirecta));
+        try {
+            jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parameters, new JRBeanCollectionDataSource(ventadirecta.getArticulosPedidos()));
+        } catch (JRException e) {
+            e.printStackTrace();
+            //todo:mensaje de error
+            return jasperPrint;
+        }
+        return jasperPrint;
+    }
+
+    public JasperPrint generarFacturaOriginalCopia(Ventadirecta venta,ControlCode controlCode,Integer numeroFactura) throws JRException {        
+
+        HashMap parameters = new HashMap();
+        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/factura.jasper"));
+
+        parameters.putAll(
+                getReportParams(
+                        venta.getCliente().getNombreCompleto(), numeroFactura, "ORIGINAL", controlCode.getCodigoControl(), controlCode.getKeyQR(), venta));
+        ////////////
+        JasperPrint original= JasperFillManager.fillReport(jasper.getPath(), parameters, new JRBeanCollectionDataSource(venta.getArticulosPedidos()));
+        HashMap parametersCopia = new HashMap();
+        parametersCopia.putAll(
+                getReportParams(
+                        venta.getCliente().getNombreCompleto(), numeroFactura, "COPIA", controlCode.getCodigoControl(), controlCode.getKeyQR(), venta));
+        ////////////
+        JasperPrint copia= JasperFillManager.fillReport(jasper.getPath(), parametersCopia, new JRBeanCollectionDataSource(venta.getArticulosPedidos()));
+        original.getPages().addAll(copia.getPages());
+        return original;
     }
 
     public void guardarFactura(Ventadirecta venta, String codControl) {
@@ -368,6 +424,45 @@ public class PedidosReportController implements Serializable {
             ventadirectaController.setSelected(venta);
             ventadirectaController.generalUpdate();
         }
+    }
+
+    public void guardarFacturaGenerada(Ventadirecta venta, String codControl) {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        LoginBean loginBean = (LoginBean) facesContext.getApplication().getELResolver().
+                getValue(facesContext.getELContext(), null, "loginBean");
+
+            Movimiento movimiento = new Movimiento();
+            movimiento.setCodestruct(dosificacion.getEstCod());
+            movimiento.setEstado("PENDIENTE");
+            movimiento.setCodigocontrol(codControl);
+            movimiento.setFecharegistro(new Date());
+            //todo:virificar estos valores
+            movimiento.setGlosa("");
+            movimiento.setMoneda("BS");
+            movimiento.setTipocambio(6.69);
+            movimiento.setNrofactura(dosificacion.getNumeroactual());
+            venta.setMovimiento(movimiento);
+
+            Impresionfactura impresionfactura = new Impresionfactura();
+            impresionfactura.setUsuario(loginBean.getUsuario());
+            impresionfactura.setFechaimpresion(new Date());
+            impresionfactura.setMovimiento(movimiento);
+            impresionfactura.setDosificacion(dosificacion);
+            impresionfactura.setTipo("ORIGINAL");
+            impresionfactura.setNroFactura(dosificacion.getNumeroactual());
+            movimiento.getImpresionfacturaCollection().add(impresionfactura);
+
+            Impresionfactura impresionfacturaCopia = new Impresionfactura();
+            impresionfactura.setUsuario(loginBean.getUsuario());
+            impresionfactura.setFechaimpresion(new Date());
+            impresionfactura.setMovimiento(movimiento);
+            impresionfactura.setDosificacion(dosificacion);
+            impresionfactura.setTipo("COPIA");
+            impresionfactura.setNroFactura(dosificacion.getNumeroactual());
+
+            movimiento.getImpresionfacturaCollection().add(impresionfacturaCopia);
+            dosificacionController.setSelected(dosificacion);
+            dosificacionController.update();
     }
 
     public void guardarFactura(Pedidos pedido, String codControl) {
@@ -641,6 +736,27 @@ public class PedidosReportController implements Serializable {
         stream.close();
         FacesContext.getCurrentInstance().responseComplete();
     }
+    public void exportarPDF(HashMap parametros, File jasper,Ventadirecta venta) throws JRException, IOException {
+
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, new JRBeanCollectionDataSource(venta.getArticulosPedidos()));
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.addHeader("Content-disposition", "attachment; filename=DOCUMENTO_ILVA.pdf");
+        ServletOutputStream stream = response.getOutputStream();
+
+        JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
+
+        stream.flush();
+        stream.close();
+        FacesContext.getCurrentInstance().responseComplete();
+    }
+
+    public byte[] exportarPDFToString(HashMap parametros, File jasper,Ventadirecta venta) throws JRException, IOException {
+
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, new JRBeanCollectionDataSource(venta.getArticulosPedidos()));
+        byte[] pdf = JasperExportManager.exportReportToPdf(jasperPrint);
+        return pdf;
+    }
+
     //todo: dar formato al total importe y al importeBaseCreditFisical
     private ControlCode generateCodControl(Pedidos pedido, Integer numberInvoice, BigInteger numberAutorization, String key,String nitEmpresa) {
         Double importeBaseCreditFisical = pedido.getTotalimporte() * 0.13;

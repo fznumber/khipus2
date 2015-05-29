@@ -6,7 +6,6 @@
 package com.encens.khipus.model;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -65,13 +64,19 @@ public class Ventadirecta implements Serializable {
     @NotNull
     @Column(name = "TOTALIMPORTE")
     private Double totalimporte;
+    @Lob
+    @Column(name = "documento")
+    private byte[] documento;
     @Basic(optional = false)
     @NotNull
     @Column(name = "IMPUESTO")
     private double impuesto;
-    @OneToOne
-    @JoinColumn(name="codigo")
-    private CodigoPedidoSecuencia codigo;
+    @Column(name = "PAGO")
+    private Double pago = 0.0;
+    @Column(name = "CAMBIO")
+    private Double cambio;
+    @Column(name="codigo")
+    private Integer codigo;
     @JoinColumn(name = "IDUSUARIO", referencedColumnName = "idusuario")
     @ManyToOne
     private Usuario usuario;
@@ -169,11 +174,11 @@ public class Ventadirecta implements Serializable {
         this.impuesto = impuesto;
     }
 
-    public CodigoPedidoSecuencia getCodigo() {
+    public Integer getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(CodigoPedidoSecuencia codigo) {
+    public void setCodigo(Integer codigo) {
         this.codigo = codigo;
     }
 
@@ -233,5 +238,32 @@ public class Ventadirecta implements Serializable {
 
     public void setArticulosPedidos(Collection<ArticulosPedido> articulosPedidos) {
         this.articulosPedidos = articulosPedidos;
+    }
+
+    public Double getPago() {
+        return pago;
+    }
+
+    public void setPago(Double pago) {
+        this.pago = pago;
+    }
+
+    public Double getCambio() {
+        cambio = pago - totalimporte;
+        if(pago <= totalimporte)
+            cambio = 0.0;
+        return cambio;
+    }
+
+    public void setCambio(Double cambio) {
+        this.cambio = cambio;
+    }
+
+    public byte[] getDocumento() {
+        return documento;
+    }
+
+    public void setDocumento(byte[] documento) {
+        this.documento = documento;
     }
 }

@@ -9,10 +9,14 @@ import com.encens.khipus.ejb.VentadirectaFacade;
 import com.encens.khipus.model.*;
 import com.encens.khipus.util.JSFUtil;
 import com.encens.khipus.util.JSFUtil.PersistAction;
-import com.encens.khipus.util.JSFUtil;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
 import org.apache.commons.lang.StringUtils;
+import org.primefaces.context.RequestContext;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,12 +27,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
+import javax.faces.event.AbortProcessingException;
+import javax.faces.event.ActionEvent;
+import javax.faces.event.ActionListener;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 
 @Named("ventadirectaController")
 @SessionScoped
@@ -42,6 +52,8 @@ public class VentadirectaController implements Serializable {
     private com.encens.khipus.ejb.VentadirectaFacade ejbFacade;
     @EJB
     private VentaarticuloFacade ventaarticuloFacade;
+    @Inject
+    private PedidosReportController pedidosReportController;
 
     private List<Ventadirecta> items = null;
     private List<Ventadirecta> ventasElegidas = new ArrayList<>();
@@ -55,8 +67,7 @@ public class VentadirectaController implements Serializable {
     private InvArticulos articuloElegido;
     private List<Ventadirecta> ventaDirectaFiltrado;
     private List<Ventadirecta> ventaDirectaElegidos = new ArrayList<>();
-    private Double pago = 0.0;
-    private Double cambio = 0.0;
+    private byte[] nota;
 
     public VentadirectaController() {
     }
@@ -146,9 +157,81 @@ public class VentadirectaController implements Serializable {
         articuloElegido = null;
     }
 
-    public void registrar() throws IOException, JRException {
-        selected.setEstado("PENDIENTE");
-        create();
+    public ActionListener createActionListener() throws IOException, JRException {
+        //registrar();
+        return new ActionListener() {
+            @Override
+            public void processAction(ActionEvent event) throws AbortProcessingException {
+                try {
+                    pedidosReportController.imprimirNotaEntrega(selected);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JRException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+    }
+
+    public void registrarImprimirNota() throws IOException, JRException {
+        if(validarCampos())
+        {
+            return;
+        }
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        LoginBean loginBean = (LoginBean) facesContext.getApplication().getELResolver().
+                getValue(facesContext.getELContext(), null, "loginBean");
+        selected.setUsuario(loginBean.getUsuario());
+        selected.setCliente(personaElegida);
+        selected.setCodigo(getFacade().getSiguienteNumeroVenta());
+        selected.setEstado("PREPARAR");
+        selected.setDocumento(pedidosReportController.generarNotaEntrega(selected));
+        persist(PersistAction.CREATE, "La venta se registro correctamente.");
+
+        if (!JSFUtil.isValidationFailed()) {
+            items = null;    // Invalidate list of items to trigger re-query.
+            nota = selected.getDocumento();
+            selected = new Ventadirecta();
+            personaElegida = new Persona();
+            personas = personasFacade.findAllClientesPersonaInstitucion();
+            articulos = invArticulosFacade.findAllInvArticulos();
+        }
+    }
+
+    public void registrarImprimirNotaFactura() throws IOException, JRException {
+        if(validarCampos())
+        {
+            return;
+        }
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        LoginBean loginBean = (LoginBean) facesContext.getApplication().getELResolver().
+                getValue(facesContext.getELContext(), null, "loginBean");
+        selected.setUsuario(loginBean.getUsuario());
+        selected.setCliente(personaElegida);
+        selected.setCodigo(getFacade().getSiguienteNumeroVenta());
+        selected.setEstado("PREPARAR");
+        selected.setDocumento(pedidosReportController.generarFacturaNotaVentaDirecta(selected));
+        persist(PersistAction.CREATE, "La venta se registro correctamente.");
+
+        if (!JSFUtil.isValidationFailed()) {
+            items = null;    // Invalidate list of items to trigger re-query.
+            nota = selected.getDocumento();
+            selected = new Ventadirecta();
+            personaElegida = new Persona();
+            personas = personasFacade.findAllClientesPersonaInstitucion();
+            articulos = invArticulosFacade.findAllInvArticulos();
+        }
+    }
+
+    public StreamedContent getNotaEntrega(){
+        if(nota == null)
+            return null;
+        return new DefaultStreamedContent(new ByteArrayInputStream(nota));
+    }
+
+    public void verImprimir() throws IOException, JRException {
+        registrarImprimirNota();
+        RequestContext.getCurrentInstance().openDialog("PdfDisplayRedirect");
     }
 
     public void create() {
@@ -161,7 +244,7 @@ public class VentadirectaController implements Serializable {
                 getValue(facesContext.getELContext(), null, "loginBean");
         selected.setUsuario(loginBean.getUsuario());
         selected.setCliente(personaElegida);
-        selected.setCodigo(new CodigoPedidoSecuencia());
+        selected.setCodigo(getFacade().getSiguienteNumeroVenta());
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PedidosCreated"));
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
@@ -173,7 +256,7 @@ public class VentadirectaController implements Serializable {
 
     }
 
-    private boolean validarCampos() {
+    public boolean validarCampos() {
         Boolean error = false;
         if(personaElegida.getPiId() == null)
         {
@@ -417,22 +500,5 @@ public class VentadirectaController implements Serializable {
         this.fechaVentaFiltro = fechaVentaFiltro;
     }
 
-    public Double getPago() {
-        return pago;
-    }
 
-    public void setPago(Double pago) {
-        this.pago = pago;
-    }
-
-    public Double getCambio() {
-        cambio = pago - selected.getTotalimporte();
-        if(pago <= selected.getTotalimporte())
-            cambio = 0.0;
-        return cambio;
-    }
-
-    public void setCambio(Double cambio) {
-        this.cambio = cambio;
-    }
 }

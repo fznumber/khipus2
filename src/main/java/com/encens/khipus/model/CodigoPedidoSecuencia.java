@@ -12,13 +12,13 @@ import java.io.Serializable;
 public class CodigoPedidoSecuencia implements Serializable {
     @Id
     @NotNull
-    @TableGenerator(name = "PedidosCodigo_Gen"
+    @TableGenerator(name = "VentaCodigo_Gen"
             ,table="ID_GEN"
             ,pkColumnName = "GEN_NAME"
             ,valueColumnName = "GEN_VAL"
             ,initialValue = 1
             ,allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "PedidosCodigo_Gen")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "VentaCodigo_Gen")
     @Column(name = "secuencia")
     private Long secuencia;
 

@@ -8,6 +8,7 @@ package com.encens.khipus.ejb;
 import com.encens.khipus.model.Ventadirecta;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -27,5 +28,15 @@ public class VentadirectaFacade extends AbstractFacade<Ventadirecta> {
     public VentadirectaFacade() {
         super(Ventadirecta.class);
     }
-    
+
+    public Integer getSiguienteNumeroVenta()
+    {
+        String numero = "";
+        try{
+            numero = (String)em.createNativeQuery("SELECT khipus.getNextSeq('VENTADIRECTA')").getSingleResult();
+        }catch (NoResultException e){
+            return 0;
+        }
+        return Integer.parseInt(numero);
+    }
 }

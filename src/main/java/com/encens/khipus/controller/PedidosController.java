@@ -184,7 +184,7 @@ public class PedidosController implements Serializable {
             selected.setPedidosConReposicion(reposiciones);
             selected.setReposicion(selected);
         }
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PedidosCreated"));
+        persist(PersistAction.CREATE, "El pedido se registró correctamente.");
         actualizarReposiciones();
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
