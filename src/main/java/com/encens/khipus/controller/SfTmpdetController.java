@@ -123,7 +123,7 @@ public class SfTmpdetController implements Serializable {
     }
 
     public void createGeneral() {
-        persist(PersistAction.CREATE, "");
+        getFacade().create(selected);
     }
 
     @FacesConverter(forClass = SfTmpdet.class)

@@ -410,6 +410,7 @@ public class VentadirectaController implements Serializable {
 
     public void cancel(){
         selected = null;
+        nota = null;
     }
 
     public void anularVenta(){

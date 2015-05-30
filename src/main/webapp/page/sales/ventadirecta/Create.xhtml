@@ -99,7 +99,9 @@
                     <p:ajax event="blur" update="cambio"/>
                 </p:inputText>
                 <p:outputLabel for="cambio" value="Cambio:" />
-                <p:outputLabel id="cambio" value="#{ventadirectaController.selected.cambio}"/>
+                <h:outputText id="cambio" value="#{ventadirectaController.selected.cambio}">
+                    <f:convertNumber type="currency" currencySymbol="Bs." locale="en_US" />
+                </h:outputText>
             </p:panelGrid>
             <p:commandButton  actionListener="#{ventadirectaController.registrarImprimirNota}" oncomplete="window.open('PdfDisplayRedirect.xhtml')" value="Cobrar e imprimir" update="display,:VentaDirectaListForm:datalist,:VentaDirectaListForm:growl,VentaCreateForm:articulosTable,totalPago"/>
             <p:commandButton  actionListener="#{ventadirectaController.registrarImprimirNotaFactura}" oncomplete="window.open('PdfDisplayRedirect.xhtml')" value="Cobrar y facturar" update="display,:VentaDirectaListForm:datalist,:VentaDirectaListForm:growl,VentaCreateForm:articulosTable,totalPago"/>
