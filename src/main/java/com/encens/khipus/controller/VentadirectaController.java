@@ -7,12 +7,23 @@ import com.encens.khipus.model.*;
 import com.encens.khipus.util.JSFUtil;
 import com.encens.khipus.util.JSFUtil.PersistAction;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperExportManager;
 import org.apache.commons.lang.StringUtils;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
+import javax.ejb.EJB;
+import javax.ejb.EJBException;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
+import javax.faces.convert.FacesConverter;
+import javax.faces.event.AbortProcessingException;
+import javax.faces.event.ActionEvent;
+import javax.faces.event.ActionListener;
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.Serializable;
@@ -23,20 +34,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.EJB;
-import javax.ejb.EJBException;
-import javax.faces.event.AbortProcessingException;
-import javax.faces.event.ActionEvent;
-import javax.faces.event.ActionListener;
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
-import javax.faces.convert.FacesConverter;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
 
 @Named("ventadirectaController")
 @SessionScoped
@@ -72,6 +69,7 @@ public class VentadirectaController implements Serializable {
     private List<Ventadirecta> ventaDirectaFiltrado;
     private List<Ventadirecta> ventaDirectaElegidos = new ArrayList<>();
     private byte[] nota;
+    private String codNota;
 
     public VentadirectaController() {
     }
@@ -195,6 +193,7 @@ public class VentadirectaController implements Serializable {
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
             nota = selected.getDocumento();
+            codNota = "NOTA_"+selected.getCodigo().toString();
             String nomcliente = "";
             if(!StringUtils.isEmpty(selected.getCliente().getRazonsocial()))
                 nomcliente = selected.getCliente().getRazonsocial();
@@ -335,6 +334,7 @@ public class VentadirectaController implements Serializable {
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
             nota = selected.getDocumento();
+            codNota = "NOTAFAC_"+selected.getCodigo().toString();
             String nomcliente = "";
             if(!StringUtils.isEmpty(selected.getCliente().getRazonsocial()))
                 nomcliente = selected.getCliente().getRazonsocial();
@@ -352,7 +352,7 @@ public class VentadirectaController implements Serializable {
     public StreamedContent getNotaEntrega(){
         if(nota == null)
             return null;
-        return new DefaultStreamedContent(new ByteArrayInputStream(nota));
+        return new DefaultStreamedContent(new ByteArrayInputStream(nota),"application/pdf", codNota+".pdf");
     }
 
     public void verImprimir() throws IOException, JRException {
@@ -627,5 +627,11 @@ public class VentadirectaController implements Serializable {
         this.fechaVentaFiltro = fechaVentaFiltro;
     }
 
+    public String getCodNota() {
+        return codNota;
+    }
 
+    public void setCodNota(String codNota) {
+        this.codNota = codNota;
+    }
 }
