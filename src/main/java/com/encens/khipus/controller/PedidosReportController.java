@@ -195,8 +195,8 @@ public class PedidosReportController implements Serializable {
         int anio = cal.get(Calendar.YEAR);
         int mes = cal.get(Calendar.MONTH);
         int dia = cal.get(Calendar.DAY_OF_MONTH);
-        if(venta.getMovimiento() == null)
-            etiqueta = "ORIGINAL";
+        /*if(venta.getMovimiento() == null)
+            etiqueta = "ORIGINAL";*/
 
         String fecha = "Cochambamba, "+dia+" de "+dateUtil.getMes(mes)+" de "+anio;
         Map<String, Object> paramMap = new HashMap<String, Object>();

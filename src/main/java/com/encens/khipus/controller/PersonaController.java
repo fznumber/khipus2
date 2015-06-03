@@ -213,13 +213,13 @@ public class PersonaController implements Serializable {
             selected.setAm("");
         }
 
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PersonasUpdated"));
+        persist(PersistAction.UPDATE, "El cliente se actualizó correctamente.");
         items = null;
     }
 
     public void destroy(Persona persona) {
         selected = persona;
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("PersonasDeleted"));
+        persist(PersistAction.DELETE, "La persona se elimino correctamente.");
         if (!JSFUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
