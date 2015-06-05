@@ -7,17 +7,8 @@ package com.encens.khipus.model;
 
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -35,6 +26,14 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Ventaarticulo.findByInvArticulo", query = "SELECT v FROM Ventaarticulo v WHERE v.invArticulos = :invArticulos")})
 public class Ventaarticulo implements Serializable {
     @Id
+    @NotNull
+    @TableGenerator(name = "Ventaarticulo_Gen"
+            ,table="ID_GEN"
+            ,pkColumnName = "GEN_NAME"
+            ,valueColumnName = "GEN_VAL"
+            ,initialValue = 1
+            ,allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "Ventaarticulo_Gen")
     @Column(name = "IDVENTAARTICULO")
     private Long idventaarticulo;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation

@@ -60,7 +60,7 @@ public class Persona implements Serializable {
     private Collection<Ventadirecta> pedidosVentadirecta;
     @OneToMany(mappedBy = "distribuidor")
     private Collection<Territoriotrabajo> territorios;
-    @OneToMany(mappedBy = "persona")
+    @OneToMany(mappedBy = "persona",cascade = CascadeType.ALL)
     private Collection<Ventacliente> ventaclientes = new ArrayList<>();
     @JoinColumn(name = "IDDEPARTAMENTO",referencedColumnName = "IDDEPARTAMENTO")
     @ManyToOne(optional = true)

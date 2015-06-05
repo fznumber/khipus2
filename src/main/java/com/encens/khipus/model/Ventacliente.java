@@ -20,19 +20,24 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Ventacliente.findAll", query = "SELECT v FROM Ventacliente v"),
     @NamedQuery(name = "Ventacliente.findByIdventacliente", query = "SELECT v FROM Ventacliente v WHERE v.idventacliente = :idventacliente"),
-    @NamedQuery(name = "Ventacliente.findByVentaclientePersona", query = "SELECT v FROM Ventacliente v WHERE v.ventaarticulo = :ventaarticulo and v.persona = :persona"),
     @NamedQuery(name = "Ventacliente.findByPrecioespecial", query = "SELECT v FROM Ventacliente v WHERE v.precioespecial = :precioespecial")})
 public class Ventacliente implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @NotNull
-    @Column(name = "IDVENTACLIENTE")
+    @TableGenerator(name = "Ventacliente_Gen"
+            ,table="ID_GEN"
+            ,pkColumnName = "GEN_NAME"
+            ,valueColumnName = "GEN_VAL"
+            ,initialValue = 1
+            ,allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "Ventacliente_Gen")
     private Long idventacliente;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "PRECIOESPECIAL")
     private Double precioespecial;
     @JoinColumn(name = "IDCLIENTE", referencedColumnName = "IDPERSONACLIENTE")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,cascade = CascadeType.ALL)
     private Persona persona;
     @JoinColumns({
             @JoinColumn(name = "NO_CIA", referencedColumnName = "NO_CIA"),

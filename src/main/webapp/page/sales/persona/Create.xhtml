@@ -11,7 +11,7 @@
     <p:dialog id="PersonaCreateDlg" widgetVar="PersonaCreateDialog" modal="true" resizable="false" closable="false" appendTo="@(body)" header="Registrar Cliente">
         <h:form id="PersonaCreateForm">
             <h:panelGroup id="display">
-                <p:panelGrid columns="6" rendered="#{personaController.selected != null}">
+                <p:panelGrid columns="4" rendered="#{personaController.selected != null}">
                     <h:outputText value="Tipo Cliente: " />
                     <p:selectBooleanButton id="tipoCliente" value="#{personaController.esPersona}" onLabel="Persona" offLabel="Institución">
                         <p:ajax update="display" />
@@ -65,7 +65,7 @@
                                        itemValue="#{territoriotrabajo}"/>
                     </p:selectOneMenu>
                 </p:panelGrid>
-                <p:panelGrid columns="3" rendered="#{pedidosController.selected != null}">
+                <p:panelGrid columns="3">
                     <p:outputLabel value="Articulo:" for="itemTip" />
                     <p:autoComplete id="itemTip" size="54" value="#{personaController.articuloElegido}" completeMethod="#{personaController.completarArticulo}"
                                     var="articulo" itemLabel="#{articulo.descri}" itemValue="#{articulo}" converter="convertirArticulos">
@@ -93,13 +93,13 @@
                         Articulos a la venta elegidos
                     </f:facet>
                     <p:column headerText="Producto">
-                        <h:outputText value="#{item.ventaarticulo.invArticulos.descri}" />
+                        <h:outputText value="#{item.invArticulos.descri}" />
                     </p:column>
-                    <p:column headerText="Cant.">
+                    <p:column headerText="Precio">
                         <h:inputText value="#{item.precioespecial}" size="4"/>
                     </p:column>
                     <p:column headerText="Cod. Art.">
-                        <h:outputText value="#{item.ventaarticulo.invArticulos.invArticulosPK.codArt}"/>
+                        <h:outputText value="#{item.invArticulos.invArticulosPK.codArt}"/>
                     </p:column>
                     <p:column headerText="Acción">
                         <p:commandLink value="Quitar" update="articulosTable,:PersonaListForm:growl">

@@ -170,6 +170,7 @@ public class PersonaController implements Serializable {
             cliente.setTipocliente(selected.getTipocliente());
             cliente.setTerritoriotrabajo(selected.getTerritoriotrabajo());
             cliente.setConfactura(confacura);
+            cliente.getVentaclientes().addAll(selected.getVentaclientes());
             clienteFacade.create(cliente);
         }
         else {
@@ -193,6 +194,7 @@ public class PersonaController implements Serializable {
             institucion.setTelefono(selected.getTelefono());
             institucion.setTipocliente(selected.getTipocliente());
             institucion.setConfactura(confacura);
+            institucion.getVentaclientes().addAll(selected.getVentaclientes());
             institucionFacade.create(institucion);
         }
         JSFUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ClienteCreated"));
