@@ -11,7 +11,7 @@
     <p:dialog id="PersonaCreateDlg" widgetVar="PersonaCreateDialog" modal="true" resizable="false" closable="false" appendTo="@(body)" header="Registrar Cliente">
         <h:form id="PersonaCreateForm">
             <h:panelGroup id="display">
-                <p:panelGrid columns="2" rendered="#{personaController.selected != null}">
+                <p:panelGrid columns="6" rendered="#{personaController.selected != null}">
                     <h:outputText value="Tipo Cliente: " />
                     <p:selectBooleanButton id="tipoCliente" value="#{personaController.esPersona}" onLabel="Persona" offLabel="Institución">
                         <p:ajax update="display" />
@@ -65,6 +65,48 @@
                                        itemValue="#{territoriotrabajo}"/>
                     </p:selectOneMenu>
                 </p:panelGrid>
+                <p:panelGrid columns="3" rendered="#{pedidosController.selected != null}">
+                    <p:outputLabel value="Articulo:" for="itemTip" />
+                    <p:autoComplete id="itemTip" size="54" value="#{personaController.articuloElegido}" completeMethod="#{personaController.completarArticulo}"
+                                    var="articulo" itemLabel="#{articulo.descri}" itemValue="#{articulo}" converter="convertirArticulos">
+                        <f:facet name="itemtip">
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <f:facet name="header">
+                                    <h:outputText styleClass="ui-theme ui-theme-#{articulo.descri}" style="margin-left:50px" />
+                                </f:facet>
+                                <h:outputText value="Nombre:" />
+                                <h:outputText value="#{articulo.descri}" />
+
+                                <h:outputText value="Codigo:" />
+                                <h:outputText value="#{articulo.invArticulosPK.codArt}" />
+                            </h:panelGrid>
+                        </f:facet>
+                    </p:autoComplete>
+                    <p:commandButton actionListener="#{personaController.agregarArticulo}" value="Agregar" update=":PersonaCreateForm:articulosTable,:PersonaCreateForm:itemTip"/>
+                </p:panelGrid>
+                <p:dataTable
+                        id="articulosTable"
+                        var="item"
+                        value="#{personaController.selected.ventaclientes}"
+                        tableStyle="width:auto">
+                    <f:facet name="header">
+                        Articulos a la venta elegidos
+                    </f:facet>
+                    <p:column headerText="Producto">
+                        <h:outputText value="#{item.ventaarticulo.invArticulos.descri}" />
+                    </p:column>
+                    <p:column headerText="Cant.">
+                        <h:inputText value="#{item.precioespecial}" size="4"/>
+                    </p:column>
+                    <p:column headerText="Cod. Art.">
+                        <h:outputText value="#{item.ventaarticulo.invArticulos.invArticulosPK.codArt}"/>
+                    </p:column>
+                    <p:column headerText="Acción">
+                        <p:commandLink value="Quitar" update="articulosTable,:PersonaListForm:growl">
+                            <p:collector value="#{item}" removeFrom="#{personaController.selected.ventaclientes}" unique="true"/>
+                        </p:commandLink>
+                    </p:column>
+                </p:dataTable>
                 <p:commandButton actionListener="#{personaController.create}" rendered="#{personaController.selected != null}" value="#{bundle.Save}" update="display,:PersonaListForm:growl" />
                 <p:commandButton value="#{bundle.Close}" onclick="PersonaCreateDialog.hide()"/>
             </h:panelGroup>

@@ -6,6 +6,7 @@
 package com.encens.khipus.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.*;
@@ -59,6 +60,8 @@ public class Persona implements Serializable {
     private Collection<Ventadirecta> pedidosVentadirecta;
     @OneToMany(mappedBy = "distribuidor")
     private Collection<Territoriotrabajo> territorios;
+    @OneToMany(mappedBy = "persona")
+    private Collection<Ventacliente> ventaclientes = new ArrayList<>();
     @JoinColumn(name = "IDDEPARTAMENTO",referencedColumnName = "IDDEPARTAMENTO")
     @ManyToOne(optional = true)
     private Departamento departamento;
@@ -400,5 +403,13 @@ public class Persona implements Serializable {
 
     public void setPedidosVentadirecta(Collection<Ventadirecta> pedidosVentadirecta) {
         this.pedidosVentadirecta = pedidosVentadirecta;
+    }
+
+    public Collection<Ventacliente> getVentaclientes() {
+        return ventaclientes;
+    }
+
+    public void setVentaclientes(Collection<Ventacliente> ventaclientes) {
+        this.ventaclientes = ventaclientes;
     }
 }

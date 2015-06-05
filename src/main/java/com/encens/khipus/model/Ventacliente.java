@@ -6,14 +6,7 @@
 package com.encens.khipus.model;
 
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -41,9 +34,11 @@ public class Ventacliente implements Serializable {
     @JoinColumn(name = "IDCLIENTE", referencedColumnName = "IDPERSONACLIENTE")
     @ManyToOne(optional = false)
     private Persona persona;
-    @JoinColumn(name = "IDVENTAARTICULO", referencedColumnName = "IDVENTAARTICULO")
+    @JoinColumns({
+            @JoinColumn(name = "NO_CIA", referencedColumnName = "NO_CIA"),
+            @JoinColumn(name = "COD_ART", referencedColumnName = "COD_ART")})
     @ManyToOne(optional = false)
-    private Ventaarticulo ventaarticulo;
+    private InvArticulos invArticulos;
 
     public Ventacliente() {
     }
@@ -76,14 +71,6 @@ public class Ventacliente implements Serializable {
         this.persona = persona;
     }
 
-    public Ventaarticulo getVentaarticulo() {
-        return ventaarticulo;
-    }
-
-    public void setVentaarticulo(Ventaarticulo idventaarticulo) {
-        this.ventaarticulo = idventaarticulo;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -108,5 +95,12 @@ public class Ventacliente implements Serializable {
     public String toString() {
         return "com.encens.khipus.model.Ventacliente[ idventacliente=" + idventacliente + " ]";
     }
-    
+
+    public InvArticulos getInvArticulos() {
+        return invArticulos;
+    }
+
+    public void setInvArticulos(InvArticulos invArticulos) {
+        this.invArticulos = invArticulos;
+    }
 }

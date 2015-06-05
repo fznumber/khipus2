@@ -7,6 +7,7 @@ import com.encens.khipus.util.JSFUtil.PersistAction;
 import com.mysql.jdbc.StringUtils;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -30,12 +31,19 @@ public class PersonaController implements Serializable {
     private ClienteFacade clienteFacade;
     @EJB
     private InstitucionFacade institucionFacade;
+    @EJB
+    private InvArticulosFacade invArticulosFacade;
+    @EJB
+    private VentaarticuloFacade ventaarticuloFacade;
+
     private List<Persona> items = null;
     private Persona selected;
     private Boolean esPersona;
     private Boolean tieneComision;
     private Boolean tieneGarantia;
     private Boolean confacura;
+    private InvArticulos articuloElegido;
+    private List<InvArticulos> articulos;
 
     public PersonaController() {
     }
@@ -78,6 +86,7 @@ public class PersonaController implements Serializable {
 
     public Persona prepareCreate() {
         selected = new Persona();
+        articulos = invArticulosFacade.findAllInvArticulos();
         initializeEmbeddableKey();
         esPersona = true;
         tieneComision = false;
@@ -88,6 +97,7 @@ public class PersonaController implements Serializable {
 
     public void prepareEdit(Persona persona) {
         selected = persona;
+        articulos = invArticulosFacade.findAllInvArticulos();
         if(selected != null  ) {
             if(selected.getTipoPersona() != null)
                 esPersona = selected.getTipoPersona().equals("cliente");
@@ -226,6 +236,32 @@ public class PersonaController implements Serializable {
         }
     }
 
+    public List<InvArticulos> completarArticulo(String query) {
+        List<InvArticulos> articulosFiltrados = new ArrayList<>();
+        for(InvArticulos articulo:articulos) {
+
+            if(articulo.getDescri().toLowerCase().contains(query)) {
+                articulosFiltrados.add(articulo);
+            }
+        }
+
+        return articulosFiltrados;
+    }
+
+    public void agregarArticulo()
+    {
+        if(articuloElegido == null)
+            return;
+        Ventaarticulo ventaarticulo = ventaarticuloFacade.findByInvArticulo(articuloElegido);
+        Ventacliente ventacliente = new Ventacliente();
+        ventacliente.setInvArticulos(articuloElegido);
+        ventacliente.setPersona(selected);
+        ventacliente.setPrecioespecial(ventaarticulo.getPrecio());
+        selected.getVentaclientes().add(ventacliente);
+        articulos.remove(articuloElegido);
+        articuloElegido = null;
+    }
+
     public List<Persona> getItems() {
         if (items == null) {
             items = getFacade().findAllClientesPersonaInstitucion();
@@ -351,4 +387,22 @@ public class PersonaController implements Serializable {
     public void setConfacura(Boolean confacura) {
         this.confacura = confacura;
     }
+
+    public InvArticulos getArticuloElegido() {
+        return articuloElegido;
+    }
+
+    public void setArticuloElegido(InvArticulos articuloElegido) {
+        this.articuloElegido = articuloElegido;
+    }
+
+    public List<InvArticulos> getArticulos() {
+        return articulos;
+    }
+
+    public void setArticulos(List<InvArticulos> articulos) {
+        this.articulos = articulos;
+    }
+
 }
+
