@@ -98,6 +98,12 @@ public class PersonaController implements Serializable {
     public void prepareEdit(Persona persona) {
         selected = persona;
         articulos = invArticulosFacade.findAllInvArticulos();
+        if(selected.getVentaclientes().size() >0){
+            for(Ventacliente ventacliente: selected.getVentaclientes())
+            {
+              articulos.remove(ventacliente.getInvArticulos());
+            }
+        }
         if(selected != null  ) {
             if(selected.getTipoPersona() != null)
                 esPersona = selected.getTipoPersona().equals("cliente");
@@ -205,6 +211,7 @@ public class PersonaController implements Serializable {
     }
 
     public void cancel(){
+        articuloElegido = null;
         selected = null;
     }
 

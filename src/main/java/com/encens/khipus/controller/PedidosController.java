@@ -113,11 +113,20 @@ public class PedidosController implements Serializable {
         if(articuloElegido == null)
         return;
         Ventaarticulo ventaarticulo = ventaarticuloFacade.findByInvArticulo(articuloElegido);
-
+        Double precio = ventaarticulo.getPrecio();
+        if(personaElegida.getVentaclientes().size() >0)
+        {
+            for(Ventacliente ventacliente:personaElegida.getVentaclientes()){
+                if(ventacliente.getInvArticulos().getInvArticulosPK().getCodArt() == articuloElegido.getInvArticulosPK().getCodArt())
+                {
+                    precio = ventacliente.getPrecioespecial();
+                }
+            }
+        }
         ArticulosPedido articulosPedido = new ArticulosPedido();
         articulosPedido.setInvArticulos(articuloElegido);
         articulosPedido.setPrecioInv(ventaarticulo.getPrecio());
-        articulosPedido.setPrecio(ventaarticulo.getPrecio());
+        articulosPedido.setPrecio(precio);
         articulosPedido.setReposicion(0);
         articulosPedido.setPedidos(selected);
         articulosPedido.setTipo(ventaarticulo.getTipo());
