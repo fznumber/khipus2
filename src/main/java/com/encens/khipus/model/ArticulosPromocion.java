@@ -11,6 +11,13 @@ import java.io.Serializable;
 @Table(name = "articulospromocion")
 public class ArticulosPromocion implements Serializable {
     @Id
+    @TableGenerator(name = "ArticulosPromocion_Gen"
+            ,table="ID_GEN"
+            ,pkColumnName = "GEN_NAME"
+            ,valueColumnName = "GEN_VAL"
+            ,initialValue = 1
+            ,allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "ArticulosPromocion_Gen")
     @Column(name = "idarticulospromocion")
     private Long id;
     @Column(name = "CANTIDAD")

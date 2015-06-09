@@ -32,6 +32,13 @@ public class Promocion implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @NotNull
+    @TableGenerator(name = "Promocion_Gen"
+            ,table="ID_GEN"
+            ,pkColumnName = "GEN_NAME"
+            ,valueColumnName = "GEN_VAL"
+            ,initialValue = 1
+            ,allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "Promocion_Gen")
     @Column(name = "IDPROMOCION")
     private Long idpromocion;
     @Size(max = 50)
