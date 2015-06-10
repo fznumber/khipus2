@@ -8,25 +8,70 @@
 
     <ui:composition>
 
-        <p:dialog id="PromocionCreateDlg" widgetVar="PromocionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreatePromocionTitle}">
+        <p:dialog id="PromocionCreateDlg" widgetVar="PromocionCreateDialog" modal="true" resizable="false" closable="false" appendTo="@(body)" header="Crear nueva promoción">
             <h:form id="PromocionCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{promocionController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreatePromocionLabel_idpromocion}" for="idpromocion" />
-                        <p:inputText id="idpromocion" value="#{promocionController.selected.idpromocion}" title="#{bundle.CreatePromocionTitle_idpromocion}" required="true" requiredMessage="#{bundle.CreatePromocionRequiredMessage_idpromocion}"/>
-                        <p:outputLabel value="#{bundle.CreatePromocionLabel_nombre}" for="nombre" />
-                        <p:inputText id="nombre" value="#{promocionController.selected.nombre}" title="#{bundle.CreatePromocionTitle_nombre}" />
-                        <p:outputLabel value="#{bundle.CreatePromocionLabel_fechainicio}" for="fechainicio" />
-                        <p:calendar id="fechainicio" pattern="MM/dd/yyyy" value="#{promocionController.selected.fechainicio}" title="#{bundle.EditPromocionTitle_fechainicio}"  showOn="button"/>
-                        <p:outputLabel value="#{bundle.CreatePromocionLabel_fechafin}" for="fechafin" />
-                        <p:calendar id="fechafin" pattern="MM/dd/yyyy" value="#{promocionController.selected.fechafin}" title="#{bundle.EditPromocionTitle_fechafin}"  showOn="button"/>
-                        <p:outputLabel value="#{bundle.CreatePromocionLabel_estado}" for="estado" />
-                        <p:inputText id="estado" value="#{promocionController.selected.estado}" title="#{bundle.CreatePromocionTitle_estado}" />
-                        <p:outputLabel value="#{bundle.CreatePromocionLabel_total}" for="total" />
-                        <p:inputText id="total" value="#{promocionController.selected.total}" title="#{bundle.CreatePromocionTitle_total}" />
+                        <p:outputLabel value="Nombre:" for="nombre" />
+                        <p:inputText id="nombre" value="#{promocionController.selected.nombre}" title="Nombre" />
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{promocionController.create}" value="#{bundle.Save}" update="display,:PromocionListForm:datalist,:growl" oncomplete="handleSubmit(args,'PromocionCreateDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="PromocionCreateDialog.hide()"/>
+                    <p:panelGrid columns="3">
+                        <p:outputLabel value="Articulo:" for="itemTip" />
+                        <p:autoComplete id="itemTip" size="54" value="#{promocionController.ventaarticuloElegido}" completeMethod="#{promocionController.completarArticulo}"
+                                        var="articulo" itemLabel="#{articulo.invArticulos.descri}" itemValue="#{articulo}" converter="convertirVentaArticulo">
+                            <f:facet name="itemtip">
+                                <h:panelGrid columns="2" cellpadding="5">
+                                    <f:facet name="header">
+                                        <h:outputText styleClass="ui-theme ui-theme-#{articulo.invArticulos.descri}" style="margin-left:50px" />
+                                    </f:facet>
+                                    <h:outputText value="Nombre:" />
+                                    <h:outputText value="#{articulo.invArticulos.descri}" />
+
+                                    <h:outputText value="Codigo:" />
+                                    <h:outputText value="#{articulo.invArticulos.invArticulosPK.codArt}" />
+                                </h:panelGrid>
+                            </f:facet>
+                        </p:autoComplete>
+                        <p:commandButton actionListener="#{promocionController.agregarArticulo}" value="Agregar" update=":PromocionCreateForm:articulosTable,:PromocionCreateForm:itemTip"/>
+                    </p:panelGrid>
+
+                    <p:dataTable
+                            id="articulosTable"
+                            var="item"
+                            value="#{promocionController.selected.articulosPromocions}"
+                            tableStyle="width:auto">
+                        <f:facet name="header">
+                            Articulos a la venta elegidos
+                        </f:facet>
+                        <p:column headerText="Producto">
+                            <h:outputText value="#{item.ventaarticulo.invArticulos.descri}" />
+                        </p:column>
+                        <p:column headerText="Cod. Art.">
+                            <h:outputText value="#{item.ventaarticulo.invArticulos.invArticulosPK.codArt}"/>
+                        </p:column>
+                        <p:column headerText="Precio de venta">
+                            <h:outputText value="#{item.ventaarticulo.precio}">
+                                <f:convertNumber type="currency" currencySymbol="Bs." locale="en_US" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Cantidad">
+                            <h:inputText value="#{item.cantidad}"/>
+                        </p:column>
+                        <p:column headerText="Acción">
+                            <p:commandLink value="Quitar" actionListener="#{promocionController.reponerArticulo(item)}" update="articulosTable">
+                                <p:collector value="#{item}" removeFrom="#{promocionController.selected.articulosPromocions}" unique="true"/>
+                            </p:commandLink>
+                        </p:column>
+                        <f:facet name="footer">
+                            <h:outputText value="Totales" />
+                        </f:facet>
+                    </p:dataTable>
+                    <p:panelGrid columns="4">
+                        <p:outputLabel value="Precio de venta:" for="precioVenta" />
+                        <p:inputText id="precioVenta" value="#{promocionController.selected.precioVenta}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{promocionController.create}" value="#{bundle.Save}" update="display,:PromocionListForm:datalist,:PromocionListForm:growl" oncomplete="handleSubmit(args,'PromocionCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" actionListener="#{promocionController.cancel}" onclick="PromocionCreateDialog.close()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

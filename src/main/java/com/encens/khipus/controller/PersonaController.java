@@ -98,6 +98,7 @@ public class PersonaController implements Serializable {
     public void prepareEdit(Persona persona) {
         selected = persona;
         articulos = invArticulosFacade.findAllInvArticulos();
+        confacura = persona.getConfactura();
         if(selected.getVentaclientes().size() >0){
             for(Ventacliente ventacliente: selected.getVentaclientes())
             {
@@ -231,7 +232,7 @@ public class PersonaController implements Serializable {
             selected.setAp("");
             selected.setAm("");
         }
-
+        selected.setConfactura(confacura);
         persist(PersistAction.UPDATE, "El cliente se actualizó correctamente.");
         items = null;
     }
