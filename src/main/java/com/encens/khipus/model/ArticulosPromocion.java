@@ -21,7 +21,9 @@ public class ArticulosPromocion implements Serializable {
     @Column(name = "idarticulospromocion")
     private Long id;
     @Column(name = "CANTIDAD")
-    private Integer cantidad;
+    private Integer cantidad = 0;
+    @Column(name = "PRECIOTOTAL")
+    private Double precioTotal = 0.0;
     @JoinColumn(name="IDPROMOCION",referencedColumnName = "IDPROMOCION")
     @ManyToOne(optional = false)
     private Promocion promocion;
@@ -59,5 +61,14 @@ public class ArticulosPromocion implements Serializable {
 
     public void setVentaarticulo(Ventaarticulo ventaarticulo) {
         this.ventaarticulo = ventaarticulo;
+    }
+
+    public Double getPrecioTotal() {
+        //precioTotal = cantidad * ventaarticulo.getPrecio();
+        return precioTotal;
+    }
+
+    public void setPrecioTotal(Double precioTotal) {
+        this.precioTotal = precioTotal;
     }
 }

@@ -156,7 +156,7 @@ public class VentaarticuloController implements Serializable {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = Ventaarticulo.class)
+    @FacesConverter(value = "convertirVentaArticulo",forClass = Ventaarticulo.class)
     public static class VentaarticuloControllerConverter implements Converter {
 
         @Override

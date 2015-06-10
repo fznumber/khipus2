@@ -6,6 +6,7 @@
 package com.encens.khipus.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.*;
@@ -55,9 +56,11 @@ public class Promocion implements Serializable {
     private String estado;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "TOTAL")
-    private Double total;
+    private Double total = 0.0;
+    @Column(name = "PRECIOVENTA")
+    private Double precioVenta = 0.0;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "promocion")
-    private Collection<ArticulosPromocion> articulosPromocions;
+    private Collection<ArticulosPromocion> articulosPromocions = new ArrayList<>();
     @JoinColumns({
             @JoinColumn(name = "NO_CIA", referencedColumnName = "NO_CIA"),
             @JoinColumn(name = "COD_ART", referencedColumnName = "COD_ART")})
@@ -112,6 +115,9 @@ public class Promocion implements Serializable {
     }
 
     public Double getTotal() {
+        for(ArticulosPromocion articulosPromocion:articulosPromocions){
+            total += articulosPromocion.getCantidad() * articulosPromocion.getVentaarticulo().getPrecio();
+        }
         return total;
     }
 
@@ -158,5 +164,13 @@ public class Promocion implements Serializable {
 
     public void setInvArticulos(InvArticulos invArticulos) {
         this.invArticulos = invArticulos;
+    }
+
+    public Double getPrecioVenta() {
+        return precioVenta;
+    }
+
+    public void setPrecioVenta(Double precioVenta) {
+        this.precioVenta = precioVenta;
     }
 }

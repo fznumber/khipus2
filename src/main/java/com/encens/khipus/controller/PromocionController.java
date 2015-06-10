@@ -1,10 +1,14 @@
 package com.encens.khipus.controller;
 
 import com.encens.khipus.ejb.PromocionFacade;
+import com.encens.khipus.ejb.VentaarticuloFacade;
+import com.encens.khipus.model.ArticulosPromocion;
 import com.encens.khipus.model.Promocion;
+import com.encens.khipus.model.Ventaarticulo;
 import com.encens.khipus.util.JSFUtil;
 import com.encens.khipus.util.JSFUtil.PersistAction;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -24,8 +28,13 @@ public class PromocionController implements Serializable {
 
     @EJB
     private PromocionFacade ejbFacade;
+    @EJB
+    private VentaarticuloFacade ventaarticuloFacade;
+
     private List<Promocion> items = null;
     private Promocion selected;
+    private Ventaarticulo ventaarticuloElegido;
+    private List<Ventaarticulo> articulos = new ArrayList<>();
 
     public PromocionController() {
     }
@@ -51,22 +60,33 @@ public class PromocionController implements Serializable {
     public Promocion prepareCreate() {
         selected = new Promocion();
         initializeEmbeddableKey();
+        articulos = ventaarticuloFacade.findAll();
         return selected;
     }
 
+    public void reponerArticulo(ArticulosPromocion articulosPromocion){
+        articulos.add(articulosPromocion.getVentaarticulo());
+    }
+
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PromocionCreated"));
+        persist(PersistAction.CREATE, "Se registró con exito la promoción.");
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
+            articulos = null;
+            selected = new Promocion();
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PromocionUpdated"));
+        persist(PersistAction.UPDATE, "Se actualizó con exito la promoción.");
+    }
+
+    public void cancel(){
+        articulos = null;
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("PromocionDeleted"));
+        persist(PersistAction.DELETE, "Se eliminó con exito la promoción.");
         if (!JSFUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
@@ -78,6 +98,20 @@ public class PromocionController implements Serializable {
             items = getFacade().findAll();
         }
         return items;
+    }
+
+    public void agregarArticulo()
+    {
+        if(ventaarticuloElegido == null)
+            return;
+
+        ArticulosPromocion articulosPromocion = new ArticulosPromocion();
+        articulosPromocion.setCantidad(0);
+        articulosPromocion.setPromocion(selected);
+        articulosPromocion.setVentaarticulo(ventaarticuloElegido);
+        selected.getArticulosPromocions().add(articulosPromocion);
+        articulos.remove(ventaarticuloElegido);
+        ventaarticuloElegido = null;
     }
 
     private void persist(PersistAction persistAction, String successMessage) {
@@ -161,4 +195,35 @@ public class PromocionController implements Serializable {
 
     }
 
+    public List<Ventaarticulo> completarArticulo(String query) {
+        List<Ventaarticulo> articulosFiltrados = new ArrayList<>();
+        for(Ventaarticulo articulo:articulos) {
+
+            if(articulo.getInvArticulos().getDescri().toLowerCase().contains(query)) {
+                articulosFiltrados.add(articulo);
+            }
+        }
+
+        return articulosFiltrados;
+    }
+
+    public void setItems(List<Promocion> items) {
+        this.items = items;
+    }
+
+    public List<Ventaarticulo> getArticulos() {
+        return articulos;
+    }
+
+    public void setArticulos(List<Ventaarticulo> articulos) {
+        this.articulos = articulos;
+    }
+
+    public Ventaarticulo getVentaarticuloElegido() {
+        return ventaarticuloElegido;
+    }
+
+    public void setVentaarticuloElegido(Ventaarticulo ventaarticuloElegido) {
+        this.ventaarticuloElegido = ventaarticuloElegido;
+    }
 }
