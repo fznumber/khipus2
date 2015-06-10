@@ -88,7 +88,7 @@ public class TerritoriotrabajoController implements Serializable {
             return;
         }
         selected.setDistribuidor(distribuidorElegido);
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("TerritoriotrabajoCreated"));
+        persist(PersistAction.CREATE, "Se creo correctamente el territorio.");
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
             prepareCreate();
@@ -100,12 +100,12 @@ public class TerritoriotrabajoController implements Serializable {
         Boolean error = false;
         if(distribuidorElegido == null)
         {
-            JSFUtil.addErrorMessage( ResourceBundle.getBundle("/Bundle").getString("DistribuidorRequerido"));
+            JSFUtil.addErrorMessage( "El distribuidor es necesario");
             error = true;
         }
         if(selected.getNombre().isEmpty())
         {
-            JSFUtil.addErrorMessage( ResourceBundle.getBundle("/Bundle").getString("NombreRequerido"));
+            JSFUtil.addErrorMessage( "El nombre es requerido.");
             error = true;
         }
 
@@ -113,11 +113,11 @@ public class TerritoriotrabajoController implements Serializable {
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("TerritoriotrabajoUpdated"));
+        persist(PersistAction.UPDATE, "Se actualizo correctamente el territorio.");
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("TerritoriotrabajoDeleted"));
+        persist(PersistAction.DELETE, "Se elimino correctamente el territorio.");
         if (!JSFUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
