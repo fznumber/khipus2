@@ -21,11 +21,15 @@
     <class>com.encens.khipus.model.Modulo</class>
     <class>com.encens.khipus.model.Modulocompania</class>
     <class>com.encens.khipus.model.Movimiento</class>
+    <class>com.encens.khipus.model.Pago</class>
     <class>com.encens.khipus.model.Paquetes</class>
     <class>com.encens.khipus.model.Pedidos</class>
     <class>com.encens.khipus.model.Persona</class>
+    <class>com.encens.khipus.model.Personacliente</class>
     <class>com.encens.khipus.model.Promocion</class>
     <class>com.encens.khipus.model.Rol</class>
+    <class>com.encens.khipus.model.SfConfdet</class>
+    <class>com.encens.khipus.model.SfConfenc</class>
     <class>com.encens.khipus.model.SfTmpdet</class>
     <class>com.encens.khipus.model.SfTmpenc</class>
     <class>com.encens.khipus.model.Territoriotrabajo</class>
@@ -41,5 +45,11 @@
       <property name="eclipselink.target-server" value="JBoss"/>
       <property name="eclipselink.weaving" value="static"/>
     </properties>
+  </persistence-unit>
+  <persistence-unit name="com.encens_khipus_war_1.0-SNAPSHOTPU" transaction-type="JTA">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <jta-data-source>java:/jdbc/KhipusDS</jta-data-source>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties/>
   </persistence-unit>
 </persistence>

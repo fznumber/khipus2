@@ -7,12 +7,8 @@ package com.encens.khipus.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -25,10 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "SfTmpdet.findAll", query = "SELECT s FROM SfTmpdet s"),
-    @NamedQuery(name = "SfTmpdet.findByNoCia", query = "SELECT s FROM SfTmpdet s WHERE s.sfTmpdetPK.noCia = :noCia"),
-    @NamedQuery(name = "SfTmpdet.findByNoTrans", query = "SELECT s FROM SfTmpdet s WHERE s.sfTmpdetPK.noTrans = :noTrans"),
     @NamedQuery(name = "SfTmpdet.findByTimemillis", query = "SELECT s FROM SfTmpdet s WHERE s.timemillis = :timemillis"),
-    @NamedQuery(name = "SfTmpdet.findByCuenta", query = "SELECT s FROM SfTmpdet s WHERE s.sfTmpdetPK.cuenta = :cuenta"),
     @NamedQuery(name = "SfTmpdet.findByCodUni", query = "SELECT s FROM SfTmpdet s WHERE s.codUni = :codUni"),
     @NamedQuery(name = "SfTmpdet.findByCodCc", query = "SELECT s FROM SfTmpdet s WHERE s.codCc = :codCc"),
     @NamedQuery(name = "SfTmpdet.findByHaber", query = "SELECT s FROM SfTmpdet s WHERE s.haber = :haber"),
@@ -37,8 +30,17 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "SfTmpdet.findByTc", query = "SELECT s FROM SfTmpdet s WHERE s.tc = :tc")})
 public class SfTmpdet implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected SfTmpdetPK sfTmpdetPK;
+    @Id
+    @NotNull
+    @TableGenerator(name = "SfTmpdet_Gen"
+            ,table="ID_GEN"
+            ,pkColumnName = "GEN_NAME"
+            ,valueColumnName = "GEN_VAL"
+            ,initialValue = 1
+            ,allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "SfTmpdet_Gen")
+    @Column(name = "id_sf_tmpdet")
+    private Long idTmpdet;
     @Size(max = 255)
     @Column(name = "timemillis")
     private String timemillis;
@@ -58,24 +60,23 @@ public class SfTmpdet implements Serializable {
     private BigDecimal debe;
     @Column(name = "tc")
     private BigDecimal tc;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 2)
+    @Column(name = "no_cia")
+    private String noCia;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 10)
+    @Column(name = "no_trans")
+    private String noTrans;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 31)
+    @Column(name = "cuenta")
+    private String cuenta;
 
     public SfTmpdet() {
-    }
-
-    public SfTmpdet(SfTmpdetPK sfTmpdetPK) {
-        this.sfTmpdetPK = sfTmpdetPK;
-    }
-
-    public SfTmpdet(String noCia, String noTrans, String cuenta) {
-        this.sfTmpdetPK = new SfTmpdetPK(noCia, noTrans, cuenta);
-    }
-
-    public SfTmpdetPK getSfTmpdetPK() {
-        return sfTmpdetPK;
-    }
-
-    public void setSfTmpdetPK(SfTmpdetPK sfTmpdetPK) {
-        this.sfTmpdetPK = sfTmpdetPK;
     }
 
     public String getTimemillis() {
@@ -137,7 +138,7 @@ public class SfTmpdet implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (sfTmpdetPK != null ? sfTmpdetPK.hashCode() : 0);
+        hash += (idTmpdet != null ? idTmpdet.hashCode() : 0);
         return hash;
     }
 
@@ -148,7 +149,7 @@ public class SfTmpdet implements Serializable {
             return false;
         }
         SfTmpdet other = (SfTmpdet) object;
-        if ((this.sfTmpdetPK == null && other.sfTmpdetPK != null) || (this.sfTmpdetPK != null && !this.sfTmpdetPK.equals(other.sfTmpdetPK))) {
+        if ((this.idTmpdet == null && other.idTmpdet != null) || (this.idTmpdet != null && !this.idTmpdet.equals(other.idTmpdet))) {
             return false;
         }
         return true;
@@ -156,7 +157,38 @@ public class SfTmpdet implements Serializable {
 
     @Override
     public String toString() {
-        return "com.encens.khipus.model.SfTmpdet[ sfTmpdetPK=" + sfTmpdetPK + " ]";
+        return "com.encens.khipus.model.SfTmpdet[ sfTmpdetPK=" + idTmpdet + " ]";
     }
-    
+
+    public Long getIdTmpdet() {
+        return idTmpdet;
+    }
+
+    public void setIdTmpdet(Long idTmpdet) {
+        this.idTmpdet = idTmpdet;
+    }
+
+    public String getNoCia() {
+        return noCia;
+    }
+
+    public void setNoCia(String noCia) {
+        this.noCia = noCia;
+    }
+
+    public String getNoTrans() {
+        return noTrans;
+    }
+
+    public void setNoTrans(String noTrans) {
+        this.noTrans = noTrans;
+    }
+
+    public String getCuenta() {
+        return cuenta;
+    }
+
+    public void setCuenta(String cuenta) {
+        this.cuenta = cuenta;
+    }
 }

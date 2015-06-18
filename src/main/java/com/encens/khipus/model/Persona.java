@@ -62,6 +62,8 @@ public class Persona implements Serializable {
     private Collection<Territoriotrabajo> territorios;
     @OneToMany(mappedBy = "persona",cascade = CascadeType.ALL)
     private Collection<Ventacliente> ventaclientes = new ArrayList<>();
+    @OneToMany(mappedBy = "persona",cascade = CascadeType.PERSIST)
+    private Collection<Pago> pagos = new ArrayList<>();
     @JoinColumn(name = "IDDEPARTAMENTO",referencedColumnName = "IDDEPARTAMENTO")
     @ManyToOne(optional = true)
     private Departamento departamento;
@@ -411,5 +413,13 @@ public class Persona implements Serializable {
 
     public void setVentaclientes(Collection<Ventacliente> ventaclientes) {
         this.ventaclientes = ventaclientes;
+    }
+
+    public Collection<Pago> getPagos() {
+        return pagos;
+    }
+
+    public void setPagos(Collection<Pago> pagos) {
+        this.pagos = pagos;
     }
 }

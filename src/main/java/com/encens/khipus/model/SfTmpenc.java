@@ -7,11 +7,13 @@ package com.encens.khipus.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -139,6 +141,12 @@ public class SfTmpenc implements Serializable {
     @Size(max = 6)
     @Column(name = "cod_enti")
     private String codEnti;
+    @OneToOne
+    @MapsId
+    private Pago pago;
+    @MapsId
+    @OneToOne
+    private Pedidos pedido;
 
     public SfTmpenc() {
     }
@@ -387,5 +395,20 @@ public class SfTmpenc implements Serializable {
     public String toString() {
         return "com.encens.khipus.model.SfTmpenc[ idTmpenc=" + idTmpenc + " ]";
     }
-    
+
+    public Pago getPago() {
+        return pago;
+    }
+
+    public void setPago(Pago pago) {
+        this.pago = pago;
+    }
+
+    public Pedidos getPedido() {
+        return pedido;
+    }
+
+    public void setPedido(Pedidos pedido) {
+        this.pedido = pedido;
+    }
 }
