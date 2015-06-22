@@ -106,8 +106,7 @@ public class PersonaController implements Serializable {
             }
         }
         if(selected != null  ) {
-            if(selected.getTipoPersona() != null)
-                esPersona = selected.getTipoPersona().equals("cliente");
+            esPersona = selected.getEspersona();
             if(selected.getPorcentajeComision() != null)
                 tieneComision = selected.getPorcentajeComision() > 0.0;
             if(selected.getPorcentajeGarantia() != null)
@@ -178,6 +177,7 @@ public class PersonaController implements Serializable {
             cliente.setTerritoriotrabajo(selected.getTerritoriotrabajo());
             cliente.setConfactura(confacura);
             cliente.getVentaclientes().addAll(selected.getVentaclientes());
+            cliente.setEspersona(true);
             clienteFacade.create(cliente);
         }
         else {
@@ -186,6 +186,7 @@ public class PersonaController implements Serializable {
             institucion.setAp("");
             institucion.setSexo("");
             institucion.setRazonsocial(selected.getRazonsocial());
+            institucion.setEspersona(false);
             institucion.setTerritoriotrabajo(selected.getTerritoriotrabajo());
             if(tieneComision)
                 institucion.setPorcentajeComision(selected.getPorcentajeComision());

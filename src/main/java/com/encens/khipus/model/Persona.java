@@ -129,6 +129,9 @@ public class Persona implements Serializable {
     @ManyToOne
     private Tipocliente tipocliente;
 
+    @Column(name = "ESPERSONA")
+    private Boolean espersona = true;
+
     public Persona() {
     }
 
@@ -411,5 +414,13 @@ public class Persona implements Serializable {
 
     public void setVentaclientes(Collection<Ventacliente> ventaclientes) {
         this.ventaclientes = ventaclientes;
+    }
+
+    public Boolean getEspersona() {
+        return espersona;
+    }
+
+    public void setEspersona(Boolean espersona) {
+        this.espersona = espersona;
     }
 }
