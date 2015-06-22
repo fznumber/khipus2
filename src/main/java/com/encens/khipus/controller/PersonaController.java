@@ -184,7 +184,6 @@ public class PersonaController implements Serializable {
             Institucion institucion = new Institucion();
             institucion.setAm("");
             institucion.setAp("");
-            institucion.setNom("");
             institucion.setSexo("");
             institucion.setRazonsocial(selected.getRazonsocial());
             institucion.setTerritoriotrabajo(selected.getTerritoriotrabajo());
@@ -228,7 +227,6 @@ public class PersonaController implements Serializable {
         }
         else {
             selected.setTipoPersona("institucion");
-            selected.setNom("");
             selected.setAp("");
             selected.setAm("");
         }
