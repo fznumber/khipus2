@@ -186,6 +186,7 @@ public class PersonaController implements Serializable {
             institucion.setAp("");
             institucion.setSexo("");
             institucion.setRazonsocial(selected.getRazonsocial());
+            institucion.setNom(selected.getNom());
             institucion.setEspersona(false);
             institucion.setTerritoriotrabajo(selected.getTerritoriotrabajo());
             if(tieneComision)
