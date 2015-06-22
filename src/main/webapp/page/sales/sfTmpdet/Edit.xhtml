@@ -12,12 +12,6 @@
             <h:form id="SfTmpdetEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{sfTmpdetController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditSfTmpdetLabel_sfTmpdetPK_noCia}" for="sfTmpdetPK_noCia" />
-                        <p:inputText id="sfTmpdetPK_noCia" value="#{sfTmpdetController.selected.sfTmpdetPK.noCia}" title="#{bundle.EditSfTmpdetTitle_sfTmpdetPK_noCia}" required="true" requiredMessage="#{bundle.EditSfTmpdetRequiredMessage_sfTmpdetPK_noCia}"/>
-                        <p:outputLabel value="#{bundle.EditSfTmpdetLabel_sfTmpdetPK_noTrans}" for="sfTmpdetPK_noTrans" />
-                        <p:inputText id="sfTmpdetPK_noTrans" value="#{sfTmpdetController.selected.sfTmpdetPK.noTrans}" title="#{bundle.EditSfTmpdetTitle_sfTmpdetPK_noTrans}" required="true" requiredMessage="#{bundle.EditSfTmpdetRequiredMessage_sfTmpdetPK_noTrans}"/>
-                        <p:outputLabel value="#{bundle.EditSfTmpdetLabel_sfTmpdetPK_cuenta}" for="sfTmpdetPK_cuenta" />
-                        <p:inputText id="sfTmpdetPK_cuenta" value="#{sfTmpdetController.selected.sfTmpdetPK.cuenta}" title="#{bundle.EditSfTmpdetTitle_sfTmpdetPK_cuenta}" required="true" requiredMessage="#{bundle.EditSfTmpdetRequiredMessage_sfTmpdetPK_cuenta}"/>
                         <p:outputLabel value="#{bundle.EditSfTmpdetLabel_timemillis}" for="timemillis" />
                         <p:inputText id="timemillis" value="#{sfTmpdetController.selected.timemillis}" title="#{bundle.EditSfTmpdetTitle_timemillis}" />
                         <p:outputLabel value="#{bundle.EditSfTmpdetLabel_codUni}" for="codUni" />
@@ -32,6 +26,14 @@
                         <p:inputText id="debe" value="#{sfTmpdetController.selected.debe}" title="#{bundle.EditSfTmpdetTitle_debe}" />
                         <p:outputLabel value="#{bundle.EditSfTmpdetLabel_tc}" for="tc" />
                         <p:inputText id="tc" value="#{sfTmpdetController.selected.tc}" title="#{bundle.EditSfTmpdetTitle_tc}" />
+                        <p:outputLabel value="#{bundle.EditSfTmpdetLabel_idTmpdet}" for="idTmpdet" />
+                        <p:inputText id="idTmpdet" value="#{sfTmpdetController.selected.idTmpdet}" title="#{bundle.EditSfTmpdetTitle_idTmpdet}" />
+                        <p:outputLabel value="#{bundle.EditSfTmpdetLabel_noCia}" for="noCia" />
+                        <p:inputText id="noCia" value="#{sfTmpdetController.selected.noCia}" title="#{bundle.EditSfTmpdetTitle_noCia}" required="true" requiredMessage="#{bundle.EditSfTmpdetRequiredMessage_noCia}"/>
+                        <p:outputLabel value="#{bundle.EditSfTmpdetLabel_noTrans}" for="noTrans" />
+                        <p:inputText id="noTrans" value="#{sfTmpdetController.selected.noTrans}" title="#{bundle.EditSfTmpdetTitle_noTrans}" required="true" requiredMessage="#{bundle.EditSfTmpdetRequiredMessage_noTrans}"/>
+                        <p:outputLabel value="#{bundle.EditSfTmpdetLabel_cuenta}" for="cuenta" />
+                        <p:inputText id="cuenta" value="#{sfTmpdetController.selected.cuenta}" title="#{bundle.EditSfTmpdetTitle_cuenta}" required="true" requiredMessage="#{bundle.EditSfTmpdetRequiredMessage_cuenta}"/>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{sfTmpdetController.update}" value="#{bundle.Save}" update="display,:SfTmpdetListForm:datalist,:growl" oncomplete="handleSubmit(args, 'SfTmpdetEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="SfTmpdetEditDialog.hide()"/>

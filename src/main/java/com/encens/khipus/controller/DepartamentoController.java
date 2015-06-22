@@ -1,10 +1,10 @@
 package com.encens.khipus.controller;
 
-import com.encens.khipus.ejb.DepartamentoFacade;
 import com.encens.khipus.model.Departamento;
-import com.encens.khipus.util.JSFUtil;
-import com.encens.khipus.util.JSFUtil.PersistAction;
 
+import com.encens.khipus.ejb.DepartamentoFacade;
+import com.encens.khipus.util.JSFUtil;
+import com.encens.khipus.util.JSFUtil.*;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -24,7 +24,7 @@ import javax.faces.convert.FacesConverter;
 public class DepartamentoController implements Serializable {
 
     @EJB
-    private DepartamentoFacade ejbFacade;
+    private com.encens.khipus.ejb.DepartamentoFacade ejbFacade;
     private List<Departamento> items = null;
     private Departamento selected;
 

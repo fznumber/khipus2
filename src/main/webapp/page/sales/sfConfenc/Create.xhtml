@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SfConfencCreateDlg" widgetVar="SfConfencCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Configurar asiento contable">
+            <h:form id="SfConfencCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{sfConfencController.selected != null}">
+                        <p:outputLabel value="Nombre:" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{sfConfencController.selected.descripcion}" title="Nombre" />
+                        <p:outputLabel value="Cuenta asociada:" for="cuenta" />
+                        <p:inputText id="cuenta" value="#{sfConfencController.selected.cuenta}" title="Cuenta asociada" />
+                        <p:outputLabel value="Documento:" for="tipoDoc" />
+                        <p:inputText id="tipoDoc" value="#{sfConfencController.selected.tipoDoc}" title="Documento" />
+                        <p:outputLabel value="Glosa:" for="glosa" />
+                        <p:inputText id="glosa" value="#{sfConfencController.selected.glosa}" title="Glosa" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{sfConfencController.create}" value="#{bundle.Save}" update="display,:SfConfencListForm:datalist,:growl" oncomplete="handleSubmit(args,'SfConfencCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="SfConfencCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

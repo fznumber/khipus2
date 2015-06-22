@@ -1,9 +1,9 @@
 package com.encens.khipus.controller;
 
-import com.encens.khipus.model.SfTmpdet;
-import com.encens.khipus.ejb.SfTmpdetFacade;
+import com.encens.khipus.model.SfConfdet;
 import com.encens.khipus.util.JSFUtil;
 import com.encens.khipus.util.JSFUtil.PersistAction;
+import com.encens.khipus.ejb.SfConfdetFacade;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,23 +19,23 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@Named("sfTmpdetController")
+@Named("sfConfdetController")
 @SessionScoped
-public class SfTmpdetController implements Serializable {
+public class SfConfdetController implements Serializable {
 
     @EJB
-    private com.encens.khipus.ejb.SfTmpdetFacade ejbFacade;
-    private List<SfTmpdet> items = null;
-    private SfTmpdet selected;
+    private com.encens.khipus.ejb.SfConfdetFacade ejbFacade;
+    private List<SfConfdet> items = null;
+    private SfConfdet selected;
 
-    public SfTmpdetController() {
+    public SfConfdetController() {
     }
 
-    public SfTmpdet getSelected() {
+    public SfConfdet getSelected() {
         return selected;
     }
 
-    public void setSelected(SfTmpdet selected) {
+    public void setSelected(SfConfdet selected) {
         this.selected = selected;
     }
 
@@ -45,36 +45,36 @@ public class SfTmpdetController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private SfTmpdetFacade getFacade() {
+    private SfConfdetFacade getFacade() {
         return ejbFacade;
     }
 
-    public SfTmpdet prepareCreate() {
-        selected = new SfTmpdet();
+    public SfConfdet prepareCreate() {
+        selected = new SfConfdet();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("SfTmpdetCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("SfConfdetCreated"));
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("SfTmpdetUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("SfConfdetUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("SfTmpdetDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("SfConfdetDeleted"));
         if (!JSFUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<SfTmpdet> getItems() {
+    public List<SfConfdet> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -109,45 +109,38 @@ public class SfTmpdetController implements Serializable {
         }
     }
 
-    public SfTmpdet getSfTmpdet(Long id) {
+    public SfConfdet getSfConfdet(long id) {
         return getFacade().find(id);
     }
 
-    public List<SfTmpdet> getItemsAvailableSelectMany() {
+    public List<SfConfdet> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<SfTmpdet> getItemsAvailableSelectOne() {
+    public List<SfConfdet> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    public void createGeneral() {
-        getFacade().create(selected);
-    }
-
-    @FacesConverter(forClass = SfTmpdet.class)
-    public static class SfTmpdetControllerConverter implements Converter {
-
-        private static final String SEPARATOR = "#";
-        private static final String SEPARATOR_ESCAPED = "\\#";
+    @FacesConverter(forClass = SfConfdet.class)
+    public static class SfConfdetControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            SfTmpdetController controller = (SfTmpdetController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "sfTmpdetController");
-            return controller.getSfTmpdet(getKey(value));
+            SfConfdetController controller = (SfConfdetController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "sfConfdetController");
+            return controller.getSfConfdet(getKey(value));
         }
 
-        java.lang.Long getKey(String value) {
-            java.lang.Long key;
-            key = Long.valueOf(value);
+        long getKey(String value) {
+            long key;
+            key = Long.parseLong(value);
             return key;
         }
 
-        String getStringKey(java.lang.Long value) {
+        String getStringKey(long value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
@@ -158,11 +151,11 @@ public class SfTmpdetController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof SfTmpdet) {
-                SfTmpdet o = (SfTmpdet) object;
-                return getStringKey(o.getIdTmpdet());
+            if (object instanceof SfConfdet) {
+                SfConfdet o = (SfConfdet) object;
+                return getStringKey(o.getIdSfConfdet());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), SfTmpdet.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), SfConfdet.class.getName()});
                 return null;
             }
         }

@@ -13,7 +13,7 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{sfTmpencController.selected != null}">
                         <p:outputLabel value="#{bundle.EditSfTmpencLabel_idTmpenc}" for="idTmpenc" />
-                        <p:inputText id="idTmpenc" value="#{sfTmpencController.selected.idTmpenc}" title="#{bundle.EditSfTmpencTitle_idTmpenc}" required="true" requiredMessage="#{bundle.EditSfTmpencRequiredMessage_idTmpenc}"/>
+                        <p:inputText id="idTmpenc" value="#{sfTmpencController.selected.idTmpenc}" title="#{bundle.EditSfTmpencTitle_idTmpenc}" />
                         <p:outputLabel value="#{bundle.EditSfTmpencLabel_noTrans}" for="noTrans" />
                         <p:inputText id="noTrans" value="#{sfTmpencController.selected.noTrans}" title="#{bundle.EditSfTmpencTitle_noTrans}" />
                         <p:outputLabel value="#{bundle.EditSfTmpencLabel_agregarCtaProv}" for="agregarCtaProv" />
@@ -66,6 +66,20 @@
                         <p:inputText id="noUsr" value="#{sfTmpencController.selected.noUsr}" title="#{bundle.EditSfTmpencTitle_noUsr}" />
                         <p:outputLabel value="#{bundle.EditSfTmpencLabel_codEnti}" for="codEnti" />
                         <p:inputText id="codEnti" value="#{sfTmpencController.selected.codEnti}" title="#{bundle.EditSfTmpencTitle_codEnti}" />
+                        <p:outputLabel value="#{bundle.EditSfTmpencLabel_pago}" for="pago" />
+                        <p:selectOneMenu id="pago" value="#{sfTmpencController.selected.pago}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{pagoController.itemsAvailableSelectOne}"
+                                           var="pagoItem"
+                                           itemValue="#{pagoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditSfTmpencLabel_pedido}" for="pedido" />
+                        <p:selectOneMenu id="pedido" value="#{sfTmpencController.selected.pedido}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{pedidosController.itemsAvailableSelectOne}"
+                                           var="pedidoItem"
+                                           itemValue="#{pedidoItem}"/>
+                        </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{sfTmpencController.update}" value="#{bundle.Save}" update="display,:SfTmpencListForm:datalist,:growl" oncomplete="handleSubmit(args, 'SfTmpencEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="SfTmpencEditDialog.hide()"/>

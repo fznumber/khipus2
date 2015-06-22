@@ -193,6 +193,18 @@
                             </f:facet>
                             <h:outputText value="#{item.codEnti}"/>
                         </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListSfTmpencTitle_pago}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.pago}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListSfTmpencTitle_pedido}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.pedido}"/>
+                        </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{sfTmpencController.prepareCreate}" update=":SfTmpencCreateForm" oncomplete="PF('SfTmpencCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":SfTmpencViewForm" oncomplete="PF('SfTmpencViewDialog').show()" disabled="#{empty sfTmpencController.selected}"/>

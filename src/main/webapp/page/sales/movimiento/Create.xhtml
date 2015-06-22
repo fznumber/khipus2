@@ -32,12 +32,6 @@
                         <p:inputText id="tipocambio" value="#{movimientoController.selected.tipocambio}" title="#{bundle.CreateMovimientoTitle_tipocambio}" />
                         <p:outputLabel value="#{bundle.CreateMovimientoLabel_fecharegistro}" for="fecharegistro" />
                         <p:calendar id="fecharegistro" pattern="MM/dd/yyyy HH:mm:ss" value="#{movimientoController.selected.fecharegistro}" title="#{bundle.EditMovimientoTitle_fecharegistro}" required="true" requiredMessage="#{bundle.EditMovimientoRequiredMessage_fecharegistro}" showOn="button"/>
-                        <p:outputLabel value="#{bundle.CreateMovimientoLabel_pedidos}" for="pedidos" />
-                        <p:selectOneMenu id="pedidos" value="#{movimientoController.selected.pedidos}" required="true" requiredMessage="#{bundle.EditMovimientoRequiredMessage_pedidos}">
-                            <f:selectItems value="#{pedidosController.itemsAvailableSelectOne}"
-                                           var="pedidosItem"
-                                           itemValue="#{pedidosItem}"/>
-                        </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{movimientoController.create}" value="#{bundle.Save}" update="display,:MovimientoListForm:datalist,:growl" oncomplete="handleSubmit(args,'MovimientoCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="MovimientoCreateDialog.hide()"/>

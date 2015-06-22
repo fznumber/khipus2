@@ -35,6 +35,8 @@
                                            var="idcompaniaItem"
                                            itemValue="#{idcompaniaItem}"/>
                         </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditUsuarioLabel_pagosByIdusuario}" for="pagosByIdusuario" />
+                        <p:inputText id="pagosByIdusuario" value="#{usuarioController.selected.pagosByIdusuario}" title="#{bundle.EditUsuarioTitle_pagosByIdusuario}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{usuarioController.update}" value="#{bundle.Save}" update="display,:UsuarioListForm:datalist,:growl" oncomplete="handleSubmit(args, 'UsuarioEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="UsuarioEditDialog.hide()"/>

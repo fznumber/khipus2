@@ -12,12 +12,6 @@
             <h:form id="SfTmpdetCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{sfTmpdetController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateSfTmpdetLabel_sfTmpdetPK_noCia}" for="sfTmpdetPK_noCia" />
-                        <p:inputText id="sfTmpdetPK_noCia" value="#{sfTmpdetController.selected.sfTmpdetPK.noCia}" title="#{bundle.CreateSfTmpdetTitle_sfTmpdetPK_noCia}" required="true" requiredMessage="#{bundle.CreateSfTmpdetRequiredMessage_sfTmpdetPK_noCia}"/>
-                        <p:outputLabel value="#{bundle.CreateSfTmpdetLabel_sfTmpdetPK_noTrans}" for="sfTmpdetPK_noTrans" />
-                        <p:inputText id="sfTmpdetPK_noTrans" value="#{sfTmpdetController.selected.sfTmpdetPK.noTrans}" title="#{bundle.CreateSfTmpdetTitle_sfTmpdetPK_noTrans}" required="true" requiredMessage="#{bundle.CreateSfTmpdetRequiredMessage_sfTmpdetPK_noTrans}"/>
-                        <p:outputLabel value="#{bundle.CreateSfTmpdetLabel_sfTmpdetPK_cuenta}" for="sfTmpdetPK_cuenta" />
-                        <p:inputText id="sfTmpdetPK_cuenta" value="#{sfTmpdetController.selected.sfTmpdetPK.cuenta}" title="#{bundle.CreateSfTmpdetTitle_sfTmpdetPK_cuenta}" required="true" requiredMessage="#{bundle.CreateSfTmpdetRequiredMessage_sfTmpdetPK_cuenta}"/>
                         <p:outputLabel value="#{bundle.CreateSfTmpdetLabel_timemillis}" for="timemillis" />
                         <p:inputText id="timemillis" value="#{sfTmpdetController.selected.timemillis}" title="#{bundle.CreateSfTmpdetTitle_timemillis}" />
                         <p:outputLabel value="#{bundle.CreateSfTmpdetLabel_codUni}" for="codUni" />
@@ -32,6 +26,14 @@
                         <p:inputText id="debe" value="#{sfTmpdetController.selected.debe}" title="#{bundle.CreateSfTmpdetTitle_debe}" />
                         <p:outputLabel value="#{bundle.CreateSfTmpdetLabel_tc}" for="tc" />
                         <p:inputText id="tc" value="#{sfTmpdetController.selected.tc}" title="#{bundle.CreateSfTmpdetTitle_tc}" />
+                        <p:outputLabel value="#{bundle.CreateSfTmpdetLabel_idTmpdet}" for="idTmpdet" />
+                        <p:inputText id="idTmpdet" value="#{sfTmpdetController.selected.idTmpdet}" title="#{bundle.CreateSfTmpdetTitle_idTmpdet}" />
+                        <p:outputLabel value="#{bundle.CreateSfTmpdetLabel_noCia}" for="noCia" />
+                        <p:inputText id="noCia" value="#{sfTmpdetController.selected.noCia}" title="#{bundle.CreateSfTmpdetTitle_noCia}" required="true" requiredMessage="#{bundle.CreateSfTmpdetRequiredMessage_noCia}"/>
+                        <p:outputLabel value="#{bundle.CreateSfTmpdetLabel_noTrans}" for="noTrans" />
+                        <p:inputText id="noTrans" value="#{sfTmpdetController.selected.noTrans}" title="#{bundle.CreateSfTmpdetTitle_noTrans}" required="true" requiredMessage="#{bundle.CreateSfTmpdetRequiredMessage_noTrans}"/>
+                        <p:outputLabel value="#{bundle.CreateSfTmpdetLabel_cuenta}" for="cuenta" />
+                        <p:inputText id="cuenta" value="#{sfTmpdetController.selected.cuenta}" title="#{bundle.CreateSfTmpdetTitle_cuenta}" required="true" requiredMessage="#{bundle.CreateSfTmpdetRequiredMessage_cuenta}"/>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{sfTmpdetController.create}" value="#{bundle.Save}" update="display,:SfTmpdetListForm:datalist,:growl" oncomplete="handleSubmit(args,'SfTmpdetCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="SfTmpdetCreateDialog.hide()"/>

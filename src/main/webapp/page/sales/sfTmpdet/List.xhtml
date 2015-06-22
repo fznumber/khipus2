@@ -19,7 +19,7 @@
                     <p:dataTable id="datalist" value="#{sfTmpdetController.items}" var="item"
                                  selectionMode="single" selection="#{sfTmpdetController.selected}"
                                  paginator="true"
-                                 rowKey="#{item.sfTmpdetPK}"
+                                 rowKey="#{item.idTmpdet}"
                                  rows="10"
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  >
@@ -27,24 +27,6 @@
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSfTmpdetTitle_sfTmpdetPK_noTrans}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.sfTmpdetPK.noTrans}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSfTmpdetTitle_sfTmpdetPK_cuenta}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.sfTmpdetPK.cuenta}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSfTmpdetTitle_sfTmpdetPK_noCia}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.sfTmpdetPK.noCia}"/>
-                        </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListSfTmpdetTitle_timemillis}"/>
@@ -86,6 +68,30 @@
                                 <h:outputText value="#{bundle.ListSfTmpdetTitle_tc}"/>
                             </f:facet>
                             <h:outputText value="#{item.tc}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListSfTmpdetTitle_idTmpdet}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idTmpdet}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListSfTmpdetTitle_noCia}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.noCia}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListSfTmpdetTitle_noTrans}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.noTrans}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListSfTmpdetTitle_cuenta}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cuenta}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{sfTmpdetController.prepareCreate}" update=":SfTmpdetCreateForm" oncomplete="PF('SfTmpdetCreateDialog').show()"/>

@@ -43,3 +43,4 @@ ALTER TABLE pago ADD CONSTRAINT pago_sf_tmpenc_FK FOREIGN KEY (id_tmpenc ) REFER
 ALTER TABLE `personacliente` ADD deuda DOUBLE NULL;
 ALTER TABLE `sf_tmpdet` ADD id_sf_tmpdet BIGINT(20) NOT NULL;
 ALTER TABLE sf_tmpdet ADD PRIMARY KEY (id_sf_tmpdet);
+ALTER TABLE `arcgms` ADD PRIMARY KEY (cuenta);
