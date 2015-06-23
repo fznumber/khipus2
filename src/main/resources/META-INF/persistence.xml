@@ -25,7 +25,6 @@
     <class>com.encens.khipus.model.Paquetes</class>
     <class>com.encens.khipus.model.Pedidos</class>
     <class>com.encens.khipus.model.Persona</class>
-    <class>com.encens.khipus.model.Personacliente</class>
     <class>com.encens.khipus.model.Promocion</class>
     <class>com.encens.khipus.model.Rol</class>
     <class>com.encens.khipus.model.SfConfdet</class>
@@ -50,6 +49,10 @@
     <properties>
       <property name="eclipselink.target-server" value="JBoss"/>
       <property name="eclipselink.weaving" value="static"/>
+      <property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:3306/khipus"/>
+      <property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="eclipselink.jdbc.user"/>
+      <property name="eclipselink.jdbc.password"/>
     </properties>
   </persistence-unit>
 </persistence>

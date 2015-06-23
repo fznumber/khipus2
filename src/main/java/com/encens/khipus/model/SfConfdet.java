@@ -10,10 +10,12 @@ import java.io.Serializable;
 @Table(name = "sf_confdet")
 public class SfConfdet implements Serializable {
     private long idSfConfdet;
-    private String cuenta;
+
     private String tipomovimiento;
-    private long idSfConfenc;
     private SfConfenc sfConfencByIdSfConfenc;
+    @JoinColumn(name = "cuenta",referencedColumnName = "cuenta")
+    @ManyToOne
+    private Arcgms arcgms;
 
     @Id
     @Column(name = "id_sf_confdet", nullable = false, insertable = true, updatable = true)
@@ -24,22 +26,13 @@ public class SfConfdet implements Serializable {
             ,initialValue = 1
             ,allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "SfConfdet_Gen")
+
     public long getIdSfConfdet() {
         return idSfConfdet;
     }
 
     public void setIdSfConfdet(long idSfConfdet) {
         this.idSfConfdet = idSfConfdet;
-    }
-
-    @Basic
-    @Column(name = "cuenta", nullable = true, insertable = true, updatable = true, length = 31)
-    public String getCuenta() {
-        return cuenta;
-    }
-
-    public void setCuenta(String cuenta) {
-        this.cuenta = cuenta;
     }
 
     @Basic
@@ -52,16 +45,6 @@ public class SfConfdet implements Serializable {
         this.tipomovimiento = tipomovimiento;
     }
 
-    @Basic
-    @Column(name = "id_sf_confenc", nullable = false, insertable = true, updatable = true)
-    public long getIdSfConfenc() {
-        return idSfConfenc;
-    }
-
-    public void setIdSfConfenc(long idSfConfenc) {
-        this.idSfConfenc = idSfConfenc;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -70,8 +53,6 @@ public class SfConfdet implements Serializable {
         SfConfdet sfConfdet = (SfConfdet) o;
 
         if (idSfConfdet != sfConfdet.idSfConfdet) return false;
-        if (idSfConfenc != sfConfdet.idSfConfenc) return false;
-        if (cuenta != null ? !cuenta.equals(sfConfdet.cuenta) : sfConfdet.cuenta != null) return false;
         if (tipomovimiento != null ? !tipomovimiento.equals(sfConfdet.tipomovimiento) : sfConfdet.tipomovimiento != null)
             return false;
 
@@ -81,9 +62,7 @@ public class SfConfdet implements Serializable {
     @Override
     public int hashCode() {
         int result = (int) (idSfConfdet ^ (idSfConfdet >>> 32));
-        result = 31 * result + (cuenta != null ? cuenta.hashCode() : 0);
         result = 31 * result + (tipomovimiento != null ? tipomovimiento.hashCode() : 0);
-        result = 31 * result + (int) (idSfConfenc ^ (idSfConfenc >>> 32));
         return result;
     }
 
@@ -95,5 +74,13 @@ public class SfConfdet implements Serializable {
 
     public void setSfConfencByIdSfConfenc(SfConfenc sfConfencByIdSfConfenc) {
         this.sfConfencByIdSfConfenc = sfConfencByIdSfConfenc;
+    }
+
+    public Arcgms getArcgms() {
+        return arcgms;
+    }
+
+    public void setArcgms(Arcgms arcgms) {
+        this.arcgms = arcgms;
     }
 }

@@ -141,12 +141,12 @@ public class SfTmpenc implements Serializable {
     @Size(max = 6)
     @Column(name = "cod_enti")
     private String codEnti;
-    @OneToOne
+    /*@OneToOne
     @MapsId
     private Pago pago;
     @MapsId
     @OneToOne
-    private Pedidos pedido;
+    private Pedidos pedido;*/
 
     public SfTmpenc() {
     }
@@ -396,7 +396,7 @@ public class SfTmpenc implements Serializable {
         return "com.encens.khipus.model.SfTmpenc[ idTmpenc=" + idTmpenc + " ]";
     }
 
-    public Pago getPago() {
+   /* public Pago getPago() {
         return pago;
     }
 
@@ -410,5 +410,5 @@ public class SfTmpenc implements Serializable {
 
     public void setPedido(Pedidos pedido) {
         this.pedido = pedido;
-    }
+    }*/
 }
