@@ -103,7 +103,7 @@ public class PedidosReportController implements Serializable {
 
     private Map<String, Object> getReportParams(Pedidos pedido) {
         String nroDoc = pedido.getCliente().getNroDoc();
-        if (pedido.getCliente().getTipocliente().equals("INSTITUCION")) {
+        if (pedido.getCliente().getTipoPersona().equals("institucion")) {
             nroDoc = pedido.getCliente().getNit();
         }
 
@@ -120,7 +120,7 @@ public class PedidosReportController implements Serializable {
 
     private Map<String, Object> getReportParams(Ventadirecta ventadirecta) {
         String nroDoc = ventadirecta.getCliente().getNroDoc();
-        if (ventadirecta.getCliente().getTipocliente().equals("INSTITUCION")) {
+        if (ventadirecta.getCliente().getTipoPersona().equals("institucion")) {
             nroDoc = ventadirecta.getCliente().getNit();
         }
 
@@ -154,7 +154,7 @@ public class PedidosReportController implements Serializable {
         etiqueta = "ORIGINAL";
 
         String nombre;
-        if (pedido.getCliente().getTipocliente().equals("INSTITUCION")) {
+        if (pedido.getCliente().getTipoPersona().equals("institucion")) {
             nombre = pedido.getCliente().getRazonsocial();
         }else{
             nombre = pedido.getCliente().getNom()+" "+pedido.getCliente().getAp()+" "+pedido.getCliente().getAm();
@@ -258,7 +258,7 @@ public class PedidosReportController implements Serializable {
         dosificacion = dosificacionFacade.findByPeriodo(new Date());
         BigInteger numberAuthorization = dosificacion.getNroautorizacion();
         String key = dosificacion.getLlave();
-        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/factura.jasper"));        
+        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/factura.jasper"));
         Integer numeroFactura;
         if (pedido.getMovimiento() == null) {
             numeroFactura = Integer.parseInt(dosificacionFacade.getSiguienteNumeroFactura());
@@ -267,7 +267,7 @@ public class PedidosReportController implements Serializable {
             numeroFactura = pedido.getMovimiento().getNrofactura();
         }
         String nombre;
-        if (pedido.getCliente().getTipocliente().equals("INSTITUCION")) {
+        if (pedido.getCliente().getTipoPersona().equals("institucion")) {
             nombre = pedido.getCliente().getRazonsocial();
         }else{
             nombre = pedido.getCliente().getNom()+" "+pedido.getCliente().getAp()+" "+pedido.getCliente().getAm();
