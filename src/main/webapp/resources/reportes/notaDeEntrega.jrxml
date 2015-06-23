@@ -74,25 +74,25 @@
 				<textFieldExpression><![CDATA[$P{fechaEntrega}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="195" y="30" width="36" height="13" uuid="8d23f068-4f8b-41a4-b91d-1229a40e8ace"/>
+				<reportElement x="181" y="30" width="36" height="13" uuid="8d23f068-4f8b-41a4-b91d-1229a40e8ace"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="Arial Narrow" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Cliente:"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="231" y="30" width="206" height="13" uuid="d6304926-385e-4644-a12b-9ac1187b3108"/>
+				<reportElement x="217" y="30" width="206" height="13" uuid="d6304926-385e-4644-a12b-9ac1187b3108"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="Arial Narrow" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{nombreClienteyTerritorio}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="437" y="30" width="23" height="13" uuid="314f715c-95b1-43b3-bef4-18d7110b3975"/>
-				<textElement verticalAlignment="Bottom">
+				<reportElement x="423" y="30" width="37" height="13" uuid="314f715c-95b1-43b3-bef4-18d7110b3975"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
 					<font fontName="Arial Narrow" size="10"/>
 				</textElement>
-				<text><![CDATA[C.I.:]]></text>
+				<text><![CDATA[C.I./NIT:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement x="460" y="30" width="112" height="13" uuid="34d853cd-132d-4250-b639-44772b3acd98"/>

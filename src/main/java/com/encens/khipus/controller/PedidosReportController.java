@@ -153,6 +153,13 @@ public class PedidosReportController implements Serializable {
         if(pedido.getMovimiento() == null)
         etiqueta = "ORIGINAL";
 
+        String nombre;
+        if (pedido.getCliente().getTipocliente().equals("INSTITUCION")) {
+            nombre = pedido.getCliente().getRazonsocial();
+        }else{
+            nombre = pedido.getCliente().getNom()+" "+pedido.getCliente().getAp()+" "+pedido.getCliente().getAm();
+        }
+
         String fecha = "Cochambamba, "+dia+" de "+dateUtil.getMes(mes)+" de "+anio;
         Map<String, Object> paramMap = new HashMap<String, Object>();
         paramMap.put("nitEmpresa", dosificacion.getNitEmpresa());
@@ -160,7 +167,7 @@ public class PedidosReportController implements Serializable {
         paramMap.put("numAutorizacion", dosificacion.getNroautorizacion().intValue());
         paramMap.put("nitCliente", nroDoc);
         paramMap.put("fecha", fecha);
-        paramMap.put("nombreCliente", nameClient);
+        paramMap.put("nombreCliente", nombre);
         paramMap.put("fechaLimite", dosificacion.getFechavencimiento());
         paramMap.put("codigoControl", codControl);
         paramMap.put("tipoEtiqueta", etiqueta);
@@ -259,12 +266,18 @@ public class PedidosReportController implements Serializable {
         }else{
             numeroFactura = pedido.getMovimiento().getNrofactura();
         }
+        String nombre;
+        if (pedido.getCliente().getTipocliente().equals("INSTITUCION")) {
+            nombre = pedido.getCliente().getRazonsocial();
+        }else{
+            nombre = pedido.getCliente().getNom()+" "+pedido.getCliente().getAp()+" "+pedido.getCliente().getAm();
+        }
 
         
         ControlCode controlCode = generateCodControl(pedido, numeroFactura, numberAuthorization, key,dosificacion.getNitEmpresa());
         parameters.putAll(
                 getReportParams(
-                        pedido.getCliente().getNombreCompleto(), numeroFactura, tipoEtiquetaFactura, controlCode.getCodigoControl(), controlCode.getKeyQR(), pedido));
+                        nombre, numeroFactura, tipoEtiquetaFactura, controlCode.getCodigoControl(), controlCode.getKeyQR(), pedido));
         guardarFactura(pedido, controlCode.getCodigoControl());
         exportarPDF(parameters, jasper);
     }
