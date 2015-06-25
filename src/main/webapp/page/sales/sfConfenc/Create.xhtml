@@ -11,17 +11,41 @@
         <p:dialog id="SfConfencCreateDlg" widgetVar="SfConfencCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Configurar asiento contable">
             <h:form id="SfConfencCreateForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{sfConfencController.selected != null}">
+                    <p:panelGrid columns="4" rendered="#{sfConfencController.selected != null}">
                         <p:outputLabel value="Nombre:" for="descripcion" />
                         <p:inputText id="descripcion" value="#{sfConfencController.selected.descripcion}" title="Nombre" />
-                        <p:outputLabel value="Cuenta asociada:" for="cuenta" />
-                        <p:inputText id="cuenta" value="#{sfConfencController.selected.cuenta}" title="Cuenta asociada" />
                         <p:outputLabel value="Documento:" for="tipoDoc" />
                         <p:inputText id="tipoDoc" value="#{sfConfencController.selected.tipoDoc}" title="Documento" />
                         <p:outputLabel value="Glosa:" for="glosa" />
                         <p:inputText id="glosa" value="#{sfConfencController.selected.glosa}" title="Glosa" />
+
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{sfConfencController.create}" value="#{bundle.Save}" update="display,:SfConfencListForm:datalist,:growl" oncomplete="handleSubmit(args,'SfConfencCreateDialog');"/>
+                    <p:panelGrid columns="3" rendered="#{sfConfencController.selected != null}">
+                        <p:outputLabel value="Cuenta asociada:" for="cuenta" />
+                        <p:autoComplete id="cuenta" value="#{sfConfencController.cuentaElegida}" completeMethod="#{sfConfencController.completarCuenta}"
+                                        var="cuenta" itemLabel="#{cuenta.cuenta}" itemValue="#{cuenta}" converter="convertirCuenta" forceSelection="true">
+                            <f:facet name="itemtip">
+                                <h:panelGrid columns="2" cellpadding="5">
+                                    <h:outputText value="Número de cuenta:" />
+                                    <h:outputText value="#{cuenta.cuenta}" />
+                                    <h:outputText value="Descrición:" />
+                                    <h:outputText value="#{cuenta.descri}" />
+                                </h:panelGrid>
+                            </f:facet>
+                        </p:autoComplete>
+                        <p:autoComplete value="#{sfConfencController.cuentaElegida}" completeMethod="#{sfConfencController.completarCuentaDescripcion}"
+                                        var="cuenta" itemLabel="#{cuenta.cuenta}" itemValue="#{cuenta}" converter="convertirCuenta" forceSelection="true">
+                            <f:facet name="itemtip">
+                                <h:panelGrid columns="2" cellpadding="5">
+                                    <h:outputText value="Número de cuenta:" />
+                                    <h:outputText value="#{cuenta.cuenta}" />
+                                    <h:outputText value="Descrición:" />
+                                    <h:outputText value="#{cuenta.descri}" />
+                                </h:panelGrid>
+                            </f:facet>
+                        </p:autoComplete>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{sfConfencController.create}" value="#{bundle.Save}" update="display,:SfConfencListForm:datalist,:SfConfencListForm:growl" oncomplete="handleSubmit(args,'SfConfencCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="SfConfencCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

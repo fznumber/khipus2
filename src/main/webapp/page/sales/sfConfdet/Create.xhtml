@@ -21,7 +21,7 @@
                         <p:outputLabel value="#{bundle.CreateSfConfdetLabel_idSfConfenc}" for="idSfConfenc" />
                         <p:inputText id="idSfConfenc" value="#{sfConfdetController.selected.idSfConfenc}" title="#{bundle.CreateSfConfdetTitle_idSfConfenc}" required="true" requiredMessage="#{bundle.CreateSfConfdetRequiredMessage_idSfConfenc}"/>
                         <p:outputLabel value="#{bundle.CreateSfConfdetLabel_sfConfencByIdSfConfenc}" for="sfConfencByIdSfConfenc" />
-                        <p:selectOneMenu id="sfConfencByIdSfConfenc" value="#{sfConfdetController.selected.sfConfencByIdSfConfenc}" required="true" requiredMessage="#{bundle.EditSfConfdetRequiredMessage_sfConfencByIdSfConfenc}">
+                        <p:selectOneMenu id="sfConfencByIdSfConfenc" value="#{sfConfdetController.selected.sfConfenc}" required="true" requiredMessage="#{bundle.EditSfConfdetRequiredMessage_sfConfencByIdSfConfenc}">
                             <f:selectItems value="#{sfConfencController.itemsAvailableSelectOne}"
                                            var="sfConfencByIdSfConfencItem"
                                            itemValue="#{sfConfencByIdSfConfencItem}"/>

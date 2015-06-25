@@ -1,21 +1,17 @@
 package com.encens.khipus.controller;
 
-import com.encens.khipus.ejb.ArcgmsFacade;
 import com.encens.khipus.model.Arcgms;
-import com.encens.khipus.model.SfConfenc;
 import com.encens.khipus.util.JSFUtil;
 import com.encens.khipus.util.JSFUtil.PersistAction;
-import com.encens.khipus.ejb.SfConfencFacade;
+import com.encens.khipus.ejb.ArcgmsFacade;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -23,27 +19,23 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@Named("sfConfencController")
+@Named("arcgmsController")
 @SessionScoped
-public class SfConfencController implements Serializable {
+public class ArcgmsController implements Serializable {
 
     @EJB
-    private com.encens.khipus.ejb.SfConfencFacade ejbFacade;
-    @EJB
-    private ArcgmsFacade arcgmsFacade;
-    private List<SfConfenc> items = null;
-    private SfConfenc selected;
-    private Arcgms cuentaElegida;
-    private List<Arcgms> cuentas= new ArrayList<>();
+    private com.encens.khipus.ejb.ArcgmsFacade ejbFacade;
+    private List<Arcgms> items = null;
+    private Arcgms selected;
 
-    public SfConfencController() {
+    public ArcgmsController() {
     }
 
-    public SfConfenc getSelected() {
+    public Arcgms getSelected() {
         return selected;
     }
 
-    public void setSelected(SfConfenc selected) {
+    public void setSelected(Arcgms selected) {
         this.selected = selected;
     }
 
@@ -53,61 +45,36 @@ public class SfConfencController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    public List<Arcgms> completarCuenta(String query) {
-        List<Arcgms> clientesFiltrados = new ArrayList<>();
-        for(Arcgms cuenta: cuentas) {
-
-            if(cuenta.getCuenta().toLowerCase().contains(query)) {
-                clientesFiltrados.add(cuenta);
-            }
-        }
-
-        return clientesFiltrados;
-    }
-
-    public List<Arcgms> completarCuentaDescripcion(String query) {
-        List<Arcgms> clientesFiltrados = new ArrayList<>();
-        for(Arcgms cuenta: cuentas) {
-
-            if(cuenta.getDescri().toLowerCase().contains(query)) {
-                clientesFiltrados.add(cuenta);
-            }
-        }
-
-        return clientesFiltrados;
-    }
-
-    private SfConfencFacade getFacade() {
+    private ArcgmsFacade getFacade() {
         return ejbFacade;
     }
 
-    public SfConfenc prepareCreate() {
-        selected = new SfConfenc();
+    public Arcgms prepareCreate() {
+        selected = new Arcgms();
         initializeEmbeddableKey();
-        cuentas = arcgmsFacade.findAll();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("SfConfencCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("ArcgmsCreated"));
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("SfConfencUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("ArcgmsUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("SfConfencDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("ArcgmsDeleted"));
         if (!JSFUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<SfConfenc> getItems() {
+    public List<Arcgms> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -142,38 +109,38 @@ public class SfConfencController implements Serializable {
         }
     }
 
-    public SfConfenc getSfConfenc(long id) {
+    public Arcgms getArcgms(java.lang.String id) {
         return getFacade().find(id);
     }
 
-    public List<SfConfenc> getItemsAvailableSelectMany() {
+    public List<Arcgms> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<SfConfenc> getItemsAvailableSelectOne() {
+    public List<Arcgms> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = SfConfenc.class)
-    public static class SfConfencControllerConverter implements Converter {
+    @FacesConverter(value = "convertirCuenta",forClass = Arcgms.class)
+    public static class ArcgmsControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            SfConfencController controller = (SfConfencController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "sfConfencController");
-            return controller.getSfConfenc(getKey(value));
+            ArcgmsController controller = (ArcgmsController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "arcgmsController");
+            return controller.getArcgms(getKey(value));
         }
 
-        long getKey(String value) {
-            long key;
-            key = Long.parseLong(value);
+        java.lang.String getKey(String value) {
+            java.lang.String key;
+            key = value;
             return key;
         }
 
-        String getStringKey(long value) {
+        String getStringKey(java.lang.String value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
@@ -184,30 +151,15 @@ public class SfConfencController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof SfConfenc) {
-                SfConfenc o = (SfConfenc) object;
-                return getStringKey(o.getIdSfConfenc());
+            if (object instanceof Arcgms) {
+                Arcgms o = (Arcgms) object;
+                return getStringKey(o.getCuenta());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), SfConfenc.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Arcgms.class.getName()});
                 return null;
             }
         }
 
     }
 
-    public Arcgms getCuentaElegida() {
-        return cuentaElegida;
-    }
-
-    public void setCuentaElegida(Arcgms cuentaElegida) {
-        this.cuentaElegida = cuentaElegida;
-    }
-
-    public List<Arcgms> getCuentas() {
-        return cuentas;
-    }
-
-    public void setCuentas(List<Arcgms> cuentas) {
-        this.cuentas = cuentas;
-    }
 }

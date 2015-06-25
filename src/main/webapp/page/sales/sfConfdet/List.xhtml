@@ -55,7 +55,7 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListSfConfdetTitle_sfConfencByIdSfConfenc}"/>
                             </f:facet>
-                            <h:outputText value="#{item.sfConfencByIdSfConfenc}"/>
+                            <h:outputText value="#{item.sfConfenc}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{sfConfdetController.prepareCreate}" update=":SfConfdetCreateForm" oncomplete="PF('SfConfdetCreateDialog').show()"/>

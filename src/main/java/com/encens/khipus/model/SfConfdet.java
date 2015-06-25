@@ -9,10 +9,10 @@ import java.io.Serializable;
 @Entity
 @Table(name = "sf_confdet")
 public class SfConfdet implements Serializable {
-    private long idSfConfdet;
+
 
     private String tipomovimiento;
-    private SfConfenc sfConfencByIdSfConfenc;
+    private SfConfenc sfConfenc;
     @JoinColumn(name = "cuenta",referencedColumnName = "cuenta")
     @ManyToOne
     private Arcgms arcgms;
@@ -26,7 +26,7 @@ public class SfConfdet implements Serializable {
             ,initialValue = 1
             ,allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "SfConfdet_Gen")
-
+    private long idSfConfdet;
     public long getIdSfConfdet() {
         return idSfConfdet;
     }
@@ -68,12 +68,12 @@ public class SfConfdet implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "id_sf_confenc", referencedColumnName = "id_sf_confenc", nullable = false)
-    public SfConfenc getSfConfencByIdSfConfenc() {
-        return sfConfencByIdSfConfenc;
+    public SfConfenc getSfConfenc() {
+        return sfConfenc;
     }
 
-    public void setSfConfencByIdSfConfenc(SfConfenc sfConfencByIdSfConfenc) {
-        this.sfConfencByIdSfConfenc = sfConfencByIdSfConfenc;
+    public void setSfConfenc(SfConfenc sfConfencByIdSfConfenc) {
+        this.sfConfenc = sfConfencByIdSfConfenc;
     }
 
     public Arcgms getArcgms() {
