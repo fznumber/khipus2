@@ -2,6 +2,7 @@ package com.encens.khipus.controller;
 
 import com.encens.khipus.ejb.ArcgmsFacade;
 import com.encens.khipus.model.Arcgms;
+import com.encens.khipus.model.SfConfdet;
 import com.encens.khipus.model.SfConfenc;
 import com.encens.khipus.util.JSFUtil;
 import com.encens.khipus.util.JSFUtil.PersistAction;
@@ -77,6 +78,30 @@ public class SfConfencController implements Serializable {
         return clientesFiltrados;
     }
 
+    public void reponerCuenta(SfConfdet sfConfdet){
+        cuentas.add(sfConfdet.getCuenta());
+    }
+
+    public void agregarCuentaAlHaber(){
+        SfConfdet sfConfdet = new SfConfdet();
+        sfConfdet.setCuenta(cuentaElegida);
+        sfConfdet.setSfConfenc(selected);
+        sfConfdet.setTipomovimiento("HABER");
+        cuentas.remove(cuentaElegida);
+        selected.getAsientos().add(sfConfdet);
+        cuentaElegida = new Arcgms();
+    }
+
+    public void agregarCuentaAlDebe(){
+        SfConfdet sfConfdet = new SfConfdet();
+        sfConfdet.setCuenta(cuentaElegida);
+        sfConfdet.setSfConfenc(selected);
+        sfConfdet.setTipomovimiento("DEBE");
+        cuentas.remove(cuentaElegida);
+        selected.getAsientos().add(sfConfdet);
+        cuentaElegida = new Arcgms();
+    }
+
     private SfConfencFacade getFacade() {
         return ejbFacade;
     }
@@ -85,22 +110,24 @@ public class SfConfencController implements Serializable {
         selected = new SfConfenc();
         initializeEmbeddableKey();
         cuentas = arcgmsFacade.findAll();
+        cuentaElegida = new Arcgms();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("SfConfencCreated"));
+        persist(PersistAction.CREATE,"Se registro con exito la configuración");
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
+            selected = null;
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("SfConfencUpdated"));
+        persist(PersistAction.UPDATE, "Se actualizo con exito la configuración");
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("SfConfencDeleted"));
+        persist(PersistAction.DELETE, "Se elimino con exito la configuración");
         if (!JSFUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.

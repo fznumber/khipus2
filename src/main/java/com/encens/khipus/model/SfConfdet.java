@@ -10,12 +10,9 @@ import java.io.Serializable;
 @Table(name = "sf_confdet")
 public class SfConfdet implements Serializable {
 
-
-    private String tipomovimiento;
-    private SfConfenc sfConfenc;
     @JoinColumn(name = "cuenta",referencedColumnName = "cuenta")
     @ManyToOne
-    private Arcgms arcgms;
+    private Arcgms cuenta;
 
     @Id
     @Column(name = "id_sf_confdet", nullable = false, insertable = true, updatable = true)
@@ -37,6 +34,7 @@ public class SfConfdet implements Serializable {
 
     @Basic
     @Column(name = "tipomovimiento", nullable = true, insertable = true, updatable = true, length = 20)
+    private String tipomovimiento;
     public String getTipomovimiento() {
         return tipomovimiento;
     }
@@ -68,6 +66,7 @@ public class SfConfdet implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "id_sf_confenc", referencedColumnName = "id_sf_confenc", nullable = false)
+    private SfConfenc sfConfenc;
     public SfConfenc getSfConfenc() {
         return sfConfenc;
     }
@@ -76,11 +75,11 @@ public class SfConfdet implements Serializable {
         this.sfConfenc = sfConfencByIdSfConfenc;
     }
 
-    public Arcgms getArcgms() {
-        return arcgms;
+    public Arcgms getCuenta() {
+        return cuenta;
     }
 
-    public void setArcgms(Arcgms arcgms) {
-        this.arcgms = arcgms;
+    public void setCuenta(Arcgms arcgms) {
+        this.cuenta = arcgms;
     }
 }

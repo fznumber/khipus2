@@ -2,6 +2,7 @@ package com.encens.khipus.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -24,11 +25,11 @@ public class SfConfenc implements Serializable {
     @Column(name = "idusuario", nullable = false, insertable = true, updatable = true)
     private long idusuario;
     @OneToMany(mappedBy = "sfConfencByIdSfConfenc",cascade = CascadeType.PERSIST)
-    private Collection<Pago> pagosByIdSfConfenc;
+    private Collection<Pago> pagosByIdSfConfenc = new ArrayList<>();
     @OneToMany(mappedBy = "sfConfenc",cascade = CascadeType.PERSIST)
-    private Collection<Pedidos> pedidosesByIdSfConfenc;
+    private Collection<Pedidos> pedidosesByIdSfConfenc = new ArrayList<>();
     @OneToMany(mappedBy = "sfConfenc",cascade = CascadeType.PERSIST)
-    private Collection<SfConfdet> sfConfdetsByIdSfConfenc;
+    private Collection<SfConfdet> asientos = new ArrayList<>();
     @JoinColumn(name = "cuenta",referencedColumnName = "cuenta")
     @ManyToOne
     private Arcgms cuenta;
@@ -126,12 +127,12 @@ public class SfConfenc implements Serializable {
         this.pedidosesByIdSfConfenc = pedidosesByIdSfConfenc;
     }
 
-    public Collection<SfConfdet> getSfConfdetsByIdSfConfenc() {
-        return sfConfdetsByIdSfConfenc;
+    public Collection<SfConfdet> getAsientos() {
+        return asientos;
     }
 
-    public void setSfConfdetsByIdSfConfenc(Collection<SfConfdet> sfConfdetsByIdSfConfenc) {
-        this.sfConfdetsByIdSfConfenc = sfConfdetsByIdSfConfenc;
+    public void setAsientos(Collection<SfConfdet> sfConfdetsByIdSfConfenc) {
+        this.asientos = sfConfdetsByIdSfConfenc;
     }
 
     public Arcgms getCuenta() {

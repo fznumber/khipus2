@@ -11,7 +11,7 @@ import java.sql.Date;
  */
 @Entity
 public class Arcgms implements Serializable{
-    private String cuenta;
+
 
     @Id
     @NotNull
@@ -22,7 +22,8 @@ public class Arcgms implements Serializable{
             ,initialValue = 1
             ,allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "Arcgms_Gen")
-    @javax.persistence.Column(name = "cuenta", nullable = true, insertable = true, updatable = true, length = 20)
+    @Column(name = "cuenta")
+    private String cuenta;
     public String getCuenta() {
         return cuenta;
     }
@@ -31,10 +32,9 @@ public class Arcgms implements Serializable{
         this.cuenta = cuenta;
     }
 
-    private String descri;
-
     @Basic
     @javax.persistence.Column(name = "descri", nullable = true, insertable = true, updatable = true, length = 100)
+    private String descri;
     public String getDescri() {
         return descri;
     }
@@ -43,10 +43,9 @@ public class Arcgms implements Serializable{
         this.descri = descri;
     }
 
-    private String cnAna;
-
     @Basic
     @javax.persistence.Column(name = "cn_ana", nullable = true, insertable = true, updatable = true, length = 1)
+    private String cnAna;
     public String getCnAna() {
         return cnAna;
     }
@@ -55,10 +54,9 @@ public class Arcgms implements Serializable{
         this.cnAna = cnAna;
     }
 
-    private Integer cnNivel;
-
     @Basic
     @javax.persistence.Column(name = "cn_nivel", nullable = true, insertable = true, updatable = true)
+    private Integer cnNivel;
     public Integer getCnNivel() {
         return cnNivel;
     }
@@ -67,10 +65,9 @@ public class Arcgms implements Serializable{
         this.cnNivel = cnNivel;
     }
 
-    private Integer cnDv;
-
     @Basic
     @javax.persistence.Column(name = "cn_dv", nullable = true, insertable = true, updatable = true)
+    private Integer cnDv;
     public Integer getCnDv() {
         return cnDv;
     }
@@ -79,10 +76,9 @@ public class Arcgms implements Serializable{
         this.cnDv = cnDv;
     }
 
-    private String cnTip;
-
     @Basic
     @javax.persistence.Column(name = "cn_tip", nullable = true, insertable = true, updatable = true, length = 1)
+    private String cnTip;
     public String getCnTip() {
         return cnTip;
     }
@@ -91,10 +87,10 @@ public class Arcgms implements Serializable{
         this.cnTip = cnTip;
     }
 
-    private Integer cnAct;
 
     @Basic
     @javax.persistence.Column(name = "cn_act", nullable = true, insertable = true, updatable = true)
+    private Integer cnAct;
     public Integer getCnAct() {
         return cnAct;
     }
@@ -103,10 +99,9 @@ public class Arcgms implements Serializable{
         this.cnAct = cnAct;
     }
 
-    private String noCia;
-
     @Basic
     @javax.persistence.Column(name = "no_cia", nullable = true, insertable = true, updatable = true, length = 2)
+    private String noCia;
     public String getNoCia() {
         return noCia;
     }
@@ -115,10 +110,9 @@ public class Arcgms implements Serializable{
         this.noCia = noCia;
     }
 
-    private String clase;
-
     @Basic
     @javax.persistence.Column(name = "clase", nullable = true, insertable = true, updatable = true, length = 1)
+    private String clase;
     public String getClase() {
         return clase;
     }
@@ -127,10 +121,9 @@ public class Arcgms implements Serializable{
         this.clase = clase;
     }
 
-    private String tipo;
-
     @Basic
     @javax.persistence.Column(name = "tipo", nullable = true, insertable = true, updatable = true, length = 2)
+    private String tipo;
     public String getTipo() {
         return tipo;
     }
@@ -139,10 +132,9 @@ public class Arcgms implements Serializable{
         this.tipo = tipo;
     }
 
-    private String activa;
-
     @Basic
     @javax.persistence.Column(name = "activa", nullable = true, insertable = true, updatable = true, length = 255)
+    private String activa;
     public String getActiva() {
         return activa;
     }
@@ -151,10 +143,9 @@ public class Arcgms implements Serializable{
         this.activa = activa;
     }
 
-    private String permiteIva;
-
     @Basic
     @javax.persistence.Column(name = "permite_iva", nullable = true, insertable = true, updatable = true, length = 255)
+    private String permiteIva;
     public String getPermiteIva() {
         return permiteIva;
     }
@@ -163,10 +154,9 @@ public class Arcgms implements Serializable{
         this.permiteIva = permiteIva;
     }
 
-    private String indPresup;
-
     @Basic
     @javax.persistence.Column(name = "ind_presup", nullable = true, insertable = true, updatable = true, length = 255)
+    private String indPresup;
     public String getIndPresup() {
         return indPresup;
     }
@@ -175,10 +165,9 @@ public class Arcgms implements Serializable{
         this.indPresup = indPresup;
     }
 
-    private BigDecimal creditos;
-
     @Basic
     @javax.persistence.Column(name = "creditos", nullable = true, insertable = true, updatable = true, precision = 2)
+    private BigDecimal creditos;
     public BigDecimal getCreditos() {
         return creditos;
     }
@@ -187,10 +176,9 @@ public class Arcgms implements Serializable{
         this.creditos = creditos;
     }
 
-    private String moneda;
-
     @Basic
     @javax.persistence.Column(name = "moneda", nullable = true, insertable = true, updatable = true, length = 255)
+    private String moneda;
     public String getMoneda() {
         return moneda;
     }
@@ -199,10 +187,9 @@ public class Arcgms implements Serializable{
         this.moneda = moneda;
     }
 
-    private BigDecimal debitos;
-
     @Basic
     @javax.persistence.Column(name = "debitos", nullable = true, insertable = true, updatable = true, precision = 2)
+    private BigDecimal debitos;
     public BigDecimal getDebitos() {
         return debitos;
     }
@@ -211,10 +198,9 @@ public class Arcgms implements Serializable{
         this.debitos = debitos;
     }
 
-    private BigDecimal saldoMesAntDol;
-
     @Basic
     @javax.persistence.Column(name = "saldo_mes_ant_dol", nullable = true, insertable = true, updatable = true, precision = 6)
+    private BigDecimal saldoMesAntDol;
     public BigDecimal getSaldoMesAntDol() {
         return saldoMesAntDol;
     }
@@ -223,10 +209,10 @@ public class Arcgms implements Serializable{
         this.saldoMesAntDol = saldoMesAntDol;
     }
 
-    private BigDecimal saldoPerAntDol;
 
     @Basic
     @javax.persistence.Column(name = "saldo_per_ant_dol", nullable = true, insertable = true, updatable = true, precision = 6)
+    private BigDecimal saldoPerAntDol;
     public BigDecimal getSaldoPerAntDol() {
         return saldoPerAntDol;
     }
@@ -235,10 +221,9 @@ public class Arcgms implements Serializable{
         this.saldoPerAntDol = saldoPerAntDol;
     }
 
-    private BigDecimal creditosDol;
-
     @Basic
     @javax.persistence.Column(name = "creditos_dol", nullable = true, insertable = true, updatable = true, precision = 6)
+    private BigDecimal creditosDol;
     public BigDecimal getCreditosDol() {
         return creditosDol;
     }
@@ -247,10 +232,9 @@ public class Arcgms implements Serializable{
         this.creditosDol = creditosDol;
     }
 
-    private BigDecimal debitosDol;
-
     @Basic
     @javax.persistence.Column(name = "debitos_dol", nullable = true, insertable = true, updatable = true, precision = 6)
+    private BigDecimal debitosDol;
     public BigDecimal getDebitosDol() {
         return debitosDol;
     }
@@ -259,10 +243,9 @@ public class Arcgms implements Serializable{
         this.debitosDol = debitosDol;
     }
 
-    private String gruCta;
-
     @Basic
     @javax.persistence.Column(name = "gru_cta", nullable = true, insertable = true, updatable = true, length = 6)
+    private String gruCta;
     public String getGruCta() {
         return gruCta;
     }
@@ -271,10 +254,9 @@ public class Arcgms implements Serializable{
         this.gruCta = gruCta;
     }
 
-    private String permisoCon;
-
     @Basic
     @javax.persistence.Column(name = "permiso_con", nullable = true, insertable = true, updatable = true, length = 255)
+    private String permisoCon;
     public String getPermisoCon() {
         return permisoCon;
     }
@@ -283,10 +265,9 @@ public class Arcgms implements Serializable{
         this.permisoCon = permisoCon;
     }
 
-    private String exijeCc;
-
     @Basic
     @javax.persistence.Column(name = "exije_cc", nullable = true, insertable = true, updatable = true, length = 255)
+    private String exijeCc;
     public String getExijeCc() {
         return exijeCc;
     }
@@ -295,10 +276,9 @@ public class Arcgms implements Serializable{
         this.exijeCc = exijeCc;
     }
 
-    private String permisoAfijo;
-
     @Basic
     @javax.persistence.Column(name = "permiso_afijo", nullable = true, insertable = true, updatable = true, length = 255)
+    private String permisoAfijo;
     public String getPermisoAfijo() {
         return permisoAfijo;
     }
@@ -307,10 +287,9 @@ public class Arcgms implements Serializable{
         this.permisoAfijo = permisoAfijo;
     }
 
-    private String permisoCxp;
-
     @Basic
     @javax.persistence.Column(name = "permiso_cxp", nullable = true, insertable = true, updatable = true, length = 255)
+    private String permisoCxp;
     public String getPermisoCxp() {
         return permisoCxp;
     }
@@ -319,10 +298,9 @@ public class Arcgms implements Serializable{
         this.permisoCxp = permisoCxp;
     }
 
-    private String permisoCxc;
-
     @Basic
     @javax.persistence.Column(name = "permiso_cxc", nullable = true, insertable = true, updatable = true, length = 255)
+    private String permisoCxc;
     public String getPermisoCxc() {
         return permisoCxc;
     }
@@ -331,10 +309,9 @@ public class Arcgms implements Serializable{
         this.permisoCxc = permisoCxc;
     }
 
-    private String permisoChe;
-
     @Basic
     @javax.persistence.Column(name = "permiso_che", nullable = true, insertable = true, updatable = true, length = 255)
+    private String permisoChe;
     public String getPermisoChe() {
         return permisoChe;
     }
@@ -343,10 +320,9 @@ public class Arcgms implements Serializable{
         this.permisoChe = permisoChe;
     }
 
-    private String permisoInv;
-
     @Basic
     @javax.persistence.Column(name = "permiso_inv", nullable = true, insertable = true, updatable = true, length = 255)
+    private String permisoInv;
     public String getPermisoInv() {
         return permisoInv;
     }
@@ -355,10 +331,9 @@ public class Arcgms implements Serializable{
         this.permisoInv = permisoInv;
     }
 
-    private Date fInactiva;
-
     @Basic
     @javax.persistence.Column(name = "f_inactiva", nullable = true, insertable = true, updatable = true)
+    private Date fInactiva;
     public Date getfInactiva() {
         return fInactiva;
     }
@@ -367,10 +342,9 @@ public class Arcgms implements Serializable{
         this.fInactiva = fInactiva;
     }
 
-    private String indMov;
-
     @Basic
     @javax.persistence.Column(name = "ind_mov", nullable = true, insertable = true, updatable = true, length = 255)
+    private String indMov;
     public String getIndMov() {
         return indMov;
     }
@@ -379,10 +353,9 @@ public class Arcgms implements Serializable{
         this.indMov = indMov;
     }
 
-    private BigDecimal saldoMesAnt;
-
     @Basic
     @javax.persistence.Column(name = "saldo_mes_ant", nullable = true, insertable = true, updatable = true, precision = 2)
+    private BigDecimal saldoMesAnt;
     public BigDecimal getSaldoMesAnt() {
         return saldoMesAnt;
     }
@@ -391,10 +364,9 @@ public class Arcgms implements Serializable{
         this.saldoMesAnt = saldoMesAnt;
     }
 
-    private BigDecimal saldoPerAnt;
-
     @Basic
     @javax.persistence.Column(name = "saldo_per_ant", nullable = true, insertable = true, updatable = true, precision = 2)
+    private BigDecimal saldoPerAnt;
     public BigDecimal getSaldoPerAnt() {
         return saldoPerAnt;
     }
