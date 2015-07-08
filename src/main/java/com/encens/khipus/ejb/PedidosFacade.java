@@ -53,10 +53,23 @@ public class PedidosFacade extends AbstractFacade<Pedidos> {
         return pedidos;
     }
 
+    public String getSiguienteCodigo() {
+
+        String numero = "0";
+        try{
+            numero = (String)em.createNativeQuery("SELECT khipus.getNextSeq('SECUENCIAPEDIDO')")
+                    .getSingleResult();
+        }catch (NoResultException e){
+            return "0";
+        }
+        return numero;
+
+    }
+
     public List<Object[]> recepcionDePedidos(){
         List<Object[]> resultado = new ArrayList<>();
         try {
-            resultado = (List<Object[]>)em.createQuery("select concat(pe.codigo.secuencia,'-',pe.cliente.nom,' ',pe.cliente.ap,' ',pe.cliente.am,pe.cliente.razonsocial) as CLIENTE\n" +
+            resultado = (List<Object[]>)em.createQuery("select concat(pe.codigo,'-',pe.cliente.nom,' ',pe.cliente.ap,' ',pe.cliente.am,pe.cliente.razonsocial) as CLIENTE\n" +
                     "               ,articulos.invArticulos.nombrecorto as PRODUCTO\n" +
                     "               ,articulos.cantidad + articulos.reposicion as CANTIDAD\n" +
                     "               ,pe.cliente.territoriotrabajo.nombre \n" +
@@ -99,7 +112,7 @@ public class PedidosFacade extends AbstractFacade<Pedidos> {
         List<Object[]> resultado = new ArrayList<>();
         try {
             if(territoriotrabajo != null)
-                resultado = (List<Object[]>)em.createQuery("select concat(pe.codigo.secuencia,'-',pe.cliente.nom,' ',pe.cliente.ap,' ',pe.cliente.am,pe.cliente.razonsocial) as CLIENTE\n" +
+                resultado = (List<Object[]>)em.createQuery("select concat(pe.codigo,'-',pe.cliente.nom,' ',pe.cliente.ap,' ',pe.cliente.am,pe.cliente.razonsocial) as CLIENTE\n" +
                     "               ,articulos.invArticulos.nombrecorto as PRODUCTO\n" +
                     "               ,articulos.cantidad + articulos.reposicion as CANTIDAD\n" +
                     "               ,pe.cliente.territoriotrabajo.nombre as DISTRIBUIDOR\n" +
@@ -110,7 +123,7 @@ public class PedidosFacade extends AbstractFacade<Pedidos> {
                     .setParameter("territoriotrabajo",territoriotrabajo)
                     .getResultList();
             else
-                resultado = (List<Object[]>)em.createQuery("select concat(pe.codigo.secuencia,'-',pe.cliente.nom,' ',pe.cliente.ap,' ',pe.cliente.am,pe.cliente.razonsocial) as CLIENTE\n" +
+                resultado = (List<Object[]>)em.createQuery("select concat(pe.codigo,'-',pe.cliente.nom,' ',pe.cliente.ap,' ',pe.cliente.am,pe.cliente.razonsocial) as CLIENTE\n" +
                         "               ,articulos.invArticulos.nombrecorto as PRODUCTO\n" +
                         "               ,articulos.cantidad + articulos.reposicion as CANTIDAD\n" +
                         "               ,pe.cliente.territoriotrabajo.nombre as DISTRIBUIDOR\n" +
@@ -129,7 +142,7 @@ public class PedidosFacade extends AbstractFacade<Pedidos> {
         List<Object[]> datas = new ArrayList<>();
         List<RecepcionPedido> recepcionPedidos = new ArrayList<>();
         try {
-            datas = (List<Object[]>)em.createQuery("select concat(pe.codigo.secuencia,'-',pe.cliente.nom,' ',pe.cliente.ap,' ',pe.cliente.am,pe.cliente.razonsocial) as CLIENTE\n" +
+            datas = (List<Object[]>)em.createQuery("select concat(pe.codigo,'-',pe.cliente.nom,' ',pe.cliente.ap,' ',pe.cliente.am,pe.cliente.razonsocial) as CLIENTE\n" +
                     "               ,articulos.invArticulos.nombrecorto as PRODUCTO\n" +
                     "               ,articulos.cantidad + articulos.reposicion as CANTIDAD\n" +
                     "               ,pe.cliente.territoriotrabajo.nombre as DISTRIBUIDOR\n" +
@@ -151,7 +164,7 @@ public class PedidosFacade extends AbstractFacade<Pedidos> {
         List<Object[]> datas = new ArrayList<>();
         List<RecepcionPedido> recepcionPedidos = new ArrayList<>();
         try {
-            datas = (List<Object[]>)em.createQuery("select concat(pe.codigo.secuencia,'-',pe.cliente.nom,' ',pe.cliente.ap,' ',pe.cliente.am,pe.cliente.razonsocial) as CLIENTE\n" +
+            datas = (List<Object[]>)em.createQuery("select concat(pe.codigo,'-',pe.cliente.nom,' ',pe.cliente.ap,' ',pe.cliente.am,pe.cliente.razonsocial) as CLIENTE\n" +
                     "               ,articulos.invArticulos.descri as PRODUCTO\n" +
                     "               ,articulos.cantidad + articulos.reposicion as CANTIDAD\n" +
                     "               ,pe.cliente.territoriotrabajo.distribuidor.nom as DISTRIBUIDOR\n" +
