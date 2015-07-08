@@ -54,3 +54,6 @@ ALTER TABLE khipus.sf_tmpenc ADD idusuario BIGINT(20) NULL;
 ALTER TABLE khipus.sf_tmpdet ADD id_tmpenc BIGINT(20) NOT NULL;
 ALTER TABLE khipus.ventadirecta ADD id_tmpenc BIGINT(20) NULL;
 ALTER TABLE khipus.sf_tmpenc ADD IDPERSONACLIENTE BIGINT(20) NULL;
+ALTER TABLE khipus.sf_tmpenc ADD NOMBRECLIENTE VARCHAR(50) NULL;
+ALTER TABLE khipus.sf_tmpenc ADD DEBE DOUBLE NULL;
+ALTER TABLE khipus.sf_tmpenc ADD HABER DOUBLE NULL;
