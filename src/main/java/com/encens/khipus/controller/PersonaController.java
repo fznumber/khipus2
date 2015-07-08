@@ -165,7 +165,7 @@ public class PersonaController implements Serializable {
             cliente.setAm(selected.getAm());
             cliente.setAp(selected.getAp());
             cliente.setNom(selected.getNom());
-            cliente.setRazonsocial(select.getRazonsocial());
+            cliente.setRazonsocial(selected.getRazonsocial());
             cliente.setPorcentajeComision(selected.getPorcentajeComision());
             cliente.setPorcentajeGarantia(selected.getPorcentajeGarantia());
             cliente.setNroDoc(selected.getNroDoc());

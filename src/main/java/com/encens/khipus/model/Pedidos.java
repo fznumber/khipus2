@@ -88,7 +88,7 @@ public class Pedidos implements Serializable {
     private Boolean conReposicion = false;
     @OneToOne
     @JoinColumn(name="codigo")
-    private CodigoPedidoSecuencia codigo;
+    private BigInteger codigo;
     @JoinColumn(name = "IDCLIENTE", referencedColumnName = "IDPERSONACLIENTE")
     @ManyToOne(optional = false)
     private Persona cliente;
@@ -342,11 +342,11 @@ public class Pedidos implements Serializable {
         this.totalimporte = totalimporte;
     }
 
-    public CodigoPedidoSecuencia getCodigo() {
+    public BigInteger getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(CodigoPedidoSecuencia codigo) {
+    public void setCodigo(BigInteger codigo) {
         this.codigo = codigo;
     }
 

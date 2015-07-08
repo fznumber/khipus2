@@ -5,6 +5,7 @@ import com.encens.khipus.model.*;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
@@ -186,7 +187,7 @@ public class PedidosController implements Serializable {
                 getValue(facesContext.getELContext(), null, "loginBean");
         selected.setUsuario(loginBean.getUsuario());
         selected.setCliente(personaElegida);
-        selected.setCodigo(new CodigoPedidoSecuencia());
+        selected.setCodigo(new BigInteger(getFacade().getSiguienteCodigo()));
         selected.setFechaPedido(new Date());
         selected.setConReposicion(conReposicion);
         if(conReposicion) {

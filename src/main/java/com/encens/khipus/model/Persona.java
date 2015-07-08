@@ -427,7 +427,7 @@ public class Persona implements Serializable {
 
     public void setEspersona(Boolean espersona) {
         this.espersona = espersona;
-
+    }
     public Collection<Pago> getPagos() {
         return pagos;
     }

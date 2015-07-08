@@ -101,9 +101,12 @@ public class PedidosReportController implements Serializable {
         SfTmpenc sfTmpenc = new SfTmpenc();
         String nroTrans = sfTmpencFacade.getSiguienteNumeroTransacccion();
         sfTmpenc.setNoTrans(nroTrans);
-        sfTmpenc.setGlosa(operacion.getGlosa() + " del pedido: " + pedido.getCodigo().getSecuencia().toString());
+        sfTmpenc.setGlosa(operacion.getGlosa() + " del pedido: " + pedido.getCodigo().toString());
         sfTmpenc.setFecha(new Date());
         sfTmpenc.setTipoDoc(operacion.getTipoDoc());
+        sfTmpenc.setCliente(pedido.getCliente());
+        sfTmpenc.setDebe(pedido.getTotalimporte());
+        sfTmpenc.setNombreCliente(pedido.getCliente().getNombreCompleto());
         sfTmpenc.setNoDoc(sfConfencFacade.getSiguienteNumeroDocumento(operacion.getTipoDoc()));
         FacesContext facesContext = FacesContext.getCurrentInstance();
         LoginBean loginBean = (LoginBean) facesContext.getApplication().getELResolver().
@@ -191,7 +194,7 @@ public class PedidosReportController implements Serializable {
         }
 
         Map<String, Object> paramMap = new HashMap<String, Object>();
-        paramMap.put("nroPedido", pedido.getCodigo().getSecuencia().toString());
+        paramMap.put("nroPedido", pedido.getCodigo().toString());
         paramMap.put("nit", nroDoc);
         paramMap.put("fechaEntrega", pedido.getFechaEntrega());
         paramMap.put("nombreClienteyTerritorio", pedido.getCliente().getNombreCompleto() + "(" + pedido.getCliente().getTerritoriotrabajo().getNombre() + ")");
@@ -349,12 +352,6 @@ public class PedidosReportController implements Serializable {
         }else{
             numeroFactura = pedido.getMovimiento().getNrofactura();
         }
-        String nombre;
-        if (pedido.getCliente().getTipoPersona().equals("institucion")) {
-            nombre = pedido.getCliente().getRazonsocial();
-        }else{
-            nombre = pedido.getCliente().getNom()+" "+pedido.getCliente().getAp()+" "+pedido.getCliente().getAm();
-        }
 
         
         ControlCode controlCode = generateCodControl(pedido, numeroFactura, numberAuthorization, key,dosificacion.getNitEmpresa());
@@ -365,7 +362,8 @@ public class PedidosReportController implements Serializable {
         guardarFactura(pedido, controlCode.getCodigoControl());
         exportarPDF(parameters, jasper);
     }
-    private void setDebeOHaber(SfConfdet ope,SfTmpdet asiento,Double monto){
+
+    private void setDebeOHaber(SfConfdet ope,SfTmpdet asiento, Double monto){
         if(ope.getTipomovimiento().equals("DEBE"))
             asiento.setDebe(new BigDecimal(monto));
         else
@@ -377,9 +375,12 @@ public class PedidosReportController implements Serializable {
         SfTmpenc sfTmpenc = new SfTmpenc();
         String nroTrans = sfTmpencFacade.getSiguienteNumeroTransacccion();
         sfTmpenc.setNoTrans(nroTrans);
-        sfTmpenc.setGlosa(operacion.getGlosa()+" del pedido: "+pedido.getCodigo().getSecuencia().toString());
+        sfTmpenc.setGlosa(operacion.getGlosa() + " del pedido: " + pedido.getCodigo().toString());
         sfTmpenc.setFecha(new Date());
         sfTmpenc.setTipoDoc(operacion.getTipoDoc());
+        sfTmpenc.setCliente(pedido.getCliente());
+        sfTmpenc.setDebe(pedido.getTotalimporte());
+        sfTmpenc.setNombreCliente(pedido.getCliente().getNombreCompleto());
         sfTmpenc.setNoDoc(sfConfencFacade.getSiguienteNumeroDocumento(operacion.getTipoDoc()));
         FacesContext facesContext = FacesContext.getCurrentInstance();
         LoginBean loginBean = (LoginBean) facesContext.getApplication().getELResolver().
