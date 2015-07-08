@@ -89,12 +89,6 @@
                                 <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                             </h:outputText>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListMovimientoTitle_pedidos}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.pedidos}"/>
-                        </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{movimientoController.prepareCreate}" update=":MovimientoCreateForm" oncomplete="PF('MovimientoCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":MovimientoViewForm" oncomplete="PF('MovimientoViewDialog').show()" disabled="#{empty movimientoController.selected}"/>

@@ -35,10 +35,10 @@ import javax.xml.bind.annotation.XmlTransient;
 
 public class Usuario implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     @JoinColumn(name = "IDCOMPANIA", referencedColumnName = "IDCOMPANIA")
     @ManyToOne
     private Compania idcompania;
-    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "IDUSUARIO")
     private Long idusuario;
@@ -71,6 +71,8 @@ public class Usuario implements Serializable {
     private Collection<Ventadirecta> ventadirectas;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private Collection<Impresionfactura> facturas;
+    @OneToMany(mappedBy = "usuario")
+    private Collection<Pago> pagosByIdusuario;
 
     public Usuario() {
     }
@@ -214,5 +216,13 @@ public class Usuario implements Serializable {
 
     public void setVentadirectas(Collection<Ventadirecta> ventadirectas) {
         this.ventadirectas = ventadirectas;
+    }
+
+    public Collection<Pago> getPagosByIdusuario() {
+        return pagosByIdusuario;
+    }
+
+    public void setPagosByIdusuario(Collection<Pago> pagosByIdusuario) {
+        this.pagosByIdusuario = pagosByIdusuario;
     }
 }

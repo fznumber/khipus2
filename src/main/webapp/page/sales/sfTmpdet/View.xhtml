@@ -12,12 +12,6 @@
             <h:form id="SfTmpdetViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{sfTmpdetController.selected != null}">
-                        <h:outputText value="#{bundle.ViewSfTmpdetLabel_sfTmpdetPK_noCia}"/>
-                        <h:outputText value="#{sfTmpdetController.selected.sfTmpdetPK.noCia}" title="#{bundle.ViewSfTmpdetTitle_sfTmpdetPK_noCia}"/>
-                        <h:outputText value="#{bundle.ViewSfTmpdetLabel_sfTmpdetPK_noTrans}"/>
-                        <h:outputText value="#{sfTmpdetController.selected.sfTmpdetPK.noTrans}" title="#{bundle.ViewSfTmpdetTitle_sfTmpdetPK_noTrans}"/>
-                        <h:outputText value="#{bundle.ViewSfTmpdetLabel_sfTmpdetPK_cuenta}"/>
-                        <h:outputText value="#{sfTmpdetController.selected.sfTmpdetPK.cuenta}" title="#{bundle.ViewSfTmpdetTitle_sfTmpdetPK_cuenta}"/>
                         <h:outputText value="#{bundle.ViewSfTmpdetLabel_timemillis}"/>
                         <h:outputText value="#{sfTmpdetController.selected.timemillis}" title="#{bundle.ViewSfTmpdetTitle_timemillis}"/>
                         <h:outputText value="#{bundle.ViewSfTmpdetLabel_codUni}"/>
@@ -32,6 +26,14 @@
                         <h:outputText value="#{sfTmpdetController.selected.debe}" title="#{bundle.ViewSfTmpdetTitle_debe}"/>
                         <h:outputText value="#{bundle.ViewSfTmpdetLabel_tc}"/>
                         <h:outputText value="#{sfTmpdetController.selected.tc}" title="#{bundle.ViewSfTmpdetTitle_tc}"/>
+                        <h:outputText value="#{bundle.ViewSfTmpdetLabel_idTmpdet}"/>
+                        <h:outputText value="#{sfTmpdetController.selected.idTmpdet}" title="#{bundle.ViewSfTmpdetTitle_idTmpdet}"/>
+                        <h:outputText value="#{bundle.ViewSfTmpdetLabel_noCia}"/>
+                        <h:outputText value="#{sfTmpdetController.selected.noCia}" title="#{bundle.ViewSfTmpdetTitle_noCia}"/>
+                        <h:outputText value="#{bundle.ViewSfTmpdetLabel_noTrans}"/>
+                        <h:outputText value="#{sfTmpdetController.selected.noTrans}" title="#{bundle.ViewSfTmpdetTitle_noTrans}"/>
+                        <h:outputText value="#{bundle.ViewSfTmpdetLabel_cuenta}"/>
+                        <h:outputText value="#{sfTmpdetController.selected.cuenta}" title="#{bundle.ViewSfTmpdetTitle_cuenta}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="SfTmpdetViewDialog.hide()"/>
                 </h:panelGroup>

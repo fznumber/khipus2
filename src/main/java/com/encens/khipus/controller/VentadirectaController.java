@@ -46,6 +46,8 @@ public class VentadirectaController implements Serializable {
     @EJB
     private com.encens.khipus.ejb.VentadirectaFacade ejbFacade;
     @EJB
+    SfConfencFacade sfConfencFacade;
+    @EJB
     private VentaarticuloFacade ventaarticuloFacade;
     @Inject
     private PedidosReportController pedidosReportController;
@@ -180,6 +182,11 @@ public class VentadirectaController implements Serializable {
         {
             return;
         }
+        SfConfenc operacion= sfConfencFacade.getOperacion("PEDIDOSINFACTURA");
+        if(operacion == null)
+        {
+            JSFUtil.addErrorMessage("No se encuentra una operación registrada");
+        }
         FacesContext facesContext = FacesContext.getCurrentInstance();
         LoginBean loginBean = (LoginBean) facesContext.getApplication().getELResolver().
                 getValue(facesContext.getELContext(), null, "loginBean");
@@ -200,7 +207,7 @@ public class VentadirectaController implements Serializable {
             else
                 nomcliente = selected.getCliente().getNombreCompleto();
 
-            crearAsientoNota(selected.getTotalimporte(), nomcliente, selected.getCodigo());
+            crearAsientoNota(selected.getTotalimporte(), nomcliente,operacion);
             selected = new Ventadirecta();
             personaElegida = new Persona();
             personas = personasFacade.findAllClientesPersonaInstitucion();
@@ -208,46 +215,48 @@ public class VentadirectaController implements Serializable {
         }
     }
 
-    private void crearAsientoNota(Double totalimporte, String nomcliente, Integer codigo) {
-        Double iva = totalimporte * 0.13;
-        Double it = totalimporte * 0.03;
-        String glosa = "Venta al contado con ("+codigo.toString()+") "+nomcliente;
+    private void crearAsientoNota(Double totalimporte, String nomcliente, SfConfenc operacion) {
+
         SfTmpenc sfTmpenc = new SfTmpenc();
-        sfTmpenc.setAgregarCtaProv("SI");
         sfTmpenc.setNoCia("01");
         sfTmpenc.setFecha(new Date());
-        sfTmpenc.setDescri(glosa);
-        sfTmpenc.setTipoDoc("CI");
-        sfTmpenc.setFormulario("CI");
-        sfTmpenc.setGlosa(glosa);
+        sfTmpenc.setDescri(operacion.getGlosa() + " por la venta Nro: " + selected.getCodigo() + " " + nomcliente);
+        sfTmpenc.setTipoDoc(operacion.getTipoDoc());
+        sfTmpenc.setGlosa(operacion.getGlosa() + " por la venta Nro: " + selected.getCodigo() + " " + nomcliente);
         sfTmpenc.setEstado("PEN");
-        sfTmpenc.setNoUsr("ADM");
-        sfTmpenc.setCuenta("111");
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        LoginBean loginBean = (LoginBean) facesContext.getApplication().getELResolver().
+                getValue(facesContext.getELContext(), null, "loginBean");
+        sfTmpenc.setUsuario(loginBean.getUsuario());
         String nroTrans = sfTmpencFacade.getSiguienteNumeroTransacccion();
         sfTmpenc.setNoTrans(nroTrans);
-        sfTmpencController.setSelected(sfTmpenc);
-        sfTmpencController.createGeneral();
-        ///
-        SfTmpdet sfTmpdet = new SfTmpdet();
-        SfTmpdetPK sfTmpdetPK = new SfTmpdetPK();
-        sfTmpdetPK.setNoCia("01");
-        sfTmpdetPK.setCuenta("5420110201");
-        sfTmpdetPK.setNoTrans(nroTrans);
-        sfTmpdet.setSfTmpdetPK(sfTmpdetPK);
-        sfTmpdet.setHaber(new BigDecimal(totalimporte));
-        sfTmpdet.setTc(new BigDecimal(1.0));
-        sfTmpdetController.setSelected(sfTmpdet);
-        sfTmpdetController.createGeneral();
-        SfTmpdet sfTmpdet1 = new SfTmpdet();
-        SfTmpdetPK sfTmpdetPK1 = new SfTmpdetPK();
-        sfTmpdetPK1.setNoCia("01");
-        sfTmpdetPK1.setCuenta("1110110100");
-        sfTmpdetPK1.setNoTrans(nroTrans);
-        sfTmpdet1.setSfTmpdetPK(sfTmpdetPK1);
-        sfTmpdet1.setDebe(new BigDecimal(totalimporte));
-        sfTmpdet1.setTc(new BigDecimal(1.0));
-        sfTmpdetController.setSelected(sfTmpdet1);
-        sfTmpdetController.createGeneral();
+
+        List<SfConfdet> asientos = new ArrayList<>(operacion.getAsientos());
+        SfConfdet ventaProductos = asientos.get(0);
+        SfConfdet cajaGeneral = asientos.get(1);
+        /////
+        SfTmpdet asientoVentaProductos = new SfTmpdet();
+        asientoVentaProductos.setNoCia("01");
+        asientoVentaProductos.setCuenta(ventaProductos.getCuenta().getCuenta());
+        asientoVentaProductos.setNoTrans(nroTrans);
+        setDebeOHaber(ventaProductos, asientoVentaProductos,totalimporte);
+        sfTmpenc.getAsientos().add(asientoVentaProductos);
+        /////
+        SfTmpdet asientoCajaGeneral = new SfTmpdet();
+        asientoCajaGeneral.setNoCia("01");
+        asientoCajaGeneral.setCuenta(cajaGeneral.getCuenta().getCuenta());
+        asientoCajaGeneral.setNoTrans(nroTrans);
+        setDebeOHaber(cajaGeneral, asientoCajaGeneral,totalimporte);
+        sfTmpenc.getAsientos().add(asientoCajaGeneral);
+
+        selected.setAsiento(sfTmpenc);
+    }
+
+    private void setDebeOHaber(SfConfdet ope,SfTmpdet asiento,Double monto){
+        if(ope.getTipomovimiento().equals("DEBE"))
+            asiento.setDebe(new BigDecimal(monto));
+        else
+            asiento.setHaber(new BigDecimal(monto));
     }
 
     private void crearAsientoFactura(Double totalimporte, String nomcliente, Integer codigo) {
@@ -272,44 +281,36 @@ public class VentadirectaController implements Serializable {
         sfTmpencController.createGeneral();
         ///
         SfTmpdet sfTmpdet = new SfTmpdet();
-        SfTmpdetPK sfTmpdetPK = new SfTmpdetPK();
-        sfTmpdetPK.setNoCia("01");
-        sfTmpdetPK.setCuenta("1110110100");
-        sfTmpdetPK.setNoTrans(nroTrans);
-        sfTmpdet.setSfTmpdetPK(sfTmpdetPK);
+        sfTmpdet.setNoCia("01");
+        sfTmpdet.setCuenta("1110110100");
+        sfTmpdet.setNoTrans(nroTrans);
         sfTmpdet.setDebe(new BigDecimal(totalimporte));
         sfTmpdet.setTc(new BigDecimal(1.0));
         sfTmpdetController.setSelected(sfTmpdet);
         sfTmpdetController.createGeneral();
 
         SfTmpdet sfTmpdet1 = new SfTmpdet();
-        SfTmpdetPK sfTmpdetPK1 = new SfTmpdetPK();
-        sfTmpdetPK1.setNoCia("01");
-        sfTmpdetPK1.setCuenta("5420110201");
-        sfTmpdetPK1.setNoTrans(nroTrans);
-        sfTmpdet1.setSfTmpdetPK(sfTmpdetPK1);
+        sfTmpdet1.setNoCia("01");
+        sfTmpdet1.setCuenta("5420110201");
+        sfTmpdet1.setNoTrans(nroTrans);
         sfTmpdet1.setHaber(new BigDecimal(importe));
         sfTmpdet1.setTc(new BigDecimal(1.0));
         sfTmpdetController.setSelected(sfTmpdet1);
         sfTmpdetController.createGeneral();
 
         SfTmpdet sfTmpdet2 = new SfTmpdet();
-        SfTmpdetPK sfTmpdetPK2 = new SfTmpdetPK();
-        sfTmpdetPK2.setNoCia("01");
-        sfTmpdetPK2.setCuenta("2420410200");
-        sfTmpdetPK2.setNoTrans(nroTrans);
-        sfTmpdet2.setSfTmpdetPK(sfTmpdetPK2);
+        sfTmpdet2.setNoCia("01");
+        sfTmpdet2.setCuenta("2420410200");
+        sfTmpdet2.setNoTrans(nroTrans);
         sfTmpdet2.setHaber(new BigDecimal(iva));
         sfTmpdet2.setTc(new BigDecimal(1.0));
         sfTmpdetController.setSelected(sfTmpdet2);
         sfTmpdetController.createGeneral();
 
-        SfTmpdet sfTmpdet3 = new SfTmpdet();
-        SfTmpdetPK sfTmpdetPK3 = new SfTmpdetPK();
-        sfTmpdetPK3.setNoCia("01");
-        sfTmpdetPK3.setCuenta("2420410100");
-        sfTmpdetPK3.setNoTrans(nroTrans);
-        sfTmpdet3.setSfTmpdetPK(sfTmpdetPK3);
+        SfTmpdet sfTmpdet3 = new SfTmpdet();        
+        sfTmpdet3.setNoCia("01");
+        sfTmpdet3.setCuenta("2420410100");
+        sfTmpdet3.setNoTrans(nroTrans);        
         sfTmpdet3.setHaber(new BigDecimal(it));
         sfTmpdet3.setTc(new BigDecimal(1.0));
         sfTmpdetController.setSelected(sfTmpdet3);

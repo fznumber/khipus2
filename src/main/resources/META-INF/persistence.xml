@@ -3,6 +3,7 @@
   <persistence-unit name="khipusPU" transaction-type="JTA">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <jta-data-source>java:/jdbc/KhipusDS</jta-data-source>
+    <class>com.encens.khipus.model.Arcgms</class>
     <class>com.encens.khipus.model.ArticulosPaquete</class>
     <class>com.encens.khipus.model.ArticulosPedido</class>
     <class>com.encens.khipus.model.ArticulosPromocion</class>
@@ -21,11 +22,14 @@
     <class>com.encens.khipus.model.Modulo</class>
     <class>com.encens.khipus.model.Modulocompania</class>
     <class>com.encens.khipus.model.Movimiento</class>
+    <class>com.encens.khipus.model.Pago</class>
     <class>com.encens.khipus.model.Paquetes</class>
     <class>com.encens.khipus.model.Pedidos</class>
     <class>com.encens.khipus.model.Persona</class>
     <class>com.encens.khipus.model.Promocion</class>
     <class>com.encens.khipus.model.Rol</class>
+    <class>com.encens.khipus.model.SfConfdet</class>
+    <class>com.encens.khipus.model.SfConfenc</class>
     <class>com.encens.khipus.model.SfTmpdet</class>
     <class>com.encens.khipus.model.SfTmpenc</class>
     <class>com.encens.khipus.model.Territoriotrabajo</class>
@@ -40,6 +44,10 @@
     <properties>
       <property name="eclipselink.target-server" value="JBoss"/>
       <property name="eclipselink.weaving" value="static"/>
+      <property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:3306/khipus"/>
+      <property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="eclipselink.jdbc.user"/>
+      <property name="eclipselink.jdbc.password"/>
     </properties>
   </persistence-unit>
 </persistence>

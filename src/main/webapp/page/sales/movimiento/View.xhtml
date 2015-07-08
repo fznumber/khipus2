@@ -34,8 +34,6 @@
                         <h:outputText value="#{movimientoController.selected.fecharegistro}" title="#{bundle.ViewMovimientoTitle_fecharegistro}">
                             <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                         </h:outputText>
-                        <h:outputText value="#{bundle.ViewMovimientoLabel_pedidos}"/>
-                        <h:outputText value="#{movimientoController.selected.pedidos}" title="#{bundle.ViewMovimientoTitle_pedidos}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="MovimientoViewDialog.hide()"/>
                 </h:panelGroup>

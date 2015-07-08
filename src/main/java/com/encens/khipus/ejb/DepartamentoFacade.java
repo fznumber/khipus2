@@ -5,7 +5,6 @@
  */
 package com.encens.khipus.ejb;
 
-
 import com.encens.khipus.model.Departamento;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

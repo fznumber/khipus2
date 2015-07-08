@@ -116,7 +116,12 @@ public class Pedidos implements Serializable {
     private Pedidos reposicion;
     @OneToMany(cascade = CascadeType.PERSIST,mappedBy = "reposicion")
     private Collection<Pedidos> pedidosConReposicion;
-
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "id_tmpenc", referencedColumnName = "id_tmpenc")
+    private SfTmpenc asiento;
+    @Basic
+    @Column(name = "CONTABILIZADO")
+    private Boolean contabilizado;
     public Pedidos() {
     }
 
@@ -282,7 +287,6 @@ public class Pedidos implements Serializable {
         return "com.encens.khipus.model.Pedidos[ idpedidos=" + idpedidos + " ]";
     }
 
-
     public Collection<ArticulosPedido> getArticulosPedidos() {
         return articulosPedidos;
     }
@@ -376,5 +380,21 @@ public class Pedidos implements Serializable {
 
     public void setImpuesto(Double impuesto) {
         this.impuesto = impuesto;
+    }
+
+    public SfTmpenc getAsiento() {
+        return asiento;
+    }
+
+    public void setAsiento(SfTmpenc sfTmpenc) {
+        this.asiento = sfTmpenc;
+    }
+
+    public Boolean getContabilizado() {
+        return contabilizado;
+    }
+
+    public void setContabilizado(Boolean contabilizado) {
+        this.contabilizado = contabilizado;
     }
 }

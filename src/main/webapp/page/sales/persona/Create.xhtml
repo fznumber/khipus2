@@ -74,7 +74,9 @@
                 <p:panelGrid columns="3">
                     <p:outputLabel value="Articulo:" for="itemTip" />
                     <p:autoComplete id="itemTip" size="54" value="#{personaController.articuloElegido}" completeMethod="#{personaController.completarArticulo}"
-                                    var="articulo" itemLabel="#{articulo.descri}" itemValue="#{articulo}" converter="convertirArticulos">
+                                    var="articulo" itemLabel="#{articulo.descri}" itemValue="#{articulo}"
+                                    converter="convertirArticulos"
+                                    minQueryLength="3" maxResults="8" cache="true" cacheTimeout="30000">
                         <f:facet name="itemtip">
                             <h:panelGrid columns="2" cellpadding="5">
                                 <f:facet name="header">
@@ -94,7 +96,11 @@
                         id="articulosTable"
                         var="item"
                         value="#{personaController.selected.ventaclientes}"
-                        tableStyle="width:auto">
+                        tableStyle="width:auto"
+                        rowKey="#{item.idventacliente}"
+                        paginator="true"
+                        rows="10"
+                        rowsPerPageTemplate="10,20,30,40,50">
                     <f:facet name="header">
                         Articulos a la venta elegidos
                     </f:facet>

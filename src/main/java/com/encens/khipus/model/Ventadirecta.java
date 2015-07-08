@@ -88,6 +88,9 @@ public class Ventadirecta implements Serializable {
     @JoinColumn(name = "IDMOVIMIENTO",referencedColumnName = "IDMOVIMIENTO")
     @ManyToOne(optional = true)
     private Movimiento movimiento;
+    @JoinColumn(name = "id_tmpenc",referencedColumnName = "id_tmpenc")
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private SfTmpenc asiento;
 
     public Ventadirecta() {
     }
@@ -215,8 +218,7 @@ public class Ventadirecta implements Serializable {
         if ((this.idventadirecta == null && other.idventadirecta != null) || (this.idventadirecta != null && !this.idventadirecta.equals(other.idventadirecta))) {
             return false;
         }
-        return true;
-    }
+        return true;    }
 
     @Override
     public String toString() {
@@ -265,5 +267,13 @@ public class Ventadirecta implements Serializable {
 
     public void setDocumento(byte[] documento) {
         this.documento = documento;
+    }
+
+    public SfTmpenc getAsiento() {
+        return asiento;
+    }
+
+    public void setAsiento(SfTmpenc sfTmpenc) {
+        this.asiento = sfTmpenc;
     }
 }

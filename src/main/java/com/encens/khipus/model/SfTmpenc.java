@@ -7,11 +7,14 @@ package com.encens.khipus.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -95,6 +98,7 @@ public class SfTmpenc implements Serializable {
     @Size(max = 20)
     @Column(name = "no_doc")
     private String noDoc;
+    @Basic
     @Size(max = 3)
     @Column(name = "tipo_doc")
     private String tipoDoc;
@@ -139,6 +143,29 @@ public class SfTmpenc implements Serializable {
     @Size(max = 6)
     @Column(name = "cod_enti")
     private String codEnti;
+    @JoinColumn(name = "idusuario",referencedColumnName = "idusuario")
+    @ManyToOne
+    private Usuario usuario;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "sfTmpenc")
+    private Collection<SfTmpdet> asientos = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.PERSIST,mappedBy = "asiento")
+    private Collection<Pedidos> pedidos = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.PERSIST,mappedBy = "asiento")
+    private Collection<Pago> pagos = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.PERSIST,mappedBy = "asiento")
+    private Collection<Ventadirecta> ventadirectas = new ArrayList<>();
+    @JoinColumn(name = "IDPERSONACLIENTE",referencedColumnName = "IDPERSONACLIENTE")
+    @ManyToOne
+    private Persona cliente;
+    @Basic
+    @Column(name = "NOMBRECLIENTE")
+    private String nombreCliente;
+    @Basic
+    @Column(name = "DEBE")
+    private Double debe;
+    @Basic
+    @Column(name = "HABER")
+    private Double haber;
 
     public SfTmpenc() {
     }
@@ -387,5 +414,76 @@ public class SfTmpenc implements Serializable {
     public String toString() {
         return "com.encens.khipus.model.SfTmpenc[ idTmpenc=" + idTmpenc + " ]";
     }
-    
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Collection<SfTmpdet> getAsientos() {
+        return asientos;
+    }
+
+    public void setAsientos(Collection<SfTmpdet> asientos) {
+        this.asientos = asientos;
+    }
+
+    public Collection<Pedidos> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(Collection<Pedidos> pedidos) {
+        this.pedidos = pedidos;
+    }
+
+    public Collection<Pago> getPagos() {
+        return pagos;
+    }
+
+    public void setPagos(Collection<Pago> pagos) {
+        this.pagos = pagos;
+    }
+
+    public Collection<Ventadirecta> getVentadirectas() {
+        return ventadirectas;
+    }
+
+    public void setVentadirectas(Collection<Ventadirecta> ventadirectas) {
+        this.ventadirectas = ventadirectas;
+    }
+
+    public Persona getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Persona cliente) {
+        this.cliente = cliente;
+    }
+
+    public String getNombreCliente() {
+        return nombreCliente;
+    }
+
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
+    }
+
+    public Double getDebe() {
+        return debe;
+    }
+
+    public void setDebe(Double debe) {
+        this.debe = debe;
+    }
+
+    public Double getHaber() {
+        return haber;
+    }
+
+    public void setHaber(Double haber) {
+        this.haber = haber;
+    }
 }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SfConfencEditDlg" widgetVar="SfConfencEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditSfConfencTitle}">
+            <h:form id="SfConfencEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{sfConfencController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditSfConfencLabel_idSfConfenc}" for="idSfConfenc" />
+                        <p:inputText id="idSfConfenc" value="#{sfConfencController.selected.idSfConfenc}" title="#{bundle.EditSfConfencTitle_idSfConfenc}" required="true" requiredMessage="#{bundle.EditSfConfencRequiredMessage_idSfConfenc}"/>
+                        <p:outputLabel value="#{bundle.EditSfConfencLabel_cuenta}" for="cuenta" />
+                        <p:inputText id="cuenta" value="#{sfConfencController.selected.cuenta}" title="#{bundle.EditSfConfencTitle_cuenta}" />
+                        <p:outputLabel value="#{bundle.EditSfConfencLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{sfConfencController.selected.descripcion}" title="#{bundle.EditSfConfencTitle_descripcion}" />
+                        <p:outputLabel value="#{bundle.EditSfConfencLabel_tipoDoc}" for="tipoDoc" />
+                        <p:inputText id="tipoDoc" value="#{sfConfencController.selected.tipoDoc}" title="#{bundle.EditSfConfencTitle_tipoDoc}" />
+                        <p:outputLabel value="#{bundle.EditSfConfencLabel_glosa}" for="glosa" />
+                        <p:inputText id="glosa" value="#{sfConfencController.selected.glosa}" title="#{bundle.EditSfConfencTitle_glosa}" />
+                        <p:outputLabel value="#{bundle.EditSfConfencLabel_idusuario}" for="idusuario" />
+                        <p:inputText id="idusuario" value="#{sfConfencController.selected.idusuario}" title="#{bundle.EditSfConfencTitle_idusuario}" required="true" requiredMessage="#{bundle.EditSfConfencRequiredMessage_idusuario}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{sfConfencController.update}" value="#{bundle.Save}" update="display,:SfConfencListForm:datalist,:growl" oncomplete="handleSubmit(args, 'SfConfencEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="SfConfencEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

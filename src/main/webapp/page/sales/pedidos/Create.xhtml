@@ -13,7 +13,9 @@
             <p:panelGrid id="display" rendered="#{pedidosController.selected != null}" columns="4" >
                 <p:outputLabel value="Cliente:" for="cliente" />
                 <p:autoComplete id="cliente" value="#{pedidosController.personaElegida}" completeMethod="#{pedidosController.completarCliente}"
-                                var="cliente" itemLabel="#{cliente.nombreCompleto}" itemValue="#{cliente}" converter="convertirPersona" forceSelection="true">
+                                var="cliente" itemLabel="#{cliente.nombreCompleto}" itemValue="#{cliente}"
+                                converter="convertirPersona" forceSelection="true"
+                                minQueryLength="3" maxResults="8" cache="true" cacheTimeout="30000">
                     <f:facet name="itemtip">
                         <h:panelGrid columns="2" cellpadding="5">
                             <f:facet name="header">

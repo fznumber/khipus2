@@ -43,7 +43,6 @@ public class SfTmpdetController implements Serializable {
     }
 
     protected void initializeEmbeddableKey() {
-        selected.setSfTmpdetPK(new com.encens.khipus.model.SfTmpdetPK());
     }
 
     private SfTmpdetFacade getFacade() {
@@ -110,7 +109,7 @@ public class SfTmpdetController implements Serializable {
         }
     }
 
-    public SfTmpdet getSfTmpdet(com.encens.khipus.model.SfTmpdetPK id) {
+    public SfTmpdet getSfTmpdet(Long id) {
         return getFacade().find(id);
     }
 
@@ -142,23 +141,15 @@ public class SfTmpdetController implements Serializable {
             return controller.getSfTmpdet(getKey(value));
         }
 
-        com.encens.khipus.model.SfTmpdetPK getKey(String value) {
-            com.encens.khipus.model.SfTmpdetPK key;
-            String values[] = value.split(SEPARATOR_ESCAPED);
-            key = new com.encens.khipus.model.SfTmpdetPK();
-            key.setNoCia(values[0]);
-            key.setNoTrans(values[1]);
-            key.setCuenta(values[2]);
+        java.lang.Long getKey(String value) {
+            java.lang.Long key;
+            key = Long.valueOf(value);
             return key;
         }
 
-        String getStringKey(com.encens.khipus.model.SfTmpdetPK value) {
+        String getStringKey(java.lang.Long value) {
             StringBuilder sb = new StringBuilder();
-            sb.append(value.getNoCia());
-            sb.append(SEPARATOR);
-            sb.append(value.getNoTrans());
-            sb.append(SEPARATOR);
-            sb.append(value.getCuenta());
+            sb.append(value);
             return sb.toString();
         }
 
@@ -169,7 +160,7 @@ public class SfTmpdetController implements Serializable {
             }
             if (object instanceof SfTmpdet) {
                 SfTmpdet o = (SfTmpdet) object;
-                return getStringKey(o.getSfTmpdetPK());
+                return getStringKey(o.getIdTmpdet());
             } else {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), SfTmpdet.class.getName()});
                 return null;
