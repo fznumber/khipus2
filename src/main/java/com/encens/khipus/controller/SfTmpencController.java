@@ -1,10 +1,12 @@
 package com.encens.khipus.controller;
 
+import com.encens.khipus.model.Persona;
 import com.encens.khipus.model.SfTmpenc;
 import com.encens.khipus.ejb.SfTmpencFacade;
 import com.encens.khipus.util.JSFUtil;
 import com.encens.khipus.util.JSFUtil.PersistAction;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -26,6 +28,9 @@ public class SfTmpencController implements Serializable {
     private com.encens.khipus.ejb.SfTmpencFacade ejbFacade;
     private List<SfTmpenc> items = null;
     private SfTmpenc selected;
+    private Persona personaElegida = new Persona();
+    private Date fechaIni;
+    private Date fechaFin;
 
     public SfTmpencController() {
     }
@@ -54,6 +59,10 @@ public class SfTmpencController implements Serializable {
         return selected;
     }
 
+    public void generarKardex(){
+
+    }
+
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("SfTmpencCreated"));
         if (!JSFUtil.isValidationFailed()) {
@@ -75,7 +84,7 @@ public class SfTmpencController implements Serializable {
 
     public List<SfTmpenc> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = getFacade().findKardex();
         }
         return items;
     }
@@ -166,4 +175,27 @@ public class SfTmpencController implements Serializable {
 
     }
 
+    public Persona getPersonaElegida() {
+        return personaElegida;
+    }
+
+    public void setPersonaElegida(Persona personaElegida) {
+        this.personaElegida = personaElegida;
+    }
+
+    public Date getFechaIni() {
+        return fechaIni;
+    }
+
+    public void setFechaIni(Date fechaIni) {
+        this.fechaIni = fechaIni;
+    }
+
+    public Date getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(Date fechaFin) {
+        this.fechaFin = fechaFin;
+    }
 }

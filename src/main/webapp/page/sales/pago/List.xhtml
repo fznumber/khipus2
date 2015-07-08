@@ -61,19 +61,19 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListPagoTitle_sfConfencByIdSfConfenc}"/>
                             </f:facet>
-                            <h:outputText value="#{item.sfConfencByIdSfConfenc}"/>
+                            <h:outputText value="#{item.asientoConfiguracion}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListPagoTitle_sfTmpencByIdTmpenc}"/>
                             </f:facet>
-                            <h:outputText value="#{item.sfTmpencByIdTmpenc}"/>
+                            <h:outputText value="#{item.asiento}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListPagoTitle_usuarioByIdusuario}"/>
                             </f:facet>
-                            <h:outputText value="#{item.usuarioByIdusuario}"/>
+                            <h:outputText value="#{item.usuario}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{pagoController.prepareCreate}" update=":PagoCreateForm" oncomplete="PF('PagoCreateDialog').show()"/>

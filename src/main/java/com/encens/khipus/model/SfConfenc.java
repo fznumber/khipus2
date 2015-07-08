@@ -24,16 +24,16 @@ public class SfConfenc implements Serializable {
     @Basic
     @Column(name = "idusuario", nullable = false, insertable = true, updatable = true)
     private long idusuario;
-    @OneToMany(mappedBy = "sfConfencByIdSfConfenc",cascade = CascadeType.PERSIST)
+    @Basic
+    @Column(name = "OPERACION")
+    private String opracion;
+    @OneToMany(mappedBy = "asientoConfiguracion",cascade = CascadeType.PERSIST)
     private Collection<Pago> pagosByIdSfConfenc = new ArrayList<>();
-    @OneToMany(mappedBy = "sfConfenc",cascade = CascadeType.PERSIST)
-    private Collection<Pedidos> pedidosesByIdSfConfenc = new ArrayList<>();
     @OneToMany(mappedBy = "sfConfenc",cascade = CascadeType.PERSIST)
     private Collection<SfConfdet> asientos = new ArrayList<>();
     @JoinColumn(name = "cuenta",referencedColumnName = "cuenta")
     @ManyToOne
     private Arcgms cuenta;
-
     @Id
     @Column(name = "id_sf_confenc", nullable = false, insertable = true, updatable = true)
     @TableGenerator(name = "SfConfenc_Gen"
@@ -119,14 +119,6 @@ public class SfConfenc implements Serializable {
         this.pagosByIdSfConfenc = pagosByIdSfConfenc;
     }
 
-    public Collection<Pedidos> getPedidosesByIdSfConfenc() {
-        return pedidosesByIdSfConfenc;
-    }
-
-    public void setPedidosesByIdSfConfenc(Collection<Pedidos> pedidosesByIdSfConfenc) {
-        this.pedidosesByIdSfConfenc = pedidosesByIdSfConfenc;
-    }
-
     public Collection<SfConfdet> getAsientos() {
         return asientos;
     }
@@ -141,5 +133,13 @@ public class SfConfenc implements Serializable {
 
     public void setCuenta(Arcgms arcgms) {
         this.cuenta = arcgms;
+    }
+
+    public String getOpracion() {
+        return opracion;
+    }
+
+    public void setOpracion(String opracion) {
+        this.opracion = opracion;
     }
 }

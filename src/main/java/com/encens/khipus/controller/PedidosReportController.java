@@ -6,6 +6,8 @@
 package com.encens.khipus.controller;
 
 import com.encens.khipus.ejb.DosificacionFacade;
+import com.encens.khipus.ejb.SfConfencFacade;
+import com.encens.khipus.ejb.SfTmpencFacade;
 import com.encens.khipus.model.*;
 import com.encens.khipus.util.*;
 import net.sf.jasperreports.engine.*;
@@ -24,10 +26,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.*;
 import java.util.*;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -45,6 +47,10 @@ public class PedidosReportController implements Serializable {
     GestorImpresion gestorImpresion;
     @EJB
     DosificacionFacade dosificacionFacade;
+    @EJB
+    SfConfencFacade sfConfencFacade;
+    @EJB
+    SfTmpencFacade sfTmpencFacade;
     @Inject
     PedidosController pedidosController;
     @Inject
@@ -71,6 +77,11 @@ public class PedidosReportController implements Serializable {
         {
             return;
         }
+        SfConfenc operacion= sfConfencFacade.getOperacion("PEDIDOSINFACTURA");
+        if(operacion == null)
+        {
+            JSFUtil.addErrorMessage("No se encuentra una operación registrada");
+        }
         this.pedido = pedido;
         HashMap parameters = new HashMap();
         moneyUtil = new MoneyUtil();
@@ -78,9 +89,81 @@ public class PedidosReportController implements Serializable {
         File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/notaDeEntrega.jasper"));
         exportarPDF(parameters, jasper);
         pedido.setEstado("PREPARAR");
+        if(!pedido.getContabilizado())
+            contabilizarPedidoSinfactura(operacion,pedido);
         pedidosController.setSelected(pedido);
         pedidosController.generalUpdate();
         pedidosController.setItems(null);
+    }
+
+    private void contabilizarPedidoSinfactura(SfConfenc operacion,Pedidos pedido) {
+        pedido.setContabilizado(true);
+        SfTmpenc sfTmpenc = new SfTmpenc();
+        String nroTrans = sfTmpencFacade.getSiguienteNumeroTransacccion();
+        sfTmpenc.setNoTrans(nroTrans);
+        sfTmpenc.setGlosa(operacion.getGlosa() + " del pedido: " + pedido.getCodigo().getSecuencia().toString());
+        sfTmpenc.setFecha(new Date());
+        sfTmpenc.setTipoDoc(operacion.getTipoDoc());
+        sfTmpenc.setNoDoc(sfConfencFacade.getSiguienteNumeroDocumento(operacion.getTipoDoc()));
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        LoginBean loginBean = (LoginBean) facesContext.getApplication().getELResolver().
+                getValue(facesContext.getELContext(), null, "loginBean");
+        sfTmpenc.setUsuario(loginBean.getUsuario());
+        List<SfConfdet> asientos = new ArrayList<>(operacion.getAsientos());
+        SfConfdet cuentasPorCobrar = asientos.get(0);
+        SfConfdet mermasYBajas = asientos.get(1);
+        SfConfdet ventaDeProductos = asientos.get(2);
+
+        SfTmpdet asientoCuentasPorCobrar = new SfTmpdet();
+        asientoCuentasPorCobrar.setCuenta(cuentasPorCobrar.getCuenta().getCuenta());
+        asientoCuentasPorCobrar.setNoTrans(nroTrans);
+        setMonto(pedido, cuentasPorCobrar,asientoCuentasPorCobrar,false);
+        sfTmpenc.getAsientos().add(asientoCuentasPorCobrar);
+        /////
+        SfTmpdet asientoMermasYbajas = new SfTmpdet();
+        asientoMermasYbajas.setCuenta(mermasYBajas.getCuenta().getCuenta());
+        asientoMermasYbajas.setNoTrans(nroTrans);
+        setMonto(pedido, mermasYBajas,asientoMermasYbajas,true);
+        sfTmpenc.getAsientos().add(asientoMermasYbajas);
+        ////
+        SfTmpdet asientoVentaDeProductos = new SfTmpdet();
+        asientoVentaDeProductos.setCuenta(ventaDeProductos.getCuenta().getCuenta());
+        asientoVentaDeProductos.setNoTrans(nroTrans);
+        if(ventaDeProductos.getTipomovimiento().equals("DEBE"))
+        {
+            asientoVentaDeProductos.setDebe(new BigDecimal(pedido.getTotalimporte()));
+        }else {
+            asientoVentaDeProductos.setHaber(new BigDecimal(pedido.getTotalimporte()));
+        }
+        sfTmpenc.getAsientos().add(asientoVentaDeProductos);
+        pedido.setAsiento(sfTmpenc);
+
+    }
+
+    private void setMonto(Pedidos pedido,SfConfdet detConf,SfTmpdet asiento,Boolean conRepo)
+    {   Double monto = 0.0;
+        Double montoRepo = 0.0;
+        Double valor = 0.0;
+        for(ArticulosPedido articulosPedido:pedido.getArticulosPedidos()){
+            if(articulosPedido.getReposicion() > 0)
+                montoRepo +=  articulosPedido.getImporte();
+            else
+                monto +=  articulosPedido.getImporte();
+        }
+
+        if(conRepo)
+        {
+            valor = montoRepo;
+        }else{
+            valor = monto;
+        }
+
+        if(detConf.getTipomovimiento().equals("DEBE"))
+        {
+            asiento.setDebe(new BigDecimal(valor));
+        }else {
+            asiento.setHaber(new BigDecimal(valor));
+        }
     }
 
     public void imprimirNotaEntrega(Ventadirecta venta) throws IOException, JRException {
@@ -245,6 +328,13 @@ public class PedidosReportController implements Serializable {
             return;
         }
 
+        SfConfenc operacion= sfConfencFacade.getOperacion("PEDIDOCONFACTURA");
+        if(operacion == null)
+        {
+            JSFUtil.addErrorMessage("No se encuentra una operación registrada");
+            return;
+        }
+
         HashMap parameters = new HashMap();
         moneyUtil = new MoneyUtil();
         barcodeRenderer = new BarcodeRenderer();
@@ -265,9 +355,67 @@ public class PedidosReportController implements Serializable {
         parameters.putAll(
                 getReportParams(
                         pedido.getCliente().getNombreCompleto(), numeroFactura, tipoEtiquetaFactura, controlCode.getCodigoControl(), controlCode.getKeyQR(), pedido));
+        contabilizarPedidoConfactura(operacion,pedido);
         guardarFactura(pedido, controlCode.getCodigoControl());
         exportarPDF(parameters, jasper);
     }
+    private void setDebeOHaber(SfConfdet ope,SfTmpdet asiento,Double monto){
+        if(ope.getTipomovimiento().equals("DEBE"))
+            asiento.setDebe(new BigDecimal(monto));
+        else
+            asiento.setHaber(new BigDecimal(monto));
+    }
+
+    private void contabilizarPedidoConfactura(SfConfenc operacion,Pedidos pedido) {
+        pedido.setContabilizado(true);
+        SfTmpenc sfTmpenc = new SfTmpenc();
+        String nroTrans = sfTmpencFacade.getSiguienteNumeroTransacccion();
+        sfTmpenc.setNoTrans(nroTrans);
+        sfTmpenc.setGlosa(operacion.getGlosa()+" del pedido: "+pedido.getCodigo().getSecuencia().toString());
+        sfTmpenc.setFecha(new Date());
+        sfTmpenc.setTipoDoc(operacion.getTipoDoc());
+        sfTmpenc.setNoDoc(sfConfencFacade.getSiguienteNumeroDocumento(operacion.getTipoDoc()));
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        LoginBean loginBean = (LoginBean) facesContext.getApplication().getELResolver().
+                getValue(facesContext.getELContext(), null, "loginBean");
+        sfTmpenc.setUsuario(loginBean.getUsuario());
+        List<SfConfdet> asientos = new ArrayList<>(operacion.getAsientos());
+        SfConfdet cuentasPorCobrar = asientos.get(0);
+        SfConfdet ventaDeProductos = asientos.get(1);
+        SfConfdet debitoFiscalIVA = asientos.get(2);
+        SfConfdet impuestoALasTransacciones = asientos.get(3);
+        Double iva = pedido.getTotalimporte() * 0.13;
+        Double it = pedido.getTotalimporte() * 0.03;
+        Double montoVentaProductos = pedido.getTotalimporte() - iva -it;
+
+        SfTmpdet asientoCuentasPorCobrar = new SfTmpdet();
+        asientoCuentasPorCobrar.setCuenta(cuentasPorCobrar.getCuenta().getCuenta());
+        asientoCuentasPorCobrar.setNoTrans(nroTrans);
+        setDebeOHaber(cuentasPorCobrar,asientoCuentasPorCobrar,pedido.getTotalimporte());
+        sfTmpenc.getAsientos().add(asientoCuentasPorCobrar);
+        /////
+        SfTmpdet asientoVentaDeProductos = new SfTmpdet();
+        asientoVentaDeProductos.setCuenta(ventaDeProductos.getCuenta().getCuenta());
+        asientoVentaDeProductos.setNoTrans(nroTrans);
+        setDebeOHaber(ventaDeProductos,asientoVentaDeProductos,montoVentaProductos);
+        sfTmpenc.getAsientos().add(asientoVentaDeProductos);
+        ////
+        SfTmpdet asientoIVA = new SfTmpdet();
+        asientoIVA.setCuenta(debitoFiscalIVA.getCuenta().getCuenta());
+        asientoIVA.setNoTrans(nroTrans);
+        setDebeOHaber(debitoFiscalIVA,asientoIVA,iva);
+        sfTmpenc.getAsientos().add(asientoIVA);
+        ////
+        SfTmpdet asientoIT = new SfTmpdet();
+        asientoIT.setCuenta(impuestoALasTransacciones.getCuenta().getCuenta());
+        asientoIT.setNoTrans(nroTrans);
+        setDebeOHaber(impuestoALasTransacciones,asientoIT,it);
+        sfTmpenc.getAsientos().add(asientoIVA);
+
+        pedido.setAsiento(sfTmpenc);
+
+    }
+
 
     public void imprimirFacturaVentaDirecta() throws IOException, JRException {
         dosificacion = dosificacionFacade.findByPeriodo(new Date());
@@ -526,6 +674,11 @@ public class PedidosReportController implements Serializable {
             JSFUtil.addWarningMessage("No hay ningun pedido elegido.");
             return;
         }
+        SfConfenc operacion= sfConfencFacade.getOperacion("PEDIDOCONFACTURA");
+        if(operacion == null)
+        {
+            JSFUtil.addErrorMessage("No se encuentra una operación registrada");
+        }
         quitarAnulados();
         HashMap parameters = new HashMap();
         moneyUtil = new MoneyUtil();
@@ -535,7 +688,7 @@ public class PedidosReportController implements Serializable {
         File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/factura.jasper"));
         quitarSinFactura();
         JasperPrint jasperPrint;
-        parameters.putAll(fijarParmetrosFactura(pedidosElegidos.get(0)));
+        parameters.putAll(fijarParmetrosFactura(pedidosElegidos.get(0),operacion));
         try {
             jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parameters, new JRBeanCollectionDataSource(pedidosElegidos.get(0).getArticulosPedidos()));
         } catch (JRException e) {
@@ -545,7 +698,7 @@ public class PedidosReportController implements Serializable {
         }
 
         for (int i = 1; i < pedidosElegidos.size(); i++) {
-            parameters.putAll(fijarParmetrosFactura(pedidosElegidos.get(i)));
+            parameters.putAll(fijarParmetrosFactura(pedidosElegidos.get(i),operacion));
             try {
                 jasperPrint.getPages().addAll(JasperFillManager.fillReport(jasper.getPath()
                         , parameters
@@ -620,6 +773,11 @@ public class PedidosReportController implements Serializable {
             JSFUtil.addWarningMessage("No hay ningun pedido elegido.");
             return;
         }
+        SfConfenc operacion= sfConfencFacade.getOperacion("PEDIDOSINFACTURA");
+        if(operacion == null)
+        {
+            JSFUtil.addErrorMessage("No se encuentra una operación registrada");
+        }
         HashMap parameters = new HashMap();
         moneyUtil = new MoneyUtil();
         File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/notaDeEntrega.jasper"));
@@ -649,6 +807,10 @@ public class PedidosReportController implements Serializable {
         for (Pedidos pedido : pedidosElegidos) {
             if (pedido.getEstado().equals("PENDIENTE")) {
                 pedido.setEstado("PREPARAR");
+
+                if(!pedido.getContabilizado())
+                    contabilizarPedidoSinfactura(operacion,pedido);
+
                 pedidosController.setSelected(pedido);
                 pedidosController.setItems(null);
                 pedidosController.generalUpdate();
@@ -676,7 +838,7 @@ public class PedidosReportController implements Serializable {
                 venta.getCliente().getNombreCompleto(), numeroFactura, tipoEtiquetaFactura, controlCode.getCodigoControl(), controlCode.getKeyQR(), venta);
     }
 
-    public Map<String, Object> fijarParmetrosFactura(Pedidos pedido) {
+    public Map<String, Object> fijarParmetrosFactura(Pedidos pedido,SfConfenc operacion) {
         Integer numeroFactura;
         if (pedido.getMovimiento() == null) {
             numeroFactura = Integer.parseInt(dosificacionFacade.getSiguienteNumeroFactura());
@@ -688,6 +850,7 @@ public class PedidosReportController implements Serializable {
         if (pedido.getEstado().equals("PENDIENTE")) {
             pedido.setEstado("PREPARAR");
         }
+        contabilizarPedidoConfactura(operacion,pedido);
         guardarFactura(pedido, controlCode.getCodigoControl());
         return getReportParams(
                 pedido.getCliente().getNombreCompleto(), numeroFactura, tipoEtiquetaFactura, controlCode.getCodigoControl(), controlCode.getKeyQR(), pedido);

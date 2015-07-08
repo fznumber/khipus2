@@ -71,6 +71,7 @@ public class Usuario implements Serializable {
     private Collection<Ventadirecta> ventadirectas;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private Collection<Impresionfactura> facturas;
+    @OneToMany(mappedBy = "usuario")
     private Collection<Pago> pagosByIdusuario;
 
     public Usuario() {
@@ -217,7 +218,6 @@ public class Usuario implements Serializable {
         this.ventadirectas = ventadirectas;
     }
 
-    @OneToMany(mappedBy = "usuarioByIdusuario")
     public Collection<Pago> getPagosByIdusuario() {
         return pagosByIdusuario;
     }

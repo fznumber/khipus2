@@ -27,19 +27,19 @@
                                            itemValue="#{personaItem}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.CreatePagoLabel_sfConfencByIdSfConfenc}" for="sfConfencByIdSfConfenc" />
-                        <p:selectOneMenu id="sfConfencByIdSfConfenc" value="#{pagoController.selected.sfConfencByIdSfConfenc}" required="true" requiredMessage="#{bundle.EditPagoRequiredMessage_sfConfencByIdSfConfenc}">
+                        <p:selectOneMenu id="sfConfencByIdSfConfenc" value="#{pagoController.selected.asientoConfiguracion}" required="true" requiredMessage="#{bundle.EditPagoRequiredMessage_sfConfencByIdSfConfenc}">
                             <f:selectItems value="#{sfConfencController.itemsAvailableSelectOne}"
                                            var="sfConfencByIdSfConfencItem"
                                            itemValue="#{sfConfencByIdSfConfencItem}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.CreatePagoLabel_sfTmpencByIdTmpenc}" for="sfTmpencByIdTmpenc" />
-                        <p:selectOneMenu id="sfTmpencByIdTmpenc" value="#{pagoController.selected.sfTmpencByIdTmpenc}" >
+                        <p:selectOneMenu id="sfTmpencByIdTmpenc" value="#{pagoController.selected.asiento}" >
                             <f:selectItems value="#{sfTmpencController.itemsAvailableSelectOne}"
                                            var="sfTmpencByIdTmpencItem"
                                            itemValue="#{sfTmpencByIdTmpencItem}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.CreatePagoLabel_usuarioByIdusuario}" for="usuarioByIdusuario" />
-                        <p:selectOneMenu id="usuarioByIdusuario" value="#{pagoController.selected.usuarioByIdusuario}" required="true" requiredMessage="#{bundle.EditPagoRequiredMessage_usuarioByIdusuario}">
+                        <p:selectOneMenu id="usuarioByIdusuario" value="#{pagoController.selected.usuario}" required="true" requiredMessage="#{bundle.EditPagoRequiredMessage_usuarioByIdusuario}">
                             <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
                                            var="usuarioByIdusuarioItem"
                                            itemValue="#{usuarioByIdusuarioItem}"/>

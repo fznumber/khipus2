@@ -75,6 +75,9 @@ public class SfTmpdet implements Serializable {
     @Size(min = 1, max = 31)
     @Column(name = "cuenta")
     private String cuenta;
+    @JoinColumn(name = "id_tmpenc",referencedColumnName = "id_tmpenc")
+    @ManyToOne(optional = false)
+    private SfTmpenc sfTmpenc;
 
     public SfTmpdet() {
     }
@@ -190,5 +193,13 @@ public class SfTmpdet implements Serializable {
 
     public void setCuenta(String cuenta) {
         this.cuenta = cuenta;
+    }
+
+    public SfTmpenc getSfTmpenc() {
+        return sfTmpenc;
+    }
+
+    public void setSfTmpenc(SfTmpenc sfTmpenc) {
+        this.sfTmpenc = sfTmpenc;
     }
 }

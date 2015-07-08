@@ -130,6 +130,8 @@ public class Persona implements Serializable {
     @JoinColumn(name = "IDTIPOCLIENTE", referencedColumnName = "IDTIPOCLIENTE")
     @ManyToOne
     private Tipocliente tipocliente;
+    @Transient
+    private String nombreCompleto;
 
     public Persona() {
     }

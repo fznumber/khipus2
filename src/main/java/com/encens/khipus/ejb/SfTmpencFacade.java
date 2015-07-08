@@ -5,11 +5,15 @@
  */
 package com.encens.khipus.ejb;
 
+import com.encens.khipus.model.Persona;
 import com.encens.khipus.model.SfTmpenc;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -37,5 +41,54 @@ public class SfTmpencFacade extends AbstractFacade<SfTmpenc> {
             return "0";
         }
         return numero;
+    }
+
+    public List<SfTmpenc> findKardex() {
+        List<SfTmpenc> sfTmpencs = new ArrayList<>();
+        try{
+            sfTmpencs = (List<SfTmpenc>)em.createQuery("select  asiento.fecha\n" +
+                    "               ,asiento.tipoDoc\n" +
+                    "               ,asiento.noDoc\n" +
+                    "               ,asiento.nombreCliente\n" +
+                    "               ,asiento.debe\n" +
+                    "               ,asiento.haber\n" +
+                    "        from SfTmpenc asiento\n" +
+                    "        join asiento.pedidos pedido\n" +
+                    "        join asiento.pagos  pago\n" +
+                    "        join asiento.ventadirectas venta\n" +
+                    "        where asiento.cliente.tipoPersona = 'cliente' and asiento.cliente.tipoPersona = 'institucion'\n" +
+                    "        group by asiento.cliente.piId\n")
+                        .getResultList();
+        }catch (NoResultException e){
+            return sfTmpencs;
+        }
+        return sfTmpencs;
+    }
+
+    public List<SfTmpenc> findKardexByClienteAndRangoFecha(Persona cliente,Date fechaIni,Date fechaFin){
+        List<SfTmpenc> kardex = new ArrayList<>();
+        try{
+            kardex = (List<SfTmpenc>)em.createQuery("select  asiento.fecha\n" +
+                    "               ,asiento.tipoDoc\n" +
+                    "               ,asiento.noDoc\n" +
+                    "               ,asiento.nombreCliente\n" +
+                    "               ,asiento.debe\n" +
+                    "               ,asiento.haber\n" +
+                    "        from SfTmpenc asiento\n" +
+                    "        join asiento.pedidos pedido\n" +
+                    "        join asiento.pagos  pago\n" +
+                    "        join asiento.ventadirectas venta\n" +
+                    "        where asiento.cliente.piId =:idCliente\n" +
+                    "        and asiento.fecha between :fechaIni and :fechaFin\n" +
+                    "        group by asiento.cliente.piId")
+                    .setParameter("idCliente",cliente.getPiId())
+                    .setParameter("fechaIni",fechaIni)
+                    .setParameter("fechaFin",fechaFin)
+                    .getResultList();
+        }catch (NoResultException e)
+        {
+            return kardex;
+        }
+        return kardex;
     }
 }

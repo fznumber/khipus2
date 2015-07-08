@@ -178,6 +178,10 @@ public class PersonaController implements Serializable {
             cliente.setTerritoriotrabajo(selected.getTerritoriotrabajo());
             cliente.setConfactura(confacura);
             cliente.getVentaclientes().addAll(selected.getVentaclientes());
+            for(Ventacliente ventacliente:cliente.getVentaclientes())
+            {
+                ventacliente.setPersona(cliente);
+            }
             clienteFacade.create(cliente);
         }
         else {
@@ -202,6 +206,10 @@ public class PersonaController implements Serializable {
             institucion.setTipocliente(selected.getTipocliente());
             institucion.setConfactura(confacura);
             institucion.getVentaclientes().addAll(selected.getVentaclientes());
+            for(Ventacliente ventacliente:institucion.getVentaclientes())
+            {
+                ventacliente.setPersona(institucion);
+            }
             institucionFacade.create(institucion);
         }
         JSFUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ClienteCreated"));
@@ -256,6 +264,19 @@ public class PersonaController implements Serializable {
         }
 
         return articulosFiltrados;
+    }
+
+    public List<Persona> completarCliente(String query) {
+        List<Persona> clientesFiltrados = new ArrayList<>();
+        List<Persona> personas = getFacade().findAllClientesPersonaInstitucion();
+        for(Persona persona: personas) {
+
+            if(persona.getNombreCompleto().toLowerCase().contains(query)) {
+                clientesFiltrados.add(persona);
+            }
+        }
+
+        return clientesFiltrados;
     }
 
     public void agregarArticulo()

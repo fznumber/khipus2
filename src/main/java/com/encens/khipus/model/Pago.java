@@ -2,6 +2,7 @@ package com.encens.khipus.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.sql.Timestamp;
 
 /**
@@ -10,14 +11,6 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "pago")
 public class Pago implements Serializable {
-    private long idPago;
-    private Timestamp fecha;
-    private Double monto;
-    private String descripcion;
-    private Persona persona;
-    private SfConfenc sfConfencByIdSfConfenc;
-    private SfTmpenc sfTmpencByIdTmpenc;
-    private Usuario usuarioByIdusuario;
 
     @Id
     @Column(name = "id_pago", nullable = false, insertable = true, updatable = true)
@@ -28,6 +21,36 @@ public class Pago implements Serializable {
             ,initialValue = 1
             ,allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "Pago_Gen")
+    private long idPago;
+
+    @Basic
+    @Column(name = "fecha", nullable = false, insertable = true, updatable = true)
+    private Timestamp fecha;
+
+    @Basic
+    @Column(name = "monto", nullable = true, insertable = true, updatable = true, precision = 0)
+    private Double monto;
+
+    @Basic
+    @Column(name = "descripcion", nullable = true, insertable = true, updatable = true, length = 150)
+    private String descripcion;
+
+    @ManyToOne
+    @JoinColumn(name = "IDPERSONACLIENTE", referencedColumnName = "IDPERSONACLIENTE", nullable = false)
+    private Persona persona;
+
+    @ManyToOne
+    @JoinColumn(name = "id_sf_confenc", referencedColumnName = "id_sf_confenc", nullable = false)
+    private SfConfenc asientoConfiguracion;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "id_tmpenc", referencedColumnName = "id_tmpenc")
+    private SfTmpenc asiento;
+
+    @ManyToOne
+    @JoinColumn(name = "idusuario", referencedColumnName = "idusuario", nullable = false)
+    private Usuario usuario;
+
     public long getIdPago() {
         return idPago;
     }
@@ -36,8 +59,6 @@ public class Pago implements Serializable {
         this.idPago = idPago;
     }
 
-    @Basic
-    @Column(name = "fecha", nullable = false, insertable = true, updatable = true)
     public Timestamp getFecha() {
         return fecha;
     }
@@ -46,8 +67,6 @@ public class Pago implements Serializable {
         this.fecha = fecha;
     }
 
-    @Basic
-    @Column(name = "monto", nullable = true, insertable = true, updatable = true, precision = 0)
     public Double getMonto() {
         return monto;
     }
@@ -56,8 +75,6 @@ public class Pago implements Serializable {
         this.monto = monto;
     }
 
-    @Basic
-    @Column(name = "descripcion", nullable = true, insertable = true, updatable = true, length = 150)
     public String getDescripcion() {
         return descripcion;
     }
@@ -90,8 +107,6 @@ public class Pago implements Serializable {
         return result;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "IDPERSONACLIENTE", referencedColumnName = "IDPERSONACLIENTE", nullable = false)
     public Persona getPersona() {
         return persona;
     }
@@ -100,33 +115,27 @@ public class Pago implements Serializable {
         this.persona = personaclienteByIdpersonacliente;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "id_sf_confenc", referencedColumnName = "id_sf_confenc", nullable = false)
-    public SfConfenc getSfConfencByIdSfConfenc() {
-        return sfConfencByIdSfConfenc;
+    public SfConfenc getAsientoConfiguracion() {
+        return asientoConfiguracion;
     }
 
-    public void setSfConfencByIdSfConfenc(SfConfenc sfConfencByIdSfConfenc) {
-        this.sfConfencByIdSfConfenc = sfConfencByIdSfConfenc;
+    public void setAsientoConfiguracion(SfConfenc sfConfencByIdSfConfenc) {
+        this.asientoConfiguracion = sfConfencByIdSfConfenc;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "id_tmpenc", referencedColumnName = "id_tmpenc")
-    public SfTmpenc getSfTmpencByIdTmpenc() {
-        return sfTmpencByIdTmpenc;
+    public SfTmpenc getAsiento() {
+        return asiento;
     }
 
-    public void setSfTmpencByIdTmpenc(SfTmpenc sfTmpencByIdTmpenc) {
-        this.sfTmpencByIdTmpenc = sfTmpencByIdTmpenc;
+    public void setAsiento(SfTmpenc sfTmpencByIdTmpenc) {
+        this.asiento = sfTmpencByIdTmpenc;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "idusuario", referencedColumnName = "idusuario", nullable = false)
-    public Usuario getUsuarioByIdusuario() {
-        return usuarioByIdusuario;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setUsuarioByIdusuario(Usuario usuarioByIdusuario) {
-        this.usuarioByIdusuario = usuarioByIdusuario;
+    public void setUsuario(Usuario usuarioByIdusuario) {
+        this.usuario = usuarioByIdusuario;
     }
 }

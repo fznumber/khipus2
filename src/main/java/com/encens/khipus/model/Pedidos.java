@@ -116,12 +116,12 @@ public class Pedidos implements Serializable {
     private Pedidos reposicion;
     @OneToMany(cascade = CascadeType.PERSIST,mappedBy = "reposicion")
     private Collection<Pedidos> pedidosConReposicion;
-    @JoinColumn(name = "id_tmpenc",referencedColumnName = "id_tmpenc")
-    @OneToOne
-    private SfTmpenc sfTmpenc;
-    @JoinColumn(name = "id_sf_confenc",referencedColumnName = "id_sf_confenc")
-    @ManyToOne
-    private SfConfenc sfConfenc;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "id_tmpenc", referencedColumnName = "id_tmpenc")
+    private SfTmpenc asiento;
+    @Basic
+    @Column(name = "CONTABILIZADO")
+    private Boolean contabilizado;
     public Pedidos() {
     }
 
@@ -382,19 +382,19 @@ public class Pedidos implements Serializable {
         this.impuesto = impuesto;
     }
 
-    public SfTmpenc getSfTmpenc() {
-        return sfTmpenc;
+    public SfTmpenc getAsiento() {
+        return asiento;
     }
 
-    public void setSfTmpenc(SfTmpenc sfTmpenc) {
-        this.sfTmpenc = sfTmpenc;
+    public void setAsiento(SfTmpenc sfTmpenc) {
+        this.asiento = sfTmpenc;
     }
 
-    public SfConfenc getSfConfenc() {
-        return sfConfenc;
+    public Boolean getContabilizado() {
+        return contabilizado;
     }
 
-    public void setSfConfenc(SfConfenc sfConfenc) {
-        this.sfConfenc = sfConfenc;
+    public void setContabilizado(Boolean contabilizado) {
+        this.contabilizado = contabilizado;
     }
 }

@@ -3,6 +3,7 @@
   <persistence-unit name="khipusPU" transaction-type="JTA">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <jta-data-source>java:/jdbc/KhipusDS</jta-data-source>
+    <class>com.encens.khipus.model.Arcgms</class>
     <class>com.encens.khipus.model.ArticulosPaquete</class>
     <class>com.encens.khipus.model.ArticulosPedido</class>
     <class>com.encens.khipus.model.ArticulosPromocion</class>
@@ -39,12 +40,6 @@
     <class>com.encens.khipus.model.Ventaarticulo</class>
     <class>com.encens.khipus.model.Ventacliente</class>
     <class>com.encens.khipus.model.Ventadirecta</class>
-    <class>com.encens.khipus.model.Arcgms</class>
-    <class>com.encens.khipus.model.InvArticulosPK</class>
-    <class>com.encens.khipus.model.InvGruposPK</class>
-    <class>com.encens.khipus.model.SfTmpdetPK</class>
-    <class>com.encens.khipus.model.DerechoaccesoPK</class>
-    <class>com.encens.khipus.model.ModulocompaniaPK</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.target-server" value="JBoss"/>
