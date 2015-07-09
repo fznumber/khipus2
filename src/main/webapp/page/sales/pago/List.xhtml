@@ -13,14 +13,15 @@
             <h:outputText value="#{bundle.ListPagoTitle}"></h:outputText>
         </ui:define>
 
-        <ui:define name="body">
+        <ui:define name="center">
             <h:form id="PagoListForm">
                 <p:panel header="#{bundle.ListPagoTitle}">
                     <p:dataTable id="datalist" value="#{pagoController.items}" var="item"
                                  selectionMode="single" selection="#{pagoController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idPago}"
-                                 rows="10"
+                                 rows="15"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  >
 
@@ -35,45 +36,27 @@
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPagoTitle_fecha}"/>
+                                <h:outputText value="Fecha"/>
                             </f:facet>
                             <h:outputText value="#{item.fecha}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPagoTitle_monto}"/>
+                                <h:outputText value="Monto"/>
                             </f:facet>
                             <h:outputText value="#{item.monto}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPagoTitle_descripcion}"/>
+                                <h:outputText value="Descripción"/>
                             </f:facet>
                             <h:outputText value="#{item.descripcion}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPagoTitle_persona}"/>
+                                <h:outputText value="Nombre Persona"/>
                             </f:facet>
-                            <h:outputText value="#{item.persona}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPagoTitle_sfConfencByIdSfConfenc}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.asientoConfiguracion}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPagoTitle_sfTmpencByIdTmpenc}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.asiento}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPagoTitle_usuarioByIdusuario}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.usuario}"/>
+                            <h:outputText value="#{item.persona.nombreCompleto}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{pagoController.prepareCreate}" update=":PagoCreateForm" oncomplete="PF('PagoCreateDialog').show()"/>

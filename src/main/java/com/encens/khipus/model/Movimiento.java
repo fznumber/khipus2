@@ -70,6 +70,9 @@ public class Movimiento implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "TIPOCAMBIO")
     private Double tipocambio;
+    @Basic
+    @Column(name = "CODIGO_QR")
+    private String vodigoQR;
     @Basic(optional = false)
     @NotNull
     @Column(name = "FECHAREGISTRO")
@@ -222,5 +225,13 @@ public class Movimiento implements Serializable {
 
     public void setVentadirectas(Collection<Ventadirecta> ventadirectas) {
         this.ventadirectas = ventadirectas;
+    }
+
+    public String getVodigoQR() {
+        return vodigoQR;
+    }
+
+    public void setVodigoQR(String vodigoQR) {
+        this.vodigoQR = vodigoQR;
     }
 }
