@@ -32,13 +32,13 @@ public class SfTmpdet implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @NotNull
-    @TableGenerator(name = "SfTmpdet_Gen"
-            ,table="ID_GEN"
-            ,pkColumnName = "GEN_NAME"
-            ,valueColumnName = "GEN_VAL"
+    @TableGenerator(name = "sf_tmpdet"
+            ,table="secuencia"
+            ,pkColumnName = "tabla"
+            ,valueColumnName = "valor"
             ,initialValue = 1
             ,allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "SfTmpdet_Gen")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "sf_tmpdet")
     @Column(name = "id_sf_tmpdet")
     private Long idTmpdet;
     @Size(max = 255)

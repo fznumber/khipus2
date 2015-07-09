@@ -56,13 +56,13 @@ public class SfTmpenc implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @NotNull
-    @TableGenerator(name = "SfTmpenc_Gen"
-            ,table="ID_GEN"
-            ,pkColumnName = "GEN_NAME"
-            ,valueColumnName = "GEN_VAL"
+    @TableGenerator(name = "sf_tmpenc"
+            ,table="secuencia"
+            ,pkColumnName = "tabla"
+            ,valueColumnName = "valor"
             ,initialValue = 1
             ,allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "SfTmpenc_Gen")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "sf_tmpenc")
     @Column(name = "id_tmpenc")
     private Long idTmpenc;
     @Size(max = 10)
