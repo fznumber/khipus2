@@ -224,6 +224,9 @@ public class VentadirectaController implements Serializable {
         sfTmpenc.setTipoDoc(operacion.getTipoDoc());
         sfTmpenc.setGlosa(operacion.getGlosa() + " por la venta Nro: " + selected.getCodigo() + " " + nomcliente);
         sfTmpenc.setEstado("PEN");
+        sfTmpenc.setCliente(selected.getCliente());
+        sfTmpenc.setDebe(selected.getTotalimporte());
+        sfTmpenc.setNombreCliente(selected.getCliente().getNombreCompleto());
         FacesContext facesContext = FacesContext.getCurrentInstance();
         LoginBean loginBean = (LoginBean) facesContext.getApplication().getELResolver().
                 getValue(facesContext.getELContext(), null, "loginBean");

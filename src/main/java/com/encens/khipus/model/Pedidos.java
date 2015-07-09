@@ -86,8 +86,8 @@ public class Pedidos implements Serializable {
     private String estado;
     @Column(name = "CON_REPOSICION")
     private Boolean conReposicion = false;
-    @OneToOne
-    @JoinColumn(name="codigo")
+    @Column(name = "CODIGO")
+    @Basic
     private BigInteger codigo;
     @JoinColumn(name = "IDCLIENTE", referencedColumnName = "IDPERSONACLIENTE")
     @ManyToOne(optional = false)
