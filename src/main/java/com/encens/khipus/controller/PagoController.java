@@ -1,11 +1,17 @@
 package com.encens.khipus.controller;
 
+import com.encens.khipus.ejb.SfConfencFacade;
 import com.encens.khipus.model.Pago;
 
 import com.encens.khipus.ejb.PagoFacade;
+import com.encens.khipus.model.Persona;
+import com.encens.khipus.model.SfConfenc;
+import com.encens.khipus.model.SfTmpenc;
 import com.encens.khipus.util.JSFUtil.*;
 import com.encens.khipus.util.JSFUtil;
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -25,8 +31,11 @@ public class PagoController implements Serializable {
 
     @EJB
     private com.encens.khipus.ejb.PagoFacade ejbFacade;
+    @EJB
+    SfConfencFacade sfConfencFacade;
     private List<Pago> items = null;
     private Pago selected;
+    private Persona personaElegida;
 
     public PagoController() {
     }
@@ -56,18 +65,39 @@ public class PagoController implements Serializable {
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PagoCreated"));
+        SfConfenc operacion= sfConfencFacade.getOperacion("PAGO");
+        if(operacion == null)
+        {
+            JSFUtil.addErrorMessage("No se encuentra una operación registrada");
+            return;
+        }
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        LoginBean loginBean = (LoginBean) facesContext.getApplication().getELResolver().
+                getValue(facesContext.getELContext(), null, "loginBean");
+        selected.setPersona(personaElegida);
+        selected.setFecha(new Timestamp(new Date().getTime()));
+        selected.setUsuario(loginBean.getUsuario());
+
+        SfTmpenc asiento = new SfTmpenc();
+        asiento.setFecha(new Date());
+        asiento.setNombreCliente(personaElegida.getNombreCompleto());
+        asiento.setCliente(personaElegida);
+        asiento.setGlosa(operacion.getGlosa()+" "+selected.getDescripcion());
+
+        persist(PersistAction.CREATE, "El pago se registro correctamente");
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
+            personaElegida = null;
+            selected = new Pago();
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PagoUpdated"));
+        persist(PersistAction.UPDATE,"El pago se actualizo correctamente");
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("PagoDeleted"));
+        persist(PersistAction.DELETE, "El pago se elimino correctamente");
         if (!JSFUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
@@ -162,4 +192,11 @@ public class PagoController implements Serializable {
 
     }
 
+    public Persona getPersonaElegida() {
+        return personaElegida;
+    }
+
+    public void setPersonaElegida(Persona personaElegida) {
+        this.personaElegida = personaElegida;
+    }
 }

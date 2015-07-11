@@ -2,7 +2,6 @@ package com.encens.khipus.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.sql.Timestamp;
 
 /**
@@ -28,8 +27,8 @@ public class Pago implements Serializable {
     private Timestamp fecha;
 
     @Basic
-    @Column(name = "monto", nullable = true, insertable = true, updatable = true, precision = 0)
-    private Double monto;
+    @Column(name = "pago", nullable = true, insertable = true, updatable = true)
+    private Double pago;
 
     @Basic
     @Column(name = "descripcion", nullable = true, insertable = true, updatable = true, length = 150)
@@ -67,12 +66,12 @@ public class Pago implements Serializable {
         this.fecha = fecha;
     }
 
-    public Double getMonto() {
-        return monto;
+    public Double getPago() {
+        return pago;
     }
 
-    public void setMonto(Double monto) {
-        this.monto = monto;
+    public void setPago(Double monto) {
+        this.pago = monto;
     }
 
     public String getDescripcion() {
@@ -93,7 +92,7 @@ public class Pago implements Serializable {
         if (idPago != pago.idPago) return false;
         if (descripcion != null ? !descripcion.equals(pago.descripcion) : pago.descripcion != null) return false;
         if (fecha != null ? !fecha.equals(pago.fecha) : pago.fecha != null) return false;
-        if (monto != null ? !monto.equals(pago.monto) : pago.monto != null) return false;
+        if (pago != null ? !pago.equals(pago.pago) : pago.pago != null) return false;
 
         return true;
     }
@@ -102,7 +101,7 @@ public class Pago implements Serializable {
     public int hashCode() {
         int result = (int) (idPago ^ (idPago >>> 32));
         result = 31 * result + (fecha != null ? fecha.hashCode() : 0);
-        result = 31 * result + (monto != null ? monto.hashCode() : 0);
+        result = 31 * result + (pago != null ? pago.hashCode() : 0);
         result = 31 * result + (descripcion != null ? descripcion.hashCode() : 0);
         return result;
     }

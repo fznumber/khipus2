@@ -8,44 +8,38 @@
 
     <ui:composition>
 
-        <p:dialog id="PagoCreateDlg" widgetVar="PagoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreatePagoTitle}">
+        <p:dialog id="PagoCreateDlg" widgetVar="PagoCreateDialog" modal="true" resizable="false" closable="false" appendTo="@(body)" header="Registrar Pago">
             <h:form id="PagoCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{pagoController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreatePagoLabel_idPago}" for="idPago" />
-                        <p:inputText id="idPago" value="#{pagoController.selected.idPago}" title="#{bundle.CreatePagoTitle_idPago}" required="true" requiredMessage="#{bundle.CreatePagoRequiredMessage_idPago}"/>
-                        <p:outputLabel value="#{bundle.CreatePagoLabel_fecha}" for="fecha" />
-                        <p:inputText id="fecha" value="#{pagoController.selected.fecha}" title="#{bundle.CreatePagoTitle_fecha}" required="true" requiredMessage="#{bundle.CreatePagoRequiredMessage_fecha}"/>
-                        <p:outputLabel value="#{bundle.CreatePagoLabel_monto}" for="monto" />
-                        <p:inputText id="monto" value="#{pagoController.selected.monto}" title="#{bundle.CreatePagoTitle_monto}" />
-                        <p:outputLabel value="#{bundle.CreatePagoLabel_descripcion}" for="descripcion" />
-                        <p:inputText id="descripcion" value="#{pagoController.selected.descripcion}" title="#{bundle.CreatePagoTitle_descripcion}" />
-                        <p:outputLabel value="#{bundle.CreatePagoLabel_persona}" for="persona" />
-                        <p:selectOneMenu id="persona" value="#{pagoController.selected.persona}" required="true" requiredMessage="#{bundle.EditPagoRequiredMessage_persona}">
-                            <f:selectItems value="#{personaController.itemsAvailableSelectOne}"
-                                           var="personaItem"
-                                           itemValue="#{personaItem}"/>
-                        </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.CreatePagoLabel_sfConfencByIdSfConfenc}" for="sfConfencByIdSfConfenc" />
-                        <p:selectOneMenu id="sfConfencByIdSfConfenc" value="#{pagoController.selected.asientoConfiguracion}" required="true" requiredMessage="#{bundle.EditPagoRequiredMessage_sfConfencByIdSfConfenc}">
-                            <f:selectItems value="#{sfConfencController.itemsAvailableSelectOne}"
-                                           var="sfConfencByIdSfConfencItem"
-                                           itemValue="#{sfConfencByIdSfConfencItem}"/>
-                        </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.CreatePagoLabel_sfTmpencByIdTmpenc}" for="sfTmpencByIdTmpenc" />
-                        <p:selectOneMenu id="sfTmpencByIdTmpenc" value="#{pagoController.selected.asiento}" >
-                            <f:selectItems value="#{sfTmpencController.itemsAvailableSelectOne}"
-                                           var="sfTmpencByIdTmpencItem"
-                                           itemValue="#{sfTmpencByIdTmpencItem}"/>
-                        </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.CreatePagoLabel_usuarioByIdusuario}" for="usuarioByIdusuario" />
-                        <p:selectOneMenu id="usuarioByIdusuario" value="#{pagoController.selected.usuario}" required="true" requiredMessage="#{bundle.EditPagoRequiredMessage_usuarioByIdusuario}">
-                            <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
-                                           var="usuarioByIdusuarioItem"
-                                           itemValue="#{usuarioByIdusuarioItem}"/>
-                        </p:selectOneMenu>
+                        <p:outputLabel value="Cliente:" for="cliente" />
+                        <p:autoComplete id="cliente" value="#{pagoController.personaElegida}" completeMethod="#{personaController.completarCliente}"
+                                        var="cliente" itemLabel="#{cliente.nombreCompleto}" itemValue="#{cliente}"
+                                        converter="convertirPersona" forceSelection="true"
+                                        minQueryLength="3" maxResults="8" cache="true" cacheTimeout="30000">
+                            <f:facet name="itemtip">
+                                <h:panelGrid columns="2" cellpadding="5">
+                                    <f:facet name="header">
+                                        <h:outputText styleClass="ui-theme ui-theme-#{cliente.nombreCompleto}" style="margin-left:50px" />
+                                    </f:facet>
+                                    <h:outputText value="Nombre:" />
+                                    <h:outputText value="#{cliente.nombreCompleto}" />
+                                    <h:outputText value="Nit:" />
+                                    <h:outputText value="#{cliente.nit}" />
+                                    <h:outputText value="C.I.:" />
+                                    <h:outputText value="#{cliente.nroDoc}" />
+                                    <h:outputText value="Telefono:" />
+                                    <h:outputText value="#{cliente.telefono}" />
+                                    <h:outputText value="#{cliente.confactura?'SI':'NO'}" />
+                                </h:panelGrid>
+                            </f:facet>
+                        </p:autoComplete>
+                        <p:outputLabel value="Pago:" for="pago" />
+                        <p:inputText id="pago" value="#{pagoController.selected.pago}" title="Pago"/>
+                        <p:outputLabel value="Descripción:" for="descripcion" />
+                        <p:inputTextarea id="descripcion" value="#{pagoController.selected.descripcion}" title="Descripción" cols="20" rows="3"/>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{pagoController.create}" value="#{bundle.Save}" update="display,:PagoListForm:datalist,:growl" oncomplete="handleSubmit(args,'PagoCreateDialog');"/>
+                    <p:commandButton actionListener="#{pagoController.create}" value="#{bundle.Save}" update="display,:PagoListForm:datalist,:PagoListForm:growl" oncomplete="handleSubmit(args,'PagoCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="PagoCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
