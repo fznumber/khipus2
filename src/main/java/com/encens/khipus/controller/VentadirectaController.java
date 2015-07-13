@@ -186,6 +186,7 @@ public class VentadirectaController implements Serializable {
         if(operacion == null)
         {
             JSFUtil.addErrorMessage("No se encuentra una operación registrada");
+            return;
         }
         FacesContext facesContext = FacesContext.getCurrentInstance();
         LoginBean loginBean = (LoginBean) facesContext.getApplication().getELResolver().

@@ -122,6 +122,10 @@ public class Pedidos implements Serializable {
     @Basic
     @Column(name = "CONTABILIZADO")
     private Boolean contabilizado;
+    @Basic
+    @Column(name = "TIENEFACTURA")
+    private Boolean tieneFactura = false;
+
     public Pedidos() {
     }
 
@@ -396,5 +400,13 @@ public class Pedidos implements Serializable {
 
     public void setContabilizado(Boolean contabilizado) {
         this.contabilizado = contabilizado;
+    }
+
+    public Boolean getTieneFactura() {
+        return tieneFactura;
+    }
+
+    public void setTieneFactura(Boolean tieneFactura) {
+        this.tieneFactura = tieneFactura;
     }
 }

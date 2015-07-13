@@ -211,17 +211,17 @@ public class PedidosController implements Serializable {
         Boolean error = false;
         if(personaElegida.getPiId() == null)
         {
-            JSFUtil.addErrorMessage( ResourceBundle.getBundle("/Bundle").getString("ClienteRequerido"));
+            JSFUtil.addErrorMessage("El cliente es requerido");
             error = true;
         }
         if(selected.getFechaEntrega() == null)
         {
-            JSFUtil.addErrorMessage( ResourceBundle.getBundle("/Bundle").getString("FechaEntregaRequerido"));
+            JSFUtil.addErrorMessage( "La Fecha de entrega es requerida");
             error = true;
         }
         if(selected.getArticulosPedidos().size() == 0)
         {
-            JSFUtil.addErrorMessage( ResourceBundle.getBundle("/Bundle").getString("ArticulosRequerido"));
+            JSFUtil.addErrorMessage("Es necesario registrar al menos un artículo.");
             error = true;
         }
         if(selected.getArticulosPedidos().size() > 0)
@@ -258,7 +258,7 @@ public class PedidosController implements Serializable {
             selected.setPedidosConReposicion(reposiciones);
             selected.setReposicion(selected);
         }
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PedidosUpdated"));
+        persist(PersistAction.UPDATE, "El pedido se actualizo correctamente");
         items = null;
     }
     

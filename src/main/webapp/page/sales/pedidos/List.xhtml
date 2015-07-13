@@ -85,9 +85,6 @@
                     </p:column>
                     <p:column headerText="Acción">
                         <p:commandButton title="NOTA DE ENTREGA" id="printNotaDeVenta" actionListener="#{pedidosReportController.imprimirNotaEntrega(item)}" ajax="false" icon="#{item.estado.equals('PENDIENTE')? 'ui-icon-note':'ui-icon-circle-check'}" rendered="#{!item.estado.equals('ANULADO')}"/>
-                        <p:commandButton title="GENERAR FACTURA" id="printFacturaButton" oncomplete="PF('ImprimirFacturaDialog').show()" icon="#{item.estado.equals('PENDIENTE')? 'ui-icon-script':'ui-icon-check'}" rendered="#{!item.estado.equals('ANULADO')}">
-                            <f:setPropertyActionListener value="#{item}" target="#{pedidosReportController.pedido}" />
-                        </p:commandButton>
                         <p:commandButton id="editButton" actionListener="#{pedidosController.prepareEdit(item)}"  icon="ui-icon-arrowreturnthick-1-e" title="REPONER" update=":PedidosReponerForm" oncomplete="PF('PedidosReponerDialog').show()" rendered="#{item.estado.equals('ENTREGADO') and !item.estado.equals('ANULADO')}"/>
                         <p:commandButton id="editPedido" actionListener="#{pedidosController.prepareEdit(item)}"  icon="ui-icon-wrench" title="EDITAR" update=":PedidosEditForm" oncomplete="PF('PedidosEditDialog').show()" rendered="#{item.estado.equals('PENDIENTE') and !item.estado.equals('ANULADO')}"/>
                         <p:commandButton id="anularPedido" actionListener="#{pedidosController.prepareEdit(item)}"  icon="ui-icon-alert" title="ANULAR PEDIDO" update=":PedidosAnularForm" oncomplete="PF('PedidosAnularDialog').show()" rendered="#{!item.estado.equals('ANULADO')}"/>
@@ -100,6 +97,9 @@
                             <f:setPropertyActionListener value="#{pedidosController.pedidosElegidos}" target="#{pedidosReportController.pedidosElegidos}" />
                         </p:commandButton>
                         <p:commandButton id="generarNotas" value="Generar Notas" actionListener="#{pedidosReportController.imprimirNota(pedidosController.pedidosElegidos)}" ajax="false" update="PedidosListForm"/>
+                        <p:commandButton id="contabilizarPedidos" value="Contabiliza Pedidos" oncomplete="PF('ContabilzarPedidosDialog').show()">
+                            <f:setPropertyActionListener value="#{pedidosController.pedidosElegidos}" target="#{pedidosReportController.pedidosElegidos}" />
+                        </p:commandButton>
                     </f:facet>
                 </p:dataTable>
             </p:panel>
@@ -112,9 +112,10 @@
         <ui:include src="RecepcionPedidosReport.xhtml"/>
         <ui:include src="View.xhtml"/>
         <ui:include src="Edit.xhtml"/>
-        <ui:include src="ImprimirFactura.xhtml"/>
+        <!--<ui:include src="ImprimirFactura.xhtml"/>-->
         <ui:include src="ImprimirTodasLasFacturas.xhtml"/>
         <ui:include src="AnularPedido.xhtml"/>
+        <ui:include src="ContabilizarPedidos.xhtml"/>
     </ui:define>
 </ui:composition>
 
