@@ -1,16 +1,14 @@
 package com.encens.khipus.controller;
 
 import com.encens.khipus.ejb.SfConfencFacade;
-import com.encens.khipus.model.Pago;
+import com.encens.khipus.model.*;
 
 import com.encens.khipus.ejb.PagoFacade;
-import com.encens.khipus.model.Persona;
-import com.encens.khipus.model.SfConfenc;
-import com.encens.khipus.model.SfTmpenc;
 import com.encens.khipus.util.JSFUtil.*;
 import com.encens.khipus.util.JSFUtil;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -30,12 +28,15 @@ import javax.faces.convert.FacesConverter;
 public class PagoController implements Serializable {
 
     @EJB
-    private com.encens.khipus.ejb.PagoFacade ejbFacade;
+    private PagoFacade ejbFacade;
     @EJB
     SfConfencFacade sfConfencFacade;
     private List<Pago> items = null;
     private Pago selected;
     private Persona personaElegida;
+    private String tipoPago = "EFECTIVO";
+    private Banco bancoElejido = new Banco();
+    private List<Banco> bancos = new ArrayList<>();
 
     public PagoController() {
     }
@@ -60,6 +61,7 @@ public class PagoController implements Serializable {
 
     public Pago prepareCreate() {
         selected = new Pago();
+        bancos = getFacade().findBancos();
         initializeEmbeddableKey();
         return selected;
     }
@@ -198,5 +200,29 @@ public class PagoController implements Serializable {
 
     public void setPersonaElegida(Persona personaElegida) {
         this.personaElegida = personaElegida;
+    }
+
+    public String getTipoPago() {
+        return tipoPago;
+    }
+
+    public void setTipoPago(String tipoPago) {
+        this.tipoPago = tipoPago;
+    }
+
+    public Banco getBancoElejido() {
+        return bancoElejido;
+    }
+
+    public void setBancoElejido(Banco bancoElejido) {
+        this.bancoElejido = bancoElejido;
+    }
+
+    public List<Banco> getBancos() {
+        return bancos;
+    }
+
+    public void setBancos(List<Banco> bancos) {
+        this.bancos = bancos;
     }
 }

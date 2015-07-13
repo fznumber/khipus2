@@ -703,11 +703,6 @@ public class PedidosReportController implements Serializable {
             JSFUtil.addWarningMessage("No hay ningun pedido elegido.");
             return;
         }
-        SfConfenc operacion= sfConfencFacade.getOperacion("PEDIDOCONFACTURA");
-        if(operacion == null)
-        {
-            JSFUtil.addErrorMessage("No se encuentra una operación registrada");
-        }
         quitarAnulados();
         HashMap parameters = new HashMap();
         moneyUtil = new MoneyUtil();
@@ -717,7 +712,7 @@ public class PedidosReportController implements Serializable {
         File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/factura.jasper"));
         quitarSinFactura();
         JasperPrint jasperPrint;
-        parameters.putAll(fijarParmetrosFactura(pedidosElegidos.get(0),operacion));
+        parameters.putAll(fijarParmetrosFactura(pedidosElegidos.get(0)));
         try {
             jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parameters, new JRBeanCollectionDataSource(pedidosElegidos.get(0).getArticulosPedidos()));
         } catch (JRException e) {
@@ -727,7 +722,7 @@ public class PedidosReportController implements Serializable {
         }
 
         for (int i = 1; i < pedidosElegidos.size(); i++) {
-            parameters.putAll(fijarParmetrosFactura(pedidosElegidos.get(i),operacion));
+            parameters.putAll(fijarParmetrosFactura(pedidosElegidos.get(i)));
             try {
                 jasperPrint.getPages().addAll(JasperFillManager.fillReport(jasper.getPath()
                         , parameters
@@ -807,11 +802,6 @@ public class PedidosReportController implements Serializable {
             JSFUtil.addWarningMessage("No hay ningun pedido elegido.");
             return;
         }
-        SfConfenc operacion= sfConfencFacade.getOperacion("PEDIDOSINFACTURA");
-        if(operacion == null)
-        {
-            JSFUtil.addErrorMessage("No se encuentra una operación registrada");
-        }
         HashMap parameters = new HashMap();
         moneyUtil = new MoneyUtil();
         File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/notaDeEntrega.jasper"));
@@ -841,10 +831,6 @@ public class PedidosReportController implements Serializable {
         for (Pedidos pedido : pedidosElegidos) {
             if (pedido.getEstado().equals("PENDIENTE")) {
                 pedido.setEstado("PREPARAR");
-
-                if(!pedido.getContabilizado())
-                    contabilizarPedidoSinfactura(operacion,pedido);
-
                 pedidosController.setSelected(pedido);
                 pedidosController.setItems(null);
                 pedidosController.generalUpdate();
@@ -872,7 +858,7 @@ public class PedidosReportController implements Serializable {
                 venta.getCliente().getNombreCompleto(), numeroFactura, tipoEtiquetaFactura, controlCode.getCodigoControl(), controlCode.getKeyQR(), venta);
     }
 
-    public Map<String, Object> fijarParmetrosFactura(Pedidos pedido,SfConfenc operacion) {
+    public Map<String, Object> fijarParmetrosFactura(Pedidos pedido) {
         Integer numeroFactura;
         if (pedido.getMovimiento() == null) {
             numeroFactura = Integer.parseInt(dosificacionFacade.getSiguienteNumeroFactura());
@@ -884,7 +870,6 @@ public class PedidosReportController implements Serializable {
         if (pedido.getEstado().equals("PENDIENTE")) {
             pedido.setEstado("PREPARAR");
         }
-        contabilizarPedidoConfactura(operacion,pedido);
         guardarFactura(pedido, controlCode.getCodigoControl());
         return getReportParams(
                 pedido.getCliente().getNombreCompleto(), numeroFactura, tipoEtiquetaFactura, controlCode.getCodigoControl(), controlCode.getKeyQR(), pedido);
