@@ -138,6 +138,11 @@ public class PedidosReportController implements Serializable {
     }
 
     public void ContabilzarPedidos(){
+        if(pedidosElegidos.size() == 0)
+        {
+            JSFUtil.addWarningMessage("No hay ningun pedido elegido.");
+            return;
+        }
         SfConfenc operacionPedidoConFactura= sfConfencFacade.getOperacion("PEDIDOCONFACTURA");
         if(operacionPedidoConFactura == null)
         {
