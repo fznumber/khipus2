@@ -148,17 +148,26 @@ public class VentadirectaController implements Serializable {
         if(articuloElegido == null)
             return;
         Ventaarticulo ventaarticulo = ventaarticuloFacade.findByInvArticulo(articuloElegido);
-
+        Double precio = ventaarticulo.getPrecio();
+        if(personaElegida.getVentaclientes().size() >0)
+        {
+            for(Ventacliente ventacliente:personaElegida.getVentaclientes()){
+                if(ventacliente.getInvArticulos().getInvArticulosPK().getCodArt() == articuloElegido.getInvArticulosPK().getCodArt())
+                {
+                    precio = ventacliente.getPrecioespecial();
+                }
+            }
+        }
         ArticulosPedido articulosPedido = new ArticulosPedido();
         articulosPedido.setInvArticulos(articuloElegido);
-        articulosPedido.setPrecioInv(ventaarticulo.getPrecio());
-        articulosPedido.setPrecio(ventaarticulo.getPrecio());
+        articulosPedido.setPrecioInv(precio);
+        articulosPedido.setPrecio(precio);
         articulosPedido.setReposicion(0);
         articulosPedido.setVentadirecta(selected);
         articulosPedido.setTipo(ventaarticulo.getTipo());
         selected.getArticulosPedidos().add(articulosPedido);
         articulos.remove(articuloElegido);
-        articuloElegido = null;
+        articuloElegido = new InvArticulos();
     }
 
     public ActionListener createActionListener() throws IOException, JRException {
@@ -229,6 +238,8 @@ public class VentadirectaController implements Serializable {
         sfTmpenc.setCliente(selected.getCliente());
         sfTmpenc.setDebe(selected.getTotalimporte());
         sfTmpenc.setNombreCliente(selected.getCliente().getNombreCompleto());
+        sfTmpenc.setTipoDoc(operacion.getTipoDoc());
+        sfTmpenc.setNoDoc(sfTmpencFacade.getSiguienteNumeroPorNombre(operacion.getTipoDoc()));
         FacesContext facesContext = FacesContext.getCurrentInstance();
         LoginBean loginBean = (LoginBean) facesContext.getApplication().getELResolver().
                 getValue(facesContext.getELContext(), null, "loginBean");

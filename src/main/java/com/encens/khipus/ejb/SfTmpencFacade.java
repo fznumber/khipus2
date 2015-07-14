@@ -43,6 +43,17 @@ public class SfTmpencFacade extends AbstractFacade<SfTmpenc> {
         return numero;
     }
 
+    public String getSiguienteNumeroPorNombre(String nombre) {
+        String numero = "0";
+        try{
+            numero = (String)em.createNativeQuery("SELECT khipus.getNextSeq('"+nombre+"')")
+                    .getSingleResult();
+        }catch (NoResultException e){
+            return "0";
+        }
+        return numero;
+    }
+
     public List<SfTmpenc> findKardex() {
         List<SfTmpenc> sfTmpencs = new ArrayList<>();
         try{

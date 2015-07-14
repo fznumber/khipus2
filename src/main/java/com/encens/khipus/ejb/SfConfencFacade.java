@@ -53,4 +53,9 @@ public class SfConfencFacade extends AbstractFacade<SfConfenc> {
             return numero;
 
     }
+
+    public void crearSecuencia(String tipoDoc) {
+        em.createNativeQuery("INSERT  INTO _sequence(seq_name,seq_val) VALUES ('"+tipoDoc+"',1)")
+                .executeUpdate();
+    }
 }

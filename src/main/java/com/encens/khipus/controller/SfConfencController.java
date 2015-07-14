@@ -116,6 +116,7 @@ public class SfConfencController implements Serializable {
 
     public void create() {
         persist(PersistAction.CREATE,"Se registro con exito la configuración");
+        getFacade().crearSecuencia(selected.getTipoDoc());
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
             selected = new SfConfenc();

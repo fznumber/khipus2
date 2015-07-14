@@ -77,10 +77,10 @@ public class ArticulosPedido implements Serializable {
     @Column(name="TIPO")
     private String tipo;
     @JoinColumn(name = "IDPEDIDOS",referencedColumnName = "IDPEDIDOS")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,cascade = CascadeType.ALL)
     private Pedidos pedidos;
     @JoinColumn(name = "IDVENTADIRECTA",referencedColumnName = "IDVENTADIRECTA")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,cascade = CascadeType.ALL)
     private Ventadirecta ventadirecta;
 
     public ArticulosPedido() {

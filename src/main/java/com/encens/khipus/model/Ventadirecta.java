@@ -81,12 +81,12 @@ public class Ventadirecta implements Serializable {
     @ManyToOne
     private Usuario usuario;
     @JoinColumn(name = "IDCLIENTE", referencedColumnName = "IDPERSONACLIENTE")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,cascade = CascadeType.PERSIST)
     private Persona cliente;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "ventadirecta")
     private Collection<ArticulosPedido> articulosPedidos = new ArrayList<>();
     @JoinColumn(name = "IDMOVIMIENTO",referencedColumnName = "IDMOVIMIENTO")
-    @ManyToOne(optional = true)
+    @ManyToOne(optional = true,cascade = CascadeType.ALL)
     private Movimiento movimiento;
     @JoinColumn(name = "id_tmpenc",referencedColumnName = "id_tmpenc")
     @ManyToOne(cascade = CascadeType.ALL)
