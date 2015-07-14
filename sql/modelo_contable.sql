@@ -1,3 +1,4 @@
+USE khip
 CREATE
   TABLE pago
   (
@@ -45,15 +46,12 @@ ALTER TABLE `personacliente` ADD deuda DOUBLE NULL;
 ALTER TABLE `sf_tmpdet` ADD id_sf_tmpdet BIGINT(20) NOT NULL;
 ALTER TABLE sf_tmpdet ADD PRIMARY KEY (id_sf_tmpdet);
 ALTER TABLE `arcgms` ADD PRIMARY KEY (cuenta);
-ALTER TABLE khipus.pedidos DROP FOREIGN KEY fk_pedido_sf_confenc;
-DROP INDEX fk_pedido_sf_confenc ON khipus.pedidos;
-ALTER TABLE khipus.pedidos DROP id_sf_confenc;
-ALTER TABLE khipus.sf_confenc ADD CONSTRAINT unique_OPERACION UNIQUE (OPERACION);
-ALTER TABLE khipus.pedidos ADD CONTABILIZADO BOOLEAN NULL;
-ALTER TABLE khipus.sf_tmpenc ADD idusuario BIGINT(20) NULL;
-ALTER TABLE khipus.sf_tmpdet ADD id_tmpenc BIGINT(20) NOT NULL;
-ALTER TABLE khipus.ventadirecta ADD id_tmpenc BIGINT(20) NULL;
-ALTER TABLE khipus.sf_tmpenc ADD IDPERSONACLIENTE BIGINT(20) NULL;
-ALTER TABLE khipus.sf_tmpenc ADD NOMBRECLIENTE VARCHAR(50) NULL;
-ALTER TABLE khipus.sf_tmpenc ADD DEBE DOUBLE NULL;
-ALTER TABLE khipus.sf_tmpenc ADD HABER DOUBLE NULL;
+ALTER TABLE pedidos DROP FOREIGN KEY fk_pedido_sf_confenc;
+DROP INDEX fk_pedido_sf_confenc ON pedidos;
+ALTER TABLE pedidos DROP id_sf_confenc;
+ALTER TABLE sf_confenc ADD CONSTRAINT unique_OPERACION UNIQUE (OPERACION);
+ALTER TABLE pedidos ADD CONTABILIZADO BOOLEAN NULL;
+ALTER TABLE sf_tmpenc ADD idusuario BIGINT(20) NULL;
+ALTER TABLE sf_tmpdet ADD id_tmpenc BIGINT(20) NOT NULL;
+ALTER TABLE ventadirecta ADD id_tmpenc BIGINT(20) NULL;
+ALTER TABLE sf_tmpenc ADD IDPERSONACLIENTE BIGINT(20) NULL;

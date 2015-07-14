@@ -26,7 +26,7 @@ public class SfConfenc implements Serializable {
     private long idusuario;
     @Basic
     @Column(name = "OPERACION")
-    private String opracion;
+    private String operacion;
     @OneToMany(mappedBy = "asientoConfiguracion",cascade = CascadeType.PERSIST)
     private Collection<Pago> pagosByIdSfConfenc = new ArrayList<>();
     @OneToMany(mappedBy = "sfConfenc",cascade = CascadeType.PERSIST)
@@ -135,11 +135,11 @@ public class SfConfenc implements Serializable {
         this.cuenta = arcgms;
     }
 
-    public String getOpracion() {
-        return opracion;
+    public String getOperacion() {
+        return operacion;
     }
 
-    public void setOpracion(String opracion) {
-        this.opracion = opracion;
+    public void setOperacion(String opracion) {
+        this.operacion = opracion;
     }
 }

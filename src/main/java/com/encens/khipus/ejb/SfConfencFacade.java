@@ -32,7 +32,7 @@ public class SfConfencFacade extends AbstractFacade<SfConfenc> {
     public SfConfenc getOperacion(String pedidosinfactura) {
         SfConfenc operacion;
         try {
-            operacion = (SfConfenc) em.createQuery("select op from SfConfenc op where op.opracion =:pedidosinfactura")
+            operacion = (SfConfenc) em.createQuery("select op from SfConfenc op where op.operacion =:pedidosinfactura")
                     .setParameter("pedidosinfactura", pedidosinfactura).getSingleResult();
         }catch (NoResultException e){
             return null;

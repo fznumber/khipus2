@@ -118,7 +118,7 @@ public class SfConfencController implements Serializable {
         persist(PersistAction.CREATE,"Se registro con exito la configuración");
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
-            selected = null;
+            selected = new SfConfenc();
         }
     }
 

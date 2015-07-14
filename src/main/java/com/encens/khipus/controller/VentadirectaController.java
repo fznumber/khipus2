@@ -182,7 +182,7 @@ public class VentadirectaController implements Serializable {
         {
             return;
         }
-        SfConfenc operacion= sfConfencFacade.getOperacion("PEDIDOSINFACTURA");
+        SfConfenc operacion= sfConfencFacade.getOperacion("VENTASINFACTURA");
         if(operacion == null)
         {
             JSFUtil.addErrorMessage("No se encuentra una operación registrada");
