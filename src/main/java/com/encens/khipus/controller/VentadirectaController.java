@@ -196,19 +196,20 @@ public class VentadirectaController implements Serializable {
         selected.setCodigo(getFacade().getSiguienteNumeroVenta());
         selected.setEstado("PREPARAR");
         selected.setDocumento(pedidosReportController.generarNotaEntrega(selected));
+        nota = selected.getDocumento();
+        codNota = "NOTA_"+selected.getCodigo().toString();
+        String nomcliente = "";
+        if(!StringUtils.isEmpty(selected.getCliente().getRazonsocial()))
+            nomcliente = selected.getCliente().getRazonsocial();
+        else
+            nomcliente = selected.getCliente().getNombreCompleto();
+
+        crearAsientoNota(selected.getTotalimporte(), nomcliente,operacion);
+
         persist(PersistAction.CREATE, "La venta se registro correctamente.");
 
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
-            nota = selected.getDocumento();
-            codNota = "NOTA_"+selected.getCodigo().toString();
-            String nomcliente = "";
-            if(!StringUtils.isEmpty(selected.getCliente().getRazonsocial()))
-                nomcliente = selected.getCliente().getRazonsocial();
-            else
-                nomcliente = selected.getCliente().getNombreCompleto();
-
-            crearAsientoNota(selected.getTotalimporte(), nomcliente,operacion);
             selected = new Ventadirecta();
             personaElegida = new Persona();
             personas = personasFacade.findAllClientesPersonaInstitucion();
@@ -244,6 +245,7 @@ public class VentadirectaController implements Serializable {
         asientoVentaProductos.setCuenta(ventaProductos.getCuenta().getCuenta());
         asientoVentaProductos.setNoTrans(nroTrans);
         setDebeOHaber(ventaProductos, asientoVentaProductos,totalimporte);
+        asientoVentaProductos.setSfTmpenc(sfTmpenc);
         sfTmpenc.getAsientos().add(asientoVentaProductos);
         /////
         SfTmpdet asientoCajaGeneral = new SfTmpdet();
@@ -251,8 +253,9 @@ public class VentadirectaController implements Serializable {
         asientoCajaGeneral.setCuenta(cajaGeneral.getCuenta().getCuenta());
         asientoCajaGeneral.setNoTrans(nroTrans);
         setDebeOHaber(cajaGeneral, asientoCajaGeneral,totalimporte);
+        asientoCajaGeneral.setSfTmpenc(sfTmpenc);
         sfTmpenc.getAsientos().add(asientoCajaGeneral);
-
+        sfTmpenc.getVentadirectas().add(selected);
         selected.setAsiento(sfTmpenc);
     }
 

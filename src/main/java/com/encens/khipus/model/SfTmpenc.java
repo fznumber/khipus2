@@ -152,7 +152,7 @@ public class SfTmpenc implements Serializable {
     private Collection<Pedidos> pedidos = new ArrayList<>();
     @OneToMany(cascade = CascadeType.PERSIST,mappedBy = "asiento")
     private Collection<Pago> pagos = new ArrayList<>();
-    @OneToMany(cascade = CascadeType.PERSIST,mappedBy = "asiento")
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "asiento")
     private Collection<Ventadirecta> ventadirectas = new ArrayList<>();
     @JoinColumn(name = "IDPERSONACLIENTE",referencedColumnName = "IDPERSONACLIENTE")
     @ManyToOne

@@ -89,7 +89,7 @@ public class Ventadirecta implements Serializable {
     @ManyToOne(optional = true)
     private Movimiento movimiento;
     @JoinColumn(name = "id_tmpenc",referencedColumnName = "id_tmpenc")
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.ALL)
     private SfTmpenc asiento;
 
     public Ventadirecta() {

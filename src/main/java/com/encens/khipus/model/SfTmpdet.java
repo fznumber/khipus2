@@ -39,7 +39,7 @@ public class SfTmpdet implements Serializable {
             ,initialValue = 1
             ,allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "sf_tmpdet")
-    @Column(name = "id_sf_tmpdet")
+    @Column(name = "id_tmpdet")
     private Long idTmpdet;
     @Size(max = 255)
     @Column(name = "timemillis")
