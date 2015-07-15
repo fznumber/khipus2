@@ -277,26 +277,25 @@ public class VentadirectaController implements Serializable {
             asiento.setHaber(new BigDecimal(monto));
     }
 
-    private void crearAsientoFactura(Double totalimporte, String nomcliente, Integer codigo) {
+    private void crearAsientoFactura(Double totalimporte, String nomcliente, Integer codigo,SfConfenc operacion) {
         Double iva = totalimporte * 0.13;
         Double it = totalimporte * 0.03;
         Double importe = totalimporte - iva -it;
-        String glosa = "Venta al contado con factura ("+codigo.toString()+") "+nomcliente;
+        String glosa = " Venta al contado con factura ("+codigo.toString()+") "+nomcliente;
         SfTmpenc sfTmpenc = new SfTmpenc();
         sfTmpenc.setAgregarCtaProv("SI");
         sfTmpenc.setNoCia("01");
         sfTmpenc.setFecha(new Date());
-        sfTmpenc.setDescri(glosa);
-        sfTmpenc.setTipoDoc("CI");
-        sfTmpenc.setFormulario("CI");
-        sfTmpenc.setGlosa(glosa);
+        sfTmpenc.setDescri(operacion.getGlosa() + glosa);
+        sfTmpenc.setTipoDoc(operacion.getTipoDoc());
+        sfTmpenc.setFormulario(operacion.getTipoDoc());
+        sfTmpenc.setGlosa(operacion.getGlosa() + glosa);
         sfTmpenc.setEstado("PEN");
         sfTmpenc.setNoUsr("ADM");
-        sfTmpenc.setCuenta("111");
+        sfTmpenc.setCuenta(operacion.getCuenta().getCuenta());
+        sfTmpenc.setNoDoc(sfTmpencFacade.getSiguienteNumeroPorNombre(operacion.getTipoDoc()));
         String nroTrans = sfTmpencFacade.getSiguienteNumeroTransacccion();
         sfTmpenc.setNoTrans(nroTrans);
-        sfTmpencController.setSelected(sfTmpenc);
-        sfTmpencController.createGeneral();
         ///
         SfTmpdet sfTmpdet = new SfTmpdet();
         sfTmpdet.setNoCia("01");
@@ -325,19 +324,28 @@ public class VentadirectaController implements Serializable {
         sfTmpdetController.setSelected(sfTmpdet2);
         sfTmpdetController.createGeneral();
 
-        SfTmpdet sfTmpdet3 = new SfTmpdet();        
+        SfTmpdet sfTmpdet3 = new SfTmpdet();
         sfTmpdet3.setNoCia("01");
         sfTmpdet3.setCuenta("2420410100");
-        sfTmpdet3.setNoTrans(nroTrans);        
+        sfTmpdet3.setNoTrans(nroTrans);
         sfTmpdet3.setHaber(new BigDecimal(it));
         sfTmpdet3.setTc(new BigDecimal(1.0));
         sfTmpdetController.setSelected(sfTmpdet3);
         sfTmpdetController.createGeneral();
+
+        sfTmpenc.getVentadirectas().add(selected);
+        selected.setAsiento(sfTmpenc);
     }
 
     public void registrarImprimirNotaFactura() throws IOException, JRException {
         if(validarCampos())
         {
+            return;
+        }
+        SfConfenc operacion= sfConfencFacade.getOperacion("VENTASINFACTURA");
+        if(operacion == null)
+        {
+            JSFUtil.addErrorMessage("No se encuentra una operación registrada");
             return;
         }
         FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -348,19 +356,19 @@ public class VentadirectaController implements Serializable {
         selected.setCodigo(getFacade().getSiguienteNumeroVenta());
         selected.setEstado("PREPARAR");
         selected.setDocumento(pedidosReportController.generarFacturaNotaVentaDirecta(selected));
+        nota = selected.getDocumento();
+        codNota = "NOTAFAC_"+selected.getCodigo().toString();
+        String nomcliente = "";
+        if(!StringUtils.isEmpty(selected.getCliente().getRazonsocial()))
+            nomcliente = selected.getCliente().getRazonsocial();
+        else
+            nomcliente = selected.getCliente().getNombreCompleto();
+
+        crearAsientoFactura(selected.getTotalimporte(), nomcliente, selected.getCodigo(), operacion);
         persist(PersistAction.CREATE, "La venta se registro correctamente.");
 
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
-            nota = selected.getDocumento();
-            codNota = "NOTAFAC_"+selected.getCodigo().toString();
-            String nomcliente = "";
-            if(!StringUtils.isEmpty(selected.getCliente().getRazonsocial()))
-                nomcliente = selected.getCliente().getRazonsocial();
-            else
-                nomcliente = selected.getCliente().getNombreCompleto();
-
-            crearAsientoFactura(selected.getTotalimporte(), nomcliente, selected.getCodigo());
             selected = new Ventadirecta();
             personaElegida = new Persona();
             personas = personasFacade.findAllClientesPersonaInstitucion();
