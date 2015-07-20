@@ -297,41 +297,44 @@ public class VentadirectaController implements Serializable {
         String nroTrans = sfTmpencFacade.getSiguienteNumeroTransacccion();
         sfTmpenc.setNoTrans(nroTrans);
         ///
-        SfTmpdet sfTmpdet = new SfTmpdet();
-        sfTmpdet.setNoCia("01");
-        sfTmpdet.setCuenta("1110110100");
-        sfTmpdet.setNoTrans(nroTrans);
-        sfTmpdet.setDebe(new BigDecimal(totalimporte));
-        sfTmpdet.setTc(new BigDecimal(1.0));
-        sfTmpdetController.setSelected(sfTmpdet);
-        sfTmpdetController.createGeneral();
+        List<SfConfdet> asientos = new ArrayList<>(operacion.getAsientos());
+        SfConfdet cajaGeneralMN = asientos.get(0);
+        SfConfdet ventaProductos = asientos.get(1);
+        SfConfdet debitoFisical = asientos.get(2);
+        SfConfdet impuestoTrasacciones = asientos.get(3);
+        ///
+        SfTmpdet cajaGeneralMNAsiento = new SfTmpdet();
+        operacion.getAsientos();
+        cajaGeneralMNAsiento.setNoCia("01");
+        cajaGeneralMNAsiento.setCuenta(cajaGeneralMN.getCuenta().getCuenta());
+        setDebeOHaber(cajaGeneralMN, cajaGeneralMNAsiento, totalimporte);
+        cajaGeneralMNAsiento.setNoTrans(nroTrans);
+        cajaGeneralMNAsiento.setTc(new BigDecimal(1.0));
+        sfTmpenc.getAsientos().add(cajaGeneralMNAsiento);
 
-        SfTmpdet sfTmpdet1 = new SfTmpdet();
-        sfTmpdet1.setNoCia("01");
-        sfTmpdet1.setCuenta("5420110201");
-        sfTmpdet1.setNoTrans(nroTrans);
-        sfTmpdet1.setHaber(new BigDecimal(importe));
-        sfTmpdet1.setTc(new BigDecimal(1.0));
-        sfTmpdetController.setSelected(sfTmpdet1);
-        sfTmpdetController.createGeneral();
+        SfTmpdet ventaDeProductosAsiento = new SfTmpdet();
+        ventaDeProductosAsiento.setNoCia("01");
+        ventaDeProductosAsiento.setCuenta(ventaProductos.getCuenta().getCuenta());
+        ventaDeProductosAsiento.setNoTrans(nroTrans);
+        setDebeOHaber(ventaProductos, ventaDeProductosAsiento, importe);
+        ventaDeProductosAsiento.setTc(new BigDecimal(1.0));
+        sfTmpenc.getAsientos().add(ventaDeProductosAsiento);
 
-        SfTmpdet sfTmpdet2 = new SfTmpdet();
-        sfTmpdet2.setNoCia("01");
-        sfTmpdet2.setCuenta("2420410200");
-        sfTmpdet2.setNoTrans(nroTrans);
-        sfTmpdet2.setHaber(new BigDecimal(iva));
-        sfTmpdet2.setTc(new BigDecimal(1.0));
-        sfTmpdetController.setSelected(sfTmpdet2);
-        sfTmpdetController.createGeneral();
+        SfTmpdet debitoFisicalAsiento = new SfTmpdet();
+        debitoFisicalAsiento.setNoCia("01");
+        debitoFisicalAsiento.setCuenta(debitoFisical.getCuenta().getCuenta());
+        debitoFisicalAsiento.setNoTrans(nroTrans);
+        setDebeOHaber(debitoFisical, debitoFisicalAsiento, iva);
+        debitoFisicalAsiento.setTc(new BigDecimal(1.0));
+        sfTmpenc.getAsientos().add(debitoFisicalAsiento);
 
-        SfTmpdet sfTmpdet3 = new SfTmpdet();
-        sfTmpdet3.setNoCia("01");
-        sfTmpdet3.setCuenta("2420410100");
-        sfTmpdet3.setNoTrans(nroTrans);
-        sfTmpdet3.setHaber(new BigDecimal(it));
-        sfTmpdet3.setTc(new BigDecimal(1.0));
-        sfTmpdetController.setSelected(sfTmpdet3);
-        sfTmpdetController.createGeneral();
+        SfTmpdet impuestoTransaccionesAsiento = new SfTmpdet();
+        impuestoTransaccionesAsiento.setNoCia("01");
+        impuestoTransaccionesAsiento.setCuenta(impuestoTrasacciones.getCuenta().getCuenta());
+        impuestoTransaccionesAsiento.setNoTrans(nroTrans);
+        setDebeOHaber(impuestoTrasacciones, impuestoTransaccionesAsiento, it);
+        impuestoTransaccionesAsiento.setTc(new BigDecimal(1.0));
+        sfTmpenc.getAsientos().add(impuestoTransaccionesAsiento);
 
         sfTmpenc.getVentadirectas().add(selected);
         selected.setAsiento(sfTmpenc);
