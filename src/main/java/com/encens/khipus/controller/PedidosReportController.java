@@ -207,7 +207,7 @@ public class PedidosReportController implements Serializable {
         HashMap parameters = new HashMap();
         moneyUtil = new MoneyUtil();
         parameters.putAll(getReportParams(ventadirecta));
-        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/notaDeEntrega.jasper"));
+        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/notaDeEntregaCI.jasper"));
         exportarPDF(parameters, jasper,venta);
     }
 
@@ -216,7 +216,7 @@ public class PedidosReportController implements Serializable {
         HashMap parameters = new HashMap();
         moneyUtil = new MoneyUtil();
         parameters.putAll(getReportParams(ventadirecta));
-        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/notaDeEntrega.jasper"));
+        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/notaDeEntregaCI.jasper"));
         return exportarPDFToString(parameters, jasper,venta);
     }
 
@@ -519,7 +519,7 @@ public class PedidosReportController implements Serializable {
     public JasperPrint generarNota(Ventadirecta ventadirecta){
         HashMap parameters = new HashMap();
         moneyUtil = new MoneyUtil();
-        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/notaDeEntrega.jasper"));
+        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/notaDeEntregaCI.jasper"));
         JasperPrint jasperPrint = new JasperPrint();
         parameters.putAll(getReportParams(ventadirecta));
         try {

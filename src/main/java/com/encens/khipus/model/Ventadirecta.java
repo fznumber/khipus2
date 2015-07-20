@@ -81,7 +81,7 @@ public class Ventadirecta implements Serializable {
     @ManyToOne
     private Usuario usuario;
     @JoinColumn(name = "IDCLIENTE", referencedColumnName = "IDPERSONACLIENTE")
-    @ManyToOne(optional = false,cascade = CascadeType.PERSIST)
+    @ManyToOne(optional = false,cascade={CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.EAGER)
     private Persona cliente;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "ventadirecta")
     private Collection<ArticulosPedido> articulosPedidos = new ArrayList<>();

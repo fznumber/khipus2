@@ -56,7 +56,7 @@ public class Persona implements Serializable {
     private Territoriotrabajo territoriotrabajo;
     @OneToMany(mappedBy = "cliente")
     private Collection<Pedidos> pedidosCliente;
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(mappedBy = "cliente",cascade = CascadeType.ALL)
     private Collection<Ventadirecta> pedidosVentadirecta;
     @OneToMany(mappedBy = "distribuidor")
     private Collection<Territoriotrabajo> territorios;

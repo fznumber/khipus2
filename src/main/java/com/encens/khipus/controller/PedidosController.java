@@ -41,6 +41,8 @@ public class PedidosController implements Serializable {
     @EJB
     private PersonasFacade personasFacade;
     @EJB
+    private ArticulosPedidoFacade articulosPedidoFacade;
+    @EJB
     private VentaarticuloFacade ventaarticuloFacade;
     @EJB
     private VentaclienteFacade ventaclienteFacade;
@@ -136,7 +138,10 @@ public class PedidosController implements Serializable {
         articuloElegido = null;
     }
 
-    public void reponerArticulo(ArticulosPedido item){
+    public void reponerArticuloYQuitarArticulo(ArticulosPedido item){
+        selected.getArticulosPedidos().remove(item);
+        articulosPedidoFacade.remove(item);
+        item.setPedidos(null);
         articulos.add(item.getInvArticulos());
     }
 
@@ -253,7 +258,7 @@ public class PedidosController implements Serializable {
             return;
 
         selected.setConReposicion(conReposicion);
-        actualizarReposiciones();
+        //actualizarReposiciones();
         if(conReposicion) {
             selected.setPedidosConReposicion(reposiciones);
             selected.setReposicion(selected);

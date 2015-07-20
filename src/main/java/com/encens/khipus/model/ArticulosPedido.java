@@ -74,10 +74,10 @@ public class ArticulosPedido implements Serializable {
     @Column(name="TIPO")
     private String tipo;
     @JoinColumn(name = "IDPEDIDOS",referencedColumnName = "IDPEDIDOS")
-    @ManyToOne(optional = false,cascade = CascadeType.ALL)
+    @ManyToOne(optional = false,cascade={CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.EAGER)
     private Pedidos pedidos;
     @JoinColumn(name = "IDVENTADIRECTA",referencedColumnName = "IDVENTADIRECTA")
-    @ManyToOne(optional = false,cascade = CascadeType.ALL)
+    @ManyToOne(optional = false,cascade={CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.EAGER)
     private Ventadirecta ventadirecta;
 
     public ArticulosPedido() {

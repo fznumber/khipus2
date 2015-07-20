@@ -8,6 +8,7 @@ import com.mysql.jdbc.StringUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -35,6 +36,8 @@ public class PersonaController implements Serializable {
     private InvArticulosFacade invArticulosFacade;
     @EJB
     private VentaarticuloFacade ventaarticuloFacade;
+    @EJB
+    private VentaclienteFacade ventaclienteFacade;
 
     private List<Persona> items = null;
     private Persona selected;
@@ -151,6 +154,13 @@ public class PersonaController implements Serializable {
           }
       }
         return error;
+    }
+
+    public void reponerArticuloYQuitarArticulo(Ventacliente item){
+        selected.getVentaclientes().remove(item);
+        ventaclienteFacade.remove(item);
+        item.setPersona(null);
+        articulos.add(item.getInvArticulos());
     }
 
     public void create() {

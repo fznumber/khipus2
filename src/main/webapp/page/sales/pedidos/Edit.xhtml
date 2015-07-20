@@ -90,8 +90,8 @@
                     </h:outputText>
                 </p:column>
                 <p:column headerText="Acción">
-                    <p:commandLink value="Quitar" actionListener="#{pedidosController.reponerArticulo(item)}" update="articulosTable,:PedidosListForm:growl" rendered="#{item.reposicion==0}">
-                        <p:collector value="#{item}" removeFrom="#{pedidosController.selected.articulosPedidos}" unique="true"/>
+                    <p:commandLink value="Quitar" actionListener="#{pedidosController.reponerArticuloYQuitarArticulo(item)}" update="articulosTable,:PedidosListForm:growl" rendered="#{item.reposicion==0}">
+
                     </p:commandLink>
                 </p:column>
                 <f:facet name="footer">

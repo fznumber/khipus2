@@ -87,18 +87,18 @@ public class PedidosFacade extends AbstractFacade<Pedidos> {
         Integer cantidad=0;
         try{
             if(fechaEntrega == null && territoriotrabajo == null) {
-                cantidad = ((List<Pedidos>)em.createQuery("select  pe from Pedidos pe where pe.estado = 'PENDIENTE' and pe.estado = 'PREPARAR' ").getResultList()).size();
+                cantidad = ((List<Pedidos>)em.createQuery("select  pe from Pedidos pe where pe.estado != 'ANULADO' and pe.estado != 'CONTABILIZADO' ").getResultList()).size();
             }
             else{
                 if(territoriotrabajo != null)
                     cantidad = ((List<Pedidos>)em.createQuery("select  pe from Pedidos pe "
-                        + "where pe.fechaEntrega =:fechaEntrega and pe.cliente.territoriotrabajo =:territoriotrabajo or (pe.estado = 'PENDIENTE' and pe.estado = 'PREPARAR')")
+                        + "where pe.fechaEntrega =:fechaEntrega and pe.cliente.territoriotrabajo =:territoriotrabajo and pe.estado != 'ANULADO' and pe.estado != 'CONTABILIZADO'")
                         .setParameter("fechaEntrega", fechaEntrega)
                         .setParameter("territoriotrabajo",territoriotrabajo)
                         .getResultList()).size();
                 else
                     cantidad = ((List<Pedidos>)em.createQuery("select  pe from Pedidos pe "
-                            + "where pe.fechaEntrega =:fechaEntrega or(pe.estado =  'PENDIENTE' and pe.estado = 'PREPARAR') ")
+                            + "where pe.fechaEntrega =:fechaEntrega and pe.estado != 'ANULADO' and pe.estado != 'CONTABILIZADO' ")
                             .setParameter("fechaEntrega", fechaEntrega)
                             .getResultList()).size();
             }
@@ -118,7 +118,7 @@ public class PedidosFacade extends AbstractFacade<Pedidos> {
                     "               ,pe.cliente.territoriotrabajo.nombre as DISTRIBUIDOR\n" +
                     "        from Pedidos pe join pe.articulosPedidos articulos" +
                     "        where pe.fechaEntrega =:fechaEntrega and pe.cliente.territoriotrabajo =:territoriotrabajo " +
-                    "              or( pe.estado = 'PENDIENTE' and pe.estado = 'PREPARAR' )")
+                    "              and pe.estado != 'ANULADO' and pe.estado != 'CONTABILIZADO'")
                     .setParameter("fechaEntrega", fechaEntrega, TemporalType.DATE)
                     .setParameter("territoriotrabajo",territoriotrabajo)
                     .getResultList();
@@ -128,7 +128,7 @@ public class PedidosFacade extends AbstractFacade<Pedidos> {
                         "               ,articulos.cantidad + articulos.reposicion as CANTIDAD\n" +
                         "               ,pe.cliente.territoriotrabajo.nombre as DISTRIBUIDOR\n" +
                         "        from Pedidos pe join pe.articulosPedidos articulos" +
-                        "        where pe.fechaEntrega =:fechaEntrega or( pe.estado = 'PENDIENTE' and pe.estado = 'PREPARAR' )")
+                        "        where pe.fechaEntrega =:fechaEntrega and pe.estado != 'ANULADO' and pe.estado != 'CONTABILIZADO'")
                         .setParameter("fechaEntrega", fechaEntrega, TemporalType.DATE)
                         .getResultList();
 
