@@ -1,14 +1,23 @@
 package com.encens.khipus.controller;
 
+import com.encens.khipus.model.Kardex;
 import com.encens.khipus.model.Persona;
 import com.encens.khipus.model.SfTmpenc;
 import com.encens.khipus.ejb.SfTmpencFacade;
 import com.encens.khipus.util.JSFUtil;
 import com.encens.khipus.util.JSFUtil.PersistAction;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -19,6 +28,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 
 @Named("sfTmpencController")
 @SessionScoped
@@ -59,8 +70,39 @@ public class SfTmpencController implements Serializable {
         return selected;
     }
 
-    public void generarKardex(){
+    public void generarKardex() throws IOException, JRException {
+        HashMap parameters = new HashMap();
 
+        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/kardex.jasper"));
+        parameters.putAll(getReportParams());
+        exportarPDF(parameters,jasper);
+    }
+
+    private Map<String, Object> getReportParams() {
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        String periodo = df.format(fechaIni)+" - "+df.format(fechaFin);
+        String nombreCliente = personaElegida.getNombreCompleto();
+        String detalleCuenta = "1421010100 Clientes (Cuentas X Cobrar de Clientes)";
+        paramMap.put("periodo",periodo);
+        paramMap.put("nombreCliente",personaElegida.getNombreCompleto());
+        paramMap.put("detalleCuenta",detalleCuenta);
+
+        return paramMap;
+    }
+
+    public void exportarPDF(HashMap parametros, File jasper) throws JRException, IOException {
+
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, new JRBeanCollectionDataSource(getFacade().getKardexcliente(personaElegida,fechaIni,fechaFin,"1421010100")));
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.addHeader("Content-disposition", "attachment; filename=RecepcionPedios.pdf");
+        ServletOutputStream stream = response.getOutputStream();
+
+        JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
+
+        stream.flush();
+        stream.close();
+        FacesContext.getCurrentInstance().responseComplete();
     }
 
     public void create() {

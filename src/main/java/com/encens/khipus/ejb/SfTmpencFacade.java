@@ -5,15 +5,15 @@
  */
 package com.encens.khipus.ejb;
 
+import com.encens.khipus.model.Kardex;
 import com.encens.khipus.model.Persona;
 import com.encens.khipus.model.SfTmpenc;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import javax.persistence.TemporalType;
+import java.util.*;
 
 /**
  *
@@ -100,6 +100,59 @@ public class SfTmpencFacade extends AbstractFacade<SfTmpenc> {
         {
             return kardex;
         }
+        return kardex;
+    }
+
+    public Collection<Kardex> getKardexcliente(Persona personaElegida, Date fechaIni, Date fechaFin,String cuenta) {
+        List<Kardex> kardex = new ArrayList<>();
+        List<Object[]> datos = new ArrayList<>();
+        try{
+            datos = (List<Object[]>)em.createNativeQuery(
+                    "SELECT enc.fecha,enc.tipo_doc,enc.no_doc,enc.glosa,det.debe,0 AS haber FROM sf_tmpenc enc\n" +
+                    "JOIN sf_tmpdet det\n" +
+                    "ON det.id_tmpenc = enc.id_tmpenc\n" +
+                    "JOIN pedidos ped\n" +
+                    "ON ped.id_tmpenc = enc.id_tmpenc \n" +
+                    "WHERE det.cuenta = cuenta\n" +
+                    "AND enc.fecha BETWEEN :fechaIni AND :fechaFin \n" +
+                    "AND ped.IDCLIENTE = :idCliente\n" +
+                    "UNION\n" +
+                    "SELECT enc.fecha,enc.tipo_doc,enc.no_doc,enc.glosa,0 AS debe,det.haber FROM sf_tmpenc enc\n" +
+                    "JOIN sf_tmpdet det\n" +
+                    "ON det.id_tmpenc = enc.id_tmpenc\n" +
+                    "JOIN pago pago\n" +
+                    "ON pago.id_tmpenc = enc.id_tmpenc \n" +
+                    "WHERE det.cuenta = :cuenta\n" +
+                    "AND enc.fecha BETWEEN :fechaIni AND :fechaFin \n" +
+                    "AND pago.IDPERSONACLIENTE = :idCliente\n" +
+                    ") AS kardex\n" +
+                    "ORDER BY kardex.fecha DESC;")
+                    .setParameter("fechaIni",fechaIni, TemporalType.DATE)
+                    .setParameter("fechaFin",fechaFin,TemporalType.DATE)
+                    .setParameter("idCliente",personaElegida.getPiId())
+                    .setParameter("cuenta",cuenta)
+                    .getResultList();
+        }catch (NoResultException e){
+                return kardex;
+        }
+        Double debe = 0.0;
+        Double haber = 0.0;
+        Double saldo = 0.0;
+        for(Object[] dato:datos)
+        {
+            debe  = (Double)dato[4];
+            haber = (Double)dato[5];
+            saldo += debe;
+            saldo -= haber;
+            Kardex kar = new Kardex();
+            kar.setFecha((Date)dato[0]);
+            kar.setTipoDoc((String) dato[1]);
+            kar.setNoDoc((Integer) dato[2]);
+            kar.setGlosa((String)dato[3]);
+            kar.setDebe(debe);
+            kar.setHaber(haber);
+        }
+
         return kardex;
     }
 }

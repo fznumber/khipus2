@@ -107,11 +107,11 @@
 				<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="427" y="0" width="64" height="20" uuid="1b02a327-922d-4ef6-a3ee-7be9be974728"/>
+				<reportElement x="428" y="0" width="64" height="20" uuid="1b02a327-922d-4ef6-a3ee-7be9be974728"/>
 				<textFieldExpression><![CDATA[$F{haber}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="364" y="0" width="64" height="20" uuid="36138804-a3fd-41ce-91da-4fa16cb489f3"/>
+				<reportElement x="365" y="0" width="64" height="20" uuid="36138804-a3fd-41ce-91da-4fa16cb489f3"/>
 				<textFieldExpression><![CDATA[$F{debe}]]></textFieldExpression>
 			</textField>
 		</band>
