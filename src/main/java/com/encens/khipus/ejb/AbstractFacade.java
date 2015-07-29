@@ -5,7 +5,9 @@
  */
 package com.encens.khipus.ejb;
 
+import com.encens.khipus.model.Distribuidor;
 import com.encens.khipus.model.InvArticulos;
+import com.encens.khipus.model.Territoriotrabajo;
 import com.encens.khipus.model.Ventaarticulo;
 import com.encens.khipus.util.JSFUtil;
 

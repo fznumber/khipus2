@@ -57,6 +57,10 @@ public class DistribuidorController implements Serializable {
         return selected;
     }
 
+    public void prepareEdit(){
+        selected = getFacade().findById(selected.getPiId());
+    }
+
     public void create() {
         if(validarCampos())
         {
@@ -75,6 +79,8 @@ public class DistribuidorController implements Serializable {
             return;
         }
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("DistribuidorUpdated"));
+        items = null;
+        selected = new Distribuidor();
     }
 
     private boolean validarCampos() {

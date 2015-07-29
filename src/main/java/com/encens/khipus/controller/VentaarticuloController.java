@@ -66,6 +66,10 @@ public class VentaarticuloController implements Serializable {
         return selected;
     }
 
+    public void prepareEdit(){
+        selected = getFacade().findById(selected.getIdventaarticulo());
+    }
+
     public void create() {
         persist(PersistAction.CREATE, "El producto se registro correctamente.");
         if (!JSFUtil.isValidationFailed()) {

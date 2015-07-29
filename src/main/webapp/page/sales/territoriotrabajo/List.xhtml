@@ -59,7 +59,7 @@
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{territoriotrabajoController.prepareCreate}" update=":TerritoriotrabajoCreateForm" oncomplete="PF('TerritoriotrabajoCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":TerritoriotrabajoViewForm" oncomplete="PF('TerritoriotrabajoViewDialog').show()" disabled="#{empty territoriotrabajoController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":TerritoriotrabajoEditForm" oncomplete="PF('TerritoriotrabajoEditDialog').show()" disabled="#{empty territoriotrabajoController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" actionListener="#{territoriotrabajoController.prepareEdit}" update=":TerritoriotrabajoEditForm" oncomplete="PF('TerritoriotrabajoEditDialog').show()" disabled="#{empty territoriotrabajoController.selected}"/>
                             <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{territoriotrabajoController.destroy}" update=":TerritoriotrabajoListForm:growl,datalist" disabled="#{empty territoriotrabajoController.selected}">
                                 <p:confirm header="Confirmación" message="¿Está seguro de eliminar el territorio?" icon="ui-icon-alert" />
                             </p:commandButton>

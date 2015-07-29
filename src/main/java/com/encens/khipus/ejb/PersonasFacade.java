@@ -59,4 +59,8 @@ public class PersonasFacade extends AbstractFacade<Persona> {
         }
         return personas;
     }
+
+    public Persona findById(Persona persona) {
+        return (Persona)em.createNamedQuery("Personas.findByPiId").setParameter("piId",persona.getPiId()).getSingleResult();
+    }
 }

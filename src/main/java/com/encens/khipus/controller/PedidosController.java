@@ -160,7 +160,7 @@ public class PedidosController implements Serializable {
     }
 
     public void prepareEdit(Pedidos ped) {
-        selected = ped;
+        selected = getFacade().findById(ped.getIdpedidos());
         personas = personasFacade.findAllClientesPersonaInstitucion();
         articulos = invArticulosFacade.findAllInvArticulos();
         conReposicion = ped.getConReposicion();

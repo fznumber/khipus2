@@ -49,7 +49,7 @@
 
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{ventaarticuloController.prepareCreate}" update=":VentaarticuloCreateForm" oncomplete="PF('VentaarticuloCreateDialog').show()"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":VentaarticuloEditForm" oncomplete="PF('VentaarticuloEditDialog').show()" disabled="#{empty ventaarticuloController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" actionListener="#{ventaarticuloController.prepareEdit}" update=":VentaarticuloEditForm" oncomplete="PF('VentaarticuloEditDialog').show()" disabled="#{empty ventaarticuloController.selected}"/>
                             <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{ventaarticuloController.destroy}" update=":VentaarticuloListForm:growl,datalist" disabled="#{empty ventaarticuloController.selected}">
                                 <p:confirm header="Confirmación" message="¿Está seguro de eliminar el producto?" icon="ui-icon-alert" />
                             </p:commandButton>

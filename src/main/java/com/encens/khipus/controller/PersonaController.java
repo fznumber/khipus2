@@ -99,7 +99,7 @@ public class PersonaController implements Serializable {
     }
 
     public void prepareEdit(Persona persona) {
-        selected = persona;
+        selected = getFacade().findById(persona);
         articulos = invArticulosFacade.findAllInvArticulos();
         confacura = persona.getConfactura();
         if(selected.getVentaclientes().size() >0){

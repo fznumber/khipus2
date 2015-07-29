@@ -41,4 +41,10 @@ public class VentaarticuloFacade extends AbstractFacade<Ventaarticulo> {
         }
         return ventaarticulo;
     }
+
+    public Ventaarticulo findById(Long idventaarticulo) {
+        return (Ventaarticulo)em.createNamedQuery("Ventaarticulo.findByIdventaarticulo")
+                .setParameter("idventaarticulo",idventaarticulo)
+                .getSingleResult();
+    }
 }

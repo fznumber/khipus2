@@ -27,5 +27,10 @@ public class TerritoriotrabajoFacade extends AbstractFacade<Territoriotrabajo> {
     public TerritoriotrabajoFacade() {
         super(Territoriotrabajo.class);
     }
-    
+
+    public Territoriotrabajo findById(Long idterritoriotrabajo) {
+        return (Territoriotrabajo)em.createNamedQuery("Territoriotrabajo.findByIdterritoriotrabajo")
+                .setParameter("idterritoriotrabajo",idterritoriotrabajo)
+                .getSingleResult();
+    }
 }

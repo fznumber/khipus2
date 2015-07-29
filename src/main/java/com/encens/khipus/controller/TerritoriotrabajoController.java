@@ -75,11 +75,17 @@ public class TerritoriotrabajoController implements Serializable {
         distribuidorElegido = new Distribuidor();
         distribuidores = personasFacade.findAlldistribuidores();
         initializeEmbeddableKey();
+        items = null;
         return selected;
     }
 
+    public void prepareEdit(){
+        selected = getFacade().findById(selected.getIdterritoriotrabajo());
+    }
+
     public void cancel(){
-        selected = null;
+        selected = new Territoriotrabajo();
+        items = null;
     }
 
     public void create() {

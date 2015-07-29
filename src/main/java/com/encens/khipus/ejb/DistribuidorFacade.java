@@ -27,5 +27,10 @@ public class DistribuidorFacade extends AbstractFacade<Distribuidor> {
     public DistribuidorFacade() {
         super(Distribuidor.class);
     }
-    
+
+    public Distribuidor findById(Long piId) {
+        return (Distribuidor)em.createQuery("select dis from Persona dis where dis.piId =:piId")
+                .setParameter("piId",piId)
+                .getSingleResult();
+    }
 }

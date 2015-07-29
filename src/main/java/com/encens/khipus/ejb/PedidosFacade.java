@@ -53,6 +53,12 @@ public class PedidosFacade extends AbstractFacade<Pedidos> {
         return pedidos;
     }
 
+    public Pedidos findById(Long id){
+        return (Pedidos)em.createQuery("select ped from Pedidos ped where ped.idpedidos =:idPedido")
+                .setParameter("idPedido",id)
+                .getSingleResult();
+    }
+
     public String getSiguienteCodigo() {
 
         String numero = "0";
