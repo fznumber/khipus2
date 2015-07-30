@@ -38,12 +38,13 @@
                             <p:selectOneRadio id="tipoPago" value="#{pagoController.tipoPago}">
                                 <f:selectItem itemLabel="Efectivo" itemValue="EFECTIVO" />
                                 <f:selectItem itemLabel="Deposito Bancario" itemValue="BANCO" />
-                                <p:ajax update="bancoEtiqueta,bancos"/>
+                                <p:ajax update="display"/>
                             </p:selectOneRadio>
                         <p:outputLabel id="bancoEtiqueta" for="bancos" value="Bancos: " rendered="#{pagoController.tipoPago.equals('BANCO')}"/>
                         <p:selectOneMenu id="bancos" value="#{pagoController.bancoElejido}" rendered="#{pagoController.tipoPago.equals('BANCO')}">
-                            <f:selectItem itemLabel="Elejida un banco" itemValue="" />
-                            <f:selectItems value="#{pagoController.bancos}" />
+                            <f:selectItems value="#{pagoController.bancos}"
+                                    var="banco"
+                                    itemValue="#{banco.descri}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="Pago:" for="pago" />
                         <p:inputText id="pago" value="#{pagoController.selected.pago}" title="Pago"/>

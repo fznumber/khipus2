@@ -42,8 +42,8 @@ public class PagoFacade extends AbstractFacade<Pago> {
         }
         for(Object[] dato:datos){
             Banco banco = new Banco();
-            banco.setCuenta((String)dato[0]);
-            banco.setDescri((String)dato[1]);
+            banco.setDescri((String)dato[0]);
+            banco.setCuenta((String)dato[1]);
             bancos.add(banco);
         }
 

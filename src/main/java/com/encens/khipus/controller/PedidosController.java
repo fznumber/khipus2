@@ -333,15 +333,7 @@ public class PedidosController implements Serializable {
         {
             return;
         }
-        if(selected.getConReposicion())
-        {
-            selected.setPedidosConReposicion(null);
-            selected.setReposicion(null);
-            quitarReposicion();
-        }
-        actualizarReposiciones();
         selected.setEstado("ANULADO");
-        selected.setConReposicion(conReposicion);
         persist(PersistAction.UPDATE, "El pedido fue anulado con exito.");
         items = null;
     }
