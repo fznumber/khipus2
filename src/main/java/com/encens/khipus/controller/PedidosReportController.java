@@ -108,21 +108,36 @@ public class PedidosReportController implements Serializable {
         sfTmpenc.setUsuario(loginBean.getUsuario());
         List<SfConfdet> asientos = new ArrayList<>(operacion.getAsientos());
         SfConfdet cuentasPorCobrar = asientos.get(0);
-        SfConfdet mermasYBajas = asientos.get(1);
+        SfConfdet mermasYVajasVentas = asientos.get(1);
         SfConfdet ventaDeProductos = asientos.get(2);
+
+        Double totalImporte = pedido.getTotalimporte();
+        Double totalReposiciones = 0.0;
+        if(pedido.getConReposicion())
+        {
+            for(ArticulosPedido articulosPedido:pedido.getArticulosPedidos())
+            {
+                totalReposiciones +=(articulosPedido.getReposicion() *articulosPedido.getPrecio());
+            }
+            totalImporte -=totalReposiciones;
+        }
+        ////
 
         SfTmpdet asientoCuentasPorCobrar = new SfTmpdet();
         asientoCuentasPorCobrar.setCuenta(cuentasPorCobrar.getCuenta().getCuenta());
         asientoCuentasPorCobrar.setNoTrans(nroTrans);
         setMonto(pedido, cuentasPorCobrar,asientoCuentasPorCobrar,false);
+        setDebeOHaber(cuentasPorCobrar,asientoCuentasPorCobrar,totalImporte);
         sfTmpenc.getAsientos().add(asientoCuentasPorCobrar);
         /////
-        SfTmpdet asientoMermasYbajas = new SfTmpdet();
-        asientoMermasYbajas.setCuenta(mermasYBajas.getCuenta().getCuenta());
-        asientoMermasYbajas.setNoTrans(nroTrans);
-        setMonto(pedido, mermasYBajas,asientoMermasYbajas,true);
-        sfTmpenc.getAsientos().add(asientoMermasYbajas);
-        ////
+        if(pedido.getConReposicion()) {
+            SfTmpdet asientoMermasYVajasVentas = new SfTmpdet();
+            asientoMermasYVajasVentas.setCuenta(mermasYVajasVentas.getCuenta().getCuenta());
+            asientoMermasYVajasVentas.setNoTrans(nroTrans);
+            setDebeOHaber(mermasYVajasVentas, asientoMermasYVajasVentas, totalReposiciones);
+            sfTmpenc.getAsientos().add(asientoMermasYVajasVentas);
+        }
+        //////
         SfTmpdet asientoVentaDeProductos = new SfTmpdet();
         asientoVentaDeProductos.setCuenta(ventaDeProductos.getCuenta().getCuenta());
         asientoVentaDeProductos.setNoTrans(nroTrans);
@@ -147,16 +162,16 @@ public class PedidosReportController implements Serializable {
         if(operacionPedidoConFactura == null)
         {
             erroresDeContabilizacion = "No se encuentra una operación registrada para generar el pedido con factura\n";
+            return;
         }
 
         SfConfenc operacionPedidoSinFactura= sfConfencFacade.getOperacion("PEDIDOSINFACTURA");
         if(operacionPedidoSinFactura == null)
         {
             erroresDeContabilizacion = "No se encuentra una operación registrada para generar el pedido sin factura\n";
+            return;
         }
 
-        //todo: verificar los errores
-        verificarPedidosContabilizacion();
         quitarAnulados();
         quitarNoEnviados();
 
@@ -166,13 +181,6 @@ public class PedidosReportController implements Serializable {
                 contabilizarPedidoConfactura(operacionPedidoConFactura,pedido);
             else
                 contabilizarPedidoSinfactura(operacionPedidoSinFactura,pedido);
-        }
-    }
-
-    private void verificarPedidosContabilizacion(){
-        for(Pedidos pedido:pedidosElegidos)
-        {
-
         }
     }
 
@@ -414,18 +422,38 @@ public class PedidosReportController implements Serializable {
         sfTmpenc.setUsuario(loginBean.getUsuario());
         List<SfConfdet> asientos = new ArrayList<>(operacion.getAsientos());
         SfConfdet cuentasPorCobrar = asientos.get(0);
-        SfConfdet ventaDeProductos = asientos.get(1);
-        SfConfdet debitoFiscalIVA = asientos.get(2);
-        SfConfdet impuestoALasTransacciones = asientos.get(3);
+        SfConfdet mermasYVajasVentas = asientos.get(1);
+        SfConfdet ventaDeProductos = asientos.get(2);
+        SfConfdet debitoFiscalIVA = asientos.get(3);
+        SfConfdet impuestoALasTransacciones = asientos.get(4);
         Double iva = pedido.getTotalimporte() * 0.13;
         Double it = pedido.getTotalimporte() * 0.03;
         Double montoVentaProductos = pedido.getTotalimporte() - iva -it;
-
+        Double totalImporte = pedido.getTotalimporte();
+        Double totalReposiciones = 0.0;
+        if(pedido.getConReposicion())
+        {
+            for(ArticulosPedido articulosPedido:pedido.getArticulosPedidos())
+            {
+                totalReposiciones +=(articulosPedido.getReposicion() *articulosPedido.getPrecio());
+            }
+            totalImporte -=totalReposiciones;
+        }
+        ////
         SfTmpdet asientoCuentasPorCobrar = new SfTmpdet();
         asientoCuentasPorCobrar.setCuenta(cuentasPorCobrar.getCuenta().getCuenta());
         asientoCuentasPorCobrar.setNoTrans(nroTrans);
-        setDebeOHaber(cuentasPorCobrar,asientoCuentasPorCobrar,pedido.getTotalimporte());
+        setDebeOHaber(cuentasPorCobrar, asientoCuentasPorCobrar, totalImporte);
         sfTmpenc.getAsientos().add(asientoCuentasPorCobrar);
+
+        /////
+        if(pedido.getConReposicion()) {
+            SfTmpdet asientoMermasYVajasVentas = new SfTmpdet();
+            asientoMermasYVajasVentas.setCuenta(mermasYVajasVentas.getCuenta().getCuenta());
+            asientoMermasYVajasVentas.setNoTrans(nroTrans);
+            setDebeOHaber(mermasYVajasVentas, asientoMermasYVajasVentas, totalReposiciones);
+            sfTmpenc.getAsientos().add(asientoMermasYVajasVentas);
+        }
         /////
         SfTmpdet asientoVentaDeProductos = new SfTmpdet();
         asientoVentaDeProductos.setCuenta(ventaDeProductos.getCuenta().getCuenta());
