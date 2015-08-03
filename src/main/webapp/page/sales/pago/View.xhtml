@@ -12,22 +12,7 @@
             <h:form id="PagoViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{pagoController.selected != null}">
-                        <h:outputText value="#{bundle.ViewPagoLabel_idPago}"/>
-                        <h:outputText value="#{pagoController.selected.idPago}" title="#{bundle.ViewPagoTitle_idPago}"/>
-                        <h:outputText value="#{bundle.ViewPagoLabel_fecha}"/>
-                        <h:outputText value="#{pagoController.selected.fecha}" title="#{bundle.ViewPagoTitle_fecha}"/>
-                        <h:outputText value="#{bundle.ViewPagoLabel_monto}"/>
-                        <h:outputText value="#{pagoController.selected.pago}" title="#{bundle.ViewPagoTitle_monto}"/>
-                        <h:outputText value="#{bundle.ViewPagoLabel_descripcion}"/>
-                        <h:outputText value="#{pagoController.selected.descripcion}" title="#{bundle.ViewPagoTitle_descripcion}"/>
-                        <h:outputText value="#{bundle.ViewPagoLabel_persona}"/>
-                        <h:outputText value="#{pagoController.selected.persona}" title="#{bundle.ViewPagoTitle_persona}"/>
-                        <h:outputText value="#{bundle.ViewPagoLabel_sfConfencByIdSfConfenc}"/>
-                        <h:outputText value="#{pagoController.selected.asientoConfiguracion}" title="#{bundle.ViewPagoTitle_sfConfencByIdSfConfenc}"/>
-                        <h:outputText value="#{bundle.ViewPagoLabel_sfTmpencByIdTmpenc}"/>
-                        <h:outputText value="#{pagoController.selected.asiento}" title="#{bundle.ViewPagoTitle_sfTmpencByIdTmpenc}"/>
-                        <h:outputText value="#{bundle.ViewPagoLabel_usuarioByIdusuario}"/>
-                        <h:outputText value="#{pagoController.selected.usuario}" title="#{bundle.ViewPagoTitle_usuarioByIdusuario}"/>
+
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="PagoViewDialog.hide()"/>
                 </h:panelGroup>

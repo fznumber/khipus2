@@ -61,17 +61,14 @@ public class SfTmpdet implements Serializable {
     @Column(name = "tc")
     private BigDecimal tc;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 2)
     @Column(name = "no_cia")
     private String noCia;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 10)
     @Column(name = "no_trans")
     private String noTrans;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 31)
     @Column(name = "cuenta")
     private String cuenta;

@@ -507,6 +507,7 @@ public class PedidosController implements Serializable {
             estados.add("PREPARAR");
             estados.add("ENTREGADO");
             estados.add("ANULADO");
+            estados.add("CONTABILIZADO");
         }
         return estados;
     }

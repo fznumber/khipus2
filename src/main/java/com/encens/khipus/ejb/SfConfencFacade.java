@@ -44,7 +44,7 @@ public class SfConfencFacade extends AbstractFacade<SfConfenc> {
 
             String numero = "0";
             try{
-                numero = (String)em.createNativeQuery("SELECT khipus.getNextSeq(:tipoDoc)")
+                numero = (String)em.createNativeQuery("SELECT getNextSeq('"+tipoDoc+"')")
                         .setParameter("tipoDoc",tipoDoc)
                         .getSingleResult();
             }catch (NoResultException e){
@@ -57,5 +57,9 @@ public class SfConfencFacade extends AbstractFacade<SfConfenc> {
     public void crearSecuencia(String tipoDoc) {
         em.createNativeQuery("INSERT  INTO _sequence(seq_name,seq_val) VALUES ('"+tipoDoc+"',1)")
                 .executeUpdate();
+    }
+
+    public boolean existeTipoDoc(String tipoDoc) {
+        return em.createNativeQuery("SELECT * FROM _sequence se WHERE se.seq_name = '"+tipoDoc+"'").getResultList().size() > 0;
     }
 }

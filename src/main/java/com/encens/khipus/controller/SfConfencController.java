@@ -1,9 +1,8 @@
 package com.encens.khipus.controller;
 
 import com.encens.khipus.ejb.ArcgmsFacade;
-import com.encens.khipus.model.Arcgms;
-import com.encens.khipus.model.SfConfdet;
-import com.encens.khipus.model.SfConfenc;
+import com.encens.khipus.ejb.OperacionesFacade;
+import com.encens.khipus.model.*;
 import com.encens.khipus.util.JSFUtil;
 import com.encens.khipus.util.JSFUtil.PersistAction;
 import com.encens.khipus.ejb.SfConfencFacade;
@@ -16,7 +15,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -29,13 +27,19 @@ import javax.faces.convert.FacesConverter;
 public class SfConfencController implements Serializable {
 
     @EJB
-    private com.encens.khipus.ejb.SfConfencFacade ejbFacade;
+    private SfConfencFacade ejbFacade;
     @EJB
     private ArcgmsFacade arcgmsFacade;
+    @EJB
+    private TipodocFacade tipodocFacade;
+    @EJB
+    private OperacionesFacade operacionesFacade;
     private List<SfConfenc> items = null;
     private SfConfenc selected;
     private Arcgms cuentaElegida;
     private List<Arcgms> cuentas= new ArrayList<>();
+    private List<Tipodoc> tipodocs = new ArrayList<>();
+    private List<Operaciones> operaciones = new ArrayList<>();
 
     public SfConfencController() {
     }
@@ -111,11 +115,14 @@ public class SfConfencController implements Serializable {
         initializeEmbeddableKey();
         cuentas = arcgmsFacade.findAll();
         cuentaElegida = new Arcgms();
+        tipodocs = tipodocFacade.findAll();
+        operaciones = operacionesFacade.findAll();
         return selected;
     }
 
     public void create() {
         persist(PersistAction.CREATE,"Se registro con exito la configuración");
+        if(!getFacade().existeTipoDoc(selected.getTipoDoc()))
         getFacade().crearSecuencia(selected.getTipoDoc());
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
@@ -237,5 +244,21 @@ public class SfConfencController implements Serializable {
 
     public void setCuentas(List<Arcgms> cuentas) {
         this.cuentas = cuentas;
+    }
+
+    public List<Tipodoc> getTipodocs() {
+        return tipodocs;
+    }
+
+    public void setTipodocs(List<Tipodoc> tipodocs) {
+        this.tipodocs = tipodocs;
+    }
+
+    public List<Operaciones> getOperaciones() {
+        return operaciones;
+    }
+
+    public void setOperaciones(List<Operaciones> operaciones) {
+        this.operaciones = operaciones;
     }
 }

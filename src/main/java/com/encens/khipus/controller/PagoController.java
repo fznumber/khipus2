@@ -1,12 +1,15 @@
 package com.encens.khipus.controller;
 
+import com.encens.khipus.ejb.BancoFacade;
 import com.encens.khipus.ejb.SfConfencFacade;
+import com.encens.khipus.ejb.SfTmpencFacade;
 import com.encens.khipus.model.*;
 
 import com.encens.khipus.ejb.PagoFacade;
 import com.encens.khipus.util.JSFUtil.*;
 import com.encens.khipus.util.JSFUtil;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,6 +34,11 @@ public class PagoController implements Serializable {
     private PagoFacade ejbFacade;
     @EJB
     SfConfencFacade sfConfencFacade;
+    @EJB
+    SfTmpencFacade sfTmpencFacade;
+    @EJB
+    BancoFacade bancoFacade;
+
     private List<Pago> items = null;
     private Pago selected;
     private Persona personaElegida;
@@ -61,14 +69,20 @@ public class PagoController implements Serializable {
 
     public Pago prepareCreate() {
         selected = new Pago();
-        bancos = getFacade().findBancos();
+        bancos = bancoFacade.findAll();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        SfConfenc operacion= sfConfencFacade.getOperacion("PAGO");
-        if(operacion == null)
+        SfConfenc operacionCaja = sfConfencFacade.getOperacion("PAGOCAJA");
+        if(operacionCaja == null)
+        {
+            JSFUtil.addErrorMessage("No se encuentra una operación registrada");
+            return;
+        }
+        SfConfenc operacionBanco = sfConfencFacade.getOperacion("PAGOBANCO");
+        if(operacionBanco == null)
         {
             JSFUtil.addErrorMessage("No se encuentra una operación registrada");
             return;
@@ -79,19 +93,50 @@ public class PagoController implements Serializable {
         selected.setPersona(personaElegida);
         selected.setFecha(new Timestamp(new Date().getTime()));
         selected.setUsuario(loginBean.getUsuario());
-
+        String noTrans =sfTmpencFacade.getSiguienteNumeroTransacccion();
+        List<SfConfdet> asientos = new ArrayList<>(operacionCaja.getAsientos());
+        SfConfdet cajaOBanco = asientos.get(0);
+        SfConfdet clientesCuentasPorCobrar = asientos.get(1);
         SfTmpenc asiento = new SfTmpenc();
         asiento.setFecha(new Date());
         asiento.setNombreCliente(personaElegida.getNombreCompleto());
         asiento.setCliente(personaElegida);
-        asiento.setGlosa(operacion.getGlosa()+" "+selected.getDescripcion());
+        asiento.setNoTrans(noTrans);
+        ////
+        SfTmpdet cajaoBancoAsiento = new SfTmpdet();
+        cajaoBancoAsiento.setNoTrans(noTrans);
+        setDebeOHaber(cajaOBanco,cajaoBancoAsiento,selected.getPago());
+        if(tipoPago.equals("BANCO")){
+            asiento.setGlosa(operacionBanco.getGlosa() + " " + selected.getDescripcion());
+            asiento.setTipoDoc(operacionBanco.getTipoDoc());
+            asiento.setNoDoc(sfConfencFacade.getSiguienteNumeroDocumento(operacionBanco.getTipoDoc()));
+            cajaoBancoAsiento.setCuenta(bancoElejido.getCuenta());
+        }else{
+            asiento.setGlosa(operacionCaja.getGlosa() + " " + selected.getDescripcion());
+            asiento.setTipoDoc(operacionCaja.getTipoDoc());
+            asiento.setNoDoc(sfConfencFacade.getSiguienteNumeroDocumento(operacionCaja.getTipoDoc()));
+            cajaoBancoAsiento.setCuenta(cajaOBanco.getCuenta().getCuenta());
+        }
+        ////
+        SfTmpdet clientesCuentasPorCobrarAsiento = new SfTmpdet();
+        clientesCuentasPorCobrarAsiento.setNoTrans(noTrans);
+        setDebeOHaber(clientesCuentasPorCobrar,clientesCuentasPorCobrarAsiento,selected.getPago());
 
+        selected.setAsiento(asiento);
+        asiento.getPagos().add(selected);
         persist(PersistAction.CREATE, "El pago se registro correctamente");
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
             personaElegida = null;
             selected = new Pago();
         }
+    }
+
+    private void setDebeOHaber(SfConfdet ope,SfTmpdet asiento, Double monto){
+        if(ope.getTipomovimiento().equals("DEBE"))
+            asiento.setDebe(new BigDecimal(monto));
+        else
+            asiento.setHaber(new BigDecimal(monto));
     }
 
     public void update() {

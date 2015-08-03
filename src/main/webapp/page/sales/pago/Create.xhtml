@@ -44,7 +44,7 @@
                         <p:selectOneMenu id="bancos" value="#{pagoController.bancoElejido}" rendered="#{pagoController.tipoPago.equals('BANCO')}">
                             <f:selectItems value="#{pagoController.bancos}"
                                     var="banco"
-                                    itemValue="#{banco.descri}"/>
+                                    itemValue="#{banco}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="Pago:" for="pago" />
                         <p:inputText id="pago" value="#{pagoController.selected.pago}" title="Pago"/>

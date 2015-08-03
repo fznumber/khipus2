@@ -27,8 +27,6 @@ public class SfConfenc implements Serializable {
     @Basic
     @Column(name = "OPERACION")
     private String operacion;
-    @OneToMany(mappedBy = "asientoConfiguracion",cascade = CascadeType.PERSIST)
-    private Collection<Pago> pagosByIdSfConfenc = new ArrayList<>();
     @OneToMany(mappedBy = "sfConfenc",cascade = CascadeType.PERSIST)
     private Collection<SfConfdet> asientos = new ArrayList<>();
     @JoinColumn(name = "cuenta",referencedColumnName = "cuenta")
@@ -109,14 +107,6 @@ public class SfConfenc implements Serializable {
         result = 31 * result + (glosa != null ? glosa.hashCode() : 0);
         result = 31 * result + (int) (idusuario ^ (idusuario >>> 32));
         return result;
-    }
-
-    public Collection<Pago> getPagosByIdSfConfenc() {
-        return pagosByIdSfConfenc;
-    }
-
-    public void setPagosByIdSfConfenc(Collection<Pago> pagosByIdSfConfenc) {
-        this.pagosByIdSfConfenc = pagosByIdSfConfenc;
     }
 
     public Collection<SfConfdet> getAsientos() {

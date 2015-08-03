@@ -5,20 +5,18 @@
  */
 package com.encens.khipus.ejb;
 
-import com.encens.khipus.model.Banco;
-import com.encens.khipus.model.Pago;
+import com.encens.khipus.ejb.AbstractFacade;
+import com.encens.khipus.model.Operaciones;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
  * @author Diego
  */
 @Stateless
-public class PagoFacade extends AbstractFacade<Pago> {
+public class OperacionesFacade extends AbstractFacade<Operaciones> {
     @PersistenceContext(unitName = "khipusPU")
     private EntityManager em;
 
@@ -27,7 +25,8 @@ public class PagoFacade extends AbstractFacade<Pago> {
         return em;
     }
 
-    public PagoFacade() {
-        super(Pago.class);
+    public OperacionesFacade() {
+        super(Operaciones.class);
     }
+    
 }

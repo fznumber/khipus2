@@ -116,7 +116,7 @@ public class Pedidos implements Serializable {
     private Pedidos reposicion;
     @OneToMany(cascade = CascadeType.PERSIST,mappedBy = "reposicion")
     private Collection<Pedidos> pedidosConReposicion;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_tmpenc", referencedColumnName = "id_tmpenc")
     private SfTmpenc asiento;
     @Basic

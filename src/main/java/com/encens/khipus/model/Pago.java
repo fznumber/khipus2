@@ -38,11 +38,7 @@ public class Pago implements Serializable {
     @JoinColumn(name = "IDPERSONACLIENTE", referencedColumnName = "IDPERSONACLIENTE", nullable = false)
     private Persona persona;
 
-    @ManyToOne
-    @JoinColumn(name = "id_sf_confenc", referencedColumnName = "id_sf_confenc", nullable = false)
-    private SfConfenc asientoConfiguracion;
-
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_tmpenc", referencedColumnName = "id_tmpenc")
     private SfTmpenc asiento;
 
@@ -112,14 +108,6 @@ public class Pago implements Serializable {
 
     public void setPersona(Persona personaclienteByIdpersonacliente) {
         this.persona = personaclienteByIdpersonacliente;
-    }
-
-    public SfConfenc getAsientoConfiguracion() {
-        return asientoConfiguracion;
-    }
-
-    public void setAsientoConfiguracion(SfConfenc sfConfencByIdSfConfenc) {
-        this.asientoConfiguracion = sfConfencByIdSfConfenc;
     }
 
     public SfTmpenc getAsiento() {

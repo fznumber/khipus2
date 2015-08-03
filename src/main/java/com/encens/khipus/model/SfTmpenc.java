@@ -148,9 +148,9 @@ public class SfTmpenc implements Serializable {
     private Usuario usuario;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "sfTmpenc")
     private Collection<SfTmpdet> asientos = new ArrayList<>();
-    @OneToMany(cascade = CascadeType.PERSIST,mappedBy = "asiento")
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "asiento")
     private Collection<Pedidos> pedidos = new ArrayList<>();
-    @OneToMany(cascade = CascadeType.PERSIST,mappedBy = "asiento")
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "asiento")
     private Collection<Pago> pagos = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "asiento")
     private Collection<Ventadirecta> ventadirectas = new ArrayList<>();

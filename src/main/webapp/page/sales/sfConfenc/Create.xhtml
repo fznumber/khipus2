@@ -15,42 +15,21 @@
                         <p:outputLabel value="Nombre:" for="descripcion" />
                         <p:inputText id="descripcion" value="#{sfConfencController.selected.descripcion}" title="Nombre" />
                         <p:outputLabel value="Documento:" for="tipoDoc" />
-                        <p:inputText id="tipoDoc" value="#{sfConfencController.selected.tipoDoc}" title="Documento" />
+                        <p:selectOneMenu id="tipoDoc" value="#{sfConfencController.selected.tipoDoc}" required="true" requiredMessage="campo requerido">
+                            <f:selectItems value="#{sfConfencController.tipodocs}"
+                                           var="tipoDoc"
+                                           itemValue="#{tipoDoc}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Operacion:" for="operacion" />
+                        <p:selectOneMenu id="operacion" value="#{sfConfencController.selected.operacion}" required="true" requiredMessage="campo requerido">
+                            <f:selectItems value="#{sfConfencController.operaciones}"
+                                           var="operacion"
+                                           itemValue="#{operacion}"/>
+                        </p:selectOneMenu>
                     </p:panelGrid>
                     <p:panelGrid columns="2" rendered="#{sfConfencController.selected != null}">
                         <p:outputLabel value="Glosa:" for="glosa" />
                         <p:inputTextarea id="glosa" value="#{sfConfencController.selected.glosa}" title="Glosa" />
-                    </p:panelGrid>
-                    <p:panelGrid columns="3" rendered="#{sfConfencController.selected != null}">
-                        <p:outputLabel value="Cuenta asociada:"/>
-                        <p:autoComplete id="cuentaAsociadaCuenta" value="#{sfConfencController.selected.cuenta}" completeMethod="#{sfConfencController.completarCuenta}"
-                                        var="cuenta" itemLabel="#{cuenta.cuenta}" itemValue="#{cuenta}" converter="convertirCuenta"
-                                        forceSelection="true" maxResults="15"
-                                        cache="true" cacheTimeout="30000">
-                            <f:facet name="itemtip">
-                                <h:panelGrid columns="2" cellpadding="5">
-                                    <h:outputText value="Número de cuenta:" />
-                                    <h:outputText value="#{cuenta.cuenta}" />
-                                    <h:outputText value="Descrición:" />
-                                    <h:outputText value="#{cuenta.descri}" />
-                                </h:panelGrid>
-                            </f:facet>
-                            <p:ajax event="itemSelect" update=":SfConfencCreateForm:cuentaAsociadaDescri" />
-                        </p:autoComplete>
-                        <p:autoComplete id="cuentaAsociadaDescri" value="#{sfConfencController.selected.cuenta}" completeMethod="#{sfConfencController.completarCuentaDescripcion}"
-                                        var="cuenta" itemLabel="#{cuenta.descri}" itemValue="#{cuenta}" converter="convertirCuenta"
-                                        forceSelection="true" maxResults="15"
-                                        cache="true" cacheTimeout="30000">
-                            <f:facet name="itemtip">
-                                <h:panelGrid columns="2" cellpadding="5">
-                                    <h:outputText value="Descrición:" />
-                                    <h:outputText value="#{cuenta.descri}" />
-                                    <h:outputText value="Número de cuenta:" />
-                                    <h:outputText value="#{cuenta.cuenta}" />
-                                </h:panelGrid>
-                            </f:facet>
-                            <p:ajax event="itemSelect" update=":SfConfencCreateForm:cuentaAsociadaCuenta" />
-                        </p:autoComplete>
                     </p:panelGrid>
                     <p:panelGrid columns="5" rendered="#{sfConfencController.selected != null}">
                         <p:outputLabel value="Asiento:" />

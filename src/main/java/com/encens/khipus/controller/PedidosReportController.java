@@ -54,6 +54,8 @@ public class PedidosReportController implements Serializable {
     @Inject
     PedidosController pedidosController;
     @Inject
+    SfTmpencController sfTmpencController;
+    @Inject
     VentadirectaController ventadirectaController;
     @Inject
     MovimientoController movimientoController;
@@ -99,7 +101,6 @@ public class PedidosReportController implements Serializable {
         sfTmpenc.setFecha(new Date());
         sfTmpenc.setTipoDoc(operacion.getTipoDoc());
         sfTmpenc.setCliente(pedido.getCliente());
-        sfTmpenc.setDebe(pedido.getTotalimporte());
         sfTmpenc.setNombreCliente(pedido.getCliente().getNombreCompleto());
         sfTmpenc.setNoDoc(sfConfencFacade.getSiguienteNumeroDocumento(operacion.getTipoDoc()));
         FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -126,8 +127,9 @@ public class PedidosReportController implements Serializable {
         SfTmpdet asientoCuentasPorCobrar = new SfTmpdet();
         asientoCuentasPorCobrar.setCuenta(cuentasPorCobrar.getCuenta().getCuenta());
         asientoCuentasPorCobrar.setNoTrans(nroTrans);
-        setMonto(pedido, cuentasPorCobrar,asientoCuentasPorCobrar,false);
-        setDebeOHaber(cuentasPorCobrar,asientoCuentasPorCobrar,totalImporte);
+        setMonto(pedido, cuentasPorCobrar, asientoCuentasPorCobrar, false);
+        setDebeOHaber(cuentasPorCobrar, asientoCuentasPorCobrar, totalImporte);
+        asientoCuentasPorCobrar.setSfTmpenc(sfTmpenc);
         sfTmpenc.getAsientos().add(asientoCuentasPorCobrar);
         /////
         if(pedido.getConReposicion()) {
@@ -135,6 +137,7 @@ public class PedidosReportController implements Serializable {
             asientoMermasYVajasVentas.setCuenta(mermasYVajasVentas.getCuenta().getCuenta());
             asientoMermasYVajasVentas.setNoTrans(nroTrans);
             setDebeOHaber(mermasYVajasVentas, asientoMermasYVajasVentas, totalReposiciones);
+            asientoMermasYVajasVentas.setSfTmpenc(sfTmpenc);
             sfTmpenc.getAsientos().add(asientoMermasYVajasVentas);
         }
         //////
@@ -147,8 +150,12 @@ public class PedidosReportController implements Serializable {
         }else {
             asientoVentaDeProductos.setHaber(new BigDecimal(pedido.getTotalimporte()));
         }
+        asientoVentaDeProductos.setSfTmpenc(sfTmpenc);
         sfTmpenc.getAsientos().add(asientoVentaDeProductos);
+        sfTmpenc.getPedidos().add(pedido);
         pedido.setAsiento(sfTmpenc);
+      /*  sfTmpencController.setSelected(sfTmpenc);
+        sfTmpencController.createGeneral();*/
 
     }
 
@@ -161,14 +168,14 @@ public class PedidosReportController implements Serializable {
         SfConfenc operacionPedidoConFactura= sfConfencFacade.getOperacion("PEDIDOCONFACTURA");
         if(operacionPedidoConFactura == null)
         {
-            erroresDeContabilizacion = "No se encuentra una operación registrada para generar el pedido con factura\n";
+            JSFUtil.addWarningMessage("No se encuentra una operación registrada para generar el pedido con factura\n");
             return;
         }
 
         SfConfenc operacionPedidoSinFactura= sfConfencFacade.getOperacion("PEDIDOSINFACTURA");
         if(operacionPedidoSinFactura == null)
         {
-            erroresDeContabilizacion = "No se encuentra una operación registrada para generar el pedido sin factura\n";
+            JSFUtil.addWarningMessage("No se encuentra una operación registrada para generar el pedido sin factura\n");
             return;
         }
 
@@ -181,7 +188,9 @@ public class PedidosReportController implements Serializable {
                 contabilizarPedidoConfactura(operacionPedidoConFactura,pedido);
             else
                 contabilizarPedidoSinfactura(operacionPedidoSinFactura,pedido);
+            pedidosController.generalUpdate(pedido);
         }
+        JSFUtil.addWarningMessage("Se contabilizo con exito.");
     }
 
     private void setMonto(Pedidos pedido,SfConfdet detConf,SfTmpdet asiento,Boolean conRepo)
@@ -413,7 +422,6 @@ public class PedidosReportController implements Serializable {
         sfTmpenc.setFecha(new Date());
         sfTmpenc.setTipoDoc(operacion.getTipoDoc());
         sfTmpenc.setCliente(pedido.getCliente());
-        sfTmpenc.setDebe(pedido.getTotalimporte());
         sfTmpenc.setNombreCliente(pedido.getCliente().getNombreCompleto());
         sfTmpenc.setNoDoc(sfConfencFacade.getSiguienteNumeroDocumento(operacion.getTipoDoc()));
         FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -444,6 +452,7 @@ public class PedidosReportController implements Serializable {
         asientoCuentasPorCobrar.setCuenta(cuentasPorCobrar.getCuenta().getCuenta());
         asientoCuentasPorCobrar.setNoTrans(nroTrans);
         setDebeOHaber(cuentasPorCobrar, asientoCuentasPorCobrar, totalImporte);
+        asientoCuentasPorCobrar.setSfTmpenc(sfTmpenc);
         sfTmpenc.getAsientos().add(asientoCuentasPorCobrar);
 
         /////
@@ -452,28 +461,34 @@ public class PedidosReportController implements Serializable {
             asientoMermasYVajasVentas.setCuenta(mermasYVajasVentas.getCuenta().getCuenta());
             asientoMermasYVajasVentas.setNoTrans(nroTrans);
             setDebeOHaber(mermasYVajasVentas, asientoMermasYVajasVentas, totalReposiciones);
+            asientoMermasYVajasVentas.setSfTmpenc(sfTmpenc);
             sfTmpenc.getAsientos().add(asientoMermasYVajasVentas);
         }
         /////
         SfTmpdet asientoVentaDeProductos = new SfTmpdet();
         asientoVentaDeProductos.setCuenta(ventaDeProductos.getCuenta().getCuenta());
         asientoVentaDeProductos.setNoTrans(nroTrans);
-        setDebeOHaber(ventaDeProductos,asientoVentaDeProductos,montoVentaProductos);
+        setDebeOHaber(ventaDeProductos, asientoVentaDeProductos, montoVentaProductos);
+        asientoVentaDeProductos.setSfTmpenc(sfTmpenc);
         sfTmpenc.getAsientos().add(asientoVentaDeProductos);
         ////
         SfTmpdet asientoIVA = new SfTmpdet();
         asientoIVA.setCuenta(debitoFiscalIVA.getCuenta().getCuenta());
         asientoIVA.setNoTrans(nroTrans);
-        setDebeOHaber(debitoFiscalIVA,asientoIVA,iva);
+        setDebeOHaber(debitoFiscalIVA, asientoIVA, iva);
+        asientoIVA.setSfTmpenc(sfTmpenc);
         sfTmpenc.getAsientos().add(asientoIVA);
         ////
         SfTmpdet asientoIT = new SfTmpdet();
         asientoIT.setCuenta(impuestoALasTransacciones.getCuenta().getCuenta());
         asientoIT.setNoTrans(nroTrans);
-        setDebeOHaber(impuestoALasTransacciones,asientoIT,it);
+        setDebeOHaber(impuestoALasTransacciones, asientoIT, it);
+        asientoIT.setSfTmpenc(sfTmpenc);
         sfTmpenc.getAsientos().add(asientoIVA);
-
+        sfTmpenc.getPedidos().add(pedido);
         pedido.setAsiento(sfTmpenc);
+       /* sfTmpencController.setSelected(sfTmpenc);
+        sfTmpencController.createGeneral();*/
 
     }
 

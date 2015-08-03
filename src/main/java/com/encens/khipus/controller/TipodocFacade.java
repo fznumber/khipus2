@@ -3,22 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.encens.khipus.ejb;
+package com.encens.khipus.controller;
 
-import com.encens.khipus.model.Banco;
-import com.encens.khipus.model.Pago;
+import com.encens.khipus.ejb.AbstractFacade;
+import com.encens.khipus.model.Tipodoc;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
  * @author Diego
  */
 @Stateless
-public class PagoFacade extends AbstractFacade<Pago> {
+public class TipodocFacade extends AbstractFacade<Tipodoc> {
     @PersistenceContext(unitName = "khipusPU")
     private EntityManager em;
 
@@ -27,7 +25,8 @@ public class PagoFacade extends AbstractFacade<Pago> {
         return em;
     }
 
-    public PagoFacade() {
-        super(Pago.class);
+    public TipodocFacade() {
+        super(Tipodoc.class);
     }
+    
 }
