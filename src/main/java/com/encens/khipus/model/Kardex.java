@@ -1,5 +1,6 @@
 package com.encens.khipus.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Date;
 public class Kardex {
     private Date fecha;
     private String tipoDoc;
-    private Integer noDoc;
+    private String noDoc;
     private String glosa;
     private Double debe;
     private Double haber;
@@ -30,11 +31,11 @@ public class Kardex {
         this.tipoDoc = tipoDoc;
     }
 
-    public Integer getNoDoc() {
+    public String getNoDoc() {
         return noDoc;
     }
 
-    public void setNoDoc(Integer noDoc) {
+    public void setNoDoc(String noDoc) {
         this.noDoc = noDoc;
     }
 

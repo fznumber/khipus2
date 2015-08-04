@@ -94,6 +94,7 @@ public class PedidosReportController implements Serializable {
 
     private void contabilizarPedidoSinfactura(SfConfenc operacion,Pedidos pedido) {
         pedido.setContabilizado(true);
+        pedido.setEstado("CONTABILIZADO");
         SfTmpenc sfTmpenc = new SfTmpenc();
         String nroTrans = sfTmpencFacade.getSiguienteNumeroTransacccion();
         sfTmpenc.setNoTrans(nroTrans);
@@ -176,6 +177,17 @@ public class PedidosReportController implements Serializable {
         if(operacionPedidoSinFactura == null)
         {
             JSFUtil.addWarningMessage("No se encuentra una operación registrada para generar el pedido sin factura\n");
+            return;
+        }
+        boolean band = false;
+        for(Pedidos pedidos:pedidosElegidos){
+            if(pedidos.getTieneFactura() == null)
+            {
+                JSFUtil.addWarningMessage("El pedido tiene datos inconsistentes contactese con el administrador "+pedidos.getCodigo()+"\n");
+                band = true;
+            }
+        }
+        if(band){
             return;
         }
 
@@ -415,6 +427,7 @@ public class PedidosReportController implements Serializable {
 
     private void contabilizarPedidoConfactura(SfConfenc operacion,Pedidos pedido) {
         pedido.setContabilizado(true);
+        pedido.setEstado("CONTABILIZADO");
         SfTmpenc sfTmpenc = new SfTmpenc();
         String nroTrans = sfTmpencFacade.getSiguienteNumeroTransacccion();
         sfTmpenc.setNoTrans(nroTrans);
