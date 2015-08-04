@@ -111,17 +111,23 @@ public class PagoController implements Serializable {
             asiento.setTipoDoc(operacionBanco.getTipoDoc());
             asiento.setNoDoc(sfConfencFacade.getSiguienteNumeroDocumento(operacionBanco.getTipoDoc()));
             cajaoBancoAsiento.setCuenta(bancoElejido.getCuenta());
+            cajaoBancoAsiento.setSfTmpenc(asiento);
+            asiento.getAsientos().add(cajaoBancoAsiento);
         }else{
             asiento.setGlosa(operacionCaja.getGlosa() + " " + selected.getDescripcion());
             asiento.setTipoDoc(operacionCaja.getTipoDoc());
             asiento.setNoDoc(sfConfencFacade.getSiguienteNumeroDocumento(operacionCaja.getTipoDoc()));
             cajaoBancoAsiento.setCuenta(cajaOBanco.getCuenta().getCuenta());
+            cajaoBancoAsiento.setSfTmpenc(asiento);
+            asiento.getAsientos().add(cajaoBancoAsiento);
         }
         ////
         SfTmpdet clientesCuentasPorCobrarAsiento = new SfTmpdet();
         clientesCuentasPorCobrarAsiento.setNoTrans(noTrans);
-        setDebeOHaber(clientesCuentasPorCobrar,clientesCuentasPorCobrarAsiento,selected.getPago());
-
+        clientesCuentasPorCobrarAsiento.setCuenta(clientesCuentasPorCobrar.getCuenta().getCuenta());
+        setDebeOHaber(clientesCuentasPorCobrar, clientesCuentasPorCobrarAsiento, selected.getPago());
+        asiento.getAsientos().add(clientesCuentasPorCobrarAsiento);
+        clientesCuentasPorCobrarAsiento.setSfTmpenc(asiento);
         selected.setAsiento(asiento);
         asiento.getPagos().add(selected);
         persist(PersistAction.CREATE, "El pago se registro correctamente");
