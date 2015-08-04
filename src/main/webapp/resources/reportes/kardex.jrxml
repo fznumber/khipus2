@@ -9,18 +9,13 @@
 	<parameter name="totalHaber" class="java.lang.Double"/>
 	<parameter name="totalSaldo" class="java.lang.Double"/>
 	<parameter name="detalleCuenta" class="java.lang.String"/>
-	<field name="fecha" class="java.util.Date">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
+	<field name="fecha" class="java.util.Date"/>
 	<field name="tipoDoc" class="java.lang.String"/>
 	<field name="noDoc" class="java.lang.String"/>
 	<field name="glosa" class="java.lang.String"/>
 	<field name="debe" class="java.lang.Double"/>
 	<field name="haber" class="java.lang.Double"/>
 	<field name="saldo" class="java.lang.Double"/>
-	<variable name="haber_1" class="java.lang.Double" resetType="Column" calculation="Sum">
-		<variableExpression><![CDATA[$F{haber}]]></variableExpression>
-	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -44,7 +39,7 @@
 				<textFieldExpression><![CDATA[$P{nombreCliente}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="46" y="38" width="227" height="19" uuid="cab2992d-73f6-46cc-a33f-5093875f9027"/>
+				<reportElement x="46" y="38" width="318" height="19" uuid="cab2992d-73f6-46cc-a33f-5093875f9027"/>
 				<textFieldExpression><![CDATA[$P{detalleCuenta}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -71,10 +66,6 @@
 	<detail>
 		<band height="21" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="70" height="20" uuid="4bfe0875-9387-4561-805b-0e909154ffde"/>
-				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement x="69" y="0" width="25" height="20" uuid="689c9387-8687-47cd-b24e-8db862742267"/>
 				<textFieldExpression><![CDATA[$F{tipoDoc}]]></textFieldExpression>
 			</textField>
@@ -98,20 +89,24 @@
 				<reportElement x="491" y="0" width="64" height="20" uuid="9ef414c0-8373-4654-9f90-0a52ab6eb411"/>
 				<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="69" height="20" uuid="4e753d0c-7a0a-4349-b107-e8fa7c84f5e0"/>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
 		<band height="33" splitType="Stretch">
 			<textField>
-				<reportElement x="491" y="0" width="64" height="20" uuid="7662b882-34e6-4a14-aead-a8845fdf945b"/>
+				<reportElement x="489" y="0" width="64" height="20" uuid="7662b882-34e6-4a14-aead-a8845fdf945b"/>
 				<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="428" y="0" width="64" height="20" uuid="1b02a327-922d-4ef6-a3ee-7be9be974728"/>
+				<reportElement x="426" y="0" width="64" height="20" uuid="1b02a327-922d-4ef6-a3ee-7be9be974728"/>
 				<textFieldExpression><![CDATA[$F{haber}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="365" y="0" width="64" height="20" uuid="36138804-a3fd-41ce-91da-4fa16cb489f3"/>
+				<reportElement x="363" y="0" width="64" height="20" uuid="36138804-a3fd-41ce-91da-4fa16cb489f3"/>
 				<textFieldExpression><![CDATA[$F{debe}]]></textFieldExpression>
 			</textField>
 		</band>

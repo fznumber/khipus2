@@ -155,6 +155,7 @@ public class SfTmpencFacade extends AbstractFacade<SfTmpenc> {
             kar.setGlosa((String)dato[3]);
             kar.setDebe(debe);
             kar.setHaber(haber);
+            kar.setSaldo(saldo);
             kardex.add(kar);
         }
 
