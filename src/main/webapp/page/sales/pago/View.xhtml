@@ -8,11 +8,16 @@
 
     <ui:composition>
 
-        <p:dialog id="PagoViewDlg" widgetVar="PagoViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewPagoTitle}">
+        <p:dialog id="PagoViewDlg" widgetVar="PagoViewDialog" modal="true" resizable="false" appendTo="@(body)" header="Pago">
             <h:form id="PagoViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{pagoController.selected != null}">
-
+                        <p:outputLabel value="Cliente:" />
+                        <p:outputLabel value="#{pagoController.selected.persona.nombreCompleto}" title="Cliente"/>
+                        <p:outputLabel value="Pago:"/>
+                        <p:outputLabel value="#{pagoController.selected.pago}" title="Pago"/>
+                        <p:outputLabel value="Descripción:"/>
+                        <p:outputLabel value="#{pagoController.selected.descripcion}" title="Descripción" cols="20" rows="3"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="PagoViewDialog.hide()"/>
                 </h:panelGroup>
