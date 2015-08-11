@@ -127,11 +127,27 @@ public class SfConfencController implements Serializable {
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
             selected = new SfConfenc();
+            cuentas = arcgmsFacade.findAll();
+            cuentaElegida = new Arcgms();
+            tipodocs = tipodocFacade.findAll();
+            operaciones = operacionesFacade.findAll();
         }
+    }
+
+    public void prepareEdit(){
+        selected = getFacade().findByID(selected.getIdSfConfenc());
+        cuentas = arcgmsFacade.findAll();
+        cuentaElegida = new Arcgms();
+        tipodocs = tipodocFacade.findAll();
+        operaciones = operacionesFacade.findAll();
     }
 
     public void update() {
         persist(PersistAction.UPDATE, "Se actualizo con exito la configuración");
+    }
+
+    public void cancel(){
+        selected = null;
     }
 
     public void destroy() {

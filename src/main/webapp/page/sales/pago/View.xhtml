@@ -17,7 +17,7 @@
                         <p:outputLabel value="Pago:"/>
                         <p:outputLabel value="#{pagoController.selected.pago}" title="Pago"/>
                         <p:outputLabel value="Descripción:"/>
-                        <p:outputLabel value="#{pagoController.selected.descripcion}" title="Descripción" cols="20" rows="3"/>
+                        <inputTextarea value="#{pagoController.selected.descripcion}" title="Descripción" cols="20" rows="3"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="PagoViewDialog.hide()"/>
                 </h:panelGroup>

@@ -48,6 +48,7 @@
     <class>com.encens.khipus.model.ModulocompaniaPK</class>
     <class>com.encens.khipus.model.Operaciones</class>
     <class>com.encens.khipus.model.Banco</class>
+    <class>com.encens.khipus.model.Sucursal</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.target-server" value="JBoss"/>

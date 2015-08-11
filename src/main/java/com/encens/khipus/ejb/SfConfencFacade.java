@@ -62,4 +62,10 @@ public class SfConfencFacade extends AbstractFacade<SfConfenc> {
     public boolean existeTipoDoc(String tipoDoc) {
         return em.createNativeQuery("SELECT * FROM _sequence se WHERE se.seq_name = '"+tipoDoc+"'").getResultList().size() > 0;
     }
+
+    public SfConfenc findByID(long idSfConfenc) {
+        return (SfConfenc)em.createQuery("select sf from SfConfenc sf where sf.idSfConfenc =:id")
+                .setParameter("id",idSfConfenc)
+                .getSingleResult();
+    }
 }
