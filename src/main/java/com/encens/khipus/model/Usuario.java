@@ -73,6 +73,9 @@ public class Usuario implements Serializable {
     private Collection<Impresionfactura> facturas;
     @OneToMany(mappedBy = "usuario")
     private Collection<Pago> pagosByIdusuario;
+    @JoinColumn(name = "IDSUCURSAL", referencedColumnName = "IDSUCURSAL")
+    @ManyToOne(optional = true)
+    private Sucursal sucursal;
 
     public Usuario() {
     }
@@ -224,5 +227,13 @@ public class Usuario implements Serializable {
 
     public void setPagosByIdusuario(Collection<Pago> pagosByIdusuario) {
         this.pagosByIdusuario = pagosByIdusuario;
+    }
+
+    public Sucursal getSucursal() {
+        return sucursal;
+    }
+
+    public void setSucursal(Sucursal sucursal) {
+        this.sucursal = sucursal;
     }
 }

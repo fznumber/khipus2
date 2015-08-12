@@ -1,9 +1,8 @@
 package com.encens.khipus.model;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Created by Diego on 11/08/2015.
@@ -19,6 +18,16 @@ public class Sucursal {
     @Basic
     @Column(name = "descripcion", nullable = true, insertable = true, updatable = true, length = 30)
     private String descripcion;
+    @OneToMany(cascade = CascadeType.PERSIST,mappedBy = "sucursal")
+    private Collection<Dosificacion> dosificaciones = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.PERSIST,mappedBy = "sucursal")
+    private Collection<Usuario> usuarios = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "sucursal")
+    private Collection<Pago> pagos = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "sucursal")
+    private Collection<Pedidos> pedidos = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "sucursal")
+    private Collection<Ventadirecta> ventadirectas = new ArrayList<>();
 
     public long getIdsucursal() {
         return idsucursal;
@@ -65,5 +74,45 @@ public class Sucursal {
         result = 31 * result + (nombre != null ? nombre.hashCode() : 0);
         result = 31 * result + (descripcion != null ? descripcion.hashCode() : 0);
         return result;
+    }
+
+    public Collection<Dosificacion> getDosificaciones() {
+        return dosificaciones;
+    }
+
+    public void setDosificaciones(Collection<Dosificacion> dosificaciones) {
+        this.dosificaciones = dosificaciones;
+    }
+
+    public Collection<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(Collection<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
+
+    public Collection<Pago> getPagos() {
+        return pagos;
+    }
+
+    public void setPagos(Collection<Pago> pagos) {
+        this.pagos = pagos;
+    }
+
+    public Collection<Pedidos> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(Collection<Pedidos> pedidos) {
+        this.pedidos = pedidos;
+    }
+
+    public Collection<Ventadirecta> getVentadirectas() {
+        return ventadirectas;
+    }
+
+    public void setVentadirectas(Collection<Ventadirecta> ventadirectas) {
+        this.ventadirectas = ventadirectas;
     }
 }

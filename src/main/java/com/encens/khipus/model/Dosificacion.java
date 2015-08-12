@@ -9,15 +9,7 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -78,6 +70,9 @@ public class Dosificacion implements Serializable {
     private String nitEmpresa;
     @OneToMany(mappedBy = "dosificacion")
     private Collection<Impresionfactura> impresionfacturas;
+    @JoinColumn(name = "IDSUCURSAL", referencedColumnName = "IDSUCURSAL")
+    @ManyToOne(optional = true)
+    private Sucursal sucursal;
 
     public Dosificacion() {
     }
@@ -222,5 +217,13 @@ public class Dosificacion implements Serializable {
 
     public void setFechaControl(Date fechaControl) {
         this.fechaControl = fechaControl;
+    }
+
+    public Sucursal getSucursal() {
+        return sucursal;
+    }
+
+    public void setSucursal(Sucursal sucursal) {
+        this.sucursal = sucursal;
     }
 }

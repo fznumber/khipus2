@@ -46,6 +46,10 @@ public class Pago implements Serializable {
     @JoinColumn(name = "idusuario", referencedColumnName = "idusuario", nullable = false)
     private Usuario usuario;
 
+    @JoinColumn(name = "IDSUCURSAL", referencedColumnName = "IDSUCURSAL")
+    @ManyToOne(optional = true)
+    private Sucursal sucursal;
+
     public long getIdPago() {
         return idPago;
     }
@@ -124,5 +128,13 @@ public class Pago implements Serializable {
 
     public void setUsuario(Usuario usuarioByIdusuario) {
         this.usuario = usuarioByIdusuario;
+    }
+
+    public Sucursal getSucursal() {
+        return sucursal;
+    }
+
+    public void setSucursal(Sucursal sucursal) {
+        this.sucursal = sucursal;
     }
 }

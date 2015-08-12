@@ -125,6 +125,9 @@ public class Pedidos implements Serializable {
     @Basic
     @Column(name = "TIENEFACTURA")
     private Boolean tieneFactura = false;
+    @JoinColumn(name = "IDSUCURSAL", referencedColumnName = "IDSUCURSAL")
+    @ManyToOne(optional = true)
+    private Sucursal sucursal;
 
     public Pedidos() {
     }
@@ -408,5 +411,13 @@ public class Pedidos implements Serializable {
 
     public void setTieneFactura(Boolean tieneFactura) {
         this.tieneFactura = tieneFactura;
+    }
+
+    public Sucursal getSucursal() {
+        return sucursal;
+    }
+
+    public void setSucursal(Sucursal sucursal) {
+        this.sucursal = sucursal;
     }
 }

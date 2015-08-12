@@ -91,6 +91,9 @@ public class Ventadirecta implements Serializable {
     @JoinColumn(name = "id_tmpenc",referencedColumnName = "id_tmpenc")
     @ManyToOne(cascade = CascadeType.ALL)
     private SfTmpenc asiento;
+    @JoinColumn(name = "IDSUCURSAL", referencedColumnName = "IDSUCURSAL")
+    @ManyToOne(optional = true)
+    private Sucursal sucursal;
 
     public Ventadirecta() {
     }
@@ -275,5 +278,13 @@ public class Ventadirecta implements Serializable {
 
     public void setAsiento(SfTmpenc sfTmpenc) {
         this.asiento = sfTmpenc;
+    }
+
+    public Sucursal getSucursal() {
+        return sucursal;
+    }
+
+    public void setSucursal(Sucursal sucursal) {
+        this.sucursal = sucursal;
     }
 }
