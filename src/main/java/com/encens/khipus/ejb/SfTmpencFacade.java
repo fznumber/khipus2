@@ -8,6 +8,8 @@ package com.encens.khipus.ejb;
 import com.encens.khipus.model.Kardex;
 import com.encens.khipus.model.Persona;
 import com.encens.khipus.model.SfTmpenc;
+import com.encens.khipus.model.Sucursal;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -106,7 +108,7 @@ public class SfTmpencFacade extends AbstractFacade<SfTmpenc> {
         return kardex;
     }
 
-    public Collection<Kardex> getKardexcliente(Persona personaElegida, Date fechaIni, Date fechaFin,String cuenta) {
+    public Collection<Kardex> getKardexcliente(Persona personaElegida, Date fechaIni, Date fechaFin,String cuenta,Sucursal sucursal) {
         List<Kardex> kardex = new ArrayList<>();
         List<Object[]> datos = new ArrayList<>();
         SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
@@ -122,6 +124,7 @@ public class SfTmpencFacade extends AbstractFacade<SfTmpenc> {
                             "WHERE det.cuenta = '" + cuenta + "'\n" +
                             "AND enc.fecha BETWEEN '" + fechaInicio + "' AND '" + fechaFinal + "' \n" +
                             "AND ped.IDCLIENTE = '" + personaElegida.getPiId() + "'\n" +
+                            "and ped.IDSUCURSAL = '" +sucursal.getIdsucursal()+ "'\n" +
                             "UNION\n" +
                             "SELECT enc.fecha,enc.tipo_doc,enc.no_doc,enc.glosa,0 AS debe,det.haber FROM sf_tmpenc enc\n" +
                             "JOIN sf_tmpdet det\n" +
@@ -131,6 +134,7 @@ public class SfTmpencFacade extends AbstractFacade<SfTmpenc> {
                             "WHERE det.cuenta = '" + cuenta + "'\n" +
                             "AND enc.fecha BETWEEN '" + fechaInicio + "' AND '" + fechaFinal + "' \n" +
                             "AND pago.IDPERSONACLIENTE = '" + personaElegida.getPiId() + "'\n" +
+                            "and pago.IDSUCURSAL = '" +sucursal.getIdsucursal()+ "'\n" +
                             ") AS kardex\n" +
                             "ORDER BY kardex.fecha DESC";
         try{

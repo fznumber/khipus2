@@ -92,8 +92,11 @@ public class SfTmpencController implements Serializable {
     }
 
     public void exportarPDF(HashMap parametros, File jasper) throws JRException, IOException {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        LoginBean loginBean = (LoginBean) facesContext.getApplication().getELResolver().
+                getValue(facesContext.getELContext(), null, "loginBean");
 
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, new JRBeanCollectionDataSource(getFacade().getKardexcliente(personaElegida,fechaIni,fechaFin,"1421010100")));
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, new JRBeanCollectionDataSource(getFacade().getKardexcliente(personaElegida,fechaIni,fechaFin,"1421010100",loginBean.getUsuario().getSucursal())));
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         response.addHeader("Content-disposition", "attachment; filename=RecepcionPedios.pdf");
         ServletOutputStream stream = response.getOutputStream();

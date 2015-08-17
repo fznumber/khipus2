@@ -93,6 +93,7 @@ public class PagoController implements Serializable {
         selected.setPersona(personaElegida);
         selected.setFecha(new Timestamp(new Date().getTime()));
         selected.setUsuario(loginBean.getUsuario());
+        selected.setSucursal(loginBean.getUsuario().getSucursal());
         String noTrans =sfTmpencFacade.getSiguienteNumeroTransacccion();
         List<SfConfdet> asientos = new ArrayList<>(operacionCaja.getAsientos());
         SfConfdet cajaOBanco = asientos.get(0);

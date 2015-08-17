@@ -205,6 +205,7 @@ public class VentadirectaController implements Serializable {
         selected.setCodigo(getFacade().getSiguienteNumeroVenta());
         selected.setEstado("PREPARAR");
         selected.setDocumento(pedidosReportController.generarNotaEntrega(selected));
+        selected.setSucursal(loginBean.getUsuario().getSucursal());
         nota = selected.getDocumento();
         codNota = "NOTA_"+selected.getCodigo().toString();
         String nomcliente = "";
@@ -359,6 +360,7 @@ public class VentadirectaController implements Serializable {
         selected.setCodigo(getFacade().getSiguienteNumeroVenta());
         selected.setEstado("PREPARAR");
         selected.setDocumento(pedidosReportController.generarFacturaNotaVentaDirecta(selected));
+        selected.setSucursal(loginBean.getUsuario().getSucursal());
         nota = selected.getDocumento();
         codNota = "NOTAFAC_"+selected.getCodigo().toString();
         String nomcliente = "";

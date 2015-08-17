@@ -107,6 +107,7 @@ public class PedidosReportController implements Serializable {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         LoginBean loginBean = (LoginBean) facesContext.getApplication().getELResolver().
                 getValue(facesContext.getELContext(), null, "loginBean");
+        pedido.setSucursal(loginBean.getUsuario().getSucursal());
         sfTmpenc.setUsuario(loginBean.getUsuario());
         List<SfConfdet> asientos = new ArrayList<>(operacion.getAsientos());
         SfConfdet cuentasPorCobrar = asientos.get(0);
@@ -441,6 +442,7 @@ public class PedidosReportController implements Serializable {
         LoginBean loginBean = (LoginBean) facesContext.getApplication().getELResolver().
                 getValue(facesContext.getELContext(), null, "loginBean");
         sfTmpenc.setUsuario(loginBean.getUsuario());
+        pedido.setSucursal(loginBean.getUsuario().getSucursal());
         List<SfConfdet> asientos = new ArrayList<>(operacion.getAsientos());
         SfConfdet cuentasPorCobrar = asientos.get(0);
         SfConfdet mermasYVajasVentas = asientos.get(1);
@@ -769,7 +771,15 @@ public class PedidosReportController implements Serializable {
         moneyUtil = new MoneyUtil();
         barcodeRenderer = new BarcodeRenderer();
         //todo: lanzar un exception en caso que no encuentre una dosificacion valida
-        dosificacion = dosificacionFacade.findByPeriodo(new Date());
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        LoginBean loginBean = (LoginBean) facesContext.getApplication().getELResolver().
+                getValue(facesContext.getELContext(), null, "loginBean");
+        for(Dosificacion dos:loginBean.getUsuario().getSucursal().getDosificaciones())
+        {
+            if(dos.getEstado().equals("ACTIVO")){
+                dosificacion = dos;
+            }
+        }
         File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/factura.jasper"));
         quitarSinFactura();
         JasperPrint jasperPrint;
