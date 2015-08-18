@@ -61,13 +61,15 @@
                             <h:outputText value="#{item.haber}"/>
                         </p:column>
                         <f:facet name="footer">
-                            <p:commandButton id="generarFacturas" value="Generar kardex cliente" oncomplete="PF('KardexDialog').show()">
+                            <p:commandButton id="generarKardex" value="Generar kardex cliente" oncomplete="PF('KardexDialog').show()">
+                            </p:commandButton>
+                            <p:commandButton id="generarRecaudaciones" value="Generar Recaudaciones" oncomplete="PF('RecaudacionDialog').show()">
                             </p:commandButton>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>
             </h:form>
-
+            <ui:include src="Recaudaciones.xhtml"/>
             <ui:include src="KardexCliente.xhtml"/>
         </ui:define>
     </ui:composition>

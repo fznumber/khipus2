@@ -5,10 +5,7 @@
  */
 package com.encens.khipus.ejb;
 
-import com.encens.khipus.model.Kardex;
-import com.encens.khipus.model.Persona;
-import com.encens.khipus.model.SfTmpenc;
-import com.encens.khipus.model.Sucursal;
+import com.encens.khipus.model.*;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -164,5 +161,58 @@ public class SfTmpencFacade extends AbstractFacade<SfTmpenc> {
         }
 
         return kardex;
+    }
+
+    public Collection<Recaudacion> getRecaudacionesUsuario(Usuario usuario, Date fechaIni, Date fechaFin, String cuenta) {
+        List<Recaudacion> recaudaciones = new ArrayList<>();
+        List<Object[]> datos = new ArrayList<>();
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+        String fechaInicio = formato.format(fechaIni);
+        String fechaFinal = formato.format(fechaFin);
+        String sql = "SELECT * FROM\n" +
+                "(\n" +
+                "SELECT enc.fecha,enc.tipo_doc,enc.no_doc,enc.glosa,det.debe,0 AS haber FROM sf_tmpenc enc\n" +
+                "JOIN sf_tmpdet det \n" +
+                "ON det.id_tmpenc = enc.id_tmpenc\n" +
+                "WHERE det.debe IS NOT NULL\n" +
+                "AND enc.cuenta = "+cuenta+"\n" +
+                "and enc.idusuario = "+usuario.getIdusuario()+"\n" +
+                "AND enc.fecha BETWEEN "+fechaInicio+" AND "+fechaFinal+"\n" +
+                "UNION\n" +
+                "SELECT enc.fecha,enc.tipo_doc,enc.no_doc,enc.glosa,0 AS debe,det.haber FROM sf_tmpenc enc\n" +
+                "JOIN sf_tmpdet det \n" +
+                "ON det.id_tmpenc = enc.id_tmpenc\n" +
+                "WHERE det.haber IS NOT NULL\n" +
+                "AND enc.cuenta = "+cuenta+"\n" +
+                "and enc.idusuario = "+usuario.getIdusuario()+"\n" +
+                "AND enc.fecha BETWEEN "+fechaInicio+" AND "+fechaFinal+"\n" +
+                ")AS recaudacion\n" +
+                "ORDER BY recaudacion.fecha DESC";
+        try{
+            datos = (List<Object[]>)em.createNativeQuery(sql)
+                    .getResultList();
+        }catch (NoResultException e){
+            return recaudaciones;
+        }
+        Double debe = 0.0;
+        Double haber = 0.0;
+        Double saldo = 0.0;
+        for(Object[] dato:datos)
+        {
+            debe  = ((BigDecimal)dato[4]).doubleValue();
+            haber = ((BigDecimal)dato[5]).doubleValue();
+            saldo += debe;
+            saldo -= haber;
+            Recaudacion recaudacion = new Recaudacion();
+            recaudacion.setFecha((Date) dato[0]);
+            recaudacion.setTipoDoc((String) dato[1]);
+            recaudacion.setNoDoc((String) dato[2]);
+            recaudacion.setGlosa((String) dato[3]);
+            recaudacion.setIngreso(debe);
+            recaudacion.setEgreso(haber);
+            recaudacion.setSaldo(saldo);
+            recaudaciones.add(recaudacion);
+        }
+        return null;
     }
 }

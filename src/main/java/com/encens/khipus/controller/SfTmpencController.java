@@ -78,6 +78,26 @@ public class SfTmpencController implements Serializable {
         exportarPDF(parameters,jasper);
     }
 
+    public void generarRecaudacion() throws IOException, JRException {
+        HashMap parameters = new HashMap();
+
+        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/recaudacion.jasper"));
+        parameters.putAll(getReportParamsRecaudaciones());
+        exportarPDFRecaudaciones(parameters, jasper);
+    }
+
+    private Map<String,Object> getReportParamsRecaudaciones(){
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        String periodo = df.format(fechaIni)+" - "+df.format(fechaFin);
+        String nombreCliente = personaElegida.getNombreCompleto();
+        String detalleCuentaPeriodo = "1421010100 Clientes (Cuentas X Cobrar de Clientes)";
+        paramMap.put("periodo",periodo);
+        paramMap.put("detalleCuentaPeriodo",detalleCuentaPeriodo);
+
+        return paramMap;
+    }
+
     private Map<String, Object> getReportParams() {
         Map<String, Object> paramMap = new HashMap<String, Object>();
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -91,6 +111,23 @@ public class SfTmpencController implements Serializable {
         return paramMap;
     }
 
+    public void exportarPDFRecaudaciones(HashMap parametros, File jasper) throws JRException, IOException {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        LoginBean loginBean = (LoginBean) facesContext.getApplication().getELResolver().
+                getValue(facesContext.getELContext(), null, "loginBean");
+
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, new JRBeanCollectionDataSource(getFacade().getRecaudacionesUsuario(loginBean.getUsuario(), fechaIni, fechaFin, "1421010100")));
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.addHeader("Content-disposition", "attachment; filename=Recaudacion.pdf");
+        ServletOutputStream stream = response.getOutputStream();
+
+        JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
+
+        stream.flush();
+        stream.close();
+        FacesContext.getCurrentInstance().responseComplete();
+    }
+
     public void exportarPDF(HashMap parametros, File jasper) throws JRException, IOException {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         LoginBean loginBean = (LoginBean) facesContext.getApplication().getELResolver().
@@ -98,7 +135,7 @@ public class SfTmpencController implements Serializable {
 
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, new JRBeanCollectionDataSource(getFacade().getKardexcliente(personaElegida,fechaIni,fechaFin,"1421010100",loginBean.getUsuario().getSucursal())));
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-        response.addHeader("Content-disposition", "attachment; filename=RecepcionPedios.pdf");
+        response.addHeader("Content-disposition", "attachment; filename=Kardex.pdf");
         ServletOutputStream stream = response.getOutputStream();
 
         JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
