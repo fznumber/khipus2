@@ -51,7 +51,7 @@
                         <p:outputLabel value="Descripción:" for="descripcion" />
                         <p:inputTextarea id="descripcion" value="#{pagoController.selected.descripcion}" title="Descripción" cols="20" rows="3"/>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{pagoController.create}" value="#{bundle.Save}" update="display,:PagoListForm:datalist,:PagoListForm:growl" oncomplete="handleSubmit(args,'PagoCreateDialog');"/>
+                    <p:commandButton actionListener="#{pagoController.create}" value="#{bundle.Save}" update="display,:PagoListForm:datalist,:PagoListForm:growl"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="PagoCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

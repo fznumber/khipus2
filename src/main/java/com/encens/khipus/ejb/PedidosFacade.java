@@ -63,7 +63,7 @@ public class PedidosFacade extends AbstractFacade<Pedidos> {
 
         String numero = "0";
         try{
-            numero = (String)em.createNativeQuery("SELECT khipus.getNextSeq('SECUENCIAPEDIDO')")
+            numero = (String)em.createNativeQuery("SELECT getNextSeq('SECUENCIAPEDIDO')")
                     .getSingleResult();
         }catch (NoResultException e){
             return "0";

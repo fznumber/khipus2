@@ -38,7 +38,7 @@ public class SfTmpencFacade extends AbstractFacade<SfTmpenc> {
     public String getSiguienteNumeroTransacccion() {
         String numero = "0";
         try{
-            numero = (String)em.createNativeQuery("SELECT khipus.getNextSeq('ASIENTO')").getSingleResult();
+            numero = (String)em.createNativeQuery("SELECT getNextSeq('ASIENTO')").getSingleResult();
         }catch (NoResultException e){
             return "0";
         }
@@ -48,7 +48,7 @@ public class SfTmpencFacade extends AbstractFacade<SfTmpenc> {
     public String getSiguienteNumeroPorNombre(String nombre) {
         String numero = "0";
         try{
-            numero = (String)em.createNativeQuery("SELECT khipus.getNextSeq('"+nombre+"')")
+            numero = (String)em.createNativeQuery("SELECT getNextSeq('"+nombre+"')")
                     .getSingleResult();
         }catch (NoResultException e){
             return "0";

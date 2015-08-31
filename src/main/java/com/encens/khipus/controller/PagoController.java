@@ -75,6 +75,9 @@ public class PagoController implements Serializable {
     }
 
     public void create() {
+        if(validarCampos()){
+            return;
+        }
         SfConfenc operacionCaja = sfConfencFacade.getOperacion("PAGOCAJA");
         if(operacionCaja == null)
         {
@@ -134,9 +137,24 @@ public class PagoController implements Serializable {
         persist(PersistAction.CREATE, "El pago se registro correctamente");
         if (!JSFUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
-            personaElegida = null;
+            personaElegida = new Persona();
             selected = new Pago();
         }
+    }
+
+    private boolean validarCampos() {
+        boolean band = false;
+        if(personaElegida == null)
+        {
+            JSFUtil.addErrorMessage("El cliente es necesario.");
+            band = true;
+        }
+        if(selected.getPago() == null || selected.getPago()== 0.0)
+        {
+            JSFUtil.addErrorMessage("El pago tiene que ser registrado y ser mayor que cero.");
+            band = true;
+        }
+        return band;
     }
 
     private void setDebeOHaber(SfConfdet ope,SfTmpdet asiento, Double monto){

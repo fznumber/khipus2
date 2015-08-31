@@ -14,7 +14,7 @@
         </ui:define>
 
         <ui:define name="center">
-            <h:form id="PagoListForm">
+            <h:form id="PagoListForm" rendered="#{loginBean.logeado}">
                 <p:growl id="growl" life="15000"/>
                 <p:panel header="Lista de pagos">
                     <p:dataTable id="datalist" value="#{pagoController.items}" var="item"

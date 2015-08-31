@@ -72,7 +72,7 @@ public class Movimiento implements Serializable {
     private Double tipocambio;
     @Basic
     @Column(name = "CODIGO_QR")
-    private String vodigoQR;
+    private String codigoQR;
     @Basic(optional = false)
     @NotNull
     @Column(name = "FECHAREGISTRO")
@@ -227,11 +227,11 @@ public class Movimiento implements Serializable {
         this.ventadirectas = ventadirectas;
     }
 
-    public String getVodigoQR() {
-        return vodigoQR;
+    public String getCodigoQR() {
+        return codigoQR;
     }
 
-    public void setVodigoQR(String vodigoQR) {
-        this.vodigoQR = vodigoQR;
+    public void setCodigoQR(String vodigoQR) {
+        this.codigoQR = vodigoQR;
     }
 }

@@ -415,7 +415,7 @@ public class PedidosReportController implements Serializable {
                 getReportParams(
                         pedido.getCliente().getNombreCompleto(), numeroFactura, tipoEtiquetaFactura, controlCode.getCodigoControl(), controlCode.getKeyQR(), pedido));
 
-        guardarFactura(pedido, controlCode.getCodigoControl());
+        guardarFactura(pedido, controlCode.getCodigoControl(),controlCode.getKeyQR());
         exportarPDF(parameters, jasper);
     }
 
@@ -548,7 +548,7 @@ public class PedidosReportController implements Serializable {
         parameters.putAll(
                 getReportParams(
                         ventadirecta.getCliente().getNombreCompleto(), numeroFactura, tipoEtiquetaFactura, controlCode.getCodigoControl(), controlCode.getKeyQR(), ventadirecta));
-        guardarFactura(ventadirecta, controlCode.getCodigoControl());
+        guardarFactura(ventadirecta, controlCode.getCodigoControl(),controlCode.getKeyQR());
         exportarPDF(parameters, jasper,ventadirecta);
     }
 
@@ -610,7 +610,7 @@ public class PedidosReportController implements Serializable {
         return original;
     }
 
-    public void guardarFactura(Ventadirecta venta, String codControl) {
+    public void guardarFactura(Ventadirecta venta, String codControl,String codQR) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         LoginBean loginBean = (LoginBean) facesContext.getApplication().getELResolver().
                 getValue(facesContext.getELContext(), null, "loginBean");
@@ -625,6 +625,7 @@ public class PedidosReportController implements Serializable {
             movimiento.setMoneda("BS");
             movimiento.setTipocambio(6.69);
             movimiento.setNrofactura(dosificacion.getNumeroactual());
+            movimiento.setCodigoQR(codQR);
             venta.setMovimiento(movimiento);
 
             Impresionfactura impresionfactura = new Impresionfactura();
@@ -665,7 +666,7 @@ public class PedidosReportController implements Serializable {
         }
     }
 
-    public void guardarFacturaGenerada(Ventadirecta venta, String codControl) {
+    public void guardarFacturaGenerada(Ventadirecta venta, String codControl,String codQR) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         LoginBean loginBean = (LoginBean) facesContext.getApplication().getELResolver().
                 getValue(facesContext.getELContext(), null, "loginBean");
@@ -679,6 +680,7 @@ public class PedidosReportController implements Serializable {
             movimiento.setGlosa("");
             movimiento.setMoneda("BS");
             movimiento.setTipocambio(6.69);
+            movimiento.setCodigoQR(codQR);
             movimiento.setNrofactura(dosificacion.getNumeroactual());
             venta.setMovimiento(movimiento);
 
@@ -704,7 +706,7 @@ public class PedidosReportController implements Serializable {
             dosificacionController.update();
     }
 
-    public void guardarFactura(Pedidos pedido, String codControl) {
+    public void guardarFactura(Pedidos pedido, String codControl,String codQR) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         LoginBean loginBean = (LoginBean) facesContext.getApplication().getELResolver().
                 getValue(facesContext.getELContext(), null, "loginBean");
@@ -718,6 +720,7 @@ public class PedidosReportController implements Serializable {
             movimiento.setGlosa("");
             movimiento.setMoneda("BS");
             movimiento.setTipocambio(6.69);
+            movimiento.setCodigoQR(codQR);
             movimiento.setNrofactura(dosificacion.getNumeroactual());
             pedido.setMovimiento(movimiento);
 
@@ -924,7 +927,7 @@ public class PedidosReportController implements Serializable {
         if (venta.getEstado().equals("PENDIENTE")) {
             venta.setEstado("PREPARAR");
         }
-        guardarFactura(venta, controlCode.getCodigoControl());
+        guardarFactura(venta, controlCode.getCodigoControl(),controlCode.getKeyQR());
         return getReportParams(
                 venta.getCliente().getNombreCompleto(), numeroFactura, tipoEtiquetaFactura, controlCode.getCodigoControl(), controlCode.getKeyQR(), venta);
     }
@@ -941,7 +944,7 @@ public class PedidosReportController implements Serializable {
         if (pedido.getEstado().equals("PENDIENTE")) {
             pedido.setEstado("PREPARAR");
         }
-        guardarFactura(pedido, controlCode.getCodigoControl());
+        guardarFactura(pedido, controlCode.getCodigoControl(),controlCode.getKeyQR());
         return getReportParams(
                 pedido.getCliente().getNombreCompleto(), numeroFactura, tipoEtiquetaFactura, controlCode.getCodigoControl(), controlCode.getKeyQR(), pedido);
     }
@@ -958,7 +961,7 @@ public class PedidosReportController implements Serializable {
         if (venta.getEstado().equals("PENDIENTE")) {
             venta.setEstado("PREPARAR");
         }
-        guardarFactura(venta, controlCode.getCodigoControl());
+        guardarFactura(venta, controlCode.getCodigoControl(),controlCode.getKeyQR());
         return getReportParams(
                 venta.getCliente().getNombreCompleto(), numeroFactura, tipoEtiquetaFactura, controlCode.getCodigoControl(), controlCode.getKeyQR(), venta);
     }

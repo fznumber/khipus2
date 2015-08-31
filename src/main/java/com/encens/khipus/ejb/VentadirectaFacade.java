@@ -33,7 +33,7 @@ public class VentadirectaFacade extends AbstractFacade<Ventadirecta> {
     {
         String numero = "";
         try{
-            numero = (String)em.createNativeQuery("SELECT khipus.getNextSeq('VENTADIRECTA')").getSingleResult();
+            numero = (String)em.createNativeQuery("SELECT getNextSeq('VENTADIRECTA')").getSingleResult();
         }catch (NoResultException e){
             return 0;
         }

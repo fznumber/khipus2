@@ -57,7 +57,7 @@
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus" title="CREAR" value="#{bundle.Create}" actionListener="#{sfConfencController.prepareCreate}" update=":SfConfencCreateForm" oncomplete="PF('SfConfencCreateDialog').show()"/>
-                            <p:commandButton id="editButton" icon="ui-icon-pencil" title="EDITAR" value="Editar" actionListener="#{sfConfencController.prepareEdit}" update=":SfConfencCreateForm" oncomplete="PF('SfConfencEditDialog').show()"/>
+                            <p:commandButton id="editButton" icon="ui-icon-pencil" title="EDITAR" value="Editar" actionListener="#{sfConfencController.prepareEdit}" update=":SfConfencEditForm" oncomplete="PF('SfConfencEditDialog').show()"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

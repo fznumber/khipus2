@@ -48,7 +48,7 @@ public class DosificacionFacade extends AbstractFacade<Dosificacion> {
     {
         String numero = "";
         try{
-            numero = (String)em.createNativeQuery("SELECT khipus.getNextSeq('FACTURA')").getSingleResult();
+            numero = (String)em.createNativeQuery("SELECT getNextSeq('FACTURA')").getSingleResult();
         }catch (NoResultException e){
             return numero;
         }

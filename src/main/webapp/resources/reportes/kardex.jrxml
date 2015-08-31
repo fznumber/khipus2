@@ -96,25 +96,25 @@
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="33" splitType="Stretch">
-			<textField>
-				<reportElement x="489" y="0" width="64" height="20" uuid="7662b882-34e6-4a14-aead-a8845fdf945b"/>
-				<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="426" y="0" width="64" height="20" uuid="1b02a327-922d-4ef6-a3ee-7be9be974728"/>
-				<textFieldExpression><![CDATA[$F{haber}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="363" y="0" width="64" height="20" uuid="36138804-a3fd-41ce-91da-4fa16cb489f3"/>
-				<textFieldExpression><![CDATA[$F{debe}]]></textFieldExpression>
-			</textField>
-		</band>
+		<band height="33" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
 		<band height="54" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band height="42" splitType="Stretch">
+			<textField>
+				<reportElement x="491" y="0" width="64" height="20" uuid="7662b882-34e6-4a14-aead-a8845fdf945b"/>
+				<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="365" y="0" width="64" height="20" uuid="36138804-a3fd-41ce-91da-4fa16cb489f3"/>
+				<textFieldExpression><![CDATA[$F{debe}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="428" y="0" width="64" height="20" uuid="1b02a327-922d-4ef6-a3ee-7be9be974728"/>
+				<textFieldExpression><![CDATA[$F{haber}]]></textFieldExpression>
+			</textField>
+		</band>
 	</summary>
 </jasperReport>
