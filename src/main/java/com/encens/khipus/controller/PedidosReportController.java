@@ -499,6 +499,7 @@ public class PedidosReportController implements Serializable {
         asientoIT.setNoTrans(nroTrans);
         setDebeOHaber(impuestoALasTransacciones, asientoIT, it);
         asientoIT.setSfTmpenc(sfTmpenc);
+        sfTmpenc.getAsientos().add(asientoIT);
         sfTmpenc.getAsientos().add(asientoIVA);
         sfTmpenc.getPedidos().add(pedido);
         pedido.setAsiento(sfTmpenc);

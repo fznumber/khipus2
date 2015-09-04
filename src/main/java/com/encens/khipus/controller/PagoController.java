@@ -106,6 +106,7 @@ public class PagoController implements Serializable {
         asiento.setNombreCliente(personaElegida.getNombreCompleto());
         asiento.setCliente(personaElegida);
         asiento.setNoTrans(noTrans);
+        asiento.setUsuario(loginBean.getUsuario());
         ////
         SfTmpdet cajaoBancoAsiento = new SfTmpdet();
         cajaoBancoAsiento.setNoTrans(noTrans);
