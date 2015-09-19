@@ -175,17 +175,17 @@ public class SfTmpencFacade extends AbstractFacade<SfTmpenc> {
                 "JOIN sf_tmpdet det \n" +
                 "ON det.id_tmpenc = enc.id_tmpenc\n" +
                 "WHERE det.debe IS NOT NULL\n" +
-                "AND enc.cuenta = "+cuenta+"\n" +
+                "AND det.cuenta = "+cuenta+"\n" +
                 "and enc.idusuario = "+usuario.getIdusuario()+"\n" +
-                "AND enc.fecha BETWEEN "+fechaInicio+" AND "+fechaFinal+"\n" +
+                "AND enc.fecha BETWEEN '"+fechaInicio+"' AND '"+fechaFinal+"'\n" +
                 "UNION\n" +
                 "SELECT enc.fecha,enc.tipo_doc,enc.no_doc,enc.glosa,0 AS debe,det.haber FROM sf_tmpenc enc\n" +
                 "JOIN sf_tmpdet det \n" +
                 "ON det.id_tmpenc = enc.id_tmpenc\n" +
                 "WHERE det.haber IS NOT NULL\n" +
-                "AND enc.cuenta = "+cuenta+"\n" +
+                "AND det.cuenta = "+cuenta+"\n" +
                 "and enc.idusuario = "+usuario.getIdusuario()+"\n" +
-                "AND enc.fecha BETWEEN "+fechaInicio+" AND "+fechaFinal+"\n" +
+                "AND enc.fecha BETWEEN '"+fechaInicio+"' AND '"+fechaFinal+"'\n" +
                 ")AS recaudacion\n" +
                 "ORDER BY recaudacion.fecha DESC";
         try{
@@ -213,6 +213,6 @@ public class SfTmpencFacade extends AbstractFacade<SfTmpenc> {
             recaudacion.setSaldo(saldo);
             recaudaciones.add(recaudacion);
         }
-        return null;
+        return recaudaciones;
     }
 }

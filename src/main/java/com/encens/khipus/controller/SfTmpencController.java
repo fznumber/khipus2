@@ -89,9 +89,8 @@ public class SfTmpencController implements Serializable {
     private Map<String,Object> getReportParamsRecaudaciones(){
         Map<String, Object> paramMap = new HashMap<String, Object>();
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        String periodo = df.format(fechaIni)+" - "+df.format(fechaFin);
-        String nombreCliente = personaElegida.getNombreCompleto();
-        String detalleCuentaPeriodo = "1421010100 Clientes (Cuentas X Cobrar de Clientes)";
+        String periodo = df.format(fechaIni)+" - "+df.format(fechaFin);        
+        String detalleCuentaPeriodo = "1110110100 (Caja General M.N.)";
         paramMap.put("periodo",periodo);
         paramMap.put("detalleCuentaPeriodo",detalleCuentaPeriodo);
 
@@ -116,7 +115,7 @@ public class SfTmpencController implements Serializable {
         LoginBean loginBean = (LoginBean) facesContext.getApplication().getELResolver().
                 getValue(facesContext.getELContext(), null, "loginBean");
 
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, new JRBeanCollectionDataSource(getFacade().getRecaudacionesUsuario(loginBean.getUsuario(), fechaIni, fechaFin, "1421010100")));
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, new JRBeanCollectionDataSource(getFacade().getRecaudacionesUsuario(loginBean.getUsuario(), fechaIni, fechaFin, "1110110100")));
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         response.addHeader("Content-disposition", "attachment; filename=Recaudacion.pdf");
         ServletOutputStream stream = response.getOutputStream();

@@ -764,12 +764,7 @@ public class PedidosReportController implements Serializable {
         }
     }
 
-    public void imprimirFacturas() throws IOException, JRException {
-        if(pedidosElegidos.size() == 0)
-        {
-            JSFUtil.addWarningMessage("No hay ningun pedido elegido.");
-            return;
-        }
+    public void imprimirFacturas() throws IOException, JRException {        
         quitarAnulados();
         HashMap parameters = new HashMap();
         moneyUtil = new MoneyUtil();
@@ -786,6 +781,11 @@ public class PedidosReportController implements Serializable {
         }
         File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/factura.jasper"));
         quitarSinFactura();
+        if(pedidosElegidos.size() == 0)
+        {
+            JSFUtil.addWarningMessage("No hay ningun pedido elegido.");
+            return;
+        }
         JasperPrint jasperPrint;
         parameters.putAll(fijarParmetrosFactura(pedidosElegidos.get(0)));
         try {
