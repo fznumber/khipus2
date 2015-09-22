@@ -293,7 +293,7 @@ public class VentadirectaController implements Serializable {
         sfTmpenc.setGlosa(operacion.getGlosa() + glosa);
         sfTmpenc.setEstado("PEN");
         sfTmpenc.setNoUsr("ADM");
-        sfTmpenc.setCuenta(operacion.getCuenta().getCuenta());
+        //sfTmpenc.setCuenta(operacion.getCuenta().getCuenta());
         sfTmpenc.setNoDoc(sfTmpencFacade.getSiguienteNumeroPorNombre(operacion.getTipoDoc()));
         String nroTrans = sfTmpencFacade.getSiguienteNumeroTransacccion();
         sfTmpenc.setNoTrans(nroTrans);
@@ -311,6 +311,7 @@ public class VentadirectaController implements Serializable {
         setDebeOHaber(cajaGeneralMN, cajaGeneralMNAsiento, totalimporte);
         cajaGeneralMNAsiento.setNoTrans(nroTrans);
         cajaGeneralMNAsiento.setTc(new BigDecimal(1.0));
+        cajaGeneralMNAsiento.setSfTmpenc(sfTmpenc);
         sfTmpenc.getAsientos().add(cajaGeneralMNAsiento);
 
         SfTmpdet ventaDeProductosAsiento = new SfTmpdet();
@@ -319,6 +320,7 @@ public class VentadirectaController implements Serializable {
         ventaDeProductosAsiento.setNoTrans(nroTrans);
         setDebeOHaber(ventaProductos, ventaDeProductosAsiento, importe);
         ventaDeProductosAsiento.setTc(new BigDecimal(1.0));
+        ventaDeProductosAsiento.setSfTmpenc(sfTmpenc);
         sfTmpenc.getAsientos().add(ventaDeProductosAsiento);
 
         SfTmpdet debitoFisicalAsiento = new SfTmpdet();
@@ -327,6 +329,7 @@ public class VentadirectaController implements Serializable {
         debitoFisicalAsiento.setNoTrans(nroTrans);
         setDebeOHaber(debitoFisical, debitoFisicalAsiento, iva);
         debitoFisicalAsiento.setTc(new BigDecimal(1.0));
+        debitoFisicalAsiento.setSfTmpenc(sfTmpenc);
         sfTmpenc.getAsientos().add(debitoFisicalAsiento);
 
         SfTmpdet impuestoTransaccionesAsiento = new SfTmpdet();
@@ -335,6 +338,7 @@ public class VentadirectaController implements Serializable {
         impuestoTransaccionesAsiento.setNoTrans(nroTrans);
         setDebeOHaber(impuestoTrasacciones, impuestoTransaccionesAsiento, it);
         impuestoTransaccionesAsiento.setTc(new BigDecimal(1.0));
+        impuestoTransaccionesAsiento.setSfTmpenc(sfTmpenc);
         sfTmpenc.getAsientos().add(impuestoTransaccionesAsiento);
 
         sfTmpenc.getVentadirectas().add(selected);

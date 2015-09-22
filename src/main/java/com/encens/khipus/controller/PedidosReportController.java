@@ -203,6 +203,7 @@ public class PedidosReportController implements Serializable {
                 contabilizarPedidoSinfactura(operacionPedidoSinFactura,pedido);
             pedidosController.generalUpdate(pedido);
         }
+        pedidosElegidos.clear();
         JSFUtil.addWarningMessage("Se contabilizo con exito.");
     }
 
