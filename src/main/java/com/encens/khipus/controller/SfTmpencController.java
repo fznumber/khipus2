@@ -71,11 +71,36 @@ public class SfTmpencController implements Serializable {
     }
 
     public void generarKardex() throws IOException, JRException {
+        if(validarCampos())
+        {
+            return;
+        }
         HashMap parameters = new HashMap();
 
         File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/kardex.jasper"));
         parameters.putAll(getReportParams());
         exportarPDF(parameters,jasper);
+    }
+    
+    public boolean validarCampos()
+    {
+        Boolean band = false;
+        if(fechaIni == null)
+        {
+             JSFUtil.addWarningMessage("La fecha inicial es necesario");
+             band = true;
+        }
+        if(fechaFin == null)
+        {
+             JSFUtil.addWarningMessage("La fecha final es necesario");
+             band = true;
+        }
+        if(personaElegida == null)
+        {
+             JSFUtil.addWarningMessage("Elija un cliente primeramente.");
+             band = true;
+        }
+        return band;
     }
 
     public void generarRecaudacion() throws IOException, JRException {

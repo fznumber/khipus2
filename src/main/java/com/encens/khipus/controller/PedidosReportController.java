@@ -86,7 +86,10 @@ public class PedidosReportController implements Serializable {
         parameters.putAll(getReportParams(pedido));
         File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/notaDeEntrega.jasper"));
         exportarPDF(parameters, jasper);
-        pedido.setEstado("PREPARAR");
+        if(pedido.getEstado().equals("PENDIENTE"))
+        {
+            pedido.setEstado("PREPARAR");
+        }
         pedidosController.setSelected(pedido);
         pedidosController.generalUpdate();
         pedidosController.setItems(null);

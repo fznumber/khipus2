@@ -143,12 +143,18 @@ public class SfTmpencFacade extends AbstractFacade<SfTmpenc> {
         Double debe = 0.0;
         Double haber = 0.0;
         Double saldo = 0.0;
+        Double totalDebe = 0.0;
+        Double totalHaber = 0.0;
+        Double totalSaldo = 0.0;
         for(Object[] dato:datos)
         {
             debe  = ((BigDecimal)dato[4]).doubleValue();
             haber = ((BigDecimal)dato[5]).doubleValue();
             saldo += debe;
             saldo -= haber;
+            totalDebe += debe;
+            totalHaber += haber;
+            totalSaldo += saldo;
             Kardex kar = new Kardex();
             kar.setFecha((Date)dato[0]);
             kar.setTipoDoc((String) dato[1]);
@@ -157,6 +163,9 @@ public class SfTmpencFacade extends AbstractFacade<SfTmpenc> {
             kar.setDebe(debe);
             kar.setHaber(haber);
             kar.setSaldo(saldo);
+            kar.setTotalDebe(totalDebe);
+            kar.setTotalHaber(totalHaber);
+            kar.setTotalSaldo(totalSaldo);
             kardex.add(kar);
         }
 

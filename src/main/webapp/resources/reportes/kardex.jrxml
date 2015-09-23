@@ -16,6 +16,9 @@
 	<field name="debe" class="java.lang.Double"/>
 	<field name="haber" class="java.lang.Double"/>
 	<field name="saldo" class="java.lang.Double"/>
+	<field name="totalDebe" class="java.lang.Double"/>
+	<field name="totalHaber" class="java.lang.Double"/>
+	<field name="totalSaldo" class="java.lang.Double"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -81,11 +84,11 @@
 				<reportElement x="365" y="0" width="64" height="20" uuid="7f8ecf5f-db93-499d-a223-89303c2ba116"/>
 				<textFieldExpression><![CDATA[$F{debe}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="428" y="0" width="64" height="20" uuid="b55830f9-b0d2-4c74-819d-db1628119d02"/>
 				<textFieldExpression><![CDATA[$F{haber}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="491" y="0" width="64" height="20" uuid="9ef414c0-8373-4654-9f90-0a52ab6eb411"/>
 				<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
 			</textField>
@@ -103,17 +106,17 @@
 	</pageFooter>
 	<summary>
 		<band height="42" splitType="Stretch">
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="491" y="0" width="64" height="20" uuid="7662b882-34e6-4a14-aead-a8845fdf945b"/>
-				<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{totalSaldo}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="365" y="0" width="64" height="20" uuid="36138804-a3fd-41ce-91da-4fa16cb489f3"/>
-				<textFieldExpression><![CDATA[$F{debe}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{totalDebe}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="428" y="0" width="64" height="20" uuid="1b02a327-922d-4ef6-a3ee-7be9be974728"/>
-				<textFieldExpression><![CDATA[$F{haber}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{totalHaber}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

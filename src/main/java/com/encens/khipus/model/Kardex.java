@@ -14,6 +14,9 @@ public class Kardex {
     private Double debe;
     private Double haber;
     private Double Saldo;
+    private Double totalDebe;
+    private Double totalHaber;
+    private Double totalSaldo;
 
     public Date getFecha() {
         return fecha;
@@ -69,5 +72,29 @@ public class Kardex {
 
     public void setSaldo(Double saldo) {
         Saldo = saldo;
+    }
+
+    public Double getTotalDebe() {
+        return totalDebe;
+    }
+
+    public void setTotalDebe(Double totalDebe) {
+        this.totalDebe = totalDebe;
+    }
+
+    public Double getTotalHaber() {
+        return totalHaber;
+    }
+
+    public void setTotalHaber(Double totalHaber) {
+        this.totalHaber = totalHaber;
+    }
+
+    public Double getTotalSaldo() {
+        return totalSaldo;
+    }
+
+    public void setTotalSaldo(Double totalSaldo) {
+        this.totalSaldo = totalSaldo;
     }
 }
