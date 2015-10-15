@@ -111,10 +111,10 @@ public class PedidosController implements Serializable {
         return clientesFiltrados;
     }
 
-    public void agregarArticulo()
+    public void agregarArticuloEdit()
     {
         if(articuloElegido == null)
-        return;
+            return;
         Ventaarticulo ventaarticulo = ventaarticuloFacade.findByInvArticulo(articuloElegido);
         Double precio = ventaarticulo.getPrecio();
         if(personaElegida.getVentaclientes().size() >0)
@@ -138,7 +138,43 @@ public class PedidosController implements Serializable {
         articuloElegido = null;
     }
 
+    public void agregarArticulo()
+    {
+        if(articuloElegido == null)
+        return;
+        Ventaarticulo ventaarticulo = ventaarticuloFacade.findByInvArticulo(articuloElegido);
+        Double precio = ventaarticulo.getPrecio();
+        if(personaElegida.getVentaclientes().size() >0)
+        {
+            for(Ventacliente ventacliente:personaElegida.getVentaclientes()){
+                if(ventacliente.getInvArticulos().getInvArticulosPK().getCodArt() == articuloElegido.getInvArticulosPK().getCodArt())
+                {
+                    precio = ventacliente.getPrecioespecial();
+                }
+            }
+        }
+        ArticulosPedido articulosPedido = new ArticulosPedido();
+        articulosPedido.setInvArticulos(articuloElegido);
+        articulosPedido.setPrecioInv(ventaarticulo.getPrecio());
+        articulosPedido.setPrecio(precio);
+        articulosPedido.setReposicion(0);
+        articulosPedido.setPedidos(selected);
+        articulosPedido.setTipo(ventaarticulo.getTipo());
+        //selected.getArticulosPedidos().add(articulosPedido);
+        articulosPedidosElegidos.add(articulosPedido);
+        articulos.remove(articuloElegido);
+        articuloElegido = null;
+    }
+
     public void reponerArticuloYQuitarArticulo(ArticulosPedido item){
+        //selected.getArticulosPedidos().remove(item);
+        articulosPedidosElegidos.remove(item);
+        // articulosPedidoFacade.remove(item);
+        item.setPedidos(null);
+        articulos.add(item.getInvArticulos());
+    }
+
+    public void reponerArticuloYQuitarArticuloActualizar(ArticulosPedido item){
         selected.getArticulosPedidos().remove(item);
         articulosPedidoFacade.remove(item);
         item.setPedidos(null);
@@ -183,6 +219,7 @@ public class PedidosController implements Serializable {
     }
 
     public void create() {
+        selected.getArticulosPedidos().addAll(articulosPedidosElegidos);
         if(validarCampos())
         {
             return;
@@ -209,7 +246,7 @@ public class PedidosController implements Serializable {
             articulos = invArticulosFacade.findAllInvArticulos();
             reposiciones = new ArrayList<>();
         }
-
+        articulosPedidosElegidos.clear();
     }
 
     private boolean validarCampos() {
@@ -244,6 +281,7 @@ public class PedidosController implements Serializable {
     }
 
     public void cancel(){
+        articulosPedidosElegidos = new ArrayList<>();
         reposiciones = new ArrayList<>();
         selected = null;
         tieneReposicion = false;

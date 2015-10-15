@@ -80,7 +80,7 @@
             <p:dataTable
                     id="articulosTable"
                     var="item"
-                    value="#{pedidosController.selected.articulosPedidos}"
+                    value="#{pedidosController.articulosPedidosElegidos}"
                     rowKey="#{articulo.idarticulospedido}"
                     rendered="#{pedidosController.selected != null}"
                     tableStyle="width:auto">
@@ -115,7 +115,7 @@
                     </h:outputText>
                 </p:column>
                 <p:column headerText="Acción">
-                    <p:commandLink value="Quitar" actionListener="#{pedidosController.reponerArticulo(item)}" update="articulosTable,:PedidosListForm:growl" rendered="#{item.reposicion==0}">
+                    <p:commandLink value="Quitar" actionListener="#{pedidosController.reponerArticuloYQuitarArticulo(item)}" update="articulosTable,:PedidosListForm:growl" rendered="#{item.reposicion==0}">
                         <p:collector value="#{item}" removeFrom="#{pedidosController.selected.articulosPedidos}" unique="true"/>
                     </p:commandLink>
                 </p:column>
