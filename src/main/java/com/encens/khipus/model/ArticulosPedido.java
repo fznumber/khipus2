@@ -131,7 +131,7 @@ public class ArticulosPedido implements Serializable {
     }
 
     public Integer getTotal() {
-        total = reposicion + cantidad;
+        total = reposicion + cantidad + promocion;
         return total;
     }
 

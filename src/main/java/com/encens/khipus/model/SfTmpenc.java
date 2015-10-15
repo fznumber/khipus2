@@ -486,4 +486,9 @@ public class SfTmpenc implements Serializable {
     public void setHaber(Double haber) {
         this.haber = haber;
     }
+    
+    public String getDocumentAll(){
+        return tipoDoc + " " + noDoc;
+    }
+    
 }

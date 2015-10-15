@@ -196,7 +196,8 @@ public class PedidosReportController implements Serializable {
         }
 
         quitarAnulados();
-        quitarNoEnviados();
+        //quitarNoEnviados();  //habilitar cuando se soluciones el problema de las entregas
+        quitarContabilizados();
 
         for(Pedidos pedido:pedidosElegidos)
         {
@@ -865,6 +866,10 @@ public class PedidosReportController implements Serializable {
 
     private void quitarAnulados() {
         pedidosElegidos = pedidosElegidos.stream().filter(p->p.getEstado().equals("ANULADO") != true).collect(Collectors.toList());
+    }
+    
+    private void quitarContabilizados() {
+        pedidosElegidos = pedidosElegidos.stream().filter(p->p.getEstado().equals("CONTABILIZADO") != true).collect(Collectors.toList());
     }
 
     private void quitarSinFacturaVenta() {

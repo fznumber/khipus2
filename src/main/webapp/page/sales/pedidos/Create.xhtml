@@ -95,6 +95,11 @@
                         <p:ajax event="blur"  process="@this" oncomplete="refreshFooter();" update="importe,total"/>
                     </h:inputText>
                 </p:column>
+                <p:column headerText="Promo">
+                    <h:inputText value="#{item.promocion}" size="4">
+                        <p:ajax event="blur"  process="@this" oncomplete="refreshFooter();" update="importe,total"/>
+                    </h:inputText>
+                </p:column>
                 <p:column headerText="P.U.">
                     <h:outputText value="#{item.precio}"/>
                 </p:column>
