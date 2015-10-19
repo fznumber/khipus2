@@ -89,10 +89,11 @@ public class PedidosReportController implements Serializable {
         if(pedido.getEstado().equals("PENDIENTE"))
         {
             pedido.setEstado("PREPARAR");
+            pedidosController.setSelected(pedido);
+            pedidosController.generalUpdate();
+            pedidosController.setItems(null);
         }
-        pedidosController.setSelected(pedido);
-        pedidosController.generalUpdate();
-        pedidosController.setItems(null);
+        
     }
 
     private void contabilizarPedidoSinfactura(SfConfenc operacion,Pedidos pedido) {
