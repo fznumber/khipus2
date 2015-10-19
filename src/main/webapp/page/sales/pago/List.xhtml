@@ -29,30 +29,40 @@
                         <p:ajax event="rowSelect"   update="createButton viewButton  "/>
                         <p:ajax event="rowUnselect" update="createButton viewButton  "/>
 
-                        <p:column>
+                        <p:column style="width: 15%">
                             <f:facet name="header">
                                 <h:outputText value="Fecha"/>
                             </f:facet>
-                            <h:outputText value="#{item.fecha}"/>
+                            <h:outputText value="#{item.fecha}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
                         </p:column>
-                        <p:column>
+                        <p:column style="width: 30%">
+                            <f:facet name="header">
+                                <h:outputText value="Cliente"/>
+                            </f:facet>
+                            <h:outputText value="#{item.persona.nombreCompleto}"/>
+                        </p:column>
+                        <p:column style="width: 15%">
                             <f:facet name="header">
                                 <h:outputText value="Monto"/>
                             </f:facet>
                             <h:outputText value="#{item.pago}"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="width: 30%">
                             <f:facet name="header">
                                 <h:outputText value="Descripción"/>
                             </f:facet>
                             <h:outputText value="#{item.descripcion}"/>
                         </p:column>
-                        <p:column>
+                        
+                        <p:column style="width: 10%">
                             <f:facet name="header">
-                                <h:outputText value="Nombre Persona"/>
+                                <h:outputText value="Doc"/>
                             </f:facet>
-                            <h:outputText value="#{item.persona.nombreCompleto}"/>
+                            <h:outputText value="#{item.asiento.documentAll}"/>
                         </p:column>
+                        
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{pagoController.prepareCreate}" update=":PagoCreateForm" oncomplete="PF('PagoCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":PagoViewForm" oncomplete="PF('PagoViewDialog').show()" disabled="#{empty pagoController.selected}"/>

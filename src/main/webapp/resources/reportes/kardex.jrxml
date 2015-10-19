@@ -26,6 +26,9 @@
 		<band height="58" splitType="Stretch">
 			<rectangle>
 				<reportElement x="0" y="38" width="555" height="19" uuid="cc7708cd-ec9e-4a17-b1aa-a5f903372b91"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
 			</rectangle>
 			<staticText>
 				<reportElement x="0" y="0" width="97" height="20" uuid="d3c95d30-e78f-46f1-9760-60c63f1315eb"/>
@@ -43,23 +46,38 @@
 			</textField>
 			<textField>
 				<reportElement x="46" y="38" width="318" height="19" uuid="cab2992d-73f6-46cc-a33f-5093875f9027"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{detalleCuenta}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="0" y="38" width="47" height="20" uuid="b60eac58-f0bc-4e80-bfe9-d1e2eb279cb4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
 				<text><![CDATA[CUENTA:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="364" y="37" width="64" height="20" uuid="4871106a-cafd-4bb3-90dd-6b47b7781ed0"/>
-				<text><![CDATA[DEBE]]></text>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[DEBE ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="427" y="37" width="64" height="20" uuid="8ba66c03-053c-48e6-843b-0704f3d8da5c"/>
-				<text><![CDATA[HABER]]></text>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[HABER ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="491" y="38" width="64" height="20" uuid="f0fac557-daa1-4025-9650-86658bad6fb7"/>
-				<text><![CDATA[SALDO]]></text>
+				<reportElement x="491" y="38" width="62" height="20" uuid="f0fac557-daa1-4025-9650-86658bad6fb7"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[SALDO ]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -67,33 +85,54 @@
 		<band height="3" splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="21" splitType="Stretch">
+		<band height="13" splitType="Stretch">
 			<textField>
-				<reportElement x="69" y="0" width="25" height="20" uuid="689c9387-8687-47cd-b24e-8db862742267"/>
+				<reportElement x="69" y="0" width="25" height="13" uuid="689c9387-8687-47cd-b24e-8db862742267"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{tipoDoc}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="93" y="0" width="76" height="20" uuid="ebf72363-28a1-43f3-93ef-7822ae51a82b"/>
+				<reportElement x="93" y="0" width="41" height="13" uuid="ebf72363-28a1-43f3-93ef-7822ae51a82b"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{noDoc}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="168" y="0" width="197" height="20" uuid="b597f480-9ac8-467a-9c8b-e1217337b14c"/>
+				<reportElement x="134" y="0" width="231" height="13" uuid="b597f480-9ac8-467a-9c8b-e1217337b14c"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{glosa}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="365" y="0" width="64" height="20" uuid="7f8ecf5f-db93-499d-a223-89303c2ba116"/>
+			<textField pattern="###0.00">
+				<reportElement x="365" y="0" width="62" height="13" uuid="7f8ecf5f-db93-499d-a223-89303c2ba116"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{debe}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
-				<reportElement x="428" y="0" width="64" height="20" uuid="b55830f9-b0d2-4c74-819d-db1628119d02"/>
+				<reportElement x="428" y="0" width="64" height="13" uuid="b55830f9-b0d2-4c74-819d-db1628119d02"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{haber}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
-				<reportElement x="491" y="0" width="64" height="20" uuid="9ef414c0-8373-4654-9f90-0a52ab6eb411"/>
+				<reportElement x="491" y="0" width="62" height="13" uuid="9ef414c0-8373-4654-9f90-0a52ab6eb411"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="0" y="0" width="69" height="20" uuid="4e753d0c-7a0a-4349-b107-e8fa7c84f5e0"/>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="0" y="0" width="69" height="13" uuid="4e753d0c-7a0a-4349-b107-e8fa7c84f5e0"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -107,15 +146,24 @@
 	<summary>
 		<band height="42" splitType="Stretch">
 			<textField pattern="###0.00">
-				<reportElement x="491" y="0" width="64" height="20" uuid="7662b882-34e6-4a14-aead-a8845fdf945b"/>
+				<reportElement x="491" y="0" width="62" height="13" uuid="7662b882-34e6-4a14-aead-a8845fdf945b"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{totalSaldo}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
-				<reportElement x="365" y="0" width="64" height="20" uuid="36138804-a3fd-41ce-91da-4fa16cb489f3"/>
+				<reportElement x="365" y="0" width="64" height="13" uuid="36138804-a3fd-41ce-91da-4fa16cb489f3"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{totalDebe}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
-				<reportElement x="428" y="0" width="64" height="20" uuid="1b02a327-922d-4ef6-a3ee-7be9be974728"/>
+				<reportElement x="428" y="0" width="64" height="13" uuid="1b02a327-922d-4ef6-a3ee-7be9be974728"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{totalHaber}]]></textFieldExpression>
 			</textField>
 		</band>
