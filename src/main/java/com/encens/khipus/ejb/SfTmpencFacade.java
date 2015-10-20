@@ -206,12 +206,18 @@ public class SfTmpencFacade extends AbstractFacade<SfTmpenc> {
         Double debe = 0.0;
         Double haber = 0.0;
         Double saldo = 0.0;
+        Double totalDebe = 0.0;
+        Double totalHaber = 0.0;
+        Double totalSaldo = 0.0;
         for(Object[] dato:datos)
         {
             debe  = ((BigDecimal)dato[4]).doubleValue();
             haber = ((BigDecimal)dato[5]).doubleValue();
             saldo += debe;
             saldo -= haber;
+            totalDebe += debe;
+            totalHaber += haber;
+            totalSaldo += saldo;
             Recaudacion recaudacion = new Recaudacion();
             recaudacion.setFecha((Date) dato[0]);
             recaudacion.setTipoDoc((String) dato[1]);
@@ -220,6 +226,9 @@ public class SfTmpencFacade extends AbstractFacade<SfTmpenc> {
             recaudacion.setIngreso(debe);
             recaudacion.setEgreso(haber);
             recaudacion.setSaldo(saldo);
+            recaudacion.setTotalDebe(totalDebe);
+            recaudacion.setTotalHaber(totalHaber);
+            recaudacion.setTotalSaldo(totalSaldo);
             recaudaciones.add(recaudacion);
         }
         return recaudaciones;
