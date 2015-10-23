@@ -106,7 +106,7 @@ public class SfTmpencController implements Serializable {
     public void generarRecaudacion() throws IOException, JRException {
         HashMap parameters = new HashMap();
 
-        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/recaudacion.jasper"));
+        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/reportes/Recaudacion.jasper"));
         parameters.putAll(getReportParamsRecaudaciones());
         exportarPDFRecaudaciones(parameters, jasper);
     }
