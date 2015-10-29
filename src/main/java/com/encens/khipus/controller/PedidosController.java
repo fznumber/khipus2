@@ -587,7 +587,8 @@ public class PedidosController implements Serializable {
                     articulo.setPedidos(selected);
                     articulo.setInvArticulos(repo.getInvArticulos());
                     articulo.setCantidad(0);
-                    selected.getArticulosPedidos().add(articulo);
+                    //selected.getArticulosPedidos().add(articulo);
+                    articulosPedidosElegidos.add(articulo);
                     articulos.remove(repo.getInvArticulos());
                 }
             }
