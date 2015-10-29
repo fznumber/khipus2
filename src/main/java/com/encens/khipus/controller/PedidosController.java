@@ -351,13 +351,13 @@ public class PedidosController implements Serializable {
     }
 
     public List<Pedidos> getItems() {
-        if (items == null) {
+        //if (items == null) {
             if(pedidosFiltrado != null)
             pedidosFiltrado.clear();
             if(pedidosElegidos != null)
             pedidosElegidos.clear();
             items = getFacade().findPedidosOrdDecs();
-        }
+        //}
         return items;
     }
     
@@ -592,7 +592,8 @@ public class PedidosController implements Serializable {
                     articulo.setPedidos(selected);
                     articulo.setInvArticulos(repo.getInvArticulos());
                     articulo.setCantidad(0);
-                    selected.getArticulosPedidos().add(articulo);
+                    //selected.getArticulosPedidos().add(articulo);
+                    articulosPedidosElegidos.add(articulo);
                     articulos.remove(repo.getInvArticulos());
                 }
             }
@@ -673,5 +674,15 @@ public class PedidosController implements Serializable {
         custom.setGroupingSeparator(',');
         df.setDecimalFormatSymbols(custom);
         return df.format(valor);
+    }
+
+    public Double getTotalimporte() {
+        Double totalimporte = 0.0;
+        if(articulosPedidosElegidos != null)
+            for(ArticulosPedido articulosPedido:articulosPedidosElegidos)
+            {
+                totalimporte += articulosPedido.getImporte();
+            }
+        return totalimporte;
     }
 }
