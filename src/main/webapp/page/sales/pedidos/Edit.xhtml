@@ -52,7 +52,7 @@
                         </h:panelGrid>
                     </f:facet>
                 </p:autoComplete>
-                <p:commandButton actionListener="#{pedidosController.agregarArticulo}" value="Agregar" update=":PedidosEditForm:articulosTable,:PedidosEditForm:itemTip"/>
+                <p:commandButton actionListener="#{pedidosController.agregarArticuloEdit}" value="Agregar" update=":PedidosEditForm:articulosTable,:PedidosEditForm:itemTip"/>
             </p:panelGrid>
             <p:remoteCommand name="refreshFooter" update="PedidosEditForm:articulosTable:totalImporte"/>
             <p:dataTable

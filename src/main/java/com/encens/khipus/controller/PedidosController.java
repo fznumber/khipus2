@@ -351,13 +351,13 @@ public class PedidosController implements Serializable {
     }
 
     public List<Pedidos> getItems() {
-        if (items == null) {
+        //if (items == null) {
             if(pedidosFiltrado != null)
             pedidosFiltrado.clear();
             if(pedidosElegidos != null)
             pedidosElegidos.clear();
             items = getFacade().findPedidosOrdDecs();
-        }
+        //}
         return items;
     }
     public String reinit() {
