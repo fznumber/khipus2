@@ -670,4 +670,14 @@ public class PedidosController implements Serializable {
         df.setDecimalFormatSymbols(custom);
         return df.format(valor);
     }
+
+    public Double getTotalimporte() {
+        Double totalimporte = 0.0;
+        if(articulosPedidosElegidos != null)
+            for(ArticulosPedido articulosPedido:articulosPedidosElegidos)
+            {
+                totalimporte += articulosPedido.getImporte();
+            }
+        return totalimporte;
+    }
 }
