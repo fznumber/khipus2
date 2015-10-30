@@ -113,7 +113,7 @@ public class SfTmpencFacade extends AbstractFacade<SfTmpenc> {
         String fechaFinal = formato.format(fechaFin);
         String sql = "SELECT * FROM\n" +
                 "(" +
-                "SELECT enc.fecha,enc.tipo_doc,enc.no_doc,enc.glosa,det.debe,0 AS haber FROM sf_tmpenc enc\n" +
+                "SELECT enc.fecha,enc.tipo_doc,enc.no_doc,enc.glosa,det.debe,0 AS haber, enc.id_tmpenc FROM sf_tmpenc enc\n" +
                             "JOIN sf_tmpdet det\n" +
                             "ON det.id_tmpenc = enc.id_tmpenc\n" +
                             "JOIN pedidos ped\n" +
@@ -123,7 +123,7 @@ public class SfTmpencFacade extends AbstractFacade<SfTmpenc> {
                             "AND ped.IDCLIENTE = '" + personaElegida.getPiId() + "'\n" +
                             "and ped.IDSUCURSAL = '" +sucursal.getIdsucursal()+ "'\n" +
                             "UNION\n" +
-                            "SELECT enc.fecha,enc.tipo_doc,enc.no_doc,enc.glosa,0 AS debe,det.haber FROM sf_tmpenc enc\n" +
+                            "SELECT enc.fecha,enc.tipo_doc,enc.no_doc,enc.glosa,0 AS debe,det.haber, enc.id_tmpenc FROM sf_tmpenc enc\n" +
                             "JOIN sf_tmpdet det\n" +
                             "ON det.id_tmpenc = enc.id_tmpenc\n" +
                             "JOIN pago pago\n" +
@@ -133,7 +133,7 @@ public class SfTmpencFacade extends AbstractFacade<SfTmpenc> {
                             "AND pago.IDPERSONACLIENTE = '" + personaElegida.getPiId() + "'\n" +
                             "and pago.IDSUCURSAL = '" +sucursal.getIdsucursal()+ "'\n" +
                             ") AS kardex\n" +
-                            "ORDER BY kardex.fecha DESC";
+                            "ORDER BY kardex.id_tmpenc ASC";
         try{
             datos = (List<Object[]>)em.createNativeQuery(sql)
                     .getResultList();
@@ -165,7 +165,8 @@ public class SfTmpencFacade extends AbstractFacade<SfTmpenc> {
             kar.setSaldo(saldo);
             kar.setTotalDebe(totalDebe);
             kar.setTotalHaber(totalHaber);
-            kar.setTotalSaldo(totalSaldo);
+            //kar.setTotalSaldo(totalSaldo);
+            kar.setTotalSaldo(saldo);
             kardex.add(kar);
         }
 

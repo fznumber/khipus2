@@ -195,12 +195,14 @@ public class PedidosFacade extends AbstractFacade<Pedidos> {
     public List<Pedidos> findPedidosOrdDecs() {
         List<Pedidos> result = new ArrayList<>();
         try{
+            em.flush();
             result = (List<Pedidos>)em.createQuery("select pe from Pedidos pe order by pe.idpedidos desc").getResultList();
         }catch (NoResultException e){
             return result;
         }
         return result;
     }
+    
 
     public class RecepcionPedido{
         private String cliente;
