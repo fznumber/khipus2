@@ -120,7 +120,7 @@ public class PedidosController implements Serializable {
         if(personaElegida.getVentaclientes().size() >0)
         {
             for(Ventacliente ventacliente:personaElegida.getVentaclientes()){
-                if(ventacliente.getInvArticulos().getInvArticulosPK().getCodArt() == articuloElegido.getInvArticulosPK().getCodArt())
+                if(ventacliente.getInvArticulos().getInvArticulosPK().getCodArt().equals( articuloElegido.getInvArticulosPK().getCodArt()))
                 {
                     precio = ventacliente.getPrecioespecial();
                 }
@@ -147,7 +147,7 @@ public class PedidosController implements Serializable {
         if(personaElegida.getVentaclientes().size() >0)
         {
             for(Ventacliente ventacliente:personaElegida.getVentaclientes()){
-                if(ventacliente.getInvArticulos().getInvArticulosPK().getCodArt() == articuloElegido.getInvArticulosPK().getCodArt())
+                if(ventacliente.getInvArticulos().getInvArticulosPK().getCodArt().equals( articuloElegido.getInvArticulosPK().getCodArt()))
                 {
                     precio = ventacliente.getPrecioespecial();
                 }
