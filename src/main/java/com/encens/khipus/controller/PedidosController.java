@@ -361,10 +361,6 @@ public class PedidosController implements Serializable {
         return items;
     }
     
-    public void refresh(){
-        getFacade().refreshPedidos();
-    }
-    
     public String reinit() {
         articuloElegido = new InvArticulos();
         return null;

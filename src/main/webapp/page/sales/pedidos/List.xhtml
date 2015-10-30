@@ -17,7 +17,7 @@
         <h:form id="PedidosListForm" rendered="#{loginBean.logeado}">
             <p:growl id="growl" life="15000"/>
             <p:panel header="Listado Pedidos">
-                <p:dataTable id="datalist" value="#{pedidosController.getItems()}" var="item"
+                <p:dataTable id="datalist" value="#{pedidosController.items}" var="item"
                              selection="#{pedidosController.pedidosElegidos}"
                              paginator="true"
                              rowKey="#{item.idpedidos}"
@@ -91,7 +91,6 @@
                         <p:commandButton id="viewButton" actionListener="#{pedidosController.setSelected(item)}"  icon="ui-icon-search" title="VER" update=":PedidosViewForm" oncomplete="PF('PedidosViewDialog').show()"/>
                     </p:column>
                     <f:facet name="footer">
-                        <p:commandButton id="updateButton" value="Actualizar" actionListener="#{pedidosController.refresh()}" update="datalist" />
                         <p:commandButton id="createButton" value="#{bundle.Create}" actionListener="#{pedidosController.prepareCreate}" update=":PedidosCreateForm" oncomplete="PF('PedidosCreateDialog').show()"/>
                         <p:commandButton id="recepcionButton" value="Recepción Pedidos" update=":RecepcionForm" oncomplete="PF('RecepcionDialog').show()" />
                         <p:commandButton id="generarFacturas" value="Generar Facturas" oncomplete="PF('ImprimirFacturasDialog').show()">
