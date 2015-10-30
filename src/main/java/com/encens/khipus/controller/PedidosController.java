@@ -159,7 +159,7 @@ public class PedidosController implements Serializable {
         articulosPedido.setPrecio(precio);
         articulosPedido.setReposicion(0);
         articulosPedido.setPedidos(selected);
-        articulosPedido.setTipo(ventaarticulo.getTipo());
+        articulosPedido.setTipo(ventaarticulo.getTipo()); 
         //selected.getArticulosPedidos().add(articulosPedido);
         articulosPedidosElegidos.add(articulosPedido);
         articulos.remove(articuloElegido);
