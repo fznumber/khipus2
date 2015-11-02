@@ -563,7 +563,7 @@ public class PedidosController implements Serializable {
         if(personaElegida == null)
             return;
         
-        if(this.personaElegida.getPiId() != personaElegida.getPiId())
+        if(!personaElegida.getPiId().equals(this.personaElegida.getPiId()))
         {
             selected.getArticulosPedidos().clear();
             tieneReposicion = false;                
