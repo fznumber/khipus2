@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 import com.encens.khipus.util.JSFUtil;
 import com.encens.khipus.util.JSFUtil.PersistAction;
@@ -593,11 +594,51 @@ public class PedidosController implements Serializable {
                     articulos.remove(repo.getInvArticulos());
                 }
             }
+            verificarArticulosRepetidos();
             tieneReposicion = true;
             conReposicion = true;
             reposicionesYaAgregadas = true;
         }
         this.personaElegida = personaElegida;
+    }
+
+    private void verificarArticulosRepetidos(){
+        List<ArticulosPedido> resultado = new ArrayList<>();
+        for(ArticulosPedido articulosPedido:articulosPedidosElegidos)
+        {
+            boolean band = true;
+            for(ArticulosPedido resul:resultado)
+            {
+                if(articulosPedido.getInvArticulos().getInvArticulosPK().getCodArt().equals(resul.getInvArticulos().getInvArticulosPK().getCodArt()))
+                {
+                    resul.setReposicion(articulosPedido.getReposicion()+resul.getReposicion());
+                    band = false;
+                }
+            }
+            if(band)
+            {
+                resultado.add(articulosPedido);
+            }
+        }
+       articulosPedidosElegidos.clear();
+       articulosPedidosElegidos.addAll(resultado);
+    }
+
+    private List<ArticulosPedido> quitarRepetidos(List<ArticulosPedido> resultado,ArticulosPedido comparar){
+        boolean band = true;
+        for(ArticulosPedido articulosPedido:resultado)
+        {
+            if(articulosPedido.getInvArticulos().getInvArticulosPK().getCodArt().equals(comparar.getInvArticulos().getInvArticulosPK().getCodArt()))
+            {
+                articulosPedido.setCantidad(articulosPedido.getCantidad()+comparar.getCantidad());
+                band = false;
+            }
+        }
+        if(band)
+        {
+            resultado.add(comparar);
+        }
+        return resultado;
     }
 
     public void quitarReposicion(){
